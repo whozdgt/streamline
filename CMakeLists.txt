@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(musicplayer VERSION 0.2.0 LANGUAGES CXX)
+project(musicplayer VERSION 0.2.1 LANGUAGES CXX)
 
 if(WIN32)
   enable_language(RC)      # the program's icon and version information
@@ -204,6 +204,11 @@ else()
     # no console window behind the player; the media keys; JetBrains Mono travels with the program
     set_target_properties(musicplayer PROPERTIES WIN32_EXECUTABLE ON)
     configure_file(packaging/windows/musicplayer.rc.in "${CMAKE_CURRENT_BINARY_DIR}/musicplayer.rc" @ONLY)
+    # The CI run number: the app compares it with the newest published build to know whether an update exists.
+    if(NOT WINDOWS_BUILD)
+      set(WINDOWS_BUILD 0)
+    endif()
+    target_compile_definitions(musicplayer PRIVATE PARAPLAY_BUILD=${WINDOWS_BUILD})
     target_sources(musicplayer PRIVATE src/winmedia.cpp src/winmedia.h "${CMAKE_CURRENT_BINARY_DIR}/musicplayer.rc")
     if(WINDOWS_FONT_DIR)
       set(font_files "")

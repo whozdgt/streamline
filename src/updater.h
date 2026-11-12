@@ -9,8 +9,8 @@ class QNetworkReply;
 
 // Looks for a newer release on GitHub (once a day, or when asked) and can install it by running the
 // update script that setup put next to the program. Nothing is sent except the request itself.
-// On Android there is no script: every build is published as a small "latest.json" plus an APK, and installing means
-// downloading that APK and handing it to Android's installer.
+// On Android and Windows there is no script: every build is published as a small "latest.json" plus an APK or a setup
+// program, and installing means downloading that file and handing it to the system's installer.
 class UpdateChecker : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString current READ current CONSTANT)
@@ -53,8 +53,8 @@ signals:
 private:
     QString scriptPath() const;
     void setStatus(const QString &s);
-    void checkAndroid(bool manual);
-    void installAndroid();
+    void checkPublished(bool manual);
+    void installPublished();
     void launchInstaller();
 
     QNetworkAccessManager m_net;

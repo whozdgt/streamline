@@ -21,7 +21,7 @@ ColumnLayout {
         ToggleRow {
             available: !updater.store              // a Play Store or App Store build is updated by the store
             label: "Check for updates on start"
-            note: settings.mobile ? "Asks GitHub for a newer build, at most once an hour" : "Asks GitHub for the newest version, at most twice a day"
+            note: settings.mobile ? "Asks GitHub for a newer build, at most once an hour" : "Asks GitHub for a newer build, at most twice a day"
             keywords: "update upgrade github automatic"
             checked: settings.autoUpdateCheck
             onToggled: settings.autoUpdateCheck = !settings.autoUpdateCheck
@@ -57,12 +57,12 @@ ColumnLayout {
                     : "To update from inside the player, install it once with ./update.sh --here from the project folder."
             }
             Rectangle {
-                visible: updater.installing && settings.mobile
+                visible: updater.installing && (settings.mobile || Qt.platform.os === "windows")
                 Layout.fillWidth: true; Layout.preferredHeight: 4; color: Qt.rgba(root.pri.r, root.pri.g, root.pri.b, 0.2)
                 Rectangle { width: parent.width * updater.progress; height: parent.height; color: settings.accent }
             }
             Text {
-                visible: updater.installing && !settings.mobile
+                visible: updater.installing && !settings.mobile && Qt.platform.os !== "windows"
                 Layout.fillWidth: true; wrapMode: Text.Wrap; font.pixelSize: 12; lineHeight: 1.3; color: root.muted
                 text: "The new version is built on this computer at low priority, so music keeps playing. This can take a few minutes."
             }

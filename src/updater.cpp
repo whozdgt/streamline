@@ -34,7 +34,7 @@ UpdateChecker::UpdateChecker(QObject *parent) : QObject(parent), m_exe(QCoreAppl
 
 QString UpdateChecker::current() const
 {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN)
     return QStringLiteral(APP_VERSION " (build %1)").arg(PARAPLAY_BUILD);
 #else
     return QStringLiteral(APP_VERSION);
@@ -61,7 +61,7 @@ QString UpdateChecker::scriptPath() const
 // In-app installing works once the player was installed by update.sh (it puts the script in place).
 bool UpdateChecker::canInstall() const
 {
-#ifdef Q_OS_ANDROID
+#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN)
     return configured();
 #else
     return configured() && QFileInfo::exists(scriptPath());
@@ -92,8 +92,8 @@ void UpdateChecker::check(bool manual)
 {
     if (!configured()) { if (manual) setStatus(QStringLiteral("Updates aren't set up in this build yet.")); return; }
     if (m_checking || m_installing) return;
-#ifdef Q_OS_ANDROID
-    checkAndroid(manual);
+#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN)
+    checkPublished(manual);      // every build is published with a small latest.json: compare build numbers
     return;
 #endif
     m_checking = true;
@@ -130,8 +130,8 @@ void UpdateChecker::check(bool manual)
 
 void UpdateChecker::install()
 {
-#ifdef Q_OS_ANDROID
-    installAndroid();
+#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN)
+    installPublished();
     return;
 #endif
 #if QT_CONFIG(process)      // iPhones can't run other programs (and have no updater anyway)
@@ -185,18 +185,31 @@ void UpdateChecker::restart()
 
 void UpdateChecker::openReleasePage() const
 {
+#ifdef Q_OS_WIN
+    QDesktopServices::openUrl(QUrl(QStringLiteral("https://github.com/%1/releases/tag/windows-latest").arg(QLatin1String(kUpdateRepo))));
+    return;
+#endif
     if (!m_page.isEmpty()) QDesktopServices::openUrl(QUrl(m_page));
 }
 
-// ---- Android: download the newest APK and hand it to Android's installer ----
+// ---- Android and Windows: download the newest build and hand it to the system's installer ----
+// Every build CI publishes goes to a rolling pre-release ("android-latest", "windows-latest") together with a
+// latest.json naming its build number and the file's SHA-256.
 
 namespace {
-const char *kLatestBase = "https://github.com/%1/releases/download/android-latest/%2";
+const char *kLatestBase = "https://github.com/%1/releases/download/%2/%3";
+#ifdef Q_OS_WIN
+const char *kChannel = "windows-latest";
+const char *kPackage = "Streamline-Setup.exe";
+#else
+const char *kChannel = "android-latest";
+const char *kPackage = "Paraplay-android.apk";
+#endif
 
-QNetworkRequest androidRequest(const QString &file)
+QNetworkRequest latestRequest(const QString &file)
 {
-    QNetworkRequest rq(QUrl(QString::fromLatin1(kLatestBase).arg(QLatin1String(kUpdateRepo), file)));
-    rq.setHeader(QNetworkRequest::UserAgentHeader, "paraplay");
+    QNetworkRequest rq(QUrl(QString::fromLatin1(kLatestBase).arg(QLatin1String(kUpdateRepo), QLatin1String(kChannel), file)));
+    rq.setHeader(QNetworkRequest::UserAgentHeader, "streamline");
     rq.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);   // GitHub hands files off to another host
     rq.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
     return rq;
@@ -212,12 +225,12 @@ QString fileSha256(const QString &path)
 }
 } // namespace
 
-void UpdateChecker::checkAndroid(bool manual)
+void UpdateChecker::checkPublished(bool manual)
 {
     m_checking = true;
     if (manual) setStatus(QStringLiteral("Checking…"));
     else emit changed();
-    QNetworkRequest rq = androidRequest(QStringLiteral("latest.json"));
+    QNetworkRequest rq = latestRequest(QStringLiteral("latest.json"));
     rq.setTransferTimeout(15000);
     QNetworkReply *r = m_net.get(rq);
     connect(r, &QNetworkReply::finished, this, [this, r, manual]() {
@@ -243,19 +256,21 @@ void UpdateChecker::checkAndroid(bool manual)
     });
 }
 
-void UpdateChecker::installAndroid()
+void UpdateChecker::installPublished()
 {
-#if defined(Q_OS_ANDROID) && !defined(PARAPLAY_STORE)
+#if (defined(Q_OS_ANDROID) && !defined(PARAPLAY_STORE)) || defined(Q_OS_WIN)
     if (!m_available || m_installing) return;
+#ifdef Q_OS_ANDROID
     if (!android::canInstallApks()) {
         // Android asks once, per app, before an app may install other apps (including itself).
         android::askInstallApks();
         setStatus(QStringLiteral("Android needs your OK first. Switch on “Allow from this source”, go Back, then tap Update now again."));
         return;
     }
+#endif
     const QString dir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + QStringLiteral("/update");
     QDir().mkpath(dir);
-    m_apkPath = dir + QStringLiteral("/Paraplay-update.apk");
+    m_apkPath = dir + QLatin1Char('/') + QLatin1String(kPackage);
     m_progress = 0;
     // A finished download from an earlier try (installer cancelled) can be reused.
     if (!m_sha.isEmpty() && QFileInfo::exists(m_apkPath) && fileSha256(m_apkPath).compare(m_sha, Qt::CaseInsensitive) == 0) {
@@ -266,12 +281,12 @@ void UpdateChecker::installAndroid()
     auto *file = new QFile(m_apkPath, this);
     if (!file->open(QIODevice::WriteOnly)) {
         delete file;
-        setStatus(QStringLiteral("Couldn't save the update on this phone."));
+        setStatus(QStringLiteral("Couldn't save the update on this device."));
         return;
     }
     m_installing = true;
     setStatus(QStringLiteral("Downloading… 0%"));
-    QNetworkReply *r = m_net.get(androidRequest(QStringLiteral("Paraplay-android.apk")));
+    QNetworkReply *r = m_net.get(latestRequest(QLatin1String(kPackage)));
     m_download = r;
     connect(r, &QNetworkReply::readyRead, this, [r, file]() { file->write(r->readAll()); });
     connect(r, &QNetworkReply::downloadProgress, this, [this](qint64 got, qint64 total) {
@@ -307,8 +322,20 @@ void UpdateChecker::launchInstaller()
 {
 #if defined(Q_OS_ANDROID) && !defined(PARAPLAY_STORE)
     if (android::installApk(m_apkPath))
-        setStatus(QStringLiteral("Tap Install in the Android prompt. If it says the app conflicts with the existing one, uninstall Paraplay once and install the update by hand."));
+        setStatus(QStringLiteral("Tap Install in the Android prompt. If it says the app conflicts with the existing one, uninstall the app once and install the update by hand."));
     else
         setStatus(QStringLiteral("Couldn't open Android's installer."));
+#elif defined(Q_OS_WIN) && QT_CONFIG(process)
+    // The installer runs on its own (no questions), replaces this copy, then opens the new one.
+    // Streamline closes first so its files can be replaced.
+    const QStringList args{QStringLiteral("/SILENT"), QStringLiteral("/SUPPRESSMSGBOXES"), QStringLiteral("/NORESTART"),
+                           QStringLiteral("/CLOSEAPPLICATIONS")};
+    if (!QProcess::startDetached(m_apkPath, args)) {
+        setStatus(QStringLiteral("Couldn't start the installer. Open the release page and run Streamline-Setup.exe by hand."));
+        return;
+    }
+    m_installing = true;
+    setStatus(QStringLiteral("Installing the update. Streamline will close and open again by itself."));
+    QTimer::singleShot(1200, qApp, []() { QCoreApplication::quit(); });
 #endif
 }

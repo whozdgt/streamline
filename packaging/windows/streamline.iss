@@ -47,3 +47,5 @@ Name: "{autodesktop}\Streamline"; Filename: "{app}\musicplayer.exe"; Tasks: desk
 
 [Run]
 Filename: "{app}\musicplayer.exe"; Description: "Start Streamline"; Flags: nowait postinstall skipifsilent
+; an update from inside the app runs this installer silently: open the new version when it is done
+Filename: "{app}\musicplayer.exe"; Flags: nowait skipifnotsilent

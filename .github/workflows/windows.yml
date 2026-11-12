@@ -57,7 +57,7 @@ jobs:
         run: |
           set +e
           {
-            cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DWINDOWS_FONT_DIR="$PWD/fonts" &&
+            cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DWINDOWS_FONT_DIR="$PWD/fonts" -DWINDOWS_BUILD=${{ github.run_number }} &&
             cmake --build build -j"$(nproc)"
           } 2>&1 | tee build.log
           rc=${PIPESTATUS[0]}

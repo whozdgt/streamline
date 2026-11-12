@@ -1,3 +1,9 @@
+# Streamline 0.2.1: updates that install themselves on Windows
+- **Settings › About › Check now works on Windows.** It used to ask GitHub for a kind of release Streamline doesn't publish, so it always failed. It now reads the newest Windows build directly.
+- **Update now** downloads the new installer, checks it isn't damaged, installs it without any questions, and opens Streamline again. Your settings, flashcards and to-dos stay.
+- The version in About now shows its build number, e.g. "0.2.1 (build 4)".
+- Copies installed before this version can't update themselves: install this one by hand once, and later updates work from inside the app.
+
 # Streamline 0.2: to-dos from Dayline
 - **To-dos** (sidebar, under Study; the To-dos tab on a phone): add a to-do and press Enter, tick it off with the circle, tap the rest of the row to edit it. Each to-do can have notes, a due date, a colour, "In progress" and a flag.
 - Filters: All, Today, In progress, Overdue, Flagged. Search, and sort by newest, due date, flagged, colour or A to Z. Finished to-dos gather under Done, and "Clear done" removes them.
