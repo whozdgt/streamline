@@ -60,7 +60,7 @@ Rectangle {
             for (const s of l) if (layout.isOn(s)) on++
             return on + " of " + l.length + " sections shown"
         }
-        return (settings.mobile ? "Paraplay " : "Music ") + updater.current + (updater.store ? "" : " · updates " + (settings.autoUpdateCheck ? "on start" : "off"))
+        return "Streamline " + updater.current + (updater.store ? "" : " · updates " + (settings.autoUpdateCheck ? "on start" : "off"))
     }
 
     // Open a section from outside (the "Update available" chip in the menu).

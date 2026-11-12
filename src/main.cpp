@@ -21,6 +21,7 @@
 #include "account.h"
 #include "artistimages.h"
 #include "cover.h"
+#include "flashcards.h"
 #include "folders.h"
 #include "library.h"
 #include "player.h"
@@ -58,9 +59,9 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
     std::setlocale(LC_NUMERIC, "C");              // libmpv requires this, otherwise mpv_create() fails
-    QGuiApplication::setApplicationName("musicplayer");
+    QGuiApplication::setApplicationName("streamline");
     QGuiApplication::setApplicationVersion(QStringLiteral(APP_VERSION));
-    QGuiApplication::setOrganizationName("musicplayer");
+    QGuiApplication::setOrganizationName("streamline");
     QGuiApplication::setDesktopFileName("musicplayer");   // Wayland app_id / window class
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN)
@@ -231,6 +232,7 @@ int main(int argc, char *argv[])
     PlayStats stats(&player, &library);
     social.setServerName([&](const QString &p) { return servers.serverNameFor(p); });
     UpdateChecker updater;
+    Flashcards flashcards;
     player.setRemote({
         [&](const QString &p) { return servers.streamUrl(p); },
         [&](const QString &p) { return servers.allowsSelfSigned(p); },
@@ -266,6 +268,7 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("stats", &stats);
     ctx->setContextProperty("folders", &folders);
     ctx->setContextProperty("updater", &updater);
+    ctx->setContextProperty("flashcards", &flashcards);
     SafeArea safeArea;
     ctx->setContextProperty("safeArea", &safeArea);
     engine.loadFromModule("Music", "Main");

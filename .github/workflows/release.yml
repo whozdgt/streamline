@@ -35,4 +35,4 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" --title "Music ${GITHUB_REF_NAME}" --notes-file notes.md --verify-tag
+          gh release create "$GITHUB_REF_NAME" --title "Streamline ${GITHUB_REF_NAME}" --notes-file notes.md --verify-tag

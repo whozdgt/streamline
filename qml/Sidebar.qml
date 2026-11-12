@@ -71,6 +71,29 @@ Rectangle {
             NavItem { width: parent.width; sub: true; text: "Artists"; active: root.view === "artists"; onClicked: root.select("artists") }
             NavItem { width: parent.width; sub: true; text: "Playlists"; active: root.view === "playlists"; onClicked: root.select("playlists") }
             Text {
+                text: "STUDY"
+                font.pixelSize: 11
+                font.letterSpacing: 1
+                color: Qt.rgba(root.pri.r, root.pri.g, root.pri.b, 0.72)
+                leftPadding: 12
+                topPadding: 22
+                bottomPadding: 6
+            }
+            NavItem {
+                width: parent.width; text: "Flashcards"
+                active: root.view === "flashcards"
+                onClicked: root.select("flashcards")
+                Rectangle {      // cards waiting to be studied today
+                    readonly property int todo: { flashcards.revision; return flashcards.todoTotal() }
+                    visible: todo > 0
+                    anchors { right: parent.right; rightMargin: 12; verticalCenter: parent.verticalCenter }
+                    width: Math.max(18, todoText.implicitWidth + 10); height: 18
+                    radius: settings.round ? 9 : 0
+                    color: settings.accent
+                    Text { id: todoText; anchors.centerIn: parent; text: parent.todo; font.pixelSize: 11; color: settings.onInk }
+                }
+            }
+            Text {
                 text: "SOURCES"
                 font.pixelSize: 11
                 font.letterSpacing: 1

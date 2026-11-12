@@ -9,7 +9,7 @@ Window {
     minimumWidth: android ? 0 : 860
     minimumHeight: android ? 0 : 520
     visible: true
-    title: "Music"
+    title: "Streamline"
     color: opaque || settings.round ? settings.ground : "transparent"     // phones and Windows can't blur what is behind the window
 
     readonly property bool android: settings.mobile
@@ -49,7 +49,7 @@ Window {
     property string promptPath: ""
     property string currentPlaylist: ""
     onSearchOpenChanged: { if (searchOpen) searchBar.open(); else library.search = "" }
-    property string view: "home"           // home | library | songs | albums | artists | playlists | profile | friends | user | friendpl
+    property string view: "home"           // home | library | songs | albums | artists | playlists | profile | friends | user | friendpl | flashcards
     property string backView: ""
     property string userBack: "home"        // where "back" goes from someone's profile
     property string profileMode: "edit"     // edit | preview (your own profile page)
@@ -87,6 +87,7 @@ Window {
         if (view === "user" || view === "friendpl") { back(); return true }
         if (library.filterKind !== "") { navigate(backView || "home"); return true }
         if (phone && (view === "songs" || view === "albums" || view === "artists" || view === "playlists")) { navigate("library"); return true }
+        if (view === "flashcards" && flashcardsPage.goBack()) return true
         if (view !== "home") { navigate("home"); return true }
         return false
     }
@@ -114,9 +115,10 @@ Window {
     }
     // Phones: which tab is lit, and what tapping one does
     readonly property string currentTab: searchOpen ? "search"
-        : (view === "home" ? "home" : (view === "friends" || view === "user" || view === "friendpl") ? "friends" : "library")
+        : (view === "home" ? "home" : view === "flashcards" ? "study" : (view === "friends" || view === "user" || view === "friendpl") ? "friends" : "library")
     function openTab(k) {
         if (k === "search") { navigate("songs"); searchOpen = true; return }
+        if (k === "study") { navigate("flashcards"); return }
         navigate(k)
     }
     readonly property bool albumHeader: settings.round && view === "songs" && library.filterKind !== ""     // Midnight's album/artist/playlist page
@@ -259,7 +261,7 @@ Window {
                 onSourceSelected: (id) => {
                     win.drawerOpen = false
                     library.source = id
-                    if (win.view === "profile" || win.view === "playlists" || win.view === "friends" || win.view === "user" || win.view === "friendpl") win.navigate("songs")
+                    if (win.view === "profile" || win.view === "playlists" || win.view === "friends" || win.view === "user" || win.view === "friendpl" || win.view === "flashcards") win.navigate("songs")
                 }
                 onAddServerRequested: { win.drawerOpen = false; win.addServerOpen = true }
                 onUpdateClicked: { win.drawerOpen = false; settingsPanel.show("about"); win.settingsOpen = true }
@@ -282,6 +284,7 @@ Window {
                             : win.view === "friendpl" ? "‹ " + (social.playlist.name || "Playlist")
                             : library.filterKind !== "" ? "‹ " + library.filterName
                             : win.view === "library" ? "Library"
+                            : win.view === "flashcards" ? "Flashcards"
                             : (win.view === "albums" ? "Albums" : win.view === "artists" ? "Artists" : win.view === "playlists" ? "Playlists" : win.view === "profile" ? "Profile" : "Songs")
                         font.pixelSize: win.phone ? (topLevel ? 32 : 24) : (settings.round ? 34 : 28)
                         font.weight: settings.round ? Font.Black : Font.DemiBold
@@ -490,6 +493,14 @@ Window {
                 FriendPlaylist {
                     visible: win.view === "friendpl"
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop; bottomMargin: win.dockSpace }
+                }
+                FlashcardsPage {
+                    id: flashcardsPage
+                    visible: win.view === "flashcards"
+                    gutter: win.gutter
+                    bottomMargin: win.dockSpace
+                    onContentYChanged: win.noteScroll(contentY)
+                    anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                 }
                 SongList {
                     visible: win.view === "songs"
@@ -717,7 +728,7 @@ Window {
 
         IconButton {
             z: 10
-            visible: !win.phone && !win.settingsOpen && win.view !== "friends" && win.view !== "user" && win.view !== "friendpl"
+            visible: !win.phone && !win.settingsOpen && win.view !== "friends" && win.view !== "user" && win.view !== "friendpl" && win.view !== "flashcards"
             anchors { right: parent.right; rightMargin: 76; top: parent.top; topMargin: 18 }
             filled: true
             name: "search"; box: 44; iconSize: 22
@@ -883,10 +894,10 @@ Window {
         }
     }
 
-    Shortcut { sequence: "Space"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen; onActivated: player.toggle() }
+    Shortcut { sequence: "Space"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || win.view !== "flashcards"); onActivated: player.toggle() }
     Shortcut { sequence: "Left"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || win.view === "songs"); onActivated: player.seek(player.position - 5) }
     Shortcut { sequence: "Right"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || win.view === "songs"); onActivated: player.seek(player.position + 5) }
-    Shortcut { sequence: "N"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen; onActivated: player.next() }
-    Shortcut { sequence: "P"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen; onActivated: player.prev() }
-    Shortcut { sequence: "Escape"; onActivated: { if (folderPicker.visible) folderPicker.visible = false; else if (win.addServerOpen) win.addServerOpen = false; else if (win.authOpen) win.authOpen = false; else if (imagePopup.visible) imagePopup.visible = false; else if (prompt.visible) prompt.visible = false; else if (win.menuPath !== "") win.menuPath = ""; else if (win.sourceOpen) win.sourceOpen = false; else if (win.searchOpen) win.searchOpen = false; else if (win.settingsOpen) { if (!settingsPanel.goBack()) win.settingsOpen = false } else if (!win.expanded && (win.view === "user" || win.view === "friendpl")) win.back(); else win.expanded = false } }
+    Shortcut { sequence: "N"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || win.view !== "flashcards"); onActivated: player.next() }
+    Shortcut { sequence: "P"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || win.view !== "flashcards"); onActivated: player.prev() }
+    Shortcut { sequence: "Escape"; onActivated: { if (folderPicker.visible) folderPicker.visible = false; else if (win.addServerOpen) win.addServerOpen = false; else if (win.authOpen) win.authOpen = false; else if (imagePopup.visible) imagePopup.visible = false; else if (prompt.visible) prompt.visible = false; else if (win.menuPath !== "") win.menuPath = ""; else if (win.sourceOpen) win.sourceOpen = false; else if (win.searchOpen) win.searchOpen = false; else if (win.settingsOpen) { if (!settingsPanel.goBack()) win.settingsOpen = false } else if (!win.expanded && (win.view === "user" || win.view === "friendpl")) win.back(); else if (!win.expanded && win.view === "flashcards") flashcardsPage.goBack(); else win.expanded = false } }
 }

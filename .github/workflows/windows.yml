@@ -93,7 +93,7 @@ jobs:
           # https streams from your own server are checked against this list of authorities
           curl -fsSL https://curl.se/ca/cacert.pem -o dist/ca-bundle.crt || echo "no CA bundle"
           cp LICENSE dist/LICENSE.txt
-          printf 'Paraplay is MIT licensed. This Windows build also contains mpv/FFmpeg (GPL), Qt (LGPL) and TagLib (LGPL).\nSource: https://github.com/whozdgt/Paraplay and the MSYS2 packages mingw-w64-ucrt-x86_64-{mpv,ffmpeg,qt6-base,taglib}.\n' > dist/THIRD-PARTY.txt
+          printf 'Streamline is MIT licensed. This Windows build also contains mpv/FFmpeg (GPL), Qt (LGPL) and TagLib (LGPL).\nSource: https://github.com/whozdgt/Streamline and the MSYS2 packages mingw-w64-ucrt-x86_64-{mpv,ffmpeg,qt6-base,taglib}.\n' > dist/THIRD-PARTY.txt
           echo "files: $(find dist -type f | wc -l), size: $(du -sh dist | cut -f1)" | tee -a deploy.log
           ls dist | head -80
 
@@ -120,26 +120,26 @@ jobs:
         run: |
           ver="$(sed -n 's/^project(musicplayer VERSION \([0-9.]*\).*/\1/p' CMakeLists.txt)"
           echo "VER=$ver" >> "$GITHUB_ENV"
-          mv dist Paraplay
-          zip -qr "Paraplay-${ver}-windows-x64.zip" Paraplay
-          mv Paraplay dist
-          ls -l Paraplay-*.zip
+          mv dist Streamline
+          zip -qr "Streamline-${ver}-windows-x64.zip" Streamline
+          mv Streamline dist
+          ls -l Streamline-*.zip
 
       - name: Installer
         shell: pwsh
         run: |
           choco install innosetup -y --no-progress | Out-Null
           $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
-          & $iscc "/DAppVersion=${env:VER}" "/DDistDir=$PWD\dist" "/DOutDir=$PWD" "packaging\windows\paraplay.iss"
+          & $iscc "/DAppVersion=${env:VER}" "/DDistDir=$PWD\dist" "/DOutDir=$PWD" "packaging\windows\streamline.iss"
           if ($LASTEXITCODE -ne 0) { Write-Host "::error title=installer::Inno Setup failed"; exit 1 }
-          Get-ChildItem Paraplay-Setup.exe
+          Get-ChildItem Streamline-Setup.exe
 
       - uses: actions/upload-artifact@v4
         with:
-          name: Paraplay-windows
+          name: Streamline-windows
           path: |
-            Paraplay-Setup.exe
-            Paraplay-*-windows-x64.zip
+            Streamline-Setup.exe
+            Streamline-*-windows-x64.zip
           retention-days: 14
 
       - name: Attach to the release
@@ -155,7 +155,7 @@ jobs:
             if ($LASTEXITCODE -eq 0) { break }
             Start-Sleep -Seconds 10
           }
-          $out = gh release upload $env:GITHUB_REF_NAME Paraplay-Setup.exe "Paraplay-$ver-windows-x64.zip" --clobber 2>&1
+          $out = gh release upload $env:GITHUB_REF_NAME Streamline-Setup.exe "Streamline-$ver-windows-x64.zip" --clobber 2>&1
           if ($LASTEXITCODE -ne 0) { Write-Host "::error title=attach failed::$($out -join '%0A')"; exit 1 }
 
       # The rolling "windows-latest" pre-release (a pre-release never counts as the desktop's "latest release").
@@ -167,7 +167,7 @@ jobs:
           RUN: ${{ github.run_number }}
         run: |
           $ver = (Select-String -Path CMakeLists.txt -Pattern '^project\(musicplayer VERSION ([0-9.]+)').Matches[0].Groups[1].Value
-          $sha = (Get-FileHash Paraplay-Setup.exe -Algorithm SHA256).Hash.ToLower()
+          $sha = (Get-FileHash Streamline-Setup.exe -Algorithm SHA256).Hash.ToLower()
           # a slower, older run must not replace a newer build
           $cur = 0
           try {
@@ -178,7 +178,7 @@ jobs:
           @{ build = [int]$env:RUN; version = $ver; sha256 = $sha } | ConvertTo-Json | Set-Content -Encoding utf8 latest.json
           Get-Content latest.json
           gh release delete windows-latest --cleanup-tag --yes *> $null
-          $notes = "Build $($env:RUN) (version $ver). Download Paraplay-Setup.exe and run it, or unzip the portable zip anywhere. Windows may say the publisher is unknown the first time: choose More info, then Run anyway."
-          $out = gh release create windows-latest Paraplay-Setup.exe "Paraplay-$ver-windows-x64.zip" latest.json --prerelease --target $env:GITHUB_SHA --title "Paraplay for Windows: newest build" --notes $notes 2>&1
+          $notes = "Build $($env:RUN) (version $ver). Download Streamline-Setup.exe and run it, or unzip the portable zip anywhere. Windows may say the publisher is unknown the first time: choose More info, then Run anyway."
+          $out = gh release create windows-latest Streamline-Setup.exe "Streamline-$ver-windows-x64.zip" latest.json --prerelease --target $env:GITHUB_SHA --title "Streamline for Windows: newest build" --notes $notes 2>&1
           if ($LASTEXITCODE -ne 0) { Write-Host "::error title=publish failed::$($out -join '%0A')"; exit 1 }
           Write-Host ($out -join "`n")

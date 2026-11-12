@@ -16,7 +16,7 @@ ColumnLayout {
         ValueRow {
             label: "Version"
             keywords: "about version build release"
-            value: (settings.mobile ? "Paraplay " : "Music ") + updater.current
+            value: "Streamline " + updater.current
         }
         ToggleRow {
             available: !updater.store              // a Play Store or App Store build is updated by the store

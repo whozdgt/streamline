@@ -1,11 +1,11 @@
 import QtQuick
 
-// Phones: the bar along the bottom. A mini player floats above four tabs (Home, Library, Friends, Search).
+// Phones: the bar along the bottom. A mini player floats above five tabs (Home, Library, Friends, Study, Search).
 // Scrolling down tucks the tabs away: what is left is one button for the page you are on, the mini player and Search.
 Item {
     id: root
     property bool collapsed: false
-    property string current: "home"           // home | library | friends | search
+    property string current: "home"           // home | library | friends | study | search
     signal tab(string k)
     signal expandPlayer()
     signal untuck()                            // bring the tabs back
@@ -17,6 +17,7 @@ Item {
         { k: "home", t: "Home", icon: "home", on: "homefill" },
         { k: "library", t: "Library", icon: "library", on: "library" },
         { k: "friends", t: "Friends", icon: "friends", on: "friends" },
+        { k: "study", t: "Study", icon: "cards", on: "cards" },
         { k: "search", t: "Search", icon: "search", on: "search" }
     ]
     readonly property var easing: [0.2, 0, 0, 1, 1, 1]
@@ -24,7 +25,7 @@ Item {
     height: tucked ? 64 : fullHeight
     Behavior on height { NumberAnimation { duration: 260; easing.type: Easing.BezierSpline; easing.bezierCurve: root.easing } }
 
-    // ---- the four tabs ----
+    // ---- the tabs ----
     Rectangle {
         id: tabBar
         anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
@@ -48,7 +49,7 @@ Item {
                     id: tabItem
                     required property var modelData
                     readonly property bool on: root.current === modelData.k
-                    width: (tabBar.width - 10 - 6) / 4
+                    width: (tabBar.width - 10 - 2 * (root.tabs.length - 1)) / root.tabs.length
                     height: 54
                     radius: settings.round ? 27 : 0
                     color: on ? (settings.round ? Qt.rgba(1, 1, 1, 0.13) : settings.hiSel) : "transparent"
@@ -93,7 +94,7 @@ Item {
             anchors.centerIn: parent
             size: 26
             color: settings.ink
-            name: root.current === "home" ? "homefill" : root.current === "friends" ? "friends" : "library"
+            name: root.current === "home" ? "homefill" : root.current === "friends" ? "friends" : root.current === "study" ? "cards" : "library"
         }
         MouseArea { anchors.fill: parent; onClicked: root.untuck() }
     }

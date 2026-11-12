@@ -1,3 +1,12 @@
+# Streamline 0.1: the music player gains flashcards
+- **Streamline** is a new app built on Paraplay's code: the same music player, with study tools being added beside it. It keeps its own settings and data, so it can sit next to Paraplay on the same computer.
+- **Flashcards** (sidebar, under Study; the Study tab on a phone): make a deck for each module, add cards, and study what is due. Rate each card Again, Hard, Good or Easy: hard cards come back sooner, easy ones are spaced further apart. "Practise all cards" goes through a whole deck whatever is due.
+- Keys while studying: Space shows the answer (and then counts as Good), 1 to 4 rate the card. Ctrl+Enter adds a card.
+- **Import many:** one card per line as `question ; answer`, or two columns pasted from a spreadsheet. **Copy all cards** puts a deck on the clipboard as a backup.
+- Decks are saved on this device (`flashcards.json` in the app's data folder). Syncing them through your account is planned.
+- Windows only for now: the Android and iPhone builds are switched off until Streamline has its own app IDs there.
+- Not yet: to-dos and the calendar (from Dayline), syncing flashcards, installing updates from inside the app on Windows.
+
 # Store builds: Google Play bundle and a first iPhone build
 - **Google Play:** the Android workflow now also builds a signed App Bundle (`.aab`) for Play. That build has no self-updater and doesn't ask to install apps, because Play only allows updates through Play. CI checks it with Google's bundletool (target API 36, no install permission, 16 KB-aligned native code). Download it from the run's artifacts.
 - **Android 16:** the app now targets API 36 and is built with Qt 6.10. Android draws apps edge to edge now, so the app keeps clear of the status bar and gesture bar, and their icons turn dark or light to suit your background colour. Back still steps back instead of closing the app.

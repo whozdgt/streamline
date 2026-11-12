@@ -1,3 +1,20 @@
+# Streamline
+
+A study app that brings three projects into one native program: the Paraplay music player, flashcards with spaced repetition (from Flashback), and, still to come, to-dos and a calendar (from Dayline). C++ and QML on Qt 6.
+
+What works today:
+
+- **Music:** everything Paraplay does (see below).
+- **Flashcards:** decks, spaced-repetition study, bulk import, clipboard export. Saved on this device.
+
+Planned next: to-dos and calendar, syncing study data through the existing account, and one-click updates on Windows.
+
+Windows builds come from the `windows` workflow: every push to `main` publishes `Streamline-Setup.exe` under the `windows-latest` release. The Android and iPhone workflows from Paraplay are not carried over yet.
+
+The rest of this file is Paraplay's own guide to the music player. The program is still called `musicplayer` internally.
+
+---
+
 <img src="packaging/icon-512.png" width="96" alt="Paraplay icon">
 
 # Music: a lightweight FLAC / Hi-Res player (Qt Quick + libmpv)
