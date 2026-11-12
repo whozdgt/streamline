@@ -1,0 +1,103 @@
+name: build
+
+# Compiles the player on every push and pull request, so a mistake shows up here before it reaches anyone.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write      # to publish the interface screenshots as a pre-release
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    container: archlinux:latest      # the same kind of system the player is made for (CachyOS / Arch)
+    steps:
+      - name: Install build tools
+        run: |
+          pm="pacman"
+          # containers sometimes lack the kernel feature pacman's sandbox needs
+          pacman --help 2>&1 | grep -q -- --disable-sandbox && pm="pacman --disable-sandbox"
+          $pm -Syu --noconfirm --needed base-devel cmake ninja git pkgconf \
+            qt6-base qt6-declarative qt6-svg qt6-shadertools qt6-wayland mpv taglib
+
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build -j"$(nproc)"
+
+      - name: Starts and exits (no display needed)
+        run: QT_QPA_PLATFORM=offscreen ./build/musicplayer --version
+
+      - name: Interface loads
+        continue-on-error: true      # a hint only: it can't test everything without a screen or a sound card
+        run: |
+          QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software timeout 8 ./build/musicplayer --music /tmp 2>&1 | tee ui.log || true
+          pattern="(qrc:|qml).*(error|Error|is not a type|Cannot assign|ReferenceError|TypeError|Unable to assign|binding loop)"
+          if grep -E "$pattern" ui.log; then
+            # the first few lines also go into the run's annotations, so they can be read without opening the log
+            grep -E "$pattern" ui.log | head -12 | while IFS= read -r line; do echo "::warning::${line}"; done
+            echo "::warning::The interface printed errors while loading (see log)"
+            exit 1
+          fi
+
+      # Pictures of the interface, made in a virtual screen with a small made-up library. A hint for reviewing changes,
+      # never a reason to fail the build. Open the run and download "screenshots" under Artifacts.
+      - name: Screenshots
+        continue-on-error: true
+        run: |
+          pm="pacman"
+          pacman --help 2>&1 | grep -q -- --disable-sandbox && pm="pacman --disable-sandbox"
+          $pm -S --noconfirm --needed xorg-server-xvfb mesa ffmpeg ttf-jetbrains-mono > /dev/null
+          bash .github/scripts/demo-music.sh /tmp/music > /dev/null
+          mkdir -p shots
+          shot() {      # shot <name> <WxH> [options…]
+            local name="$1" size="$2"; shift 2
+            QT_QPA_PLATFORM=xcb timeout 40 xvfb-run -a -s "-screen 0 1600x1000x24" \
+              ./build/musicplayer --music /tmp/music --size "$size" --screenshot "shots/$name.png" "$@" > "shots/$name.log" 2>&1 || true
+            ls -l "shots/$name.png" 2>/dev/null || { echo "::warning::no screenshot for $name"; tail -5 "shots/$name.log"; }
+          }
+          shot phone-home 390x844 --mobile
+          shot phone-albums 390x844 --mobile --set startView=albums
+          shot phone-songs 390x844 --mobile --set startView=songs
+          shot phone-settings-look 390x844 --mobile --set startSettings=look
+          shot phone-player 390x844 --mobile --set startPlay=true --set startExpanded=true
+          shot phone-library 390x844 --mobile --set startView=library
+          shot phone-album 390x844 --mobile --set "startAlbum=Night Drive"
+          shot phone-playing 390x844 --mobile --set startPlay=true --set startView=library
+          shot phone-classic 390x844 --mobile --set theme=classic
+          shot desktop-home 1280x800
+          shot desktop-songs 1280x800 --set startView=songs
+          shot desktop-settings 1280x800 --set startSettings=look
+          shot desktop-classic 1280x800 --set theme=classic --set startView=songs
+          grep -h -E "(qrc:|qml).*(rror|is not a type|ReferenceError|TypeError|Cannot assign|Unable to assign)" shots/*.log | sort -u | head -20 || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots
+          path: shots/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      # The same pictures as a rolling pre-release, "ui-screenshots", so they can be fetched without signing in.
+      - name: Publish the screenshots
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pm="pacman"
+          pacman --help 2>&1 | grep -q -- --disable-sandbox && pm="pacman --disable-sandbox"
+          $pm -S --noconfirm --needed github-cli zip > /dev/null
+          ls shots/*.png > /dev/null 2>&1 || { echo "no screenshots"; exit 0; }
+          (cd shots && zip -q ../screenshots.zip ./*.png ./*.log)
+          gh release delete ui-screenshots --cleanup-tag --yes -R "$GITHUB_REPOSITORY" || true
+          gh release create ui-screenshots screenshots.zip -R "$GITHUB_REPOSITORY" --prerelease --target "$GITHUB_SHA" \
+            --title "Interface screenshots (made by CI)" --notes "Pictures of the interface for ${GITHUB_SHA}. Not a release."
+
