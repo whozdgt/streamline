@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(musicplayer VERSION 0.1.0 LANGUAGES CXX)
+project(musicplayer VERSION 0.2.0 LANGUAGES CXX)
 
 if(WIN32)
   enable_language(RC)      # the program's icon and version information
@@ -61,7 +61,7 @@ qt_add_executable(musicplayer
   src/servers.cpp src/servers.h src/updater.cpp src/updater.h src/update_config.h
   src/social.cpp src/social.h src/folders.cpp src/folders.h
   src/playstats.cpp src/playstats.h src/safearea.h
-  src/flashcards.cpp src/flashcards.h)
+  src/flashcards.cpp src/flashcards.h src/todos.cpp src/todos.h)
 
 target_compile_definitions(musicplayer PRIVATE APP_VERSION="${PROJECT_VERSION}")
 if(PARAPLAY_STORE)
@@ -87,7 +87,7 @@ qt_add_qml_module(musicplayer
     qml/FolderPicker.qml qml/GalleryPicker.qml qml/LyricsView.qml qml/Welcome.qml
     qml/HomeLayout.qml qml/HomePage.qml qml/HomeHeading.qml qml/HomePerson.qml qml/HomeFriends.qml
     qml/HomeRequests.qml qml/HomeTop.qml qml/HomeStrip.qml qml/HomeSongs.qml
-    qml/FlashcardsPage.qml qml/TextBox.qml)
+    qml/FlashcardsPage.qml qml/TextBox.qml qml/TodosPage.qml)
 
 target_link_libraries(musicplayer PRIVATE
   Qt6::Core Qt6::Gui Qt6::Qml Qt6::Quick Qt6::Concurrent Qt6::Network)

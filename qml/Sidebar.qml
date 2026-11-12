@@ -93,6 +93,20 @@ Rectangle {
                     Text { id: todoText; anchors.centerIn: parent; text: parent.todo; font.pixelSize: 11; color: settings.onInk }
                 }
             }
+            NavItem {
+                width: parent.width; text: "To-dos"
+                active: root.view === "todos"
+                onClicked: root.select("todos")
+                Rectangle {      // to-dos due today or overdue
+                    readonly property int due: { todos.revision; return todos.attention() }
+                    visible: due > 0
+                    anchors { right: parent.right; rightMargin: 12; verticalCenter: parent.verticalCenter }
+                    width: Math.max(18, dueText.implicitWidth + 10); height: 18
+                    radius: settings.round ? 9 : 0
+                    color: settings.accent
+                    Text { id: dueText; anchors.centerIn: parent; text: parent.due; font.pixelSize: 11; color: settings.onInk }
+                }
+            }
             Text {
                 text: "SOURCES"
                 font.pixelSize: 11

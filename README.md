@@ -6,8 +6,9 @@ What works today:
 
 - **Music:** everything Paraplay does (see below).
 - **Flashcards:** decks, spaced-repetition study, bulk import, clipboard export. Saved on this device.
+- **To-dos:** Dayline's to-do list. Signed in, it syncs with Dayline through the same account.
 
-Planned next: to-dos and calendar, syncing study data through the existing account, and one-click updates on Windows.
+Planned next: the calendar, syncing flashcards through the account, and one-click updates on Windows.
 
 Windows builds come from the `windows` workflow: every push to `main` publishes `Streamline-Setup.exe` under the `windows-latest` release. The Android and iPhone workflows from Paraplay are not carried over yet.
 

@@ -1,3 +1,11 @@
+# Streamline 0.2: to-dos from Dayline
+- **To-dos** (sidebar, under Study; the To-dos tab on a phone): add a to-do and press Enter, tick it off with the circle, tap the rest of the row to edit it. Each to-do can have notes, a due date, a colour, "In progress" and a flag.
+- Filters: All, Today, In progress, Overdue, Flagged. Search, and sort by newest, due date, flagged, colour or A to Z. Finished to-dos gather under Done, and "Clear done" removes them.
+- **Shared with Dayline:** signed in, the list syncs through your account with the same records Dayline uses, so a to-do added on your phone in Dayline shows up here and the other way round. Whichever copy was edited last wins. Calendar events are left alone for now.
+- Signed out, to-dos are saved on this device (`todos.json`). Signing in sends them into your account the first time.
+- The sidebar shows how many to-dos are due today or overdue.
+- The hint text in text boxes is now readable on the Midnight theme.
+
 # Streamline 0.1: the music player gains flashcards
 - **Streamline** is a new app built on Paraplay's code: the same music player, with study tools being added beside it. It keeps its own settings and data, so it can sit next to Paraplay on the same computer.
 - **Flashcards** (sidebar, under Study; the Study tab on a phone): make a deck for each module, add cards, and study what is due. Rate each card Again, Hard, Good or Easy: hard cards come back sooner, easy ones are spaced further apart. "Practise all cards" goes through a whole deck whatever is due.

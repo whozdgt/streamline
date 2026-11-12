@@ -24,7 +24,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         text: root.placeholder
         font.pixelSize: 14
-        color: Qt.rgba(0, 0, 0, 0.5)
+        color: settings.round ? settings.inkSoft : Qt.rgba(0, 0, 0, 0.5)      // Midnight's boxes are dark: the hint must still read
     }
     TextInput {
         id: input

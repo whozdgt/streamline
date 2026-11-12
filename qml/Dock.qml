@@ -1,11 +1,11 @@
 import QtQuick
 
-// Phones: the bar along the bottom. A mini player floats above five tabs (Home, Library, Friends, Study, Search).
+// Phones: the bar along the bottom. A mini player floats above six tabs (Home, Library, Friends, To-dos, Study, Search).
 // Scrolling down tucks the tabs away: what is left is one button for the page you are on, the mini player and Search.
 Item {
     id: root
     property bool collapsed: false
-    property string current: "home"           // home | library | friends | study | search
+    property string current: "home"           // home | library | friends | todos | study | search
     signal tab(string k)
     signal expandPlayer()
     signal untuck()                            // bring the tabs back
@@ -17,6 +17,7 @@ Item {
         { k: "home", t: "Home", icon: "home", on: "homefill" },
         { k: "library", t: "Library", icon: "library", on: "library" },
         { k: "friends", t: "Friends", icon: "friends", on: "friends" },
+        { k: "todos", t: "To-dos", icon: "checklist", on: "checklist" },
         { k: "study", t: "Study", icon: "cards", on: "cards" },
         { k: "search", t: "Search", icon: "search", on: "search" }
     ]
@@ -94,7 +95,7 @@ Item {
             anchors.centerIn: parent
             size: 26
             color: settings.ink
-            name: root.current === "home" ? "homefill" : root.current === "friends" ? "friends" : root.current === "study" ? "cards" : "library"
+            name: root.current === "home" ? "homefill" : root.current === "friends" ? "friends" : root.current === "study" ? "cards" : root.current === "todos" ? "checklist" : "library"
         }
         MouseArea { anchors.fill: parent; onClicked: root.untuck() }
     }

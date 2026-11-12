@@ -72,11 +72,14 @@ jobs:
           shot phone-playing 390x844 --mobile --set startPlay=true --set startView=library
           shot phone-classic 390x844 --mobile --set theme=classic
           shot phone-flashcards 390x844 --mobile --set startView=flashcards
+          shot phone-todos 390x844 --mobile --set startView=todos
           shot desktop-home 1280x800
           shot desktop-songs 1280x800 --set startView=songs
           shot desktop-settings 1280x800 --set startSettings=look
           shot desktop-flashcards 1280x800 --set startView=flashcards
           shot desktop-flashcards-classic 1280x800 --set theme=classic --set startView=flashcards
+          shot desktop-todos 1280x800 --set startView=todos
+          shot desktop-todos-classic 1280x800 --set theme=classic --set startView=todos
           shot desktop-classic 1280x800 --set theme=classic --set startView=songs
           grep -h -E "(qrc:|qml).*(rror|is not a type|ReferenceError|TypeError|Cannot assign|Unable to assign)" shots/*.log | sort -u | head -20 || true
 

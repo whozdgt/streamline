@@ -22,6 +22,7 @@
 #include "artistimages.h"
 #include "cover.h"
 #include "flashcards.h"
+#include "todos.h"
 #include "folders.h"
 #include "library.h"
 #include "player.h"
@@ -227,6 +228,7 @@ int main(int argc, char *argv[])
     artistImages.setOnline(settings->value("onlineArtistPhotos").toBool());
     Playlists playlists(&library);
     Account account(&playlists);
+    Todos todos(&account);
     ServerManager servers(&library);
     Social social(&account, &library, &player);
     PlayStats stats(&player, &library);
@@ -269,6 +271,7 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("folders", &folders);
     ctx->setContextProperty("updater", &updater);
     ctx->setContextProperty("flashcards", &flashcards);
+    ctx->setContextProperty("todos", &todos);
     SafeArea safeArea;
     ctx->setContextProperty("safeArea", &safeArea);
     engine.loadFromModule("Music", "Main");
