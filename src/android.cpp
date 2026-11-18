@@ -127,7 +127,7 @@ void setSystemBarsLight(bool light)
 
 namespace {
 std::function<void(int, qint64)> g_mediaHandler;
-const char *const kMediaClass = "io/github/whozdgt/paraplay/MediaService";
+const char *const kMediaClass = "io/github/whozdgt/streamline/MediaService";
 
 // Called by MediaService.java (on Android's main thread) when a notification or lock-screen button is pressed.
 void JNICALL nativeMediaCommand(JNIEnv *, jclass, jint cmd, jlong arg)

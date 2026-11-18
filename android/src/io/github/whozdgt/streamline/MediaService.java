@@ -1,4 +1,4 @@
-package io.github.whozdgt.paraplay;
+package io.github.whozdgt.streamline;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -36,7 +36,7 @@ import android.os.PowerManager;
 public class MediaService extends Service {
     static final String CHANNEL = "playback";
     static final int NOTIFICATION_ID = 7;
-    static final String PKG = "io.github.whozdgt.paraplay";
+    static final String PKG = "io.github.whozdgt.streamline";
     static final String ACT_PLAY = PKG + ".PLAY";
     static final String ACT_PAUSE = PKG + ".PAUSE";
     static final String ACT_NEXT = PKG + ".NEXT";
@@ -150,7 +150,7 @@ public class MediaService extends Service {
             ch.setShowBadge(false);
             notes.createNotificationChannel(ch);
         }
-        session = new MediaSession(this, "Paraplay");
+        session = new MediaSession(this, "Streamline");
         session.setCallback(new MediaSession.Callback() {
             @Override public void onPlay() { send(0, 0); }
             @Override public void onPause() { send(1, 0); }
@@ -160,11 +160,11 @@ public class MediaService extends Service {
             @Override public void onStop() { send(5, 0); }
         }, MAIN);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "paraplay:playback");
+        wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "streamline:playback");
         wake.setReferenceCounted(false);
         WifiManager wm = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (wm != null) {
-            wifi = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "paraplay:stream");
+            wifi = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "streamline:stream");
             wifi.setReferenceCounted(false);
         }
         registerReceiver(noisy, new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY));
@@ -274,7 +274,7 @@ public class MediaService extends Service {
         int small = getResources().getIdentifier("ic_launcher_monochrome", "mipmap", getPackageName());
         if (small == 0) small = android.R.drawable.ic_media_play;
         b.setSmallIcon(small)
-         .setContentTitle(s == null || s.title.isEmpty() ? "Paraplay" : s.title)
+         .setContentTitle(s == null || s.title.isEmpty() ? "Streamline" : s.title)
          .setContentText(s == null ? "" : s.artist)
          .setSubText(s == null ? null : s.album)
          .setShowWhen(false)

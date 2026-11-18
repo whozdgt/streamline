@@ -203,7 +203,7 @@ const char *kChannel = "windows-latest";
 const char *kPackage = "Streamline-Setup.exe";
 #else
 const char *kChannel = "android-latest";
-const char *kPackage = "Paraplay-android.apk";
+const char *kPackage = "Streamline-android.apk";
 #endif
 
 QNetworkRequest latestRequest(const QString &file)

@@ -120,7 +120,7 @@ if(ANDROID)
   endif()
   set_target_properties(musicplayer PROPERTIES
     QT_ANDROID_PACKAGE_SOURCE_DIR "${android_dir}"
-    QT_ANDROID_PACKAGE_NAME "io.github.whozdgt.paraplay"
+    QT_ANDROID_PACKAGE_NAME "io.github.whozdgt.streamline"      # its own app, so it installs beside Paraplay
     QT_ANDROID_VERSION_NAME "${PROJECT_VERSION}"
     QT_ANDROID_VERSION_CODE "${ANDROID_VERSION_CODE}"
     QT_ANDROID_COMPILE_SDK_VERSION 36

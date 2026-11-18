@@ -7,7 +7,7 @@
 class Player;
 
 // Phones only: mirrors what the player is doing into Android's media notification and lock screen
-// (see android/src/io/github/whozdgt/paraplay/MediaService.java), and passes their buttons back to the player.
+// (see android/src/io/github/whozdgt/streamline/MediaService.java), and passes their buttons back to the player.
 class AndroidMedia : public QObject {
     Q_OBJECT
 public:
