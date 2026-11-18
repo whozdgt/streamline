@@ -22,4 +22,6 @@ compile_commands.json
 .env
 __pycache__/
 *.jks
+# ...except Streamline's Android signing key, which is kept here on purpose (see .github/workflows/android.yml)
+!packaging/android/streamline-release.jks
 *.keystore

@@ -10,7 +10,9 @@ What works today:
 
 Planned next: the calendar, syncing flashcards through the account, and one-click updates on Windows.
 
-Windows builds come from the `windows` workflow: every push to `main` publishes `Streamline-Setup.exe` under the `windows-latest` release. The Android and iPhone workflows from Paraplay are not carried over yet.
+Windows builds come from the `windows` workflow: every push to `main` publishes `Streamline-Setup.exe` under the `windows-latest` release.
+
+Android builds come from the `android` workflow: every push to `main` publishes `Streamline-android.apk` under the `android-latest` release (https://github.com/whozdgt/streamline/releases/download/android-latest/Streamline-android.apk). Its app ID is `io.github.whozdgt.streamline`, so it installs beside Paraplay, and Settings › About › Update now installs newer builds. The iPhone workflow from Paraplay is not carried over yet.
 
 The rest of this file is Paraplay's own guide to the music player. The program is still called `musicplayer` internally.
 
