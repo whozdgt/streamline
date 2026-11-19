@@ -1,0 +1,46 @@
+# Streamline for Arch Linux, CachyOS, EndeavourOS, Manjaro...
+#
+# The ready-made package comes from the "linux-latest" release (see README.md). To build it yourself from this
+# folder of the source:   cd packaging/arch && makepkg -si
+#
+# Built this way, Streamline updates itself as a package: Settings › About › Update now downloads the newest
+# package from GitHub and installs it with pacman.
+pkgname=streamline
+pkgver=0.0.0
+pkgrel=1
+pkgdesc='Music player with flashcards and to-dos (FLAC and Hi-Res, Navidrome and Jellyfin, Dayline sync)'
+arch=('x86_64')
+url='https://github.com/whozdgt/streamline'
+license=('MIT')
+depends=('qt6-base' 'qt6-declarative' 'qt6-wayland' 'mpv' 'taglib' 'ttf-jetbrains-mono' 'hicolor-icon-theme')
+makedepends=('cmake' 'ninja' 'git')
+optdepends=('polkit: install updates from inside the app (with a polkit agent running)')
+options=('!debug' '!lto')
+
+# The source is this checkout (two folders up), not a download.
+_src="$(cd "$startdir/../.." && pwd)"
+
+pkgver() {
+  local ver
+  ver="$(sed -n 's/^project(musicplayer VERSION \([0-9.]*\).*/\1/p' "$_src/CMakeLists.txt")"
+  # CI passes its build number; a local build counts the commits instead
+  printf '%s.%s' "$ver" "${STREAMLINE_BUILD:-$(git -C "$_src" rev-list --count HEAD 2>/dev/null || echo 0)}"
+}
+
+build() {
+  cmake -S "$_src" -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLINUX_PACKAGE=ON \
+    -DLINUX_BUILD="${STREAMLINE_BUILD:-0}"
+  cmake --build build
+}
+
+check() {
+  QT_QPA_PLATFORM=offscreen ./build/musicplayer --version
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+  install -Dm644 "$_src/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

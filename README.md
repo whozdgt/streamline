@@ -14,7 +14,14 @@ Windows builds come from the `windows` workflow: every push to `main` publishes 
 
 Android builds come from the `android` workflow: every push to `main` publishes `Streamline-android.apk` under the `android-latest` release (https://github.com/whozdgt/streamline/releases/download/android-latest/Streamline-android.apk). Its app ID is `io.github.whozdgt.streamline`, so it installs beside Paraplay, and Settings › About › Update now installs newer builds. The iPhone workflow from Paraplay is not carried over yet.
 
-The rest of this file is Paraplay's own guide to the music player. The program is still called `musicplayer` internally.
+Linux builds come from the `linux` workflow: every push to `main` publishes an Arch package (for CachyOS, EndeavourOS, Manjaro and Arch, with Hyprland or any desktop) under the `linux-latest` release. Install it with:
+
+    curl -LO https://github.com/whozdgt/streamline/releases/download/linux-latest/streamline-x86_64.pkg.tar.zst
+    sudo pacman -U streamline-x86_64.pkg.tar.zst
+
+pacman brings Qt, mpv, TagLib and the font with it. Start Streamline from your app launcher, or run `streamline`. After that, **Settings › About › Update now** downloads newer packages and installs them with pacman (it asks for your password through polkit; with no polkit agent running, it puts the `pacman` command on your clipboard instead). On Hyprland the window class is `streamline`. To build the package yourself: `cd packaging/arch && makepkg -si`.
+
+The rest of this file is Paraplay's own guide to the music player. In the build folder the program is still called `musicplayer`; installed, it is `streamline`.
 
 ---
 
@@ -34,10 +41,10 @@ Needs Qt 6.6 or newer and TagLib 1.13 or newer, both fine on current Arch.
 
 ## Build and install
 
-    git clone https://github.com/whozdgt/Paraplay.git && cd Paraplay
+    git clone https://github.com/whozdgt/streamline.git && cd streamline
     ./update.sh --here
 
-That builds the player and installs it for your user (into `~/.local`, no `sudo`), with a launcher entry. Start it from your app launcher, or run `musicplayer --music ~/Music`.
+That builds Streamline and installs it for your user (into `~/.local`, no `sudo`), with a launcher entry. Start it from your app launcher, or run `streamline --music ~/Music`.
 
 To just try it without installing:
 
@@ -134,7 +141,7 @@ This is a summary, not legal advice. Check the licences before distributing bina
 
 ## Windows
 
-Download the newest build from the [windows-latest release](https://github.com/whozdgt/Paraplay/releases/tag/windows-latest): **Paraplay-Setup.exe** installs it for your user (no administrator prompt), or unzip the portable zip anywhere and run `musicplayer.exe`. Windows may say the publisher is unknown the first time, because the files are not code-signed: choose More info, then Run anyway. Tagged releases carry the same two files.
+Download the newest build from the [windows-latest release](https://github.com/whozdgt/streamline/releases/tag/windows-latest): **Streamline-Setup.exe** installs it for your user (no administrator prompt), or unzip the portable zip anywhere and run `musicplayer.exe`. Windows may say the publisher is unknown the first time, because the files are not code-signed: choose More info, then Run anyway. Tagged releases carry the same two files.
 
 It is the same player: your music folder, playlists, servers, accounts, friends, lyrics and Home page all work. Differences on Windows:
 

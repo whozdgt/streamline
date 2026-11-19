@@ -21,6 +21,8 @@ Rectangle {
     Text {
         visible: input.text.length === 0
         x: 14
+        width: parent.width - 28
+        elide: Text.ElideRight
         anchors.verticalCenter: parent.verticalCenter
         text: root.placeholder
         font.pixelSize: 14

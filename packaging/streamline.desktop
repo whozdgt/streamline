@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Streamline
+GenericName=Study and music
+Comment=Music player with flashcards and to-dos
+Exec=streamline
+Icon=streamline
+Terminal=false
+Categories=AudioVideo;Audio;Player;Education;
+Keywords=music;flac;player;flashcards;study;todo;tasks;
+StartupNotify=true
+StartupWMClass=streamline

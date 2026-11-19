@@ -1,6 +1,7 @@
 import QtQuick
 
-// Phones: the bar along the bottom. A mini player floats above six tabs (Home, Library, Friends, To-dos, Study, Search).
+// Phones: the bar along the bottom. A mini player floats above six tabs (Home, Library, Friends, To-dos, Study, Search),
+// shown as icons only; each keeps its name for screen readers.
 // Scrolling down tucks the tabs away: what is left is one button for the page you are on, the mini player and Search.
 Item {
     id: root
@@ -59,18 +60,7 @@ Item {
                     Accessible.name: modelData.t
                     Accessible.selected: on
                     Accessible.onPressAction: root.tab(modelData.k)
-                    Column {
-                        anchors.centerIn: parent
-                        spacing: 2
-                        Icon { anchors.horizontalCenter: parent.horizontalCenter; name: tabItem.on ? tabItem.modelData.on : tabItem.modelData.icon; size: 24; color: settings.ink }
-                        Text {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            text: tabItem.modelData.t
-                            font.pixelSize: 11
-                            font.weight: tabItem.on ? Font.Bold : Font.Normal
-                            color: settings.ink
-                        }
-                    }
+                    Icon { anchors.centerIn: parent; name: tabItem.on ? tabItem.modelData.on : tabItem.modelData.icon; size: 26; color: settings.ink }
                     MouseArea { anchors.fill: parent; onClicked: root.tab(tabItem.modelData.k) }
                 }
             }

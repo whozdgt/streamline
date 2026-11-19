@@ -97,8 +97,11 @@ ListView {
 
     Text {
         anchors.centerIn: parent
+        width: parent.width - 48
         visible: list.count === 0
         horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.Wrap
+        lineHeight: 1.3
         color: list.muted
         text: library.scanning ? "Scanning your music…" : "No music found.\nSet your music folder in Settings, or add a server."
     }

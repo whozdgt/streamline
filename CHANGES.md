@@ -1,3 +1,11 @@
+# Streamline 0.3.1: Linux package, and a tidier phone layout
+- **Linux:** a ready-made package for CachyOS, Arch, EndeavourOS and Manjaro (any desktop, including Hyprland): `streamline-x86_64.pkg.tar.zst` on the `linux-latest` release, installed with `sudo pacman -U`. pacman brings everything it needs. Settings › About › Update now installs newer packages through pacman.
+- On Linux, Streamline now has its own names: the program `streamline`, its own menu entry and icon, the window class `streamline` (for Hyprland rules), and its own media-key name. It no longer installs over Paraplay.
+- **Phone tabs** along the bottom are icons only now.
+- **Add a server** on a phone: the tabs, the address hint and the buttons fit the screen. The address example sits under the box, and the buttons stack (Add server across the top, Test connection and Cancel below).
+- Text-box hints that are too long end with "…" instead of running out of the box, and long setting names wrap instead of being cut short.
+- An empty library's message wraps to fit a phone screen.
+
 # Streamline 0.3: Android
 - **Streamline for Android.** It has its own app ID (`io.github.whozdgt.streamline`), so it installs beside Paraplay and keeps its own settings, music library, flashcards and to-dos.
 - Everything the Windows app has: music, flashcards (the Study tab) and to-dos (the To-dos tab). Signed in, to-dos sync with Dayline and with Streamline on your computer.

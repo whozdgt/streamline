@@ -1,5 +1,6 @@
 #include "updater.h"
 
+#include <QClipboard>
 #include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QDateTime>
@@ -7,6 +8,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QGuiApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkReply>
@@ -34,7 +36,7 @@ UpdateChecker::UpdateChecker(QObject *parent) : QObject(parent), m_exe(QCoreAppl
 
 QString UpdateChecker::current() const
 {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN) || defined(STREAMLINE_PACKAGE)
     return QStringLiteral(APP_VERSION " (build %1)").arg(PARAPLAY_BUILD);
 #else
     return QStringLiteral(APP_VERSION);
@@ -53,15 +55,25 @@ bool UpdateChecker::store() const
 
 bool UpdateChecker::configured() const { return !store() && kUpdateRepo[0] != '\0'; }
 
+// Android, Windows and the Linux package get each update as one ready-made file; a source install builds it instead.
+bool UpdateChecker::packaged() const
+{
+#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN) || defined(STREAMLINE_PACKAGE)
+    return true;
+#else
+    return false;
+#endif
+}
+
 QString UpdateChecker::scriptPath() const
 {
-    return QDir::cleanPath(QCoreApplication::applicationDirPath() + QStringLiteral("/../share/musicplayer/musicplayer-update"));
+    return QDir::cleanPath(QCoreApplication::applicationDirPath() + QStringLiteral("/../share/streamline/streamline-update"));
 }
 
 // In-app installing works once the player was installed by update.sh (it puts the script in place).
 bool UpdateChecker::canInstall() const
 {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN) || defined(STREAMLINE_PACKAGE)
     return configured();
 #else
     return configured() && QFileInfo::exists(scriptPath());
@@ -92,7 +104,7 @@ void UpdateChecker::check(bool manual)
 {
     if (!configured()) { if (manual) setStatus(QStringLiteral("Updates aren't set up in this build yet.")); return; }
     if (m_checking || m_installing) return;
-#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN) || defined(STREAMLINE_PACKAGE)
     checkPublished(manual);      // every build is published with a small latest.json: compare build numbers
     return;
 #endif
@@ -130,7 +142,7 @@ void UpdateChecker::check(bool manual)
 
 void UpdateChecker::install()
 {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_WIN) || defined(STREAMLINE_PACKAGE)
     installPublished();
     return;
 #endif
@@ -201,9 +213,15 @@ const char *kLatestBase = "https://github.com/%1/releases/download/%2/%3";
 #ifdef Q_OS_WIN
 const char *kChannel = "windows-latest";
 const char *kPackage = "Streamline-Setup.exe";
+const qint64 kMinSize = 1000000;
+#elif defined(STREAMLINE_PACKAGE)
+const char *kChannel = "linux-latest";
+const char *kPackage = "streamline-x86_64.pkg.tar.zst";
+const qint64 kMinSize = 100000;         // the package holds only Streamline itself; pacman brings Qt and mpv
 #else
 const char *kChannel = "android-latest";
 const char *kPackage = "Streamline-android.apk";
+const qint64 kMinSize = 1000000;
 #endif
 
 QNetworkRequest latestRequest(const QString &file)
@@ -258,7 +276,7 @@ void UpdateChecker::checkPublished(bool manual)
 
 void UpdateChecker::installPublished()
 {
-#if (defined(Q_OS_ANDROID) && !defined(PARAPLAY_STORE)) || defined(Q_OS_WIN)
+#if (defined(Q_OS_ANDROID) && !defined(PARAPLAY_STORE)) || defined(Q_OS_WIN) || defined(STREAMLINE_PACKAGE)
     if (!m_available || m_installing) return;
 #ifdef Q_OS_ANDROID
     if (!android::canInstallApks()) {
@@ -307,7 +325,7 @@ void UpdateChecker::installPublished()
             setStatus(QStringLiteral("The download didn't finish. Check your connection and try again."));
             return;
         }
-        if (QFileInfo(m_apkPath).size() < 1000000 ||
+        if (QFileInfo(m_apkPath).size() < kMinSize ||
             (!m_sha.isEmpty() && fileSha256(m_apkPath).compare(m_sha, Qt::CaseInsensitive) != 0)) {
             QFile::remove(m_apkPath);
             setStatus(QStringLiteral("The downloaded update looks damaged. Try again in a minute."));
@@ -337,5 +355,35 @@ void UpdateChecker::launchInstaller()
     m_installing = true;
     setStatus(QStringLiteral("Installing the update. Streamline will close and open again by itself."));
     QTimer::singleShot(1200, qApp, []() { QCoreApplication::quit(); });
+#elif defined(STREAMLINE_PACKAGE) && QT_CONFIG(process)
+    // pacman installs the package. pkexec asks for your password the system's way (a polkit prompt); if there is no
+    // polkit agent, or you cancel, the same command is put on the clipboard to run in a terminal.
+    const QString file = m_apkPath;
+    const auto byHand = [this, file]() {
+        const QString cmd = QStringLiteral("sudo pacman -U \"%1\"").arg(file);
+        if (QClipboard *cb = QGuiApplication::clipboard()) cb->setText(cmd);
+        setStatus(QStringLiteral("Couldn't install it from here. The command to do it is on your clipboard: paste it into a terminal.\n%1").arg(cmd));
+    };
+    auto *p = new QProcess(this);
+    p->setProcessChannelMode(QProcess::MergedChannels);
+    m_installing = true;
+    setStatus(QStringLiteral("Installing… Enter your password if Linux asks for it."));
+    connect(p, &QProcess::errorOccurred, this, [this, p, byHand](QProcess::ProcessError e) {
+        if (e != QProcess::FailedToStart) return;          // pkexec isn't installed
+        m_installing = false;
+        p->deleteLater();
+        byHand();
+    });
+    connect(p, &QProcess::finished, this, [this, p, byHand](int code, QProcess::ExitStatus st) {
+        m_installing = false;
+        p->deleteLater();
+        if (st == QProcess::NormalExit && code == 0) {
+            m_installed = true;
+            setStatus(QStringLiteral("Updated to %1. Restart to use it.").arg(m_latest));
+        } else {
+            byHand();
+        }
+    });
+    p->start(QStringLiteral("pkexec"), {QStringLiteral("/usr/bin/pacman"), QStringLiteral("-U"), QStringLiteral("--noconfirm"), file});
 #endif
 }

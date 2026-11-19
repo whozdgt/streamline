@@ -25,6 +25,7 @@ class UpdateChecker : public QObject {
     Q_PROPERTY(QString status READ status NOTIFY changed)
     Q_PROPERTY(QString notes READ notes NOTIFY changed)
     Q_PROPERTY(double progress READ progress NOTIFY changed)        // 0..1 while an APK downloads
+    Q_PROPERTY(bool packaged READ packaged CONSTANT)                // updates arrive as a ready-made file (APK, setup, package)
 public:
     explicit UpdateChecker(QObject *parent = nullptr);
 
@@ -37,6 +38,7 @@ public:
     bool installed() const { return m_installed; }
     bool canInstall() const;
     bool store() const;
+    bool packaged() const;
     QString status() const { return m_status; }
     QString notes() const { return m_notes; }
     double progress() const { return m_progress; }

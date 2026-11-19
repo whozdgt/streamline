@@ -161,10 +161,13 @@ Window {
     onWatchSocialChanged: social.watch(watchSocial)
     Component.onCompleted: {
         social.watch(watchSocial)
-        // --set startView=albums, startSettings=look, startExpanded=true: open on a given screen (for checking the interface)
+        // --set startView=albums, startSettings=look, startExpanded=true, startPanel=addServer|auth: open on a given screen
+        // (for checking the interface)
         if (settings.startView) navigate(settings.startView)
         if (settings.startSettings) { settingsPanel.show(settings.startSettings); settingsOpen = true }
         if (settings.startExpanded) expanded = true
+        if (settings.startPanel === "addServer") addServerOpen = true
+        if (settings.startPanel === "auth") authOpen = true
         if (settings.startAlbum || settings.startPlay) startTimer.start()
     }
     Timer {      // --set startAlbum=<name> / startPlay=true: wait for the scan, then open that album or play the first song

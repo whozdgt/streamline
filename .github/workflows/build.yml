@@ -73,6 +73,12 @@ jobs:
           shot phone-classic 390x844 --mobile --set theme=classic
           shot phone-flashcards 390x844 --mobile --set startView=flashcards
           shot phone-todos 390x844 --mobile --set startView=todos
+          shot phone-add-server 390x844 --mobile --set startView=library --set startPanel=addServer
+          shot phone-add-server-narrow 360x780 --mobile --set startView=library --set startPanel=addServer
+          shot phone-sign-in 390x844 --mobile --set startPanel=auth
+          shot phone-settings-about 390x844 --mobile --set startSettings=about
+          mkdir -p /tmp/empty
+          shot phone-empty-songs 390x844 --mobile --set startView=songs --music /tmp/empty
           shot desktop-home 1280x800
           shot desktop-songs 1280x800 --set startView=songs
           shot desktop-settings 1280x800 --set startSettings=look

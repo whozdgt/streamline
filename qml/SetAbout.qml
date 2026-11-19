@@ -54,15 +54,16 @@ ColumnLayout {
                 Layout.fillWidth: true; wrapMode: Text.Wrap; font.pixelSize: 12; lineHeight: 1.3; color: root.muted
                 text: !updater.configured ? "This build isn't linked to a release page yet."
                     : Qt.platform.os === "windows" ? "Download the new installer from the release page and run it. Your settings and library stay as they are."
-                    : "To update from inside the player, install it once with ./update.sh --here from the project folder."
+                    : updater.packaged ? "Download the new package from the release page and install it with pacman."
+                    : "To update from inside the app, install it once with ./update.sh --here from the project folder."
             }
             Rectangle {
-                visible: updater.installing && (settings.mobile || Qt.platform.os === "windows")
+                visible: updater.installing && updater.packaged && updater.progress > 0
                 Layout.fillWidth: true; Layout.preferredHeight: 4; color: Qt.rgba(root.pri.r, root.pri.g, root.pri.b, 0.2)
                 Rectangle { width: parent.width * updater.progress; height: parent.height; color: settings.accent }
             }
             Text {
-                visible: updater.installing && !settings.mobile && Qt.platform.os !== "windows"
+                visible: updater.installing && !updater.packaged
                 Layout.fillWidth: true; wrapMode: Text.Wrap; font.pixelSize: 12; lineHeight: 1.3; color: root.muted
                 text: "The new version is built on this computer at low priority, so music keeps playing. This can take a few minutes."
             }

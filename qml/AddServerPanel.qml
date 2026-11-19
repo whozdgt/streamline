@@ -46,25 +46,39 @@ Item {
             width: parent.width - 40
             spacing: 12
             Text { text: "Add a server"; font.pixelSize: 18; font.weight: Font.DemiBold; color: root.pri }
-            Row {
-                width: parent.width
-                Repeater {
-                    model: [{ t: "Navidrome / Subsonic", k: "subsonic" }, { t: "Jellyfin", k: "jellyfin" }]
-                    Rectangle {
-                        required property var modelData
-                        readonly property bool sel: root.kind === modelData.k
-                        width: parent.width / 2; height: 40; color: "transparent"
-                        Text { anchors.centerIn: parent; text: parent.modelData.t; font.pixelSize: 14; font.weight: parent.sel ? Font.DemiBold : Font.Normal; color: root.pri }
-                        Rectangle {
-                            anchors.bottom: parent.bottom; width: parent.width
-                            height: parent.sel ? 3 : 1
-                            color: parent.sel ? settings.accent : Qt.rgba(0, 0, 0, 0.15)
+            Item {
+                width: parent.width; height: 40
+                Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 1; color: Qt.rgba(root.pri.r, root.pri.g, root.pri.b, 0.15) }
+                Row {
+                    height: parent.height
+                    spacing: 4
+                    Repeater {
+                        model: [{ t: "Navidrome / Subsonic", k: "subsonic" }, { t: "Jellyfin", k: "jellyfin" }]
+                        Item {
+                            required property var modelData
+                            readonly property bool sel: root.kind === modelData.k
+                            width: tabName.implicitWidth + 16; height: 40
+                            Accessible.role: Accessible.PageTab
+                            Accessible.name: modelData.t
+                            Accessible.selected: sel
+                            Text { id: tabName; anchors.centerIn: parent; text: parent.modelData.t; font.pixelSize: 14; font.weight: parent.sel ? Font.DemiBold : Font.Normal; color: root.pri }
+                            Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 3; visible: parent.sel; color: settings.accent }
+                            MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.kind = parent.modelData.k }
                         }
-                        MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.kind = parent.modelData.k }
                     }
                 }
             }
-            Field { id: urlIn; width: parent.width; nextField: userIn; placeholder: root.jelly ? "Address, e.g. https://jellyfin.example.com" : "Address, e.g. http://192.168.1.20:4533"; onAccepted: userIn.focusInput() }
+            Column {      // the address, with its example underneath: a whole address doesn't fit in a phone-wide box
+                width: parent.width
+                spacing: 4
+                Field { id: urlIn; width: parent.width; nextField: userIn; placeholder: "Server address"; onAccepted: userIn.focusInput() }
+                Text {
+                    width: parent.width; wrapMode: Text.Wrap; font.pixelSize: 11
+                    color: Qt.rgba(root.pri.r, root.pri.g, root.pri.b, 0.72)
+                    text: root.jelly ? "For example https://jellyfin.example.com or http://192.168.1.20:8096"
+                                     : "For example http://192.168.1.20:4533"
+                }
+            }
             Field { id: userIn; width: parent.width; nextField: passIn; placeholder: "Username"; onAccepted: passIn.focusInput() }
             Field { id: passIn; width: parent.width; nextField: nameIn; placeholder: "Password"; secret: true; onAccepted: root.go(true) }
             Field { id: nameIn; width: parent.width; nextField: urlIn; placeholder: "Name (optional), e.g. Home server"; onAccepted: root.go(true) }
@@ -86,16 +100,17 @@ Item {
                 width: parent.width; font.pixelSize: 12; color: Qt.rgba(root.pri.r, root.pri.g, root.pri.b, 0.72)
                 text: "Connecting…"
             }
-            Row {
+            Flow {
+                width: parent.width
                 spacing: 8
-                Btn { label: "Add server"; enabled: !servers.testing; onClicked: root.go(true) }
-                Btn { label: "Test connection"; primary: false; enabled: !servers.testing; onClicked: root.go(false) }
-                Btn { label: "Cancel"; primary: false; onClicked: root.closeRequested() }
+                Btn { label: "Add server"; large: settings.mobile; width: settings.mobile ? parent.width : implicitWidth; enabled: !servers.testing; onClicked: root.go(true) }
+                Btn { label: "Test connection"; large: settings.mobile; width: settings.mobile ? Math.max(implicitWidth, (parent.width - 8) * 0.6) : implicitWidth; primary: false; enabled: !servers.testing; onClicked: root.go(false) }
+                Btn { label: "Cancel"; large: settings.mobile; width: settings.mobile ? Math.max(implicitWidth, (parent.width - 8) * 0.4) : implicitWidth; primary: false; onClicked: root.closeRequested() }
             }
             Text {
                 width: parent.width; wrapMode: Text.Wrap; horizontalAlignment: Text.AlignHCenter; font.pixelSize: 11; lineHeight: 1.4
                 color: Qt.rgba(root.pri.r, root.pri.g, root.pri.b, 0.72)
-                text: "Songs play as the original files, never re-encoded.\nSign-in details are kept in a private file on this computer."
+                text: "Songs play as the original files, never re-encoded.\nSign-in details are kept in a private file on this " + (settings.mobile ? "phone." : "computer.")
             }
         }
     }

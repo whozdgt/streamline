@@ -21,8 +21,8 @@ public:
     explicit MprisRoot(QObject *parent) : QDBusAbstractAdaptor(parent) {}
     bool yes() const { return true; }
     bool no() const { return false; }
-    QString identity() const { return QStringLiteral("Music"); }
-    QString identityId() const { return QStringLiteral("musicplayer"); }
+    QString identity() const { return QStringLiteral("Streamline"); }
+    QString identityId() const { return QStringLiteral("streamline"); }
     QStringList none() const { return {}; }
 public slots:
     void Quit();

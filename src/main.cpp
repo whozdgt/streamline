@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_WIN
     attachParentConsole();
     for (int i = 1; i < argc; ++i)
-        if (!std::strcmp(argv[i], "--version") || !std::strcmp(argv[i], "-v")) { std::printf("musicplayer %s\n", APP_VERSION); return 0; }
+        if (!std::strcmp(argv[i], "--version") || !std::strcmp(argv[i], "-v")) { std::printf("streamline %s\n", APP_VERSION); return 0; }
 #endif
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_WIN) && !defined(Q_OS_IOS)
     QQuickWindow::setDefaultAlphaBuffer(true);   // transparent window so the compositor can blur behind it
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setApplicationName("streamline");
     QGuiApplication::setApplicationVersion(QStringLiteral(APP_VERSION));
     QGuiApplication::setOrganizationName("streamline");
-    QGuiApplication::setDesktopFileName("musicplayer");   // Wayland app_id / window class
+    QGuiApplication::setDesktopFileName("streamline");    // Wayland app_id / window class (streamline.desktop), not Paraplay's
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN)
     // phones and most Windows PCs don't have JetBrains Mono, so the build packs it into the app

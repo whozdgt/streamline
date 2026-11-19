@@ -47,7 +47,7 @@ Mpris::Mpris(Player *p) : QObject(p), m_player(p)
     new MprisRoot(this);
     m_pl = new MprisPlayer(p, this);
     QDBusConnection bus = QDBusConnection::sessionBus();
-    bus.registerService(QStringLiteral("org.mpris.MediaPlayer2.musicplayer"));
+    bus.registerService(QStringLiteral("org.mpris.MediaPlayer2.streamline"));      // its own name, so it can run beside Paraplay
     bus.registerObject(QStringLiteral("/org/mpris/MediaPlayer2"), this, QDBusConnection::ExportAdaptors);
     connect(p, &Player::trackChanged, this, &Mpris::refresh);
     connect(p, &Player::playingChanged, this, &Mpris::refresh);

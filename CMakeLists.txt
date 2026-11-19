@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(musicplayer VERSION 0.3.0 LANGUAGES CXX)
+project(musicplayer VERSION 0.3.1 LANGUAGES CXX)
 
 if(WIN32)
   enable_language(RC)      # the program's icon and version information
@@ -14,6 +14,10 @@ endif()
 # An app-store build (Google Play, Apple's App Store) has no self-updater: the store installs updates.
 # iOS builds are always store builds.
 option(PARAPLAY_STORE "Build for an app store: no in-app updater" OFF)
+# Linux: built as a distribution package (packaging/arch/PKGBUILD). Its updates then come as packages from the
+# "linux-latest" release, installed with pacman, instead of being built from source by update.sh.
+option(LINUX_PACKAGE "Linux: built as a package; update through pacman" OFF)
+set(LINUX_BUILD 0 CACHE STRING "Linux package: the CI build number")
 if(IOS)
   set(PARAPLAY_STORE ON)
 endif()
@@ -226,13 +230,20 @@ else()
     target_sources(musicplayer PRIVATE src/mpris.cpp src/mpris.h)
     target_link_libraries(musicplayer PRIVATE Qt6::DBus)
     target_compile_definitions(musicplayer PRIVATE HAVE_MPRIS)
-    install(FILES packaging/musicplayer.desktop DESTINATION share/applications)
-    install(FILES packaging/musicplayer.svg DESTINATION share/icons/hicolor/scalable/apps)
+    # Streamline's own names (the program, menu entry and icon), so it never replaces Paraplay's "musicplayer"
+    install(PROGRAMS $<TARGET_FILE:musicplayer> DESTINATION bin RENAME streamline)
+    install(FILES packaging/streamline.desktop DESTINATION share/applications)
+    install(FILES packaging/musicplayer.svg DESTINATION share/icons/hicolor/scalable/apps RENAME streamline.svg)
     foreach(size 48 64 128 256 512)
-      install(FILES packaging/icons/musicplayer-${size}.png DESTINATION share/icons/hicolor/${size}x${size}/apps RENAME musicplayer.png)
+      install(FILES packaging/icons/musicplayer-${size}.png DESTINATION share/icons/hicolor/${size}x${size}/apps RENAME streamline.png)
     endforeach()
+    if(LINUX_PACKAGE)
+      target_compile_definitions(musicplayer PRIVATE STREAMLINE_PACKAGE PARAPLAY_BUILD=${LINUX_BUILD})
+    else()
+      # the in-app "Update now" button runs this copy of the update script
+      install(PROGRAMS update.sh DESTINATION share/streamline RENAME streamline-update)
+    endif()
+  else()
+    install(TARGETS musicplayer RUNTIME DESTINATION bin)
   endif()
-  install(TARGETS musicplayer RUNTIME DESTINATION bin)
-  # the in-app "Update now" button runs this copy of the update script
-  install(PROGRAMS update.sh DESTINATION share/musicplayer RENAME musicplayer-update)
 endif()

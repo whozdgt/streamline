@@ -40,7 +40,7 @@ SettingItem {
             id: textCol
             Layout.fillWidth: true
             spacing: 0
-            Text { Layout.fillWidth: true; text: root.label; elide: Text.ElideRight; font.pixelSize: 14; color: root.pri }
+            Text { Layout.fillWidth: true; text: root.label; wrapMode: Text.Wrap; font.pixelSize: 14; color: root.pri }
             Text {
                 visible: root.note !== ""
                 Layout.fillWidth: true

@@ -1,0 +1,118 @@
+name: linux
+
+# Builds Streamline as an Arch Linux package (for CachyOS, EndeavourOS, Manjaro... and Hyprland or any desktop),
+# in an Arch container with packaging/arch/PKGBUILD, then installs it there with pacman and starts it as a check.
+#  - every push to main and every pull request: builds and checks it (the package is kept for 14 days under Artifacts)
+#  - every push to main: publishes it as the "linux-latest" pre-release, next to a latest.json naming its build
+#    number and SHA-256. The app reads that to offer Update now, which installs the package with pacman.
+on:
+  push:
+    branches: [main]
+    paths: ['src/**', 'qml/**', 'CMakeLists.txt', 'packaging/**', 'update.sh', '.github/workflows/linux.yml']
+  pull_request:
+    paths: ['src/**', 'qml/**', 'CMakeLists.txt', 'packaging/**', 'update.sh', '.github/workflows/linux.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write      # to publish the package as a pre-release
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Install build tools
+        run: |
+          pm="pacman"
+          # containers sometimes lack the kernel feature pacman's sandbox needs
+          pacman --help 2>&1 | grep -q -- --disable-sandbox && pm="pacman --disable-sandbox"
+          echo "PM=$pm" >> "$GITHUB_ENV"
+          $pm -Syu --noconfirm --needed base-devel git cmake ninja qt6-base qt6-declarative qt6-wayland mpv taglib \
+            ttf-jetbrains-mono hicolor-icon-theme github-cli jq desktop-file-utils xorg-server-xvfb xorg-xauth mesa > pacman.log 2>&1 \
+            || { tail -40 pacman.log; exit 1; }
+
+      - uses: actions/checkout@v4
+
+      - name: Is the package name free?
+        run: |
+          # An official or AUR package called "streamline" could replace this one during a system update.
+          if pacman -Si streamline > /dev/null 2>&1; then
+            echo "::warning title=package name::Arch's repositories have a package called streamline: $(pacman -Si streamline | sed -n 's/^Description *: //p')"
+          else
+            echo "::notice title=package name::No package called streamline in Arch's repositories"
+          fi
+          aur="$(curl -fsSL 'https://aur.archlinux.org/rpc/v5/info?arg[]=streamline' | jq -r '.resultcount // "unknown"' 2>/dev/null || echo unknown)"
+          if [ "$aur" = "0" ]; then echo "::notice title=package name::No AUR package called streamline"
+          else echo "::warning title=package name::AUR lookup for streamline: $aur result(s)"; fi
+
+      - name: Build the package
+        env:
+          STREAMLINE_BUILD: ${{ github.run_number }}
+        run: |
+          set -o pipefail
+          useradd -m builder
+          chown -R builder "$GITHUB_WORKSPACE"
+          su builder -c "cd '$GITHUB_WORKSPACE/packaging/arch' && STREAMLINE_BUILD=$STREAMLINE_BUILD makepkg -f --noconfirm" 2>&1 | tee build.log
+          pkg="$(ls packaging/arch/streamline-*-x86_64.pkg.tar.zst | grep -v -- -debug- | head -1)"
+          [ -n "$pkg" ] || { echo "::error title=package::makepkg made no package"; exit 1; }
+          echo "PKG=$pkg" >> "$GITHUB_ENV"
+          echo "VER=$(sed -n 's/^project(musicplayer VERSION \([0-9.]*\).*/\1/p' CMakeLists.txt)" >> "$GITHUB_ENV"
+          ls -l packaging/arch/*.pkg.tar.zst
+
+      - name: Install it and try it out
+        run: |
+          set -o pipefail
+          desktop-file-validate packaging/streamline.desktop && echo "menu entry: OK"
+          $PM -U --noconfirm "$PKG" > install.log 2>&1 || { cat install.log; exit 1; }
+          pacman -Qi streamline | grep -E '^(Name|Version|Depends On|Installed Size)'
+          pacman -Ql streamline | grep -v '/$'
+          streamline --version
+          grep -q 'linux-latest' /usr/bin/streamline && echo "updates from linux-latest: built in"
+          # start it for real on a virtual screen, as a normal user, and take a picture of it
+          mkdir -p /tmp/music && chmod 777 /tmp/music
+          su builder -c "QT_QPA_PLATFORM=xcb timeout 60 xvfb-run -a -s '-screen 0 1600x1000x24' streamline --music /tmp/music --size 1280x800 --screenshot /tmp/linux.png" > start.log 2>&1 || true
+          if [ -s /tmp/linux.png ]; then cp /tmp/linux.png linux-screenshot.png; echo "::notice title=starts::Streamline started and drew its window"
+          else tail -30 start.log; echo "::error title=starts::Streamline didn't draw its window"; exit 1; fi
+          grep -E "(qrc:|qml).*(rror|is not a type|ReferenceError|TypeError)" start.log | head -10 || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: streamline-linux
+          path: |
+            packaging/arch/streamline-*-x86_64.pkg.tar.zst
+            linux-screenshot.png
+          retention-days: 14
+
+      - name: Publish as the newest build (for in-app updates)
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN: ${{ github.run_number }}
+        run: |
+          cp "$PKG" streamline-x86_64.pkg.tar.zst
+          sha="$(sha256sum streamline-x86_64.pkg.tar.zst | cut -d' ' -f1)"
+          # a slower, older run must not replace a newer build
+          cur="$(curl -fsSL "https://github.com/${GITHUB_REPOSITORY}/releases/download/linux-latest/latest.json" 2>/dev/null | jq -r '.build // 0' 2>/dev/null || true)"
+          [[ "$cur" =~ ^[0-9]+$ ]] || cur=0
+          if [ "$cur" -ge "$RUN" ]; then echo "Build $cur is already published; skipping build $RUN."; exit 0; fi
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          notes="$(git log -1 --pretty=%B | head -c 600)"
+          jq -n --argjson build "$RUN" --arg version "$VER" --arg sha "$sha" --arg notes "$notes" \
+            '{build:$build, version:$version, sha256:$sha, notes:$notes}' > latest.json
+          cat latest.json
+          gh release delete linux-latest --cleanup-tag --yes -R "$GITHUB_REPOSITORY" || true
+          gh release create linux-latest streamline-x86_64.pkg.tar.zst "$PKG" latest.json linux-screenshot.png -R "$GITHUB_REPOSITORY" \
+            --prerelease --target "$GITHUB_SHA" \
+            --title "Streamline for Linux (Arch, CachyOS): newest build" \
+            --notes "Build ${RUN} (version ${VER}). Download streamline-x86_64.pkg.tar.zst and install it with: sudo pacman -U streamline-x86_64.pkg.tar.zst. After that, Settings › About › Update now installs new builds."
+
+      - name: Keep the logs when a build fails
+        if: failure()
+        run: |
+          mkdir -p /tmp/ci-log
+          for f in pacman.log build.log install.log start.log; do [ -f "$f" ] && tail -n 3000 "$f" > "/tmp/ci-log/linux-$f"; done
+          echo "run ${{ github.run_number }}, commit ${{ github.sha }}" > /tmp/ci-log/README
+          cd /tmp/ci-log && git init -q -b ci-log
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com add -A
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Linux build ${{ github.run_number }} logs"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" ci-log

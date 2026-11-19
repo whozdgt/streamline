@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-# Music: build and install, or update to the newest release.
+# Streamline: build from source and install for your user, or update to the newest release.
+# (On CachyOS / Arch the ready-made package is easier: see "Linux" in README.md.)
 #
 #   ./update.sh --here        Build THIS folder and install it for your user (into ~/.local).
-#                             Run it once; after that the player's own "Update now" button works.
+#                             Run it once; after that the app's own "Update now" button works.
 #   ./update.sh               Download the newest release from GitHub, build it here and install it.
 #   ./update.sh --tag v0.6.1  Same, for one particular release.
 #
-# The player is built on your own computer (not downloaded as a binary), so it always matches the
+# Streamline is built on your own computer (not downloaded as a binary), so it always matches the
 # Qt, mpv and TagLib versions your system has. Lines starting "STEP:" are what the player shows.
 #
 # Settings (environment):  MUSICPLAYER_REPO=owner/repo   MUSICPLAYER_PREFIX=~/.local
 
-REPO="${MUSICPLAYER_REPO:-whozdgt/Paraplay}"
+REPO="${MUSICPLAYER_REPO:-whozdgt/streamline}"
 PREFIX="${MUSICPLAYER_PREFIX:-$HOME/.local}"
 
 WORK=""; LOG=""
@@ -63,7 +64,7 @@ main() {
             [ -n "$tag" ] || die "Couldn't find a published release for $REPO."
         fi
         case "$tag" in *[!A-Za-z0-9._-]*|"") die "That doesn't look like a version tag: $tag" ;; esac
-        local cache="${XDG_CACHE_HOME:-$HOME/.cache}/musicplayer-update"
+        local cache="${XDG_CACHE_HOME:-$HOME/.cache}/streamline-update"
         mkdir -p "$cache"
         WORK="$(mktemp -d "$cache/work.XXXXXX")"
         step "Downloading $tag"
@@ -73,7 +74,7 @@ main() {
         tar xzf "$WORK/src.tar.gz" --strip-components=1 -m -C "$WORK/src"
         src="$WORK/src"
         build="$WORK/build"
-        [ -f "$src/CMakeLists.txt" ] || die "The download didn't contain the player's source."
+        [ -f "$src/CMakeLists.txt" ] || die "The download didn't contain Streamline's source."
     fi
 
     step "Building $tag (a few minutes; the music keeps playing)"
@@ -84,33 +85,34 @@ main() {
 
     step "Installing into $PREFIX"
     # `install` replaces the file instead of writing into it, so a running copy is never disturbed.
-    install -Dm755 "$build/musicplayer" "$PREFIX/bin/musicplayer"
-    install -Dm755 "$src/update.sh" "$PREFIX/share/musicplayer/musicplayer-update"
-    if [ -f "$src/packaging/musicplayer.desktop" ]; then
+    # Streamline's own names, so it never replaces Paraplay's "musicplayer"
+    install -Dm755 "$build/musicplayer" "$PREFIX/bin/streamline"
+    install -Dm755 "$src/update.sh" "$PREFIX/share/streamline/streamline-update"
+    if [ -f "$src/packaging/streamline.desktop" ]; then
         local desk; desk="$(mktemp)"
-        sed "s|^Exec=.*|Exec=$PREFIX/bin/musicplayer|" "$src/packaging/musicplayer.desktop" >"$desk"
-        install -Dm644 "$desk" "$PREFIX/share/applications/musicplayer.desktop"
+        sed "s|^Exec=.*|Exec=$PREFIX/bin/streamline|" "$src/packaging/streamline.desktop" >"$desk"
+        install -Dm644 "$desk" "$PREFIX/share/applications/streamline.desktop"
         rm -f "$desk"
         command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database "$PREFIX/share/applications" >/dev/null 2>&1 || true
     fi
     # the app icon: sharp pictures for the common sizes, the drawing for any other size
     for size in 48 64 128 256 512; do
         if [ -f "$src/packaging/icons/musicplayer-$size.png" ]; then
-            install -Dm644 "$src/packaging/icons/musicplayer-$size.png" "$PREFIX/share/icons/hicolor/${size}x${size}/apps/musicplayer.png"
+            install -Dm644 "$src/packaging/icons/musicplayer-$size.png" "$PREFIX/share/icons/hicolor/${size}x${size}/apps/streamline.png"
         fi
     done
     if [ -f "$src/packaging/musicplayer.svg" ]; then
-        install -Dm644 "$src/packaging/musicplayer.svg" "$PREFIX/share/icons/hicolor/scalable/apps/musicplayer.svg"
+        install -Dm644 "$src/packaging/musicplayer.svg" "$PREFIX/share/icons/hicolor/scalable/apps/streamline.svg"
     fi
     command -v gtk-update-icon-cache >/dev/null 2>&1 && gtk-update-icon-cache -q -t -f "$PREFIX/share/icons/hicolor" >/dev/null 2>&1 || true
 
     step "Checking the new version"
-    QT_QPA_PLATFORM=offscreen "$PREFIX/bin/musicplayer" --version 2>/dev/null | tail -n 1 || true
+    QT_QPA_PLATFORM=offscreen "$PREFIX/bin/streamline" --version 2>/dev/null | tail -n 1 || true
 
     step "Done"
     case ":$PATH:" in
         *":$PREFIX/bin:"*) ;;
-        *) echo "Note: $PREFIX/bin is not on your PATH. Start the player from the app launcher, or run $PREFIX/bin/musicplayer" ;;
+        *) echo "Note: $PREFIX/bin is not on your PATH. Start Streamline from the app launcher, or run $PREFIX/bin/streamline" ;;
     esac
     return 0
 }
