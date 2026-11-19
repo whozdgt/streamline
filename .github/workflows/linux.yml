@@ -66,7 +66,7 @@ jobs:
           $PM -U --noconfirm "$PKG" > install.log 2>&1 || { cat install.log; exit 1; }
           pacman -Qi streamline | grep -E '^(Name|Version|Depends On|Installed Size)'
           pacman -Ql streamline | grep -v '/$'
-          streamline --version
+          QT_QPA_PLATFORM=offscreen streamline --version      # on Linux, --version starts Qt, which needs a screen (a virtual one will do)
           grep -q 'linux-latest' /usr/bin/streamline && echo "updates from linux-latest: built in"
           # start it for real on a virtual screen, as a normal user, and take a picture of it
           mkdir -p /tmp/music && chmod 777 /tmp/music
