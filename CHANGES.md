@@ -2,7 +2,9 @@
 - **Streamline for Android.** It has its own app ID (`io.github.whozdgt.streamline`), so it installs beside Paraplay and keeps its own settings, music library, flashcards and to-dos.
 - Everything the Windows app has: music, flashcards (the Study tab) and to-dos (the To-dos tab). Signed in, to-dos sync with Dayline and with Streamline on your computer.
 - Every push to `main` builds it. The newest APK is always `Streamline-android.apk` on the `android-latest` release, and **Settings › About › Update now** downloads newer builds and hands them to Android's installer (Android asks once to allow installs from Streamline).
-- Every build is signed with the same key (`packaging/android/streamline-release.jks`), so updates install over each other and keep your data.
+- Builds are signed with a private key kept in GitHub's secrets, so nobody else can make an APK that Android would accept as an update.
+  Builds 1 and 2 were signed with a key that was public in this repository for a day; from build 3 on, that key only signs
+  the hand-over to the private one (Android's key rotation), so a phone with build 1 or 2 still updates normally and keeps its data.
 
 # Streamline 0.2.1: updates that install themselves on Windows
 - **Settings › About › Check now works on Windows.** It used to ask GitHub for a kind of release Streamline doesn't publish, so it always failed. It now reads the newest Windows build directly.

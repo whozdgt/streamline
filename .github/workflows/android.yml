@@ -7,17 +7,19 @@ name: android
 #  - every push to main: publishes the APK as the "android-latest" release. That is what the app's "Update now"
 #    button downloads, and you can also install it from that release page.
 #
-# Signing: Android only lets an update replace an install that was signed with the SAME key, so every build must be
-# signed with one fixed key. The first of these that exists is used:
-#   1. repository secrets (Settings > Secrets and variables > Actions), which keep the key private:
-#        ANDROID_KEYSTORE_BASE64   the .jks key file, base64 encoded
-#        ANDROID_KEY_ALIAS         the key's alias (default: streamline)
-#        ANDROID_KEYSTORE_PASSWORD the password, also used for the key (default: streamline-release)
-#   2. the key file packaging/android/streamline-release.jks (alias "streamline", password "streamline-release"),
-#      which is public in this repository
-#   3. otherwise a new throwaway key for each build: it installs, but can't update an earlier install, so it is never
-#      published as an update.
-# Switching keys after installing means uninstalling the app once (its to-dos and flashcards on the phone go with it).
+# Signing: Android only lets an update replace an install that was signed with the same key (or with a key the old one
+# handed over to). The keys live in two repository secrets (Settings > Secrets and variables > Actions), never in
+# this repository:
+#   ANDROID_KEYSTORE_BASE64    a PKCS12 keystore, base64 encoded, holding two keys:
+#                                "streamline"    the original key. Builds 1 and 2 were signed with it, and it was public
+#                                                in this repository for a day, so it only hands over to the new key now.
+#                                "streamline-2"  the private key every build is signed with.
+#   ANDROID_KEYSTORE_PASSWORD  its password (also the password of both keys)
+# Each build is signed with "streamline-2" plus a proof, signed by "streamline", that the old key handed over to it
+# (APK Signature Scheme v3 key rotation, for Android 9 and newer). So a phone with build 1 or 2 installs the update
+# normally, and once it has, Android refuses anything signed with the old key alone.
+# Without the secrets, each build is signed with throwaway keys: it installs, but can't update an earlier install, so
+# it is never published.
 #
 # The Google Play bundle (an .aab without the self-updater) is switched off: add "play" to the variant list below to
 # build it as well. See STORES.md.
@@ -150,36 +152,55 @@ jobs:
         if: matrix.variant == 'sideload'
         env:
           KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          KS_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run: |
+          set -o pipefail
           ver="$(sed -n 's/^project(musicplayer VERSION \([0-9.]*\).*/\1/p' CMakeLists.txt)"
           bt="$ANDROID_HOME/build-tools/${BUILD_TOOLS}"
           src="$(find build-android -name '*.apk' | sort | head -1)"
+          out="Streamline-${ver}-arm64.apk"
           echo "Built: $src"
-          if [ -n "$KS_B64" ]; then
+          old=streamline; new=streamline-2
+          if [ -n "$KS_B64" ] && [ -n "$KS_PASS" ]; then
             echo "$KS_B64" | base64 -d > release.jks
-            alias="${KS_ALIAS:-streamline}"; pass="${KS_PASS:-streamline-release}"
-            echo "real=true" >> "$GITHUB_OUTPUT"
-            echo "Signing with the key from the repository secrets."
-          elif [ -f packaging/android/streamline-release.jks ]; then
-            cp packaging/android/streamline-release.jks release.jks
-            alias="streamline"; pass="streamline-release"
-            echo "real=true" >> "$GITHUB_OUTPUT"
-            echo "Signing with packaging/android/streamline-release.jks (see the top of this file)."
+            pass="$KS_PASS"; real=true
+            # The old key must be Streamline's original one, or phones with build 1 or 2 couldn't take the update.
+            want=cf41a5931abeae0a1aaa904c25b763107447047319b951dba3259650d883ea97
+            got="$(keytool -exportcert -alias "$old" -keystore release.jks -storepass "$pass" 2>/dev/null | sha256sum | cut -d' ' -f1)"
+            if [ "$got" != "$want" ]; then echo "::error title=signing::The keystore secret has no \"$old\" key, or not the original one"; exit 1; fi
+            echo "Signing with the keys from the repository secrets."
           else
-            pass="streamline-throwaway"; alias="streamline"
-            echo "real=false" >> "$GITHUB_OUTPUT"
-            keytool -genkeypair -keystore release.jks -alias "$alias" -storepass "$pass" -keypass "$pass" \
-              -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Streamline build"
-            echo "::warning::No signing key set up: signed with a throwaway key and not published (see the top of this file)."
+            pass=streamline-throwaway; real=false
+            for a in "$old" "$new"; do
+              keytool -genkeypair -keystore release.jks -storetype PKCS12 -alias "$a" -storepass "$pass" -keypass "$pass" \
+                -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Streamline throwaway $a" 2> /dev/null
+            done
+            echo "::warning title=signing::No signing secrets set: signed with throwaway keys and not published (see the top of this file)."
           fi
+          newsha="$(keytool -exportcert -alias "$new" -keystore release.jks -storepass "$pass" 2>/dev/null | sha256sum | cut -d' ' -f1)"
           "$bt/zipalign" -f -P 16 4 "$src" aligned.apk       # 16 KB pages, for Android 15+ phones that use them
-          "$bt/apksigner" sign --ks release.jks --ks-key-alias "$alias" --ks-pass "pass:$pass" --key-pass "pass:$pass" \
-            --out "Streamline-${ver}-arm64.apk" aligned.apk
-          "$bt/apksigner" verify --print-certs "Streamline-${ver}-arm64.apk"
+          # the old key's signed hand-over to the new one (it may not take updates back: no rollback)
+          "$bt/apksigner" rotate --out lineage.bin \
+            --old-signer --ks release.jks --ks-key-alias "$old" --ks-pass "pass:$pass" --key-pass "pass:$pass" \
+            --new-signer --ks release.jks --ks-key-alias "$new" --ks-pass "pass:$pass" --key-pass "pass:$pass" 2>&1 | tee sign.log
+          # the new key signs for Android 9 and newer (the app's minimum), with the hand-over attached
+          "$bt/apksigner" sign \
+            --ks release.jks --ks-key-alias "$old" --ks-pass "pass:$pass" --key-pass "pass:$pass" \
+            --next-signer --ks release.jks --ks-key-alias "$new" --ks-pass "pass:$pass" --key-pass "pass:$pass" \
+            --lineage lineage.bin --rotation-min-sdk-version 28 \
+            --out "$out" aligned.apk 2>&1 | tee -a sign.log
           rm -f release.jks
-          echo "apk=Streamline-${ver}-arm64.apk" >> "$GITHUB_OUTPUT"
+          "$bt/apksigner" verify --verbose --print-certs "$out" > verify.txt 2>&1 || { cat verify.txt; echo "::error title=signing::apksigner verify failed"; exit 1; }
+          "$bt/apksigner" lineage --in "$out" --print-certs > lineage.txt 2>&1 || true
+          cat verify.txt lineage.txt | tee -a sign.log
+          # the same text where the Actions API shows it without signing in
+          esc() { sed -e 's/%/%25/g' "$1" | awk '{printf "%s%%0A", substr($0,1,200)}'; }
+          echo "::notice title=apksigner verify::$(esc verify.txt)"
+          echo "::notice title=apksigner lineage::$(esc lineage.txt)"
+          grep -q "Verified using v3 scheme (APK Signature Scheme v3): true" verify.txt || { echo "::error title=signing::No v3 signature"; exit 1; }
+          grep -qi "$newsha" verify.txt || { echo "::error title=signing::The APK isn't signed with the new key ($newsha)"; exit 1; }
+          echo "real=$real" >> "$GITHUB_OUTPUT"
+          echo "apk=$out" >> "$GITHUB_OUTPUT"
           echo "ver=${ver}" >> "$GITHUB_OUTPUT"
           ls -l Streamline-*.apk
 
@@ -205,7 +226,6 @@ jobs:
         if: matrix.variant == 'play'
         env:
           KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          KS_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run: |
           ver="$(sed -n 's/^project(musicplayer VERSION \([0-9.]*\).*/\1/p' CMakeLists.txt)"
@@ -214,10 +234,10 @@ jobs:
           echo "Built: $src"
           out="Streamline-${ver}-build${{ github.run_number }}-play.aab"
           cp "$src" "$out"
-          if [ -n "$KS_B64" ]; then
+          if [ -n "$KS_B64" ] && [ -n "$KS_PASS" ]; then
             echo "$KS_B64" | base64 -d > release.jks
-            alias="${KS_ALIAS:-streamline}"; pass="${KS_PASS:-streamline-release}"
-            echo "Signing with the key from the repository secrets (use it as the upload key in Play Console)."
+            alias=streamline-2; pass="$KS_PASS"
+            echo "Signing with the private key from the repository secrets (use it as the upload key in Play Console)."
           else
             pass="streamline-throwaway"; alias="streamline"
             keytool -genkeypair -keystore release.jks -alias "$alias" -storepass "$pass" -keypass "$pass" \
@@ -299,7 +319,7 @@ jobs:
         if: failure()
         run: |
           mkdir -p /tmp/ci-log
-          for f in configure.log build.log; do [ -f "$f" ] && tail -n 3000 "$f" > "/tmp/ci-log/android-$f"; done
+          for f in configure.log build.log sign.log; do [ -f "$f" ] && tail -n 3000 "$f" > "/tmp/ci-log/android-$f"; done
           echo "run ${{ github.run_number }}, commit ${{ github.sha }}" > /tmp/ci-log/README
           cd /tmp/ci-log && git init -q -b ci-log
           git -c user.name=ci -c user.email=ci@users.noreply.github.com add -A
