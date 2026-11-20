@@ -1,0 +1,264 @@
+==> Making package: streamline 0.0.0-1 (Fri Nov 20 09:38:49 2026)
+==> Checking runtime dependencies...
+==> Checking buildtime dependencies...
+==> Retrieving sources...
+==> Extracting sources...
+==> Starting pkgver()...
+==> Updated version: streamline 0.3.1.3-1
+==> Starting build()...
+-- The CXX compiler identification is GNU 16.2.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/sbin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Found OpenGL: /usr/lib/libOpenGL.so
+-- Found WrapOpenGL: TRUE
+-- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
+-- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
+-- Found PkgConfig: /usr/sbin/pkg-config (found version "3.0.11")
+-- Checking for module 'mpv'
+--   Found mpv, version 2.6.0
+-- Checking for module 'taglib'
+--   Found taglib, version 2.3.2
+CMake Warning (author) at /usr/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:3637 (message):
+  Qt policy QTP0004 is not set: You need qmldir files for each extra
+  directory that contains .qml files for your module.  Check
+  https://doc.qt.io/qt-6/qt-cmake-policy-qtp0004.html for policy details.
+  Use the qt_policy command to set the policy and suppress this warning.
+
+Call Stack (most recent call first):
+  /usr/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:4126 (__qt_internal_setup_policy)
+  /usr/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:1039 (qt6_target_qml_sources)
+  /usr/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:1492 (qt6_add_qml_module)
+  CMakeLists.txt:75 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- Configuring done (1.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: /__w/streamline/streamline/packaging/arch/src/build
+[1/183] Copying musicplayer qml resources into build dir
+[2/183] Copying musicplayer qml sources into build dir
+[3/183] Populating .qmlls.build.ini file at /__w/streamline/streamline/packaging/arch/src/build/.qt/.qmlls.build.ini
+[4/183] Running qmlimportscanner for musicplayer
+[5/183] Generating qt.conf part for musicplayer
+[6/183] Generating qt.conf file
+[7/183] Automatic MOC and UIC for target musicplayer
+[8/183] Running AUTOMOC file extraction for target musicplayer
+[9/183] Running rcc for resource qmake_Music
+[10/183] Generating .rcc/qmlcache/musicplayer_qmlcache_loader.cpp
+[11/183] Running moc --collect-json for target musicplayer
+[12/183] Automatic QML type registration for target musicplayer
+[13/183] Generating .rcc/qmlcache/musicplayer_qml_Icon_qml.cpp, .rcc/qmlcache/musicplayer_qml_Icon_qml.cpp.aotstats
+[14/183] Running rcc for resource musicplayer_raw_qml_0
+[15/183] Generating .rcc/qmlcache/musicplayer_qml_QualityChip_qml.cpp, .rcc/qmlcache/musicplayer_qml_QualityChip_qml.cpp.aotstats
+[16/183] Generating .rcc/qmlcache/musicplayer_qml_Progress_qml.cpp, .rcc/qmlcache/musicplayer_qml_Progress_qml.cpp.aotstats
+[17/183] Generating .rcc/qmlcache/musicplayer_qml_IconButton_qml.cpp, .rcc/qmlcache/musicplayer_qml_IconButton_qml.cpp.aotstats
+[18/183] Generating .rcc/qmlcache/musicplayer_qml_Cover_qml.cpp, .rcc/qmlcache/musicplayer_qml_Cover_qml.cpp.aotstats
+[19/183] Generating .rcc/qmlcache/musicplayer_qml_NavItem_qml.cpp, .rcc/qmlcache/musicplayer_qml_NavItem_qml.cpp.aotstats
+[20/183] Generating .rcc/qmlcache/musicplayer_qml_SongList_qml.cpp, .rcc/qmlcache/musicplayer_qml_SongList_qml.cpp.aotstats
+[21/183] Generating .rcc/qmlcache/musicplayer_qml_RoundImage_qml.cpp, .rcc/qmlcache/musicplayer_qml_RoundImage_qml.cpp.aotstats
+[22/183] Generating .rcc/qmlcache/musicplayer_qml_LibraryPage_qml.cpp, .rcc/qmlcache/musicplayer_qml_LibraryPage_qml.cpp.aotstats
+[23/183] Generating .rcc/qmlcache/musicplayer_qml_Sidebar_qml.cpp, .rcc/qmlcache/musicplayer_qml_Sidebar_qml.cpp.aotstats
+[24/183] Generating .rcc/qmlcache/musicplayer_qml_Dock_qml.cpp, .rcc/qmlcache/musicplayer_qml_Dock_qml.cpp.aotstats
+[25/183] Generating .rcc/qmlcache/musicplayer_qml_AlbumHeader_qml.cpp, .rcc/qmlcache/musicplayer_qml_AlbumHeader_qml.cpp.aotstats
+[26/183] Generating .rcc/qmlcache/musicplayer_qml_Groups_qml.cpp, .rcc/qmlcache/musicplayer_qml_Groups_qml.cpp.aotstats
+[27/183] Generating .rcc/qmlcache/musicplayer_qml_Carousel_qml.cpp, .rcc/qmlcache/musicplayer_qml_Carousel_qml.cpp.aotstats
+[28/183] Generating .rcc/qmlcache/musicplayer_qml_PlayerBar_qml.cpp, .rcc/qmlcache/musicplayer_qml_PlayerBar_qml.cpp.aotstats
+[29/183] Generating .rcc/qmlcache/musicplayer_qml_SectionLabel_qml.cpp, .rcc/qmlcache/musicplayer_qml_SectionLabel_qml.cpp.aotstats
+[30/183] Generating .rcc/qmlcache/musicplayer_qml_Slider255_qml.cpp, .rcc/qmlcache/musicplayer_qml_Slider255_qml.cpp.aotstats
+[31/183] Generating .rcc/qmlcache/musicplayer_qml_ExpandedPlayer_qml.cpp, .rcc/qmlcache/musicplayer_qml_ExpandedPlayer_qml.cpp.aotstats
+[32/183] Generating .rcc/qmlcache/musicplayer_qml_ToggleRow_qml.cpp, .rcc/qmlcache/musicplayer_qml_ToggleRow_qml.cpp.aotstats
+[33/183] Generating .rcc/qmlcache/musicplayer_qml_SettingsPanel_qml.cpp, .rcc/qmlcache/musicplayer_qml_SettingsPanel_qml.cpp.aotstats
+[34/183] Generating .rcc/qmlcache/musicplayer_qml_ColorEditor_qml.cpp, .rcc/qmlcache/musicplayer_qml_ColorEditor_qml.cpp.aotstats
+[35/183] Generating .rcc/qmlcache/musicplayer_qml_SettingItem_qml.cpp, .rcc/qmlcache/musicplayer_qml_SettingItem_qml.cpp.aotstats
+[36/183] Generating .rcc/qmlcache/musicplayer_qml_SetGroup_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetGroup_qml.cpp.aotstats
+[37/183] Generating .rcc/qmlcache/musicplayer_qml_SetAccordion_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetAccordion_qml.cpp.aotstats
+[38/183] Generating .rcc/qmlcache/musicplayer_qml_SetBlock_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetBlock_qml.cpp.aotstats
+[39/183] Generating .rcc/qmlcache/musicplayer_qml_SetSlider_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetSlider_qml.cpp.aotstats
+[40/183] Generating .rcc/qmlcache/musicplayer_qml_Main_qml.cpp, .rcc/qmlcache/musicplayer_qml_Main_qml.cpp.aotstats
+[41/183] Generating .rcc/qmlcache/musicplayer_qml_SliderRow_qml.cpp, .rcc/qmlcache/musicplayer_qml_SliderRow_qml.cpp.aotstats
+[42/183] Generating .rcc/qmlcache/musicplayer_qml_SetSearch_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetSearch_qml.cpp.aotstats
+[43/183] Generating .rcc/qmlcache/musicplayer_qml_ValueRow_qml.cpp, .rcc/qmlcache/musicplayer_qml_ValueRow_qml.cpp.aotstats
+[44/183] Generating .rcc/qmlcache/musicplayer_qml_SetNavItem_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetNavItem_qml.cpp.aotstats
+[45/183] Generating .rcc/qmlcache/musicplayer_qml_Swatch_qml.cpp, .rcc/qmlcache/musicplayer_qml_Swatch_qml.cpp.aotstats
+[46/183] Generating .rcc/qmlcache/musicplayer_qml_HexField_qml.cpp, .rcc/qmlcache/musicplayer_qml_HexField_qml.cpp.aotstats
+[47/183] Generating .rcc/qmlcache/musicplayer_qml_SetLibrary_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetLibrary_qml.cpp.aotstats
+[48/183] Generating .rcc/qmlcache/musicplayer_qml_SetSound_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetSound_qml.cpp.aotstats
+[49/183] Generating .rcc/qmlcache/musicplayer_qml_ThemeEditor_qml.cpp, .rcc/qmlcache/musicplayer_qml_ThemeEditor_qml.cpp.aotstats
+[50/183] Generating .rcc/qmlcache/musicplayer_qml_SetHome_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetHome_qml.cpp.aotstats
+[51/183] Generating .rcc/qmlcache/musicplayer_qml_SetLook_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetLook_qml.cpp.aotstats
+[52/183] Generating .rcc/qmlcache/musicplayer_qml_SearchBar_qml.cpp, .rcc/qmlcache/musicplayer_qml_SearchBar_qml.cpp.aotstats
+[53/183] Generating .rcc/qmlcache/musicplayer_qml_SetAbout_qml.cpp, .rcc/qmlcache/musicplayer_qml_SetAbout_qml.cpp.aotstats
+[54/183] Generating .rcc/qmlcache/musicplayer_qml_ArtistPhoto_qml.cpp, .rcc/qmlcache/musicplayer_qml_ArtistPhoto_qml.cpp.aotstats
+[55/183] Generating .rcc/qmlcache/musicplayer_qml_NamePrompt_qml.cpp, .rcc/qmlcache/musicplayer_qml_NamePrompt_qml.cpp.aotstats
+[56/183] Generating .rcc/qmlcache/musicplayer_qml_Btn_qml.cpp, .rcc/qmlcache/musicplayer_qml_Btn_qml.cpp.aotstats
+[57/183] Generating .rcc/qmlcache/musicplayer_qml_AuthPanel_qml.cpp, .rcc/qmlcache/musicplayer_qml_AuthPanel_qml.cpp.aotstats
+[58/183] Generating .rcc/qmlcache/musicplayer_qml_ProfilePage_qml.cpp, .rcc/qmlcache/musicplayer_qml_ProfilePage_qml.cpp.aotstats
+[59/183] Generating .rcc/qmlcache/musicplayer_qml_Avatar_qml.cpp, .rcc/qmlcache/musicplayer_qml_Avatar_qml.cpp.aotstats
+[60/183] Generating .rcc/qmlcache/musicplayer_qml_Field_qml.cpp, .rcc/qmlcache/musicplayer_qml_Field_qml.cpp.aotstats
+[61/183] Generating .rcc/qmlcache/musicplayer_qml_AddServerPanel_qml.cpp, .rcc/qmlcache/musicplayer_qml_AddServerPanel_qml.cpp.aotstats
+[62/183] Generating .rcc/qmlcache/musicplayer_qml_ImagePopup_qml.cpp, .rcc/qmlcache/musicplayer_qml_ImagePopup_qml.cpp.aotstats
+[63/183] Generating .rcc/qmlcache/musicplayer_qml_CoverTile_qml.cpp, .rcc/qmlcache/musicplayer_qml_CoverTile_qml.cpp.aotstats
+[64/183] Generating .rcc/qmlcache/musicplayer_qml_FollowButton_qml.cpp, .rcc/qmlcache/musicplayer_qml_FollowButton_qml.cpp.aotstats
+[65/183] Generating .rcc/qmlcache/musicplayer_qml_PersonRow_qml.cpp, .rcc/qmlcache/musicplayer_qml_PersonRow_qml.cpp.aotstats
+[66/183] Generating .rcc/qmlcache/musicplayer_qml_Chip_qml.cpp, .rcc/qmlcache/musicplayer_qml_Chip_qml.cpp.aotstats
+[67/183] Generating .rcc/qmlcache/musicplayer_qml_TwoColumns_qml.cpp, .rcc/qmlcache/musicplayer_qml_TwoColumns_qml.cpp.aotstats
+[68/183] Generating .rcc/qmlcache/musicplayer_qml_FriendsPage_qml.cpp, .rcc/qmlcache/musicplayer_qml_FriendsPage_qml.cpp.aotstats
+[69/183] Generating .rcc/qmlcache/musicplayer_qml_PublicProfile_qml.cpp, .rcc/qmlcache/musicplayer_qml_PublicProfile_qml.cpp.aotstats
+[70/183] Generating .rcc/qmlcache/musicplayer_qml_FolderPicker_qml.cpp, .rcc/qmlcache/musicplayer_qml_FolderPicker_qml.cpp.aotstats
+[71/183] Generating .rcc/qmlcache/musicplayer_qml_ProfilePreview_qml.cpp, .rcc/qmlcache/musicplayer_qml_ProfilePreview_qml.cpp.aotstats
+[72/183] Generating .rcc/qmlcache/musicplayer_qml_FriendPlaylist_qml.cpp, .rcc/qmlcache/musicplayer_qml_FriendPlaylist_qml.cpp.aotstats
+[73/183] Generating .rcc/qmlcache/musicplayer_qml_LyricsView_qml.cpp, .rcc/qmlcache/musicplayer_qml_LyricsView_qml.cpp.aotstats
+[74/183] Generating .rcc/qmlcache/musicplayer_qml_GalleryPicker_qml.cpp, .rcc/qmlcache/musicplayer_qml_GalleryPicker_qml.cpp.aotstats
+[75/183] Generating .rcc/qmlcache/musicplayer_qml_Welcome_qml.cpp, .rcc/qmlcache/musicplayer_qml_Welcome_qml.cpp.aotstats
+[76/183] Generating .rcc/qmlcache/musicplayer_qml_HomeLayout_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomeLayout_qml.cpp.aotstats
+[77/183] Generating .rcc/qmlcache/musicplayer_qml_HomeHeading_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomeHeading_qml.cpp.aotstats
+[78/183] Generating .rcc/qmlcache/musicplayer_qml_HomeFriends_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomeFriends_qml.cpp.aotstats
+[79/183] Generating .rcc/qmlcache/musicplayer_qml_HomeRequests_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomeRequests_qml.cpp.aotstats
+[80/183] Generating .rcc/qmlcache/musicplayer_qml_HomePerson_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomePerson_qml.cpp.aotstats
+[81/183] Generating .rcc/qmlcache/musicplayer_qml_HomePage_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomePage_qml.cpp.aotstats
+[82/183] Generating .rcc/qmlcache/musicplayer_qml_HomeTop_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomeTop_qml.cpp.aotstats
+[83/183] Generating .rcc/qmlcache/musicplayer_qml_TextBox_qml.cpp, .rcc/qmlcache/musicplayer_qml_TextBox_qml.cpp.aotstats
+[84/183] Generating .rcc/qmlcache/musicplayer_qml_HomeSongs_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomeSongs_qml.cpp.aotstats
+[85/183] Generating .rcc/qmlcache/musicplayer_qml_HomeStrip_qml.cpp, .rcc/qmlcache/musicplayer_qml_HomeStrip_qml.cpp.aotstats
+[86/183] Generating .rcc/qmlcache/musicplayer_qml_TodosPage_qml.cpp, .rcc/qmlcache/musicplayer_qml_TodosPage_qml.cpp.aotstats
+[87/183] Generating .rcc/qmlcache/musicplayer_qml_FlashcardsPage_qml.cpp, .rcc/qmlcache/musicplayer_qml_FlashcardsPage_qml.cpp.aotstats
+[88/183] Building CXX object CMakeFiles/musicplayer.dir/src/cover.cpp.o
+[89/183] Building CXX object CMakeFiles/musicplayer.dir/src/lyrics.cpp.o
+[90/183] Building CXX object CMakeFiles/musicplayer.dir/src/player.cpp.o
+[91/183] Building CXX object CMakeFiles/musicplayer.dir/musicplayer_autogen/mocs_compilation.cpp.o
+[92/183] Building CXX object CMakeFiles/musicplayer.dir/src/main.cpp.o
+/__w/streamline/streamline/src/main.cpp: In function ‘int main(int, char**)’:
+/__w/streamline/streamline/src/main.cpp:96:46: warning: ‘QQmlPropertyMap::QQmlPropertyMap(QObject*)’ is deprecated: Use create() or the protected two-argument constructor instead. [-Wdeprecated-declarations]
+   96 |     auto *settings = new QQmlPropertyMap(&app);
+      |                                              ^
+In file included from /usr/include/qt6/QtQml/QQmlPropertyMap:1,
+                 from /__w/streamline/streamline/src/main.cpp:13:
+/usr/include/qt6/QtQml/qqmlpropertymap.h:28:14: note: declared here
+   28 |     explicit QQmlPropertyMap(QObject *parent = nullptr);
+      |              ^~~~~~~~~~~~~~~
+[93/183] Building CXX object CMakeFiles/musicplayer.dir/src/artistimages.cpp.o
+[94/183] Building CXX object CMakeFiles/musicplayer.dir/src/updater.cpp.o
+[95/183] Building CXX object CMakeFiles/musicplayer.dir/src/library.cpp.o
+[96/183] Building CXX object CMakeFiles/musicplayer.dir/src/playlists.cpp.o
+[97/183] Building CXX object CMakeFiles/musicplayer.dir/src/folders.cpp.o
+[98/183] Building CXX object CMakeFiles/musicplayer.dir/src/social.cpp.o
+[99/183] Building CXX object CMakeFiles/musicplayer.dir/src/account.cpp.o
+[100/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.qt/rcc/qrc_qmake_Music.cpp.o
+[101/183] Building CXX object CMakeFiles/musicplayer.dir/src/servers.cpp.o
+[102/183] Building CXX object CMakeFiles/musicplayer.dir/musicplayer_qmltyperegistrations.cpp.o
+[103/183] Building CXX object CMakeFiles/musicplayer.dir/src/playstats.cpp.o
+[104/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qmlcache_loader.cpp.o
+[105/183] Building CXX object CMakeFiles/musicplayer.dir/src/flashcards.cpp.o
+[106/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Icon_qml.cpp.o
+[107/183] Building CXX object CMakeFiles/musicplayer.dir/src/todos.cpp.o
+[108/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_IconButton_qml.cpp.o
+[109/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Progress_qml.cpp.o
+[110/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Cover_qml.cpp.o
+[111/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_QualityChip_qml.cpp.o
+[112/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_NavItem_qml.cpp.o
+[113/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_RoundImage_qml.cpp.o
+[114/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SongList_qml.cpp.o
+[115/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Sidebar_qml.cpp.o
+[116/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Dock_qml.cpp.o
+[117/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_LibraryPage_qml.cpp.o
+[118/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Groups_qml.cpp.o
+[119/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_AlbumHeader_qml.cpp.o
+[120/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Main_qml.cpp.o
+[121/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_PlayerBar_qml.cpp.o
+[122/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SectionLabel_qml.cpp.o
+[123/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Carousel_qml.cpp.o
+[124/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ExpandedPlayer_qml.cpp.o
+[125/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ColorEditor_qml.cpp.o
+[126/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Slider255_qml.cpp.o
+[127/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ToggleRow_qml.cpp.o
+[128/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SettingsPanel_qml.cpp.o
+[129/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SettingItem_qml.cpp.o
+[130/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetGroup_qml.cpp.o
+[131/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetBlock_qml.cpp.o
+[132/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SliderRow_qml.cpp.o
+[133/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetSlider_qml.cpp.o
+[134/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetAccordion_qml.cpp.o
+[135/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ValueRow_qml.cpp.o
+[136/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetNavItem_qml.cpp.o
+[137/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetSearch_qml.cpp.o
+[138/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HexField_qml.cpp.o
+[139/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Swatch_qml.cpp.o
+[140/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetSound_qml.cpp.o
+[141/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ThemeEditor_qml.cpp.o
+[142/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetLibrary_qml.cpp.o
+[143/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetLook_qml.cpp.o
+[144/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetHome_qml.cpp.o
+[145/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SetAbout_qml.cpp.o
+[146/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ArtistPhoto_qml.cpp.o
+[147/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_SearchBar_qml.cpp.o
+[148/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_NamePrompt_qml.cpp.o
+[149/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Btn_qml.cpp.o
+[150/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_AuthPanel_qml.cpp.o
+[151/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Avatar_qml.cpp.o
+[152/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ProfilePage_qml.cpp.o
+[153/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_CoverTile_qml.cpp.o
+[154/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Field_qml.cpp.o
+[155/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ImagePopup_qml.cpp.o
+[156/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_FollowButton_qml.cpp.o
+[157/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_AddServerPanel_qml.cpp.o
+[158/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_PersonRow_qml.cpp.o
+[159/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Chip_qml.cpp.o
+[160/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_TwoColumns_qml.cpp.o
+[161/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_FriendsPage_qml.cpp.o
+[162/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_ProfilePreview_qml.cpp.o
+[163/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_FriendPlaylist_qml.cpp.o
+[164/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_PublicProfile_qml.cpp.o
+[165/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_FolderPicker_qml.cpp.o
+[166/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_GalleryPicker_qml.cpp.o
+[167/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomeLayout_qml.cpp.o
+[168/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_LyricsView_qml.cpp.o
+[169/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_Welcome_qml.cpp.o
+[170/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomeHeading_qml.cpp.o
+[171/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomePerson_qml.cpp.o
+[172/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomePage_qml.cpp.o
+[173/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomeFriends_qml.cpp.o
+[174/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomeRequests_qml.cpp.o
+[175/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomeTop_qml.cpp.o
+[176/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.qt/rcc/qrc_musicplayer_raw_qml_0.cpp.o
+[177/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomeSongs_qml.cpp.o
+[178/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_HomeStrip_qml.cpp.o
+[179/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_TextBox_qml.cpp.o
+[180/183] Building CXX object CMakeFiles/musicplayer.dir/src/mpris.cpp.o
+[181/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_FlashcardsPage_qml.cpp.o
+[182/183] Building CXX object CMakeFiles/musicplayer.dir/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_TodosPage_qml.cpp.o
+[183/183] Linking CXX executable musicplayer
+==> Starting check()...
+streamline 0.3.1
+==> Entering fakeroot environment...
+==> Starting package()...
+-- Install configuration: "Release"
+-- Installing: /__w/streamline/streamline/packaging/arch/pkg/streamline/usr/bin/streamline
+-- Installing: /__w/streamline/streamline/packaging/arch/pkg/streamline/usr/share/applications/streamline.desktop
+-- Installing: /__w/streamline/streamline/packaging/arch/pkg/streamline/usr/share/icons/hicolor/scalable/apps/streamline.svg
+-- Installing: /__w/streamline/streamline/packaging/arch/pkg/streamline/usr/share/icons/hicolor/48x48/apps/streamline.png
+-- Installing: /__w/streamline/streamline/packaging/arch/pkg/streamline/usr/share/icons/hicolor/64x64/apps/streamline.png
+-- Installing: /__w/streamline/streamline/packaging/arch/pkg/streamline/usr/share/icons/hicolor/128x128/apps/streamline.png
+-- Installing: /__w/streamline/streamline/packaging/arch/pkg/streamline/usr/share/icons/hicolor/256x256/apps/streamline.png
+-- Installing: /__w/streamline/streamline/packaging/arch/pkg/streamline/usr/share/icons/hicolor/512x512/apps/streamline.png
+==> Tidying install...
+  -> Removing libtool files...
+  -> Removing static library files...
+  -> Purging unwanted files...
+  -> Stripping unneeded symbols from binaries and libraries...
+  -> Compressing man and info pages...
+==> Checking for packaging issues...
+==> Creating package "streamline"...
+  -> Generating .PKGINFO file...
+  -> Generating .BUILDINFO file...
+  -> Generating .MTREE file...
+  -> Compressing package...
+==> Leaving fakeroot environment.
+==> Finished making: streamline 0.3.1.3-1 (Fri Nov 20 09:42:24 2026)
