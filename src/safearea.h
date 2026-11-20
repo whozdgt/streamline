@@ -26,7 +26,16 @@ public:
         if (!w) return;
         // Phones report the bars a moment after start, and again after a rotation. Reading them is cheap, so look
         // again whenever the window changes size and, to be sure, once a second.
-        const auto read = [this, w]() { set(w->safeAreaMargins()); };
+        // STREAMLINE_FAKE_INSETS=top,bottom pretends a phone's bars are there, for checking the layout on a computer.
+        const QByteArray fake = qgetenv("STREAMLINE_FAKE_INSETS");
+        const auto read = [this, w, fake]() {
+            if (!fake.isEmpty()) {
+                const auto p = fake.split(',');
+                set(QMargins(0, p.value(0).toInt(), 0, p.value(1).toInt()));
+            } else {
+                set(w->safeAreaMargins());
+            }
+        };
         read();
         connect(w, &QWindow::widthChanged, this, read);
         connect(w, &QWindow::heightChanged, this, read);

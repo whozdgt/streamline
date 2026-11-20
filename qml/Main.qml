@@ -201,38 +201,43 @@ Window {
             border.width: win.opaque || settings.round ? 0 : 1
             border.color: Qt.rgba(1, 1, 1, 0.75)
 
+            // The glow covers the whole window, including the strips under the status bar and gesture bar that the app itself keeps out of.
             Shape {
-                anchors.fill: parent
+                id: glow
+                x: -safeArea.left / win.uiS
+                y: -safeArea.top / win.uiS
+                width: win.width / win.uiS
+                height: win.height / win.uiS
                 ShapePath {
                     strokeColor: "transparent"
                     strokeWidth: -1
                     fillGradient: RadialGradient {
-                        centerX: win.lw * 0.18; centerY: win.lh * 0.12
-                        centerRadius: win.lw * 0.55
+                        centerX: glow.width * 0.18; centerY: glow.height * 0.12
+                        centerRadius: glow.width * 0.55
                         focalX: centerX; focalY: centerY
                         GradientStop { position: 0; color: Qt.rgba(win.glowA.r, win.glowA.g, win.glowA.b, 0.5 * win.glowOn) }
                         GradientStop { position: 1; color: Qt.rgba(win.glowA.r, win.glowA.g, win.glowA.b, 0) }
                     }
                     startX: 0; startY: 0
-                    PathLine { x: win.lw; y: 0 }
-                    PathLine { x: win.lw; y: win.lh }
-                    PathLine { x: 0; y: win.lh }
+                    PathLine { x: glow.width; y: 0 }
+                    PathLine { x: glow.width; y: glow.height }
+                    PathLine { x: 0; y: glow.height }
                     PathLine { x: 0; y: 0 }
                 }
                 ShapePath {
                     strokeColor: "transparent"
                     strokeWidth: -1
                     fillGradient: RadialGradient {
-                        centerX: win.lw * 0.85; centerY: win.lh * 0.92
-                        centerRadius: win.lw * 0.6
+                        centerX: glow.width * 0.85; centerY: glow.height * 0.92
+                        centerRadius: glow.width * 0.6
                         focalX: centerX; focalY: centerY
                         GradientStop { position: 0; color: Qt.rgba(win.glowB.r, win.glowB.g, win.glowB.b, 0.5 * win.glowOn) }
                         GradientStop { position: 1; color: Qt.rgba(win.glowB.r, win.glowB.g, win.glowB.b, 0) }
                     }
                     startX: 0; startY: 0
-                    PathLine { x: win.lw; y: 0 }
-                    PathLine { x: win.lw; y: win.lh }
-                    PathLine { x: 0; y: win.lh }
+                    PathLine { x: glow.width; y: 0 }
+                    PathLine { x: glow.width; y: glow.height }
+                    PathLine { x: 0; y: glow.height }
                     PathLine { x: 0; y: 0 }
                 }
             }

@@ -13,12 +13,16 @@ Item {
     readonly property color pri: settings.ink
     readonly property color muted: Qt.rgba(pri.r, pri.g, pri.b, 0.72)
 
-    height: settings.round ? 52 : 44
+    // When the heading and what sits on the right don't fit side by side (a phone, "Your top artists" with two buttons), the right side drops under it.
+    readonly property bool stacked: right.children.length > 0 && right.implicitWidth > 0 && headRow.implicitWidth + right.implicitWidth + 16 > width
+    readonly property int base: settings.round ? 52 : 44
+    height: stacked ? base + right.implicitHeight + 4 : base
     // Midnight: a big bold heading in sentence case ("Your top artists"), with a › to see all
     readonly property string shownText: settings.round ? root.text.charAt(0) + root.text.slice(1).toLowerCase() : root.text
 
     Row {
-        anchors.verticalCenter: parent.verticalCenter
+        id: headRow
+        y: (root.base - height) / 2
         spacing: 8
         Text {
             anchors.verticalCenter: parent.verticalCenter
@@ -39,7 +43,8 @@ Item {
     }
     Row {
         id: right
-        anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+        x: root.stacked ? 0 : root.width - width
+        y: root.stacked ? root.base - 4 : (root.base - height) / 2
         spacing: 8
         Item {
             visible: root.link !== ""
