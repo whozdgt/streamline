@@ -109,6 +109,7 @@ Item {
     // ---- the mini player ----
     PlayerBar {
         id: mini
+        tucked: root.tucked
         visible: root.hasTrack
         height: 60
         x: root.tucked ? 72 : 0

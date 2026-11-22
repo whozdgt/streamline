@@ -70,6 +70,9 @@ jobs:
           shot phone-library 390x844 --mobile --set startView=library
           shot phone-album 390x844 --mobile --set "startAlbum=Night Drive"
           shot phone-playing 390x844 --mobile --set startPlay=true --set startView=library
+          shot phone-tucked 390x844 --mobile --set startPlay=true --set startTucked=true --set startView=todos
+          shot phone-tucked-classic 390x844 --mobile --set theme=classic --set startPlay=true --set startTucked=true --set startView=todos
+          STREAMLINE_FAKE_INSETS=60,34 shot phone-settings-insets 390x844 --mobile --set theme=classic --set startPlay=true --set startSettings=look
           STREAMLINE_FAKE_INSETS=60,34 shot phone-glow-insets 390x844 --mobile --set startPlay=true --set startView=library
           shot phone-classic 390x844 --mobile --set theme=classic
           shot phone-flashcards 390x844 --mobile --set startView=flashcards

@@ -168,7 +168,7 @@ Window {
         if (settings.startExpanded) expanded = true
         if (settings.startPanel === "addServer") addServerOpen = true
         if (settings.startPanel === "auth") authOpen = true
-        if (settings.startAlbum || settings.startPlay) startTimer.start()
+        if (settings.startAlbum || settings.startPlay || settings.startTucked) startTimer.start()
     }
     Timer {      // --set startAlbum=<name> / startPlay=true: wait for the scan, then open that album or play the first song
         id: startTimer
@@ -180,6 +180,7 @@ Window {
                     if (list[i].name === settings.startAlbum) { win.pick("album", list[i].key, list[i].name, phone ? "library" : "albums"); break }
             }
             if (settings.startPlay) player.playRow(0)
+            if (settings.startTucked) barsTucked = true      // --set startTucked=true: the player squeezed into the bottom bar
         }
     }
 
@@ -797,6 +798,17 @@ Window {
             anchors.fill: parent
             visible: win.settingsOpen
             onClicked: win.settingsOpen = false
+        }
+
+        Rectangle {      // phone: Settings fills the screen, so its background also covers the strips under the status and gesture bars
+            z: 19
+            visible: win.phone && settingsPanel.visible
+            opacity: settingsPanel.opacity
+            x: -safeArea.left / win.uiS
+            y: -safeArea.top / win.uiS
+            width: win.width / win.uiS
+            height: win.height / win.uiS
+            color: settings.ground
         }
 
         SettingsPanel {

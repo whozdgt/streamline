@@ -4,6 +4,7 @@ import QtQuick.Layouts
 Rectangle {
     id: root
     signal expand()
+    property bool tucked: false       // squeezed into the bottom bar between two tabs: cover and buttons only, no song name
     readonly property bool compact: width < 560      // phone: cover, title, play/next and a thin progress line
     readonly property color pri: settings.ink
     readonly property color muted: Qt.rgba(pri.r, pri.g, pri.b, 0.72)
@@ -33,7 +34,9 @@ Rectangle {
             hoverScale: 1.7
             onClicked: root.expand()
         }
+        Item { Layout.fillWidth: true; visible: root.tucked }
         ColumnLayout {
+            visible: !root.tucked
             Layout.preferredWidth: root.compact ? 100 : 150
             Layout.fillWidth: root.compact
             spacing: 0
@@ -59,10 +62,11 @@ Rectangle {
         Item { Layout.fillWidth: true; visible: !root.compact }
         Row {
             spacing: 4
-            IconButton { visible: !root.compact; name: "prev"; box: 36; onClicked: player.prev() }
+            IconButton { visible: !root.compact || root.tucked; name: "prev"; box: 36; onClicked: player.prev() }
             IconButton { name: player.playing ? "pause" : "play"; box: 40; iconSize: 18; bg: root.pri; fg: settings.onInk; onClicked: player.toggle() }
             IconButton { name: "next"; box: 36; onClicked: player.next() }
         }
+        Item { Layout.fillWidth: true; visible: root.tucked }
         Progress { visible: !root.compact; Layout.preferredWidth: 200 }
     }
 
