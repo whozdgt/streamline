@@ -112,6 +112,7 @@ Item {
             id: col
             x: root.gutter
             width: Math.min(root.width - 2 * root.gutter, 880)
+            topPadding: 8
             spacing: 14
 
             // ---------------- the list of pods ----------------
@@ -217,77 +218,6 @@ Item {
                         : (root.plural(root.info.docCount || 0, "document") + (root.info.sortedLabel ? " · " + root.info.sortedLabel : ""))
                 }
 
-                // how to sort
-                Card {
-                    Text { text: "Topics"; font.pixelSize: 13; color: settings.inkSoft }
-                    Flow {
-                        width: parent.width
-                        spacing: 8
-                        Repeater {
-                            model: [{ k: 0, t: "Broad" }, { k: 1, t: "Balanced" }, { k: 2, t: "Specific" }]
-                            Pill { required property var modelData; label: modelData.t; selected: root.detail === modelData.k; onClicked: root.detail = modelData.k }
-                        }
-                    }
-                    Flow {
-                        width: parent.width
-                        spacing: 10
-                        Btn { label: "Sort on this device"; enabled: !root.info.busy; onClicked: pods.resort(root.podId, root.detail) }
-                        Btn { label: "Sort with Claude"; primary: false; enabled: !root.info.busy && pods.hasKey; onClicked: pods.sortWithAi(root.podId, root.detail) }
-                        Btn { label: "Check for new files"; primary: false; enabled: !root.info.busy; onClicked: pods.refresh(root.podId) }
-                    }
-                    Para { text: pods.hasKey ? "Sorting again replaces topic names you have changed. “Check for new files” keeps them, and puts new documents in the topic they fit best."
-                                             : "Sorting again replaces topic names you have changed. To sort with Claude, add an API key on the Pods page." }
-                }
-
-                // the real files
-                Card {
-                    Text { text: "Your files"; font.pixelSize: 13; color: settings.inkSoft }
-                    Para {
-                        color: settings.ink
-                        text: root.info.moved ? "Your documents were moved into a folder for each topic."
-                                              : "Topics only exist in Streamline for now. Your files are where they were."
-                    }
-                    Link {
-                        visible: !root.confirmMove && !root.info.busy
-                        text: root.info.moved ? "Undo the move" : "Move the files into topic folders…"
-                        font.underline: true
-                        onClicked: {
-                            if (root.info.moved) {
-                                const r = pods.undoMove(root.podId)
-                                root.note = "Put back " + root.plural(r.moved, "file") + (r.failed > 0 ? ". " + r.failed + " couldn't be moved: is one open in another app?" : ".")
-                            } else {
-                                const p = pods.movePlan(root.podId)
-                                planText.text = p.files === 0 ? "Every document is already in its topic's folder."
-                                    : "This makes " + root.plural(p.folders, "folder") + " inside " + root.info.folder + " (" + p.names.join(", ") + ") and moves "
-                                      + root.plural(p.files, "document") + " into them. Documents under Other stay where they are. You can undo this here."
-                                moveBtn.visible = p.files > 0
-                                root.confirmMove = true
-                            }
-                        }
-                    }
-                    Column {
-                        visible: root.confirmMove
-                        width: parent.width
-                        spacing: 10
-                        Para { id: planText; color: settings.ink }
-                        Flow {
-                            width: parent.width
-                            spacing: 10
-                            Btn {
-                                id: moveBtn
-                                label: "Move files"
-                                onClicked: {
-                                    const r = pods.moveFiles(root.podId)
-                                    root.confirmMove = false
-                                    root.note = "Moved " + root.plural(r.moved, "file") + (r.failed > 0 ? ". " + r.failed + " couldn't be moved: is one open in another app?" : ".")
-                                }
-                            }
-                            Btn { label: "Cancel"; primary: false; onClicked: root.confirmMove = false }
-                        }
-                    }
-                    Para { visible: root.note !== ""; text: root.note; color: settings.accent }
-                }
-
                 Field { width: root.narrow ? parent.width : 360; placeholder: "Search this pod"; onTextChanged: root.query = text }
 
                 Para {
@@ -363,6 +293,77 @@ Item {
                             onClicked: { const e = Object.assign({}, root.expanded); e[tc.modelData.id] = true; root.expanded = e }
                         }
                     }
+                }
+
+                // how to sort
+                Card {
+                    Text { text: "Sort again"; font.pixelSize: 13; color: settings.inkSoft }
+                    Flow {
+                        width: parent.width
+                        spacing: 8
+                        Repeater {
+                            model: [{ k: 0, t: "Broad" }, { k: 1, t: "Balanced" }, { k: 2, t: "Specific" }]
+                            Pill { required property var modelData; label: modelData.t; selected: root.detail === modelData.k; onClicked: root.detail = modelData.k }
+                        }
+                    }
+                    Flow {
+                        width: parent.width
+                        spacing: 10
+                        Btn { label: "Sort on this device"; enabled: !root.info.busy; onClicked: pods.resort(root.podId, root.detail) }
+                        Btn { label: "Sort with Claude"; primary: false; enabled: !root.info.busy && pods.hasKey; onClicked: pods.sortWithAi(root.podId, root.detail) }
+                        Btn { label: "Check for new files"; primary: false; enabled: !root.info.busy; onClicked: pods.refresh(root.podId) }
+                    }
+                    Para { text: pods.hasKey ? "Sorting again replaces topic names you have changed. “Check for new files” keeps them, and puts new documents in the topic they fit best."
+                                             : "Sorting again replaces topic names you have changed. To sort with Claude, add an API key on the Pods page." }
+                }
+
+                // the real files
+                Card {
+                    Text { text: "Your files"; font.pixelSize: 13; color: settings.inkSoft }
+                    Para {
+                        color: settings.ink
+                        text: root.info.moved ? "Your documents were moved into a folder for each topic."
+                                              : "Topics only exist in Streamline for now. Your files are where they were."
+                    }
+                    Link {
+                        visible: !root.confirmMove && !root.info.busy
+                        text: root.info.moved ? "Undo the move" : "Move the files into topic folders…"
+                        font.underline: true
+                        onClicked: {
+                            if (root.info.moved) {
+                                const r = pods.undoMove(root.podId)
+                                root.note = "Put back " + root.plural(r.moved, "file") + (r.failed > 0 ? ". " + r.failed + " couldn't be moved: is one open in another app?" : ".")
+                            } else {
+                                const p = pods.movePlan(root.podId)
+                                planText.text = p.files === 0 ? "Every document is already in its topic's folder."
+                                    : "This makes " + root.plural(p.folders, "folder") + " inside " + root.info.folder + " (" + p.names.join(", ") + ") and moves "
+                                      + root.plural(p.files, "document") + " into them. Documents under Other stay where they are. You can undo this here."
+                                moveBtn.visible = p.files > 0
+                                root.confirmMove = true
+                            }
+                        }
+                    }
+                    Column {
+                        visible: root.confirmMove
+                        width: parent.width
+                        spacing: 10
+                        Para { id: planText; color: settings.ink }
+                        Flow {
+                            width: parent.width
+                            spacing: 10
+                            Btn {
+                                id: moveBtn
+                                label: "Move files"
+                                onClicked: {
+                                    const r = pods.moveFiles(root.podId)
+                                    root.confirmMove = false
+                                    root.note = "Moved " + root.plural(r.moved, "file") + (r.failed > 0 ? ". " + r.failed + " couldn't be moved: is one open in another app?" : ".")
+                                }
+                            }
+                            Btn { label: "Cancel"; primary: false; onClicked: root.confirmMove = false }
+                        }
+                    }
+                    Para { visible: root.note !== ""; text: root.note; color: settings.accent }
                 }
 
                 Item { width: 1; height: 8 }

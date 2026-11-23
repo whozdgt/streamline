@@ -253,16 +253,13 @@ void name(const Model &m, Topic &t, size_t total)
     std::vector<std::string> picked;
     std::vector<double> pickedCover;
     std::set<std::string> used;           // word keys already shown, so "Cold War" isn't followed by "War"
+    // Skip what adds nothing: a word already shown, or a phrase starting with one ("Congo", then "Congo Free").
+    // "Lady Macbeth" after "Macbeth" stays: it adds a word at the front.
     auto covered = [&](const std::string &key) {
-        size_t i = 0;
-        bool all = true;
-        while (i < key.size()) {
-            size_t j = key.find(' ', i);
-            if (j == std::string::npos) j = key.size();
-            if (!used.count(key.substr(i, j - i))) all = false;
-            i = j + 1;
-        }
-        return all;
+        const size_t sp = key.find(' ');
+        if (used.count(key.substr(0, sp))) return true;
+        if (sp == std::string::npos) return false;
+        return used.count(key.substr(sp + 1)) > 0 && used.count(key.substr(0, sp)) > 0;
     };
     for (const auto &s : scored) {
         const std::string &key = m.terms[size_t(s.second)];
