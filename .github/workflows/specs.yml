@@ -75,7 +75,8 @@ jobs:
             ./spec_test "specs/$name.pdf" --head
             ./spec_test "specs/$name.pdf" | head -260
             # where a heading's layout needs a closer look (a few lines either side, cut short)
-            for probe in "1.13" "2.10" "4.2.3.1" "3.2.3.1" "(h) Transport" "Key topic 2: Involvements"; do
+            for f in "2c" "7402" "Content of topics"; do ./spec_test "specs/$name.pdf" --find "$f"; done
+            for probe in "(h) Transport" "Key topic 2: Involvements"; do
               out="$(./spec_test "specs/$name.pdf" --around "$probe")"
               [ -n "$out" ] && echo "around \"$probe\":" && echo "$out"
             done

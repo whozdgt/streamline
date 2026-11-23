@@ -28,6 +28,13 @@ int main(int argc, char **argv)
         for (int i = 0; i < 12 && std::getline(in, line); ++i) std::printf("  | %s\n", line.substr(0, 80).c_str());
         return 0;
     }
+    if (argc > 3 && std::strcmp(argv[2], "--find") == 0) {      // the first few lines containing argv[3], cut short
+        std::istringstream in(text);
+        int shown = 0;
+        for (std::string line; std::getline(in, line) && shown < 4;)
+            if (line.find(argv[3]) != std::string::npos) { std::printf("  find: %s\n", line.substr(0, 80).c_str()); ++shown; }
+        return 0;
+    }
     if (argc > 3 && std::strcmp(argv[2], "--around") == 0) {    // a few lines either side of the first line starting with argv[3]
         std::vector<std::string> ls;
         std::istringstream in(text);
