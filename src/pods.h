@@ -37,7 +37,8 @@ public:
     // specification's points). Takes effect on the next sort.
     Q_INVOKABLE void setLayout(const QString &id, const QString &layout);
     Q_INVOKABLE QVariantMap setSpec(const QString &id, const QString &name, const QString &text);   // { points } or { error }
-    Q_INVOKABLE QVariantMap readSpecFile(const QString &url) const;   // { name, text } or { error }: Word, OpenDocument, text
+    Q_INVOKABLE QVariantMap readSpecFile(const QString &url) const;   // { name, text, board } or { error }: PDF, Word, OpenDocument, text
+    static QVariantMap specFromData(const QByteArray &data, const QString &fileName);
     Q_INVOKABLE void refresh(const QString &id);             // picks up new and deleted files, keeps your topics
     Q_INVOKABLE void renameTopic(const QString &podId, const QString &topicId, const QString &name);
     Q_INVOKABLE void moveDoc(const QString &podId, const QString &path, const QString &topicId);   // topicId "new" makes a topic

@@ -406,7 +406,7 @@ Item {
                 FileDialog {
                     id: specDialog
                     title: "Choose your spec"
-                    nameFilters: ["Documents (*.docx *.odt *.txt *.md)", "All files (*)"]
+                    nameFilters: ["Specifications (*.pdf *.docx *.odt *.txt *.md)", "All files (*)"]
                     onAccepted: {
                         const r = pods.readSpecFile(selectedFile.toString())
                         if (r.error) { root.specNote = r.error; return }

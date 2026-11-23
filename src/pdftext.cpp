@@ -519,6 +519,7 @@ class Reader {
 public:
     explicit Reader(const std::string &pdf) : src(pdf) {}
     Document run();
+    int maxPages = 0;
 
 private:
     struct Entry {
@@ -1362,6 +1363,7 @@ Document Reader::run()
     std::set<const Obj *> seen;
     collectPages(resolve(catalog->get("Pages") ? *catalog->get("Pages") : kNull), nullptr, 0, seen, pages);
     if (pages.empty()) { doc.error = "Couldn't find the pages in this PDF."; return doc; }
+    if (maxPages > 0 && pages.size() > size_t(maxPages)) pages.resize(size_t(maxPages));
     for (const auto &[page, res] : pages) {
         std::string data;
         const Obj *c = page->get("Contents");
@@ -1405,9 +1407,10 @@ std::string normalise(const std::string &s)
 
 } // namespace
 
-Document read(const std::string &pdf)
+Document read(const std::string &pdf, int maxPages)
 {
     Reader r(pdf);
+    r.maxPages = maxPages;
     return r.run();
 }
 

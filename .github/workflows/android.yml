@@ -309,11 +309,17 @@ jobs:
           jq -n --argjson build "$RUN" --arg version "$VER" --arg sha "$sha" --arg notes "$notes" \
             '{build:$build, version:$version, sha256:$sha, notes:$notes}' > latest.json
           cat latest.json
-          gh release delete android-latest --cleanup-tag --yes || true
-          gh release create android-latest Streamline-android.apk latest.json \
-            --prerelease --target "$GITHUB_SHA" \
-            --title "Streamline for Android: newest build" \
-            --notes "Build ${RUN} (version ${VER}). Install Streamline-android.apk on your phone, or tap Update now in the app (Settings, About). The app finds new builds by itself."
+          # The release is made once, then its files are replaced (see linux.yml: a tag made afresh on the commit that
+          # was built is refused once main has moved on with workflow changes).
+          title="Streamline for Android: newest build"
+          body="Build ${RUN} (version ${VER}). Install Streamline-android.apk on your phone, or tap Update now in the app (Settings, About). The app finds new builds by itself."
+          if ! gh release view android-latest > /dev/null 2>&1; then
+            gh release create android-latest Streamline-android.apk latest.json --prerelease --target main --title "$title" --notes "$body" ||
+              gh release upload android-latest Streamline-android.apk latest.json --clobber
+          else
+            gh release upload android-latest Streamline-android.apk latest.json --clobber
+            gh release edit android-latest --title "$title" --notes "$body"
+          fi
 
       - name: Keep the logs when a build fails
         if: failure()

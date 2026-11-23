@@ -2,6 +2,8 @@
 #include "podsort.h"
 #include "aimodels.h"
 #include "podai.h"
+#include "pdftext.h"
+#include "specread.h"
 #ifdef Q_OS_ANDROID
 #include "android.h"
 #endif
@@ -43,9 +45,9 @@ const int kMaxChars = 200000;          // per document: plenty to tell what it i
 QString newId() { return QUuid::createUuid().toString(QUuid::WithoutBraces); }
 qint64 now() { return QDateTime::currentMSecsSinceEpoch(); }
 
-// Files a pod reads. The first four are read in full; the rest are sorted by their name and folder only.
-const QStringList &readExts() { static const QStringList l = {"docx", "odt", "txt", "md"}; return l; }
-const QStringList &nameExts() { static const QStringList l = {"doc", "rtf", "pdf", "pages", "dotx"}; return l; }
+// Files a pod reads. The first five are read; the rest are sorted by their name and folder only.
+const QStringList &readExts() { static const QStringList l = {"docx", "odt", "pdf", "txt", "md"}; return l; }
+const QStringList &nameExts() { static const QStringList l = {"doc", "rtf", "pages", "dotx"}; return l; }
 QStringList filters()
 {
     QStringList f;
@@ -152,6 +154,20 @@ void readOdt(const QString &path, QString &headings, QString &body)
     readOdtZip(zip, headings, body);
 }
 
+// PDF: the text of its first pages (a long book's opening chapters say what it is about), and the lines set larger
+// than the rest as its headings. Scanned pages (pictures of text) and locked PDFs have no text to give.
+const qint64 kMaxPdfBytes = 80LL * 1024 * 1024;
+void readPdf(const QString &path, QString &headings, QString &body)
+{
+    QFile f(path);
+    if (f.size() > kMaxPdfBytes || !f.open(QIODevice::ReadOnly)) return;
+    const QByteArray data = f.readAll();
+    const auto doc = pdftext::read(std::string(data.constData(), size_t(data.size())), 120);
+    if (!doc.error.empty()) return;
+    body = QString::fromStdString(pdftext::text(doc));
+    headings = QString::fromStdString(pdftext::headings(doc)).left(20000);
+}
+
 Pods::Scanned readOne(const QString &path, const QString &root)
 {
     Pods::Scanned s;
@@ -164,6 +180,7 @@ Pods::Scanned readOne(const QString &path, const QString &root)
     if (s.rel == QLatin1String(".")) s.rel.clear();
     if (s.ext == QLatin1String("docx")) readDocx(s.path, s.title, s.headings, s.body);
     else if (s.ext == QLatin1String("odt")) readOdt(s.path, s.headings, s.body);
+    else if (s.ext == QLatin1String("pdf")) readPdf(s.path, s.headings, s.body);
     else if (s.ext == QLatin1String("txt") || s.ext == QLatin1String("md")) {
         QFile f(s.path);
         if (f.open(QIODevice::ReadOnly)) s.body = QString::fromUtf8(f.read(kMaxChars));
@@ -436,14 +453,26 @@ QVariantMap Pods::readSpecFile(const QString &url) const
     const QString path = u.isLocalFile() ? u.toLocalFile() : url;      // Android hands over content:// addresses
     QFile f(path);
     if (!f.open(QIODevice::ReadOnly)) return {{"error", "Couldn't open that file."}};
-    const QByteArray data = f.read(20 * 1024 * 1024);
+    const QByteArray data = f.read(kMaxPdfBytes);
     QString name = u.fileName();
     if (name.isEmpty() || name.contains(QLatin1Char('%'))) name = QFileInfo(path).fileName();
     name = QFileInfo(name).completeBaseName();
-    if (data.startsWith("%PDF"))
-        return {{"error", "Streamline can't read PDFs yet. Open the spec, select all of its text, copy it, and paste it here instead."}};
+    return specFromData(data, name);
+}
+
+// A spec's text from the file's bytes (a PDF, Word, OpenDocument or text file), named after the course it is
+// for when the spec says ("AQA GCSE Biology (8461)"), otherwise after the file.
+QVariantMap Pods::specFromData(const QByteArray &data, const QString &fileName)
+{
+    QString name = fileName;
     QString title, headings, body;
-    if (data.startsWith("PK")) {      // Word or OpenDocument: both are zip files
+    if (data.contains("%PDF-") && data.indexOf("%PDF-") < 1024) {
+        const auto doc = pdftext::read(std::string(data.constData(), size_t(data.size())));
+        if (!doc.error.empty()) return {{"error", QString::fromStdString(doc.error)}};
+        body = QString::fromStdString(pdftext::text(doc));
+        if (body.trimmed().isEmpty())
+            return {{"error", "This PDF has no text to read: its pages are probably scanned pictures. Try the board's own copy of the spec."}};
+    } else if (data.startsWith("PK")) {      // Word or OpenDocument: both are zip files
         QBuffer buf;
         buf.setData(data);
         buf.open(QIODevice::ReadOnly);
@@ -457,7 +486,9 @@ QVariantMap Pods::readSpecFile(const QString &url) const
         body = QString::fromUtf8(data);
     }
     if (body.trimmed().isEmpty()) return {{"error", "No text found in that file."}};
-    return {{"name", name}, {"text", body}};
+    const auto info = specread::identify(body.toStdString());
+    if (!info.name.empty()) name = QString::fromStdString(info.name);
+    return {{"name", name}, {"text", body}, {"board", QString::fromStdString(info.board)}};
 }
 void Pods::refresh(const QString &id) { if (const Pod *p = find(id)) run(id, QStringLiteral("Looking for new documents…"), p->detail, 1); }
 void Pods::run(const QString &id, const QString &status, int detail, int kind)

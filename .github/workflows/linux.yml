@@ -100,11 +100,23 @@ jobs:
           jq -n --argjson build "$RUN" --arg version "$VER" --arg sha "$sha" --arg notes "$notes" \
             '{build:$build, version:$version, sha256:$sha, notes:$notes}' > latest.json
           cat latest.json
-          gh release delete linux-latest --cleanup-tag --yes -R "$GITHUB_REPOSITORY" || true
-          gh release create linux-latest streamline-x86_64.pkg.tar.zst "$PKG" latest.json linux-screenshot.png -R "$GITHUB_REPOSITORY" \
-            --prerelease --target "$GITHUB_SHA" \
-            --title "Streamline for Linux (Arch, CachyOS): newest build" \
-            --notes "Build ${RUN} (version ${VER}). Download streamline-x86_64.pkg.tar.zst and install it with: sudo pacman -U streamline-x86_64.pkg.tar.zst. After that, Settings › About › Update now installs new builds."
+          # The release is made once, then its files are replaced. (Making it afresh with its tag on the commit that
+          # was built fails once main has moved on with changes to .github/workflows: a workflow's own token may not
+          # make a tag whose workflow files differ from main's.)
+          title="Streamline for Linux (Arch, CachyOS): newest build"
+          body="Build ${RUN} (version ${VER}). Download streamline-x86_64.pkg.tar.zst and install it with: sudo pacman -U streamline-x86_64.pkg.tar.zst. After that, Settings › About › Update now installs new builds."
+          files="streamline-x86_64.pkg.tar.zst $PKG latest.json linux-screenshot.png"
+          if ! gh release view linux-latest -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create linux-latest $files -R "$GITHUB_REPOSITORY" --prerelease --target main --title "$title" --notes "$body" ||
+              gh release upload linux-latest $files -R "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release upload linux-latest $files -R "$GITHUB_REPOSITORY" --clobber
+            gh release edit linux-latest -R "$GITHUB_REPOSITORY" --title "$title" --notes "$body"
+          fi
+          # earlier builds' packages
+          gh release view linux-latest -R "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' |
+            grep -E '^streamline-.+-x86_64\.pkg\.tar\.zst$' | grep -vxF "$(basename "$PKG")" |
+            while read -r old; do gh release delete-asset linux-latest "$old" -R "$GITHUB_REPOSITORY" --yes || true; done
 
       - name: Keep the logs when a build fails
         if: failure()

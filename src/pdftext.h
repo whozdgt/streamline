@@ -23,7 +23,8 @@ struct Document {
     bool encrypted = false;
 };
 
-Document read(const std::string &pdf);
+// maxPages: read only the first pages (0: all of them), for a quick idea of what a long document is about
+Document read(const std::string &pdf, int maxPages = 0);
 
 // All the text, a line per line, without the lines repeated on most pages (running headers, footers and page numbers).
 std::string text(const Document &doc, bool dropRunning = true);

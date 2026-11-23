@@ -177,8 +177,24 @@ jobs:
           if ($cur -ge [int]$env:RUN) { Write-Host "Build $cur is already published; skipping build $env:RUN."; exit 0 }
           @{ build = [int]$env:RUN; version = $ver; sha256 = $sha } | ConvertTo-Json | Set-Content -Encoding utf8 latest.json
           Get-Content latest.json
-          gh release delete windows-latest --cleanup-tag --yes *> $null
+          # The release is made once, then its files are replaced (see linux.yml: a tag made afresh on the commit that
+          # was built is refused once main has moved on with workflow changes).
           $notes = "Build $($env:RUN) (version $ver). Download Streamline-Setup.exe and run it, or unzip the portable zip anywhere. Windows may say the publisher is unknown the first time: choose More info, then Run anyway."
-          $out = gh release create windows-latest Streamline-Setup.exe "Streamline-$ver-windows-x64.zip" latest.json --prerelease --target $env:GITHUB_SHA --title "Streamline for Windows: newest build" --notes $notes 2>&1
-          if ($LASTEXITCODE -ne 0) { Write-Host "::error title=publish failed::$($out -join '%0A')"; exit 1 }
+          $title = "Streamline for Windows: newest build"
+          $zip = "Streamline-$ver-windows-x64.zip"
+          gh release view windows-latest *> $null
+          $exists = $LASTEXITCODE -eq 0
+          if (-not $exists) {
+            $out = gh release create windows-latest Streamline-Setup.exe $zip latest.json --prerelease --target main --title $title --notes $notes 2>&1
+            $exists = $LASTEXITCODE -ne 0      # someone else made it meanwhile: replace its files instead
+          }
+          if ($exists) {
+            $out = gh release upload windows-latest Streamline-Setup.exe $zip latest.json --clobber 2>&1
+            if ($LASTEXITCODE -ne 0) { Write-Host "::error title=publish failed::$($out -join '%0A')"; exit 1 }
+            gh release edit windows-latest --title $title --notes $notes *> $null
+          }
+          # earlier versions' zips
+          $old = gh release view windows-latest --json assets --jq '.assets[].name' | Where-Object { $_ -match '^Streamline-.+-windows-x64\.zip$' -and $_ -ne $zip }
+          foreach ($a in $old) { gh release delete-asset windows-latest $a --yes *> $null }
           Write-Host ($out -join "`n")
+          exit 0
