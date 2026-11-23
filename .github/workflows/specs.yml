@@ -1,0 +1,54 @@
+name: specs
+# Streamline's spec reader on the exam boards' real, public specifications (.github/specs/research.txt): each is
+# downloaded from the board's website, read with Streamline's own PDF reader (compared with poppler's pdftotext),
+# and its points are listed. Only the structure is printed (numbers and headings), never the documents themselves.
+# Runs when the reader changes, every Monday (to notice when a board moves a document), and by hand.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 5 * * 1'
+  push:
+    branches: [main]
+    paths: ['src/pdftext*', 'src/pdfcrypto*', 'src/pdfglyphs.inc', 'src/specread*', 'src/podsort*',
+            'tests/spec_test.cpp', 'tests/pdftext_test.cpp', '.github/specs/**', '.github/workflows/specs.yml']
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools
+        run: |
+          sudo apt-get install -y -qq poppler-utils > /dev/null
+          g++ -std=c++17 -O2 -Wall -Isrc src/pdftext.cpp src/pdfcrypto.cpp src/specread.cpp src/podsort.cpp tests/spec_test.cpp -o spec_test
+          g++ -std=c++17 -O2 -Wall -Isrc src/pdftext.cpp src/pdfcrypto.cpp tests/pdftext_test.cpp -o pdftext_test
+      - name: Read the specifications
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          mkdir -p specs
+          cat > f1.py <<'PY'
+          import re, sys, collections
+          w = lambda t: re.findall(r"\w+", t.lower())
+          a = collections.Counter(w(open(sys.argv[1], encoding="utf-8", errors="replace").read()))
+          b = collections.Counter(w(open(sys.argv[2], encoding="utf-8", errors="replace").read()))
+          common = sum((a & b).values()); p = common / max(1, sum(a.values())); r = common / max(1, sum(b.values()))
+          print(f"{(2*p*r/(p+r) if p+r else 0):.3f}")
+          PY
+          grep -v '^#' .github/specs/research.txt | grep -v '^\s*$' | while IFS='|' read -r name urls; do
+            name="$(echo "$name" | xargs)"
+            echo "::group::$name"
+            got=""
+            for u in $(echo "$urls" | tr '|' ' '); do
+              code=$(curl -sL -A "$UA" -o "specs/$name.pdf" -w '%{http_code}' --retry 2 "$u" || true)
+              if [ "$code" = 200 ] && head -c 4 "specs/$name.pdf" | grep -q '%PDF'; then got="$u"; break; fi
+              echo "  $code  $u"
+            done
+            if [ -z "$got" ]; then echo "RESULT $name: NOT DOWNLOADED"; echo "::endgroup::"; continue; fi
+            start=$(date +%s%N)
+            ./pdftext_test "specs/$name.pdf" --all-lines > "specs/$name.mine.txt" 2> "specs/$name.err" || true
+            ms=$(( ($(date +%s%N) - start) / 1000000 ))
+            pdftotext -raw "specs/$name.pdf" "specs/$name.ref.txt"
+            echo "RESULT $name: read in ${ms} ms, $(cat "specs/$name.err"), words match pdftotext: $(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt")"
+            ./spec_test "specs/$name.pdf" | head -260
+            echo "::endgroup::"
+          done

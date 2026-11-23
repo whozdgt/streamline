@@ -1,4 +1,5 @@
 #include "podsort.h"
+#include "specread.h"
 
 #include <algorithm>
 #include <cctype>
@@ -544,7 +545,8 @@ bool pointLine(const std::string &line, std::string &number, std::string &title)
 }
 } // namespace
 
-std::vector<SpecPoint> parseSpec(const std::string &text)
+// The first way of reading a spec (numbered points anywhere, or blocks of text): what specread falls back on.
+std::vector<SpecPoint> parseSpecSimple(const std::string &text)
 {
     std::vector<std::string> lines;
     {
@@ -613,6 +615,14 @@ std::vector<SpecPoint> parseSpec(const std::string &text)
     }
     flush();
     return pts;
+}
+
+std::vector<SpecPoint> parseSpec(const std::string &text)
+{
+    auto pts = specread::parse(text);
+    if (pts.size() >= 3) return pts;
+    auto simple = parseSpecSimple(text);
+    return simple.size() > pts.size() ? simple : pts;
 }
 
 std::string pointText(const std::vector<SpecPoint> &points, int i)
