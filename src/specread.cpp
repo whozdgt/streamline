@@ -121,6 +121,10 @@ bool parseKey(const std::string &line, Key &k)
         // "Section 6 7). Use of…", "Paper 3 Statistics and Mechanics. Students are required…": a sentence, not a heading
         if (!k.title.empty() && (!std::isalpha(uint8_t(k.title[0])) || k.title.size() > 75)) return false;
         if (k.title.find(". ") != std::string::npos) return false;
+        int numbers = 0;
+        for (size_t c = 0; c < k.title.size(); ++c)
+            if (std::isdigit(uint8_t(k.title[c])) && (c == 0 || !std::isdigit(uint8_t(k.title[c - 1])))) ++numbers;
+        if (numbers >= 3 || k.title.find('%') != std::string::npos) return false;
         return true;
     }
     return false;
@@ -298,6 +302,14 @@ Info identify(const std::string &text)
             else if (level == "Advanced Subsidiary GCE") level = "AS level";
             info.name = "Edexcel " + level + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
         }
+    } else if (info.board == "OCR") {
+        static const std::regex re("(GCSE \\(9.{1,3}1\\)|GCSE|A Level|AS Level|AS and A Level|Level 3 Advanced GCE|Advanced Subsidiary GCE) in ([A-Z][A-Za-z ,&()-]{2,60}?)\\s+([A-Z][0-9]{3})\\b");
+        if (std::regex_search(head, m, re)) {
+            std::string level = m[1].str();
+            if (level.rfind("GCSE", 0) == 0) level = "GCSE";
+            else if (level.find("Advanced GCE") != std::string::npos) level = "A Level";
+            info.name = "OCR " + level + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
+        }
     } else if (info.board == "AQA") {
         // The cover: "GCSE / ENGLISH / LITERATURE / (8702)", or "AS AND / A-LEVEL / PSYCHOLOGY / AS (7181) / A-level (7182)"
         std::vector<std::string> cover;
@@ -395,6 +407,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     //    document that isn't content ("4 Details of the assessment"). Several content parts in a row count as one.
     size_t from = 0, to = all.size();
     bool foundSection = false;
+    std::vector<size_t> sectionStarts;      // further content sections (AS, then A-level), by line
     {
         int section = -1;
         for (size_t i = 0; i < all.size(); ++i) {
@@ -409,7 +422,21 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 to = i;
                 break;
             }
-            if (n.parts[0] == section + 1 && contentTitle(cleanTitle(n.title))) section = n.parts[0];      // AS, then A-level
+            if (n.parts[0] == section + 1 && contentTitle(cleanTitle(n.title))) {      // AS, then A-level
+                section = n.parts[0];
+                sectionStarts.push_back(i);
+            }
+        }
+        if (section < 0) {
+            // OCR: the content is a lettered part of a section ("2c Content of topics B1 to B6") up to the next part
+            static const std::regex part("^([0-9])([a-z])\\s+(.+)$");
+            for (size_t i = 0; i < all.size(); ++i) {
+                std::smatch m;
+                if (!std::regex_match(all[i], m, part)) continue;
+                if (section < 0) {
+                    if (!tocLine(all[i]) && contentTitle(m[3].str())) { section = 0; from = i + 1; }
+                } else { to = i; break; }
+            }
         }
         if (section < 0) { from = 0; to = all.size(); }
         foundSection = section >= 0;
@@ -517,6 +544,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
 
     for (size_t i = 0; i < lines.size(); ++i) {
         const std::string &l = lines[i];
+        while (size_t(topSection) < sectionStarts.size() && from + i > sectionStarts[size_t(topSection)]) ++topSection;
         Num n;
         Key k;
         char letter = 0;
@@ -534,7 +562,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         } else if (parseKey(l, k)) {
             keywordLine = true;
             int rank = k.rank;
-            if (numbered) rank += 50;
+            if (numbered) {
+                bool heads = false;
+                for (size_t j = i + 1; j < lines.size() && j < i + 60; ++j) {
+                    Num nn;
+                    if (parseNum(lines[j], nn) && nn.parts.size() >= 2) { heads = nn.prefix + std::to_string(nn.parts[0]) == k.id; break; }
+                }
+                if (!heads) rank += 50;
+            }
             if (useCode2 && k.keyword == "Part") rank = 75;
             made = open(rank, k.keyword + " " + k.id, cleanTitle(k.title), false);
             if (rank < 30) lastTop = 0;
@@ -634,7 +669,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         for (size_t i = 0; i < pts.size(); ++i) {
             const auto key = std::make_pair(lower(pts[i].title), depthOf(int(i)));
             auto it = last.find(key);
-            if (it != last.end() && pts[size_t(it->second)].number != pts[i].number && !pts[i].number.empty() &&
+            if (it != last.end() && section[size_t(it->second)] != section[i] && pts[size_t(it->second)].number != pts[i].number && !pts[i].number.empty() &&
                 pts[size_t(it->second)].number.size() == pts[i].number.size() && pts[i].number[0] != pts[size_t(it->second)].number[0] &&
                 std::isdigit(uint8_t(pts[i].number[0])))
                 drop[size_t(it->second)] = true;
@@ -663,6 +698,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             size_t i = 0;
             while (i < num.size() && !std::isdigit(uint8_t(num[i]))) ++i;
             if (i > 2 || i == num.size()) return k;      // not a plain number ("Topic 1", "AA"): keep the document's order
+            for (size_t c = 0; c < i; ++c) k.push_back(1000 + uint8_t(num[c]));      // "OT2.3" sorts with OT, apart from "2.3"
             while (i < num.size()) {
                 size_t j = i;
                 while (j < num.size() && std::isdigit(uint8_t(num[j]))) ++j;
