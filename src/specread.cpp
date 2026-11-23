@@ -438,7 +438,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (!std::regex_match(all[i], m, part)) continue;
                 const std::string here = m[1].str() + m[2].str();
                 if (section < 0) {
-                    if (!tocLine(all[i]) && contentTitle(m[3].str())) { section = 0; from = i + 1; label = here; }
+                    // a contents page lists the parts one after another: the real one is followed by its content
+                    std::smatch next;
+                    const bool listed = i + 1 < all.size() && std::regex_match(all[i + 1], next, part);
+                    if (!listed && !tocLine(all[i]) && contentTitle(m[3].str())) { section = 0; from = i + 1; label = here; }
                 } else if (here != label && !tocLine(all[i])) { to = i; break; }      // the next part ("2d. Prior knowledge…")
             }
         }
