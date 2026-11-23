@@ -342,10 +342,12 @@ Info identify(const std::string &text)
             if (caps && l.find('(') == std::string::npos && !level.empty() && code.empty() && u != "specification" && u != "specifications")
                 subject += (subject.empty() ? "" : " ") + l;
         }
-        if (code.empty()) {      // the codes aren't on the cover: the first "(7401, 7402)" or "(8461)" in the text
+        if (code.empty()) {      // the codes aren't on the cover: the first "(7401, 7402)" or "(8461)", or "aqa.org.uk/7402"
             static const std::regex anyCode("\\(([0-9]{4})(?:, ?([0-9]{4}))?\\)");
+            static const std::regex link("aqa\\.org\\.uk/([0-9]{4})");
             std::smatch cm;
             if (std::regex_search(head, cm, anyCode)) code = cm[2].matched ? cm[2].str() : cm[1].str();
+            else if (std::regex_search(text.cbegin(), text.cbegin() + long(std::min<size_t>(text.size(), 40000)), cm, link)) code = cm[1].str();
         }
         if (!subject.empty() && !code.empty()) {
             std::string subj = lower(subject);
@@ -429,13 +431,15 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         }
         if (section < 0) {
             // OCR: the content is a lettered part of a section ("2c Content of topics B1 to B6") up to the next part
-            static const std::regex part("^([0-9])([a-z])\\s+(.+)$");
+            static const std::regex part("^([0-9])([a-z])\\.?\\s+(.+)$");
+            std::string label;
             for (size_t i = 0; i < all.size(); ++i) {
                 std::smatch m;
                 if (!std::regex_match(all[i], m, part)) continue;
+                const std::string here = m[1].str() + m[2].str();
                 if (section < 0) {
-                    if (!tocLine(all[i]) && contentTitle(m[3].str())) { section = 0; from = i + 1; }
-                } else { to = i; break; }
+                    if (!tocLine(all[i]) && contentTitle(m[3].str())) { section = 0; from = i + 1; label = here; }
+                } else if (here != label && !tocLine(all[i])) { to = i; break; }      // the next part ("2d. Prior knowledge…")
             }
         }
         if (section < 0) { from = 0; to = all.size(); }
