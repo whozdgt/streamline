@@ -55,7 +55,7 @@ bool statementLike(const std::string &title)
 
 // "3.2.1 Cell structure", "C1.1 Types of number", "OT1.1 Construct…", "4 Subject content"
 struct Num {
-    std::string prefix;
+    std::string prefix, suffix;      // "C1.1" (Cambridge Core), "1.13B" (Edexcel: biology only)
     std::vector<int> parts;
     std::string title;
 };
@@ -74,6 +74,7 @@ bool parseNum(const std::string &line, Num &n)
         if (i + 1 < line.size() && line[i] == '.' && std::isdigit(uint8_t(line[i + 1])) && n.parts.size() < 5) { ++i; continue; }
         break;
     }
+    if (i < line.size() && std::isupper(uint8_t(line[i])) && n.parts.size() >= 2 && i + 1 < line.size() && line[i + 1] == ' ') n.suffix = line.substr(i++, 1);
     if (i < line.size() && (line[i] == '.' || line[i] == ':' || line[i] == ')')) ++i;
     if (i >= line.size() || !std::isspace(uint8_t(line[i]))) return false;
     n.title = trim(line.substr(i));
@@ -306,7 +307,10 @@ Info identify(const std::string &text)
                 size_t j = head.find('\n', i);
                 if (j == std::string::npos) j = head.size();
                 const std::string l = trim(head.substr(i, j - i));
-                if (!l.empty()) cover.push_back(l);
+                if (!l.empty()) {
+                    if (!cover.empty() && cover.back().size() > 1 && cover.back().back() == '-') cover.back() += l;      // "A-" + "LEVEL"
+                    else cover.push_back(l);
+                }
                 i = j + 1;
             }
         }
@@ -316,14 +320,20 @@ Info identify(const std::string &text)
             const std::string u = lower(l);
             std::smatch cm;
             if (std::regex_search(l, cm, codeRe)) code = cm[1].str();      // the last one: the A-level's
-            if (u == "gcse" || u == "as and" || u == "a-level" || u == "as" || u == "as and a-level") {
+            if (u == "gcse" || u == "as and" || u == "a-level" || u == "as" || u == "as and a-level" || u == "as and a-level") {
                 level = u.find("a-level") != std::string::npos ? "A-level" : u == "gcse" ? "GCSE" : (level.empty() ? "AS" : level);
                 if (u == "as and") level = "A-level";
                 continue;
             }
             const bool caps = std::none_of(l.begin(), l.end(), [](char c) { return std::islower(uint8_t(c)); }) &&
                               std::any_of(l.begin(), l.end(), [](char c) { return std::isalpha(uint8_t(c)); });
-            if (caps && l.find('(') == std::string::npos && !level.empty() && code.empty()) subject += (subject.empty() ? "" : " ") + l;
+            if (caps && l.find('(') == std::string::npos && !level.empty() && code.empty() && u != "specification" && u != "specifications")
+                subject += (subject.empty() ? "" : " ") + l;
+        }
+        if (code.empty()) {      // the codes aren't on the cover: the first "(7401, 7402)" or "(8461)" in the text
+            static const std::regex anyCode("\\(([0-9]{4})(?:, ?([0-9]{4}))?\\)");
+            std::smatch cm;
+            if (std::regex_search(head, cm, anyCode)) code = cm[2].matched ? cm[2].str() : cm[1].str();
         }
         if (!subject.empty() && !code.empty()) {
             std::string subj = lower(subject);
@@ -536,6 +546,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             const bool tier = board == "Cambridge" && (n.prefix == "C" || n.prefix == "E");      // Core and Extended: one point
             if (!tier) number = n.prefix;
             for (size_t p = 0; p < n.parts.size(); ++p) number += (p ? "." : "") + std::to_string(n.parts[p]);
+            const std::string plain = number;      // without the letter after it, for following on from the point before
+            number += n.suffix;
             const bool statement = statementLike(n.title);
             if (lower(t).rfind("extended content only", 0) == 0 || lower(t).rfind("core content only", 0) == 0) {
                 numbersSeen.insert(number);
@@ -568,18 +580,18 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     }
                 }
                 // a subtopic ("4.1.1 Cell structure"), or a statement ("2.4 know the similarities…")
-                std::string parentNum = number.substr(0, number.rfind('.'));
+                std::string parentNum = plain.substr(0, plain.rfind('.'));
                 std::string prevNum = parentNum + "." + std::to_string(n.parts.back() - 1);
                 const bool fits = !statementLike(n.title) || numbersSeen.count(prevNum) ||
                                   (n.parts.back() <= 1 && (numbersSeen.count(parentNum) || n.parts.size() == 2));
-                numbersSeen.insert(number);
+                numbersSeen.insert(plain);
                 if (statement && (letterOpen() || !fits)) body(l);
                 else {
                     made = open(30 + 2 * int(n.parts.size() - 1), number, statement ? shortTitle(t) : t, true);
                     if (statement) body(l);
                 }
             } else body(l);
-            if (made >= 0) numbersSeen.insert(number);
+            if (made >= 0) numbersSeen.insert(plain);
         } else if (parseLetter(l, letter, title)) {
             const bool chain = letter == 'a' || lastLetter == letter - 1;
             if (!statementLike(title) && !stack.empty() && !dottedOpen() && chain) {

@@ -66,8 +66,10 @@ jobs:
           print("pages below 0.9:", sum(1 for s, _ in scores if s < 0.9), "of", len(scores))
           for s, i in sorted(scores)[:3]:
               print(f"page {i+1}: {s:.2f}")
-              print("   mine:", [l[:40] for l in mine[i].strip().split("\n")[:4]])
-              print("   ref: ", [l[:40] for l in ref[i].strip().split("\n")[:4]])
+              ml, rl = mine[i].strip().split("\n"), ref[i].strip().split("\n")
+              print(f"   lines: mine {len(ml)}, pdftotext {len(rl)}")
+              print("   mine:", [l[:60] for l in ml[4:10]])
+              print("   ref: ", [l[:60] for l in rl[4:10]])
           PY
             fi
             ./spec_test "specs/$name.pdf" --head
