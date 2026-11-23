@@ -510,7 +510,8 @@ struct Font {
     }
 };
 
-struct Glyph { double x, y, x2, size; std::string text; };
+// x along the text's own direction and y across it, so rotated text (landscape tables) reads like any other
+struct Glyph { double x, y, x2, size; int dir; std::string text; };
 
 // ============================================================ the reader
 
@@ -1146,10 +1147,14 @@ void Reader::content(const std::string &data, const Obj &resources, M ctm, int d
             const double tx = (w0 * gs.fs + gs.tc + ((n == 1 && code == 32) ? gs.tw : 0)) * gs.th;
             tm = mul(M{1, 0, 0, 1, tx, 0}, tm);
             const M end = mul(M{gs.fs * gs.th, 0, 0, gs.fs, 0, gs.rise}, mul(tm, gs.ctm));
+            double dx = trm.a, dy = trm.b;
+            const double len = std::hypot(dx, dy);
+            if (len > 1e-9) { dx /= len; dy /= len; } else { dx = 1; dy = 0; }
             Glyph g;
-            g.x = trm.e;
-            g.y = trm.f;
-            g.x2 = end.e;
+            g.x = trm.e * dx + trm.f * dy;
+            g.y = -trm.e * dy + trm.f * dx;
+            g.x2 = end.e * dx + end.f * dy;
+            g.dir = int(std::lround(std::atan2(dy, dx) * 8 / 3.14159265358979));      // in 22.5° steps
             g.size = std::hypot(trm.c, trm.d);
             if (g.size <= 0) g.size = std::abs(gs.fs);
             g.text = f.text(code);
@@ -1269,6 +1274,7 @@ std::vector<Line> toLines(const std::vector<Glyph> &glyphs)
     std::vector<Line> lines;
     Line cur;
     double curX2 = 0;
+    int curDir = 0;
     bool open = false;
     auto flush = [&]() {
         if (!open) return;
@@ -1282,18 +1288,19 @@ std::vector<Line> toLines(const std::vector<Glyph> &glyphs)
         open = false;
     };
     for (const Glyph &g : glyphs) {
-        if (g.text.empty()) { if (open && std::abs(g.y - cur.y) < 0.5 * std::max(cur.size, g.size)) curX2 = std::max(curX2, g.x2); continue; }
+        if (g.text.empty()) { if (open && g.dir == curDir && std::abs(g.y - cur.y) < 0.5 * std::max(cur.size, g.size)) curX2 = std::max(curX2, g.x2); continue; }
         if (!open) {
             cur.text = g.text;
             cur.x = g.x;
             cur.y = g.y;
             cur.size = g.size;
             curX2 = g.x2;
+            curDir = g.dir;
             open = true;
             continue;
         }
         const double sz = std::max({cur.size, g.size, 1.0});
-        const bool sameLine = std::abs(g.y - cur.y) < 0.5 * sz && g.x > curX2 - 1.2 * sz;
+        const bool sameLine = g.dir == curDir && std::abs(g.y - cur.y) < 0.5 * sz && g.x > curX2 - 1.2 * sz;
         if (!sameLine) {
             flush();
             cur.text = g.text;
@@ -1301,6 +1308,7 @@ std::vector<Line> toLines(const std::vector<Glyph> &glyphs)
             cur.y = g.y;
             cur.size = g.size;
             curX2 = g.x2;
+            curDir = g.dir;
             open = true;
             continue;
         }
