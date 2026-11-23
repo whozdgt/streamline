@@ -1,6 +1,7 @@
 # Tests of Pods' sorting that need no Qt: cmake -S tests -B build-tests && cmake --build build-tests
 #   podsort_test                         key words
-#   podai_test meaning.gguf [writer.gguf]   the on-device AI (models from the ai-models release)
+#   nest_test spec_sample.txt            nested sorting and spec matching by key words
+#   podai_test meaning.gguf [writer.gguf] [spec.txt]   the on-device AI (models from the ai-models release)
 cmake_minimum_required(VERSION 3.21)
 project(pods_tests LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
@@ -11,6 +12,8 @@ include(${CMAKE_CURRENT_LIST_DIR}/../cmake/llama.cmake)
 set(SRC ${CMAKE_CURRENT_LIST_DIR}/../src)
 add_executable(podsort_test podsort_test.cpp ${SRC}/podsort.cpp)
 target_include_directories(podsort_test PRIVATE ${SRC})
+add_executable(nest_test nest_test.cpp ${SRC}/podsort.cpp)
+target_include_directories(nest_test PRIVATE ${SRC})
 add_executable(podai_test podai_test.cpp ${SRC}/podai.cpp ${SRC}/podsort.cpp)
 target_include_directories(podai_test PRIVATE ${SRC})
 target_link_libraries(podai_test PRIVATE llama)

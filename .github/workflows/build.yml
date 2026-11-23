@@ -43,7 +43,8 @@ jobs:
           for f in meaning-bge-small-en-v1.5-q8_0.gguf writer-qwen2.5-0.5b-instruct-q4_k_m.gguf; do
             curl -fsSL --retry 3 -o "models/$f" "https://github.com/$GITHUB_REPOSITORY/releases/download/ai-models/$f"
           done
-          ./build-tests/podai_test models/meaning-bge-small-en-v1.5-q8_0.gguf models/writer-qwen2.5-0.5b-instruct-q4_k_m.gguf
+          ./build-tests/nest_test tests/spec_sample.txt
+          ./build-tests/podai_test models/meaning-bge-small-en-v1.5-q8_0.gguf models/writer-qwen2.5-0.5b-instruct-q4_k_m.gguf tests/spec_sample.txt
 
       - name: Starts and exits (no display needed)
         run: QT_QPA_PLATFORM=offscreen ./build/musicplayer --version
@@ -100,6 +101,9 @@ jobs:
             SHOT_TIMEOUT=150 shot phone-pods-ai 390x844 --mobile --set startPod=/tmp/study-ai --set shotDelay=100000
             SHOT_TIMEOUT=150 shot desktop-pods-ai 1280x800 --set startPod=/tmp/study-ai --set shotDelay=4000
             shot phone-pods-ai-list 390x844 --mobile --set startView=pods
+            cp -r /tmp/docs /tmp/gcse && cp tests/spec_sample.txt "/tmp/Combined Studies spec.txt"
+            SHOT_TIMEOUT=200 shot phone-pods-spec 390x844 --mobile --set startPod=/tmp/gcse --set "startSpec=/tmp/Combined Studies spec.txt" --set shotDelay=150000
+            SHOT_TIMEOUT=60 shot desktop-pods-spec 1280x800 --set startPod=/tmp/gcse --set shotDelay=4000
           fi
           shot phone-tucked 390x844 --mobile --set startPlay=true --set startTucked=true --set startView=todos
           shot phone-tucked-classic 390x844 --mobile --set theme=classic --set startPlay=true --set startTucked=true --set startView=todos

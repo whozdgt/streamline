@@ -33,6 +33,11 @@ public:
     Q_INVOKABLE void remove(const QString &id);             // forgets the pod; never touches the files
     Q_INVOKABLE void rename(const QString &id, const QString &name);
     Q_INVOKABLE void resort(const QString &id, int detail);  // 0 broad, 1 balanced, 2 specific; uses the AI when downloaded
+    // How a pod is laid out: "topics" (one level), "nested" (Subjects › Topics › Subtopics) or "spec" (matched to a
+    // specification's points). Takes effect on the next sort.
+    Q_INVOKABLE void setLayout(const QString &id, const QString &layout);
+    Q_INVOKABLE QVariantMap setSpec(const QString &id, const QString &name, const QString &text);   // { points } or { error }
+    Q_INVOKABLE QVariantMap readSpecFile(const QString &url) const;   // { name, text } or { error }: Word, OpenDocument, text
     Q_INVOKABLE void refresh(const QString &id);             // picks up new and deleted files, keeps your topics
     Q_INVOKABLE void renameTopic(const QString &podId, const QString &topicId, const QString &name);
     Q_INVOKABLE void moveDoc(const QString &podId, const QString &path, const QString &topicId);   // topicId "new" makes a topic
@@ -65,10 +70,17 @@ private:
         int words = 0;
         bool readable = false;
     };
-    struct Topic { QString id, name, summary; QStringList keywords; bool other = false; };
+    struct Topic {
+        QString id, name, summary, number;      // number: a spec point's ("3.2.1")
+        QStringList keywords;
+        QString parent;                          // the topic it is inside ("" at the top)
+        bool other = false;
+    };
     struct Move { QString from, to; };
     struct Pod {
-        QString id, name, folder, method = QStringLiteral("device");
+        QString id, name, folder, method = QStringLiteral("words");
+        QString layout = QStringLiteral("nested");     // topics | nested (Subjects › Topics › Subtopics) | spec
+        QString specName, specText;                    // layout "spec": the specification documents are matched to
         int detail = 1;
         qint64 created = 0, sorted = 0;
         QVector<Topic> topics;
@@ -86,6 +98,8 @@ private:
     void finish(Pod *p, const QString &error = QString());
     Topic &otherTopic(Pod &p);
     void dropEmptyTopics(Pod &p);
+    QString topicDir(const Pod &p, const Topic &t) const;    // the folder a topic's files go in, with the topics above it
+    QVector<const Topic *> ordered(const Pod &p) const;    // parents before children, in order
     QString filePath() const;
     void load();
     void save() const;

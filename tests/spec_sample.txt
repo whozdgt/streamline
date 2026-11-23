@@ -1,0 +1,62 @@
+Combined Studies specification (made up, for testing)
+
+Contents
+1 History ................................ 3
+1.1 Africa and empire ....................... 3
+1.1.1 The Berlin Conference ................. 3
+1.1.2 The Congo Free State .................. 4
+1.2 The Cold War ............................. 5
+1.2.1 Origins of the Cold War ............... 5
+1.2.2 Crises of the Cold War ................ 6
+2 Biology ................................ 7
+2.1 Cells ...................................... 7
+2.1.1 Cell structure ......................... 7
+2.1.2 Cell division .......................... 8
+2.1.3 Transport in cells ..................... 8
+3 Chemistry .............................. 9
+3.1 Bonding .................................... 9
+3.1.1 Ionic bonding .......................... 9
+3.1.2 Covalent bonding ...................... 10
+3.1.3 Metallic bonding ...................... 10
+4 English Literature ..................... 11
+4.1 Shakespeare ............................... 11
+4.1.1 Macbeth ............................... 11
+5 Physics ................................ 12
+5.1 Forces ..................................... 12
+5.1.1 Newton's laws of motion ............... 12
+
+1 History
+1.1 Africa and empire
+1.1.1 The Berlin Conference
+Students should understand why the European powers met in Berlin in 1884 to 1885, the principle of effective occupation and the partition of Africa.
+1.1.2 The Congo Free State
+The rule of King Leopold II over the Congo, rubber quotas, forced labour and the international response.
+1.2 The Cold War
+1.2.1 Origins of the Cold War
+The breakdown of the wartime alliance after 1945, Yalta and Potsdam, the Truman Doctrine, Marshall Aid and the policy of containment.
+1.2.2 Crises of the Cold War
+The Berlin Blockade and Airlift of 1948 to 1949 and the Cuban Missile Crisis of 1962, and how each was resolved.
+2 Biology
+2.1 Cells
+2.1.1 Cell structure
+Eukaryotic animal and plant cells: nucleus, cytoplasm, cell membrane, mitochondria, ribosomes, cell wall, chloroplasts and vacuole.
+2.1.2 Cell division
+Chromosomes, the cell cycle and mitosis, producing two genetically identical diploid cells.
+2.1.3 Transport in cells
+Diffusion, osmosis across a partially permeable membrane, and active transport using energy from respiration.
+3 Chemistry
+3.1 Bonding
+3.1.1 Ionic bonding
+Transfer of electrons between metals and non-metals to form ions held in a giant ionic lattice by electrostatic forces.
+3.1.2 Covalent bonding
+Shared pairs of electrons between non-metal atoms in simple molecules and giant covalent structures such as diamond.
+3.1.3 Metallic bonding
+Positive metal ions in a sea of delocalised electrons; conductivity and alloys.
+4 English Literature
+4.1 Shakespeare
+4.1.1 Macbeth
+Themes of ambition, guilt and the supernatural; the characters of Macbeth, Lady Macbeth and the witches; Shakespeare's language.
+5 Physics
+5.1 Forces
+5.1.1 Newton's laws of motion
+Resultant force, acceleration and the relationship F = ma; inertia and action and reaction forces.

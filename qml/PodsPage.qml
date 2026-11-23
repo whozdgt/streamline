@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Dialogs
 
 // Pods: pick a folder of documents and Streamline sorts them into topics.
 // The list of pods, one pod's topics, and one document (a preview, which topic it is in, and Open).
@@ -20,6 +21,10 @@ Item {
     property bool confirmDelete: false
     property string note: ""
     property var expanded: ({})             // topic id → showing all its documents
+    property var collapsed: ({})            // topic id → the topics inside it are hidden
+    property string layout: "nested"        // what the next "Sort again" makes: nested | topics | spec
+    property bool pasting: false            // the box for pasting a spec is open
+    property string specNote: ""
     property bool allowed: pods.filesAllowed()
 
     readonly property bool narrow: width < 640
@@ -42,8 +47,10 @@ Item {
     }
     function openPod(id) {
         podId = id; query = ""; note = ""; renaming = false; renamingTopic = ""; confirmMove = false; confirmDelete = false
-        expanded = ({})
-        detail = pods.pod(id).detail !== undefined ? pods.pod(id).detail : 1
+        expanded = ({}); collapsed = ({}); pasting = false; specNote = ""
+        const info = pods.pod(id)
+        detail = info.detail !== undefined ? info.detail : 1
+        layout = info.layout || "nested"
         mode = "pod"
         flick.contentY = 0
     }
@@ -85,7 +92,7 @@ Item {
     component Card: Rectangle {
         default property alias content: inner.data
         property real pad: 16
-        width: col.width
+        width: col.width - x
         height: inner.implicitHeight + 2 * pad
         radius: settings.round ? 16 : 0
         color: settings.boxFill
@@ -222,19 +229,37 @@ Item {
                         required property var modelData
                         readonly property bool all: root.expanded[modelData.id] === true || root.query.trim() !== ""
                         readonly property int limit: 6
+                        readonly property int depth: Math.min(modelData.depth, 3)
+                        readonly property bool shut: root.collapsed[modelData.id] === true && root.query.trim() === ""
+                        // a topic inside a subject sits a little to the right of it; hidden while a topic above it is closed
+                        x: depth * (root.narrow ? 12 : 20)
+                        visible: { root.collapsed; for (let i = 0; i < modelData.ancestors.length; ++i) if (root.collapsed[modelData.ancestors[i]] === true) return root.query.trim() !== ""; return true }
+                        color: depth === 0 && modelData.hasChildren ? settings.boxHover : settings.boxFill
 
                         Flow {
                             visible: root.renamingTopic !== tc.modelData.id
                             width: parent.width
                             spacing: 10
+                            Text {      // open / close the topics inside
+                                visible: tc.modelData.hasChildren
+                                height: 24; width: 18
+                                verticalAlignment: Text.AlignVCenter
+                                text: tc.shut ? "▸" : "▾"
+                                font.pixelSize: 16; color: settings.ink
+                                MouseArea {
+                                    anchors.fill: parent; anchors.margins: -10; cursorShape: Qt.PointingHandCursor
+                                    onClicked: { const c = Object.assign({}, root.collapsed); c[tc.modelData.id] = !tc.shut; root.collapsed = c }
+                                }
+                            }
                             Text {
-                                text: tc.modelData.name
-                                width: Math.min(implicitWidth, parent.width)
+                                text: (tc.modelData.number ? tc.modelData.number + "  " : "") + tc.modelData.name
+                                width: Math.min(implicitWidth, parent.width - (tc.modelData.hasChildren ? 28 : 0))
                                 wrapMode: Text.Wrap
-                                font.pixelSize: 17; font.weight: Font.DemiBold
+                                font.pixelSize: tc.depth === 0 ? (tc.modelData.hasChildren ? 20 : 17) : tc.depth === 1 ? 16 : 15
+                                font.weight: tc.depth === 0 && tc.modelData.hasChildren ? Font.Bold : Font.DemiBold
                                 color: tc.modelData.other ? settings.inkSoft : settings.ink
                             }
-                            Text { height: 24; verticalAlignment: Text.AlignVCenter; text: tc.modelData.docs.length; font.pixelSize: 13; color: settings.accent }
+                            Text { height: 24; verticalAlignment: Text.AlignVCenter; text: tc.modelData.total; font.pixelSize: 13; color: settings.accent }
                             Link { height: 24; verticalAlignment: Text.AlignVCenter; text: "Rename"; font.pixelSize: 12; color: settings.inkSoft; onClicked: { topicName.text = tc.modelData.name; root.renamingTopic = tc.modelData.id; topicName.focusInput() } }
                         }
                         Flow {
@@ -247,10 +272,10 @@ Item {
                         }
                         Para { visible: tc.modelData.summary !== ""; text: tc.modelData.summary; color: settings.ink }
                         Para { visible: tc.modelData.keywords.length > 0; text: tc.modelData.keywords.join(" · "); font.pixelSize: 12 }
-                        Para { visible: tc.modelData.other; font.pixelSize: 12; text: "Documents that didn't share enough with any others." }
+                        Para { visible: tc.modelData.other; font.pixelSize: 12; text: root.info.layout === "spec" ? "Documents that didn't match any point of the spec." : "Documents that didn't share enough with any others." }
 
                         Repeater {
-                            model: tc.all ? tc.modelData.docs : tc.modelData.docs.slice(0, tc.limit)
+                            model: tc.shut ? [] : tc.all ? tc.modelData.docs : tc.modelData.docs.slice(0, tc.limit)
                             Rectangle {
                                 id: dr
                                 required property var modelData
@@ -277,7 +302,7 @@ Item {
                             }
                         }
                         Link {
-                            visible: !tc.all && tc.modelData.docs.length > tc.limit
+                            visible: !tc.shut && !tc.all && tc.modelData.docs.length > tc.limit
                             text: "Show all " + tc.modelData.docs.length
                             font.underline: true
                             onClicked: { const e = Object.assign({}, root.expanded); e[tc.modelData.id] = true; root.expanded = e }
@@ -292,24 +317,103 @@ Item {
                         width: parent.width
                         spacing: 8
                         Repeater {
+                            model: [{ k: "nested", t: "Subjects › Topics" }, { k: "topics", t: "Topics only" }, { k: "spec", t: "Match to a spec" }]
+                            Pill {
+                                required property var modelData
+                                label: modelData.t
+                                selected: root.layout === modelData.k
+                                onClicked: { root.layout = modelData.k; pods.setLayout(root.podId, modelData.k); root.specNote = "" }
+                            }
+                        }
+                    }
+                    Para {
+                        color: settings.ink
+                        text: root.layout === "nested" ? "Subjects, the topics in each, and the parts of each topic, for a folder with a bit of everything in it."
+                            : root.layout === "topics" ? "One level of topics. Choose how wide they are:"
+                            : "Match each document to the point of your course specification it covers, such as “3.2.1 Cell structure”."
+                    }
+                    Flow {
+                        visible: root.layout === "topics"
+                        width: parent.width
+                        spacing: 8
+                        Repeater {
                             model: [{ k: 0, t: "Broad" }, { k: 1, t: "Balanced" }, { k: 2, t: "Specific" }]
                             Pill { required property var modelData; label: modelData.t; selected: root.detail === modelData.k; onClicked: root.detail = modelData.k }
                         }
                     }
+
+                    // the spec
+                    Column {
+                        visible: root.layout === "spec"
+                        width: parent.width
+                        spacing: 10
+                        Para {
+                            color: settings.ink
+                            text: root.info.specName ? "Spec: " + root.info.specName + " · " + root.info.specPoints + " points"
+                                : "Add your spec: the specification from your exam board's website (AQA, Edexcel, OCR, WJEC…) or your module's outline. "
+                                  + "Choose the file, or open it, copy all of its text and paste it."
+                        }
+                        Flow {
+                            width: parent.width
+                            spacing: 10
+                            Btn { label: root.info.specName ? "Choose another file" : "Choose a file"; primary: false; onClicked: specDialog.open() }
+                            Btn { label: "Paste text"; primary: false; visible: !root.pasting; onClicked: { root.pasting = true; specBox.focusInput() } }
+                        }
+                        Column {
+                            visible: root.pasting
+                            width: parent.width
+                            spacing: 10
+                            Field { id: specName; width: root.narrow ? parent.width : 360; placeholder: "Name (for example AQA GCSE Biology)" }
+                            TextBox { id: specBox; width: parent.width; minHeight: 140; placeholder: "Paste the spec's text here" }
+                            Flow {
+                                width: parent.width
+                                spacing: 10
+                                Btn {
+                                    label: "Use this spec"
+                                    onClicked: {
+                                        const r = pods.setSpec(root.podId, specName.text, specBox.text)
+                                        if (r.error) { root.specNote = r.error; return }
+                                        root.specNote = "Found " + r.points + " points."
+                                        root.pasting = false
+                                        specBox.clear()
+                                        pods.resort(root.podId, root.detail)
+                                    }
+                                }
+                                Btn { label: "Cancel"; primary: false; onClicked: root.pasting = false }
+                            }
+                        }
+                        Para { visible: root.specNote !== ""; text: root.specNote; color: root.specNote.indexOf("Found") === 0 ? settings.accent : root.warn }
+                    }
+
                     Flow {
                         width: parent.width
                         spacing: 10
-                        Btn { label: "Sort again"; enabled: !root.info.busy; onClicked: pods.resort(root.podId, root.detail) }
+                        Btn { label: "Sort again"; enabled: !root.info.busy && (root.layout !== "spec" || !!root.info.specName); onClicked: pods.resort(root.podId, root.detail) }
                         Btn { label: "Check for new files"; primary: false; enabled: !root.info.busy; onClicked: pods.refresh(root.podId) }
                     }
                     Para {
                         text: { ai.revision
                             const m = ai.installed("meaning"), w = ai.installed("writer")
-                            const how = m && w ? "Sorts with the on-device AI: the meaning model groups your documents and the writer names each topic."
-                                : m ? "Sorts with the on-device AI's meaning model. Download the writer on the Pods page to have topics named and summed up."
-                                : w ? "Groups by key words, then the writer names each topic. Download the meaning model on the Pods page to group by meaning."
+                            const how = root.layout === "spec"
+                                ? (m ? "Matches by meaning, with the on-device AI." : "Matches by key words. Download the meaning model on the Pods page to match by meaning.")
+                                : m && w ? "Sorts with the on-device AI: the meaning model groups your documents and the writer names each group."
+                                : m ? "Sorts with the on-device AI's meaning model. Download the writer on the Pods page to have groups named and summed up."
+                                : w ? "Groups by key words, then the writer names each group. Download the meaning model on the Pods page to group by meaning."
                                 : "Sorts by key words. Download the free on-device AI on the Pods page to sort by meaning."
-                            return how + " Sorting again replaces topic names you have changed; “Check for new files” keeps them." }
+                            return how + " Sorting again replaces names you have changed; “Check for new files” keeps them." }
+                    }
+                }
+                FileDialog {
+                    id: specDialog
+                    title: "Choose your spec"
+                    nameFilters: ["Documents (*.docx *.odt *.txt *.md)", "All files (*)"]
+                    onAccepted: {
+                        const r = pods.readSpecFile(selectedFile.toString())
+                        if (r.error) { root.specNote = r.error; return }
+                        const s = pods.setSpec(root.podId, r.name, r.text)
+                        if (s.error) { root.specNote = s.error; return }
+                        root.specNote = "Found " + s.points + " points."
+                        pods.resort(root.podId, root.detail)
                     }
                 }
 
@@ -318,7 +422,7 @@ Item {
                     Text { text: "Your files"; font.pixelSize: 13; color: settings.inkSoft }
                     Para {
                         color: settings.ink
-                        text: root.info.moved ? "Your documents were moved into a folder for each topic."
+                        text: root.info.moved ? "Your documents were moved into a folder for each topic, inside its subject's folder."
                                               : "Topics only exist in Streamline for now. Your files are where they were."
                     }
                     Link {
@@ -332,7 +436,8 @@ Item {
                             } else {
                                 const p = pods.movePlan(root.podId)
                                 planText.text = p.files === 0 ? "Every document is already in its topic's folder."
-                                    : "This makes " + root.plural(p.folders, "folder") + " inside " + root.info.folder + " (" + p.names.join(", ") + ") and moves "
+                                    : "This makes " + root.plural(p.folders, "folder") + " inside " + root.info.folder + " ("
+                                      + (p.names.length > 6 ? p.names.slice(0, 6).join(", ") + "…" : p.names.join(", ")) + ") and moves "
                                       + root.plural(p.files, "document") + " into them. Documents under Other stay where they are. You can undo this here."
                                 moveBtn.visible = p.files > 0
                                 root.confirmMove = true

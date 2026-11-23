@@ -1,3 +1,9 @@
+# Streamline 0.6: nested pods and spec matching
+- **Subjects › Topics › Subtopics.** A pod can sort a messy folder in levels: each subject, the topics in it, and the parts of each topic. New pods start this way. With the writer model, each level gets its own name ("History", then "Cold War", then "Cuban Missile Crisis"); subjects fold open and shut.
+- **Match to a spec.** Add your own course specification (from your exam board's website, or a module outline: a Word or text file, or pasted text) and each document is matched to the point it covers, such as "3.2.1 Cell structure", inside its section. Documents that match nothing go under "Not in the spec". With the meaning model it matches by meaning; without it, by key words. A spec's contents page is skipped.
+- **Moving the files** follows the layout: folders inside folders (`History/Cold War/…`, or `1 History/1.2 The Cold War/1.2.1 Origins…`). Undo puts everything back and removes the folders it made.
+- "Topics only" is still there, with broad, balanced and specific.
+
 # Streamline 0.5: on-device AI for Pods
 - **Free AI that runs on your device.** Two open models read your documents and sort them by what they're about. Nothing is sent anywhere, there's nothing to pay, and once downloaded they work offline.
   - **Meaning model** (BGE small, 37 MB): reads each document's name, headings and text, in pieces through long documents, and groups documents by meaning, even when they share no words.

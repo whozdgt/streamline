@@ -17,6 +17,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QRegularExpression>
+#include <QBuffer>
 #include <QSaveFile>
 #include <QSet>
 #include <QSettings>
@@ -32,6 +33,7 @@
 #include <QtGui/private/qzipreader_p.h>
 #endif
 #include <algorithm>
+#include <functional>
 
 namespace {
 
@@ -54,9 +56,8 @@ QStringList filters()
 
 // Word (.docx): the text is in word/document.xml, one <w:p> per paragraph, the words in <w:t>.
 // A paragraph whose style is a heading or the title goes into the headings as well.
-void readDocx(const QString &path, QString &title, QString &headings, QString &body)
+void readDocxZip(QZipReader &zip, QString &title, QString &headings, QString &body)
 {
-    QZipReader zip(path);
     if (zip.status() != QZipReader::NoError) return;
     {
         QXmlStreamReader x(zip.fileData(QStringLiteral("docProps/core.xml")));
@@ -104,9 +105,8 @@ void readDocx(const QString &path, QString &title, QString &headings, QString &b
 }
 
 // OpenDocument (.odt): content.xml, <text:p> paragraphs and <text:h> headings.
-void readOdt(const QString &path, QString &headings, QString &body)
+void readOdtZip(QZipReader &zip, QString &headings, QString &body)
 {
-    QZipReader zip(path);
     if (zip.status() != QZipReader::NoError) return;
     QXmlStreamReader x(zip.fileData(QStringLiteral("content.xml")));
     QString para;
@@ -139,6 +139,17 @@ void readOdt(const QString &path, QString &headings, QString &body)
             break;
         }
     }
+}
+
+void readDocx(const QString &path, QString &title, QString &headings, QString &body)
+{
+    QZipReader zip(path);
+    readDocxZip(zip, title, headings, body);
+}
+void readOdt(const QString &path, QString &headings, QString &body)
+{
+    QZipReader zip(path);
+    readOdtZip(zip, headings, body);
 }
 
 Pods::Scanned readOne(const QString &path, const QString &root)
@@ -227,8 +238,7 @@ QString mimeOf(const QString &ext)
 
 struct Result {
     QVector<Pods::Scanned> docs;
-    std::vector<podsort::Topic> topics;   // sorting
-    std::vector<std::string> summaries;   // sorting with the writer: one per topic
+    std::vector<podsort::Node> nodes;     // sorting: the topics, parents before children
     QString method = QStringLiteral("words");   // words | ai | ai-writer
     QString note;                         // something went wrong with the AI and key words were used instead
     std::vector<int> placed;              // refreshing: the topic each new document joins, -1 for none
@@ -278,26 +288,55 @@ QVariantList Pods::pods() const
     return out;
 }
 
+QVector<const Pods::Topic *> Pods::ordered(const Pod &p) const
+{
+    QVector<const Topic *> out;
+    std::function<void(const QString &)> walk = [&](const QString &parent) {
+        for (const Topic &t : p.topics)
+            if (t.parent == parent && !t.other) { out << &t; walk(t.id); }
+    };
+    walk(QString());
+    for (const Topic &t : p.topics) if (t.other) out << &t;      // Other last
+    return out;
+}
+
 QVariantMap Pods::pod(const QString &id, const QString &query) const
 {
     const Pod *p = find(id);
     if (!p) return {};
     const QString q = query.trimmed();
+    // the documents each topic holds itself that match the search
+    QHash<QString, QVariantList> direct;
+    QHash<QString, int> matches;      // in the topic and every topic inside it
+    QHash<QString, QString> parentOf;
+    QSet<QString> hits;               // topics whose own name matches: all their documents show
+    for (const Topic &t : p->topics) {
+        parentOf.insert(t.id, t.parent);
+        if (!q.isEmpty() && (t.name.contains(q, Qt::CaseInsensitive) || t.number.startsWith(q))) hits.insert(t.id);
+    }
+    auto underHit = [&](QString tid) {
+        for (; !tid.isEmpty(); tid = parentOf.value(tid)) if (hits.contains(tid)) return true;
+        return false;
+    };
+    for (const Doc &d : p->docs) {
+        if (!q.isEmpty() && !underHit(d.topic) && !d.name.contains(q, Qt::CaseInsensitive) && !d.snippet.contains(q, Qt::CaseInsensitive)) continue;
+        direct[d.topic] << QVariantMap{{"path", d.path}, {"name", d.name}, {"ext", d.ext}, {"snippet", d.snippet},
+                                       {"words", d.words}, {"readable", d.readable}, {"folder", d.folder}};
+        for (QString tid = d.topic; !tid.isEmpty(); tid = parentOf.value(tid)) ++matches[tid];
+    }
+    QSet<QString> parents;
+    for (const Topic &t : p->topics) if (!t.parent.isEmpty()) parents.insert(t.parent);
     QVariantList topics;
     int shown = 0;
-    for (const Topic &t : p->topics) {
-        QVariantList docs;
-        const bool topicHit = !q.isEmpty() && t.name.contains(q, Qt::CaseInsensitive);
-        for (const Doc &d : p->docs) {
-            if (d.topic != t.id) continue;
-            if (!q.isEmpty() && !topicHit && !d.name.contains(q, Qt::CaseInsensitive) && !d.snippet.contains(q, Qt::CaseInsensitive)) continue;
-            docs << QVariantMap{{"path", d.path}, {"name", d.name}, {"ext", d.ext}, {"snippet", d.snippet},
-                                {"words", d.words}, {"readable", d.readable}, {"folder", d.folder}};
-        }
-        if (docs.isEmpty() && (!q.isEmpty() || t.other)) continue;
-        shown += int(docs.size());
-        topics << QVariantMap{{"id", t.id}, {"name", t.name}, {"summary", t.summary}, {"keywords", t.keywords},
-                              {"other", t.other}, {"docs", docs}};
+    for (const Topic *t : ordered(*p)) {
+        if (matches.value(t->id) == 0) continue;
+        QStringList ancestors;
+        for (QString a = t->parent; !a.isEmpty(); a = parentOf.value(a)) ancestors << a;
+        shown += int(direct.value(t->id).size());
+        topics << QVariantMap{{"id", t->id}, {"name", t->name}, {"number", t->number}, {"summary", t->summary},
+                              {"keywords", t->keywords}, {"other", t->other}, {"depth", int(ancestors.size())},
+                              {"ancestors", ancestors}, {"hasChildren", parents.contains(t->id)},
+                              {"total", matches.value(t->id)}, {"docs", direct.value(t->id)}};
     }
     QString when;
     if (p->sorted > 0) {
@@ -305,11 +344,14 @@ QVariantMap Pods::pod(const QString &id, const QString &query) const
         when = dt.date() == QDate::currentDate() ? dt.toString(QStringLiteral("HH:mm")) : dt.toString(QStringLiteral("d MMM"));
     }
     const QStringList details = {QStringLiteral("broad"), QStringLiteral("balanced"), QStringLiteral("specific")};
-    const QString sortedLabel = p->sorted == 0 ? QString()
-        : (p->method == QLatin1String("ai-writer") ? QStringLiteral("Sorted and named by on-device AI")
-           : p->method == QLatin1String("ai") ? QStringLiteral("Sorted by on-device AI") : QStringLiteral("Sorted by key words"))
-              + QStringLiteral(" · ") + details.value(p->detail) + QStringLiteral(" · ") + when;
+    const QString how = p->method == QLatin1String("ai-writer") ? QStringLiteral("Sorted and named by on-device AI")
+                      : p->method == QLatin1String("ai") ? QStringLiteral("Sorted by on-device AI") : QStringLiteral("Sorted by key words");
+    const QString shape = p->layout == QLatin1String("spec") ? QStringLiteral("matched to ") + (p->specName.isEmpty() ? QStringLiteral("your spec") : p->specName)
+                        : p->layout == QLatin1String("nested") ? QStringLiteral("subjects › topics") : details.value(p->detail) + QStringLiteral(" topics");
+    const QString sortedLabel = p->sorted == 0 ? QString() : how + QStringLiteral(" · ") + shape + QStringLiteral(" · ") + when;
+    const int points = p->specText.isEmpty() ? 0 : int(podsort::parseSpec(p->specText.toStdString()).size());
     return {{"id", p->id}, {"name", p->name}, {"folder", QDir::toNativeSeparators(p->folder)}, {"detail", p->detail},
+            {"layout", p->layout}, {"specName", p->specName}, {"specPoints", points},
             {"method", p->method}, {"sortedLabel", sortedLabel}, {"busy", p->busy}, {"status", p->status},
             {"error", p->error}, {"moved", !p->moves.isEmpty()}, {"docCount", int(p->docs.size())},
             {"shown", shown}, {"topics", topics}};
@@ -320,7 +362,13 @@ QVariantList Pods::topicChoices(const QString &podId) const
     QVariantList out;
     const Pod *p = find(podId);
     if (!p) return out;
-    for (const Topic &t : p->topics) out << QVariantMap{{"id", t.id}, {"name", t.name}};
+    QHash<QString, const Topic *> byId;
+    for (const Topic &t : p->topics) byId.insert(t.id, &t);
+    for (const Topic *t : ordered(*p)) {
+        QStringList path;
+        for (const Topic *a = t; a; a = byId.value(a->parent)) path.prepend(a->number.isEmpty() ? a->name : a->number + QLatin1Char(' ') + a->name);
+        out << QVariantMap{{"id", t->id}, {"name", path.join(QStringLiteral(" › "))}};
+    }
     out << QVariantMap{{"id", "new"}, {"name", "+ New topic"}};
     return out;
 }
@@ -358,6 +406,59 @@ void Pods::rename(const QString &id, const QString &name)
 }
 
 void Pods::resort(const QString &id, int detail) { run(id, QStringLiteral("Sorting…"), qBound(0, detail, 2), 0); }
+
+void Pods::setLayout(const QString &id, const QString &layout)
+{
+    Pod *p = find(id);
+    if (!p || p->busy || (layout != QLatin1String("topics") && layout != QLatin1String("nested") && layout != QLatin1String("spec"))) return;
+    if (p->layout == layout) return;
+    p->layout = layout;
+    changed();
+}
+
+QVariantMap Pods::setSpec(const QString &id, const QString &name, const QString &text)
+{
+    Pod *p = find(id);
+    if (!p) return {{"error", "That pod has gone."}};
+    const auto pts = podsort::parseSpec(text.toStdString());
+    if (pts.size() < 2) return {{"error", "That doesn't look like a specification: no numbered points (such as \"3.2.1 Cell structure\") or sections were found."}};
+    p->specName = name.simplified().left(80);
+    if (p->specName.isEmpty()) p->specName = QStringLiteral("Your spec");
+    p->specText = text.left(600000);
+    p->layout = QStringLiteral("spec");
+    changed();
+    return {{"points", int(pts.size())}};
+}
+
+QVariantMap Pods::readSpecFile(const QString &url) const
+{
+    const QUrl u(url);
+    const QString path = u.isLocalFile() ? u.toLocalFile() : url;      // Android hands over content:// addresses
+    QFile f(path);
+    if (!f.open(QIODevice::ReadOnly)) return {{"error", "Couldn't open that file."}};
+    const QByteArray data = f.read(20 * 1024 * 1024);
+    QString name = u.fileName();
+    if (name.isEmpty() || name.contains(QLatin1Char('%'))) name = QFileInfo(path).fileName();
+    name = QFileInfo(name).completeBaseName();
+    if (data.startsWith("%PDF"))
+        return {{"error", "Streamline can't read PDFs yet. Open the spec, select all of its text, copy it, and paste it here instead."}};
+    QString title, headings, body;
+    if (data.startsWith("PK")) {      // Word or OpenDocument: both are zip files
+        QBuffer buf;
+        buf.setData(data);
+        buf.open(QIODevice::ReadOnly);
+        QZipReader zip(&buf);
+        const auto files = zip.fileInfoList();
+        bool word = false;
+        for (const auto &fi : files) if (fi.filePath == QLatin1String("word/document.xml")) word = true;
+        if (word) readDocxZip(zip, title, headings, body);
+        else readOdtZip(zip, headings, body);
+    } else {
+        body = QString::fromUtf8(data);
+    }
+    if (body.trimmed().isEmpty()) return {{"error", "No text found in that file."}};
+    return {{"name", name}, {"text", body}};
+}
 void Pods::refresh(const QString &id) { if (const Pod *p = find(id)) run(id, QStringLiteral("Looking for new documents…"), p->detail, 1); }
 void Pods::run(const QString &id, const QString &status, int detail, int kind)
 {
@@ -369,12 +470,16 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
     ++m_rev;
     emit revisionChanged();
 
-    // what the pod knows now, for a refresh: which topic each file is in
+    // what the pod knows now, for a refresh: which topic each file is in, and the topics that hold documents
     QHash<QString, QString> known;
-    QStringList topicIds;
+    QStringList leafIds;
+    QSet<QString> parents;
+    for (const Topic &t : p->topics) if (!t.parent.isEmpty()) parents.insert(t.parent);
     for (const Doc &d : p->docs) known.insert(d.path, d.topic);
-    for (const Topic &t : p->topics) if (!t.other) topicIds << t.id;
+    for (const Topic &t : p->topics) if (!t.other && !parents.contains(t.id)) leafIds << t.id;
     const QString folder = p->folder;
+    const QString layout = p->layout;
+    const std::string specText = p->specText.toStdString();
     const QString meaningPath = m_models ? m_models->path(QStringLiteral("meaning")) : QString();
     const QString writerPath = m_models ? m_models->path(QStringLiteral("writer")) : QString();
 
@@ -395,16 +500,19 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         if (kind == 0) {
             p->topics.clear();
             p->docs.clear();
-            for (size_t k = 0; k < r.topics.size(); ++k) {
-                const auto &t = r.topics[k];
+            QVector<QString> ids;
+            for (const auto &n : r.nodes) {
                 Topic tp;
                 tp.id = newId();
-                tp.name = QString::fromStdString(t.name);
-                if (k < r.summaries.size()) tp.summary = QString::fromStdString(r.summaries[k]);
-                for (const auto &kw : t.keywords) tp.keywords << QString::fromStdString(kw);
-                tp.other = t.other;
+                ids << tp.id;
+                tp.name = QString::fromStdString(n.name);
+                tp.summary = QString::fromStdString(n.summary);
+                tp.number = QString::fromStdString(n.number);
+                for (const auto &kw : n.keywords) tp.keywords << QString::fromStdString(kw);
+                tp.parent = n.parent >= 0 && n.parent < ids.size() ? ids[n.parent] : QString();
+                tp.other = n.other;
                 p->topics.push_back(tp);
-                for (int i : t.docs) {
+                for (int i : n.docs) {
                     const Scanned &s = r.docs[i];
                     p->docs.push_back({s.path, s.name, s.ext, s.rel, tp.id, snippetOf(s.body), s.words, s.readable});
                 }
@@ -415,8 +523,10 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         } else {
             QHash<QString, QString> before;
             for (const Doc &d : p->docs) before.insert(d.path, d.topic);
-            QStringList topicIds;
-            for (const Topic &t : p->topics) if (!t.other) topicIds << t.id;
+            QSet<QString> parents;
+            for (const Topic &t : p->topics) if (!t.parent.isEmpty()) parents.insert(t.parent);
+            QStringList leafIds;
+            for (const Topic &t : p->topics) if (!t.other && !parents.contains(t.id)) leafIds << t.id;
             QVector<Doc> docs;
             for (int i = 0; i < r.docs.size(); ++i) {
                 const Scanned &s = r.docs[i];
@@ -424,7 +534,7 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
                 if (topic.isEmpty()) {
                     const auto f = std::find(r.fresh.begin(), r.fresh.end(), i);
                     const int k = f == r.fresh.end() ? -1 : r.placed[size_t(f - r.fresh.begin())];
-                    topic = k >= 0 && k < topicIds.size() ? topicIds[k] : otherTopic(*p).id;
+                    topic = k >= 0 && k < leafIds.size() ? leafIds[k] : otherTopic(*p).id;
                 }
                 docs.push_back({s.path, s.name, s.ext, s.rel, topic, snippetOf(s.body), s.words, s.readable});
             }
@@ -433,12 +543,16 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         }
         finish(p, r.note);
     });
-    w->setFuture(QtConcurrent::run([folder, kind, detail, known, topicIds, meaningPath, writerPath, say]() {
+    w->setFuture(QtConcurrent::run([folder, kind, detail, layout, specText, known, leafIds, meaningPath, writerPath, say]() {
         Result r;
         r.docs = scanFolder(folder);
         const int n = int(r.docs.size());
         if (n == 0) return r;
         const auto words = toSortDocs(r.docs);
+        const bool spec = layout == QLatin1String("spec") && kind == 0;
+        const auto points = spec ? podsort::parseSpec(specText) : std::vector<podsort::SpecPoint>();
+        const auto leaves = podsort::leafPoints(points);
+        std::vector<int> docPoint;          // spec: the point each document matched
 
         // The meaning model reads every document (its name, headings and text, in a few pieces when it is long)
         std::vector<std::vector<float>> vecs;
@@ -452,56 +566,85 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
                     vecs.push_back(m.read((d.title.isEmpty() ? d.name : d.name + QStringLiteral(": ") + d.title).toStdString(),
                                           d.headings.toStdString(), d.body.toStdString()));
                 }
+                if (spec && !leaves.empty()) {      // and every point of the spec
+                    say(QStringLiteral("Reading the spec…"));
+                    std::vector<std::vector<float>> pv;
+                    for (int l : leaves) pv.push_back(m.embed(podsort::pointText(points, l)));
+                    for (int x : podai::match(vecs, pv)) docPoint.push_back(x < 0 ? -1 : leaves[size_t(x)]);
+                }
             } else {
                 r.note = QStringLiteral("The meaning model couldn't start, so key words were used. Try removing and downloading it again.");
+                vecs.clear();
             }
         }
+        const bool byMeaning = vecs.size() == size_t(n);
 
-        if (kind == 1) {      // refresh: new documents join the topic they fit best
-            std::vector<std::vector<int>> groups(size_t(topicIds.size()));
+        if (kind == 1) {      // refresh: new documents join the topic (with nothing inside it) they fit best
+            std::vector<std::vector<int>> groups(size_t(leafIds.size()));
             for (int i = 0; i < n; ++i) {
                 const auto it = known.constFind(r.docs[i].path);
                 if (it == known.constEnd()) { r.fresh.push_back(i); continue; }
-                const qsizetype k = topicIds.indexOf(*it);
+                const qsizetype k = leafIds.indexOf(*it);
                 if (k >= 0) groups[size_t(k)].push_back(i);
             }
             if (!r.fresh.empty())
-                r.placed = vecs.size() == size_t(n) ? podai::place(vecs, groups, r.fresh, detail)
-                                                    : podsort::placeNew(words, groups, r.fresh, detail);
+                r.placed = byMeaning ? podai::place(vecs, groups, r.fresh, detail) : podsort::placeNew(words, groups, r.fresh, detail);
             return r;
         }
 
-        if (vecs.size() == size_t(n)) {
-            r.topics = podsort::nameGroups(words, podai::group(vecs, detail));
-            r.method = QStringLiteral("ai");
-        } else {
-            r.topics = podsort::sortDocs(words, detail);
+        if (spec) {
+            if (docPoint.empty()) {
+                say(QStringLiteral("Matching to the spec…"));
+                std::vector<std::string> targets;
+                for (int l : leaves) targets.push_back(podsort::pointText(points, l));
+                for (int x : podsort::matchPoints(words, targets)) docPoint.push_back(x < 0 ? -1 : leaves[size_t(x)]);
+            }
+            r.nodes = podsort::specTree(points, docPoint);
+            r.method = byMeaning ? QStringLiteral("ai") : QStringLiteral("words");
+            return r;      // the spec names its own points
         }
-        r.summaries.assign(r.topics.size(), std::string());
 
-        // The writer reads the documents in each topic and names it
+        if (layout == QLatin1String("nested")) {
+            r.nodes = byMeaning ? podsort::nest(words, [&vecs](const std::vector<int> &subset, int level) { return podai::groupWithin(vecs, subset, level); })
+                                : podsort::nest(words, podsort::wordGrouper(words));
+        } else {
+            const auto topics = byMeaning ? podsort::nameGroups(words, podai::group(vecs, detail)) : podsort::sortDocs(words, detail);
+            for (const auto &t : topics) {
+                podsort::Node nd;
+                nd.name = t.name;
+                nd.keywords = t.keywords;
+                nd.docs = t.docs;
+                nd.other = t.other;
+                nd.level = 1;
+                r.nodes.push_back(nd);
+            }
+        }
+        r.method = byMeaning ? QStringLiteral("ai") : QStringLiteral("words");
+
+        // The writer reads the documents in each topic and names it (subjects first, then the topics inside them)
         if (!writerPath.isEmpty()) {
             say(QStringLiteral("Starting the writer…"));
             podai::Writer wr;
             std::string err;
             if (wr.load(writerPath.toStdString(), err)) {
-                std::vector<std::string> names;
                 int done = 0, total = 0;
-                for (const auto &t : r.topics) if (!t.other) ++total;
-                for (size_t k = 0; k < r.topics.size(); ++k) {
-                    auto &t = r.topics[k];
-                    if (t.other) continue;
+                for (const auto &nd : r.nodes) if (!nd.other) ++total;
+                for (size_t k = 0; k < r.nodes.size(); ++k) {
+                    auto &nd = r.nodes[k];
+                    if (nd.other) continue;
                     say(QStringLiteral("Naming topics… %1 of %2").arg(++done).arg(total));
-                    const podai::Named nm = podai::name(wr, docTexts(r.docs, t.docs), names);
-                    if (!nm.name.empty()) {
-                        bool clash = false;
-                        for (const auto &o : names) if (QString::fromStdString(o).compare(QString::fromStdString(nm.name), Qt::CaseInsensitive) == 0) clash = true;
-                        if (!clash) t.name = nm.name;
-                    }
-                    r.summaries[k] = nm.summary;
-                    names.push_back(t.name);
+                    std::vector<std::string> siblings;
+                    for (size_t j = 0; j < k; ++j) if (r.nodes[j].parent == nd.parent && !r.nodes[j].other) siblings.push_back(r.nodes[j].name);
+                    const std::string parent = nd.parent >= 0 ? r.nodes[size_t(nd.parent)].name : std::string();
+                    const podai::Named nm = podai::name(wr, docTexts(r.docs, podsort::subtree(r.nodes, int(k))), siblings,
+                                                        layout == QLatin1String("nested") ? nd.level : 1, parent);
+                    bool clash = nm.name.empty();
+                    for (const auto &o : siblings) if (QString::fromStdString(o).compare(QString::fromStdString(nm.name), Qt::CaseInsensitive) == 0) clash = true;
+                    if (!parent.empty() && QString::fromStdString(parent).compare(QString::fromStdString(nm.name), Qt::CaseInsensitive) == 0) clash = true;
+                    if (!clash) nd.name = nm.name;
+                    nd.summary = nm.summary;
                 }
-                r.method = r.method == QLatin1String("ai") ? QStringLiteral("ai-writer") : r.method;
+                if (byMeaning) r.method = QStringLiteral("ai-writer");
             } else if (r.note.isEmpty()) {
                 r.note = QStringLiteral("The writer model couldn't start, so topics were named by their key words.");
             }
@@ -531,10 +674,27 @@ Pods::Topic &Pods::otherTopic(Pod &p)
 
 void Pods::dropEmptyTopics(Pod &p)
 {
-    QSet<QString> used;
-    for (const Doc &d : p.docs) used.insert(d.topic);
-    for (int i = p.topics.size() - 1; i >= 0; --i)
-        if (!used.contains(p.topics[i].id)) p.topics.remove(i);
+    // a topic with no documents and no topics inside it goes; that can empty its parent, so go round again
+    for (bool again = true; again;) {
+        again = false;
+        QSet<QString> used;
+        for (const Doc &d : p.docs) used.insert(d.topic);
+        for (const Topic &t : p.topics) if (!t.parent.isEmpty()) used.insert(t.parent);
+        for (int i = p.topics.size() - 1; i >= 0; --i)
+            if (!used.contains(p.topics[i].id)) { p.topics.remove(i); again = true; }
+    }
+}
+
+QString Pods::topicDir(const Pod &p, const Topic &t) const
+{
+    QStringList parts;
+    for (const Topic *a = &t; a;) {
+        parts.prepend(folderName(a->number.isEmpty() ? a->name : a->number + QLatin1Char(' ') + a->name));
+        const Topic *up = nullptr;
+        for (const Topic &x : p.topics) if (x.id == a->parent) up = &x;
+        a = up;
+    }
+    return QDir(p.folder).filePath(parts.join(QLatin1Char('/')));
 }
 
 // ---- Changing topics by hand ----
@@ -575,13 +735,13 @@ QVariantMap Pods::movePlan(const QString &id) const
     if (!p) return {};
     int files = 0;
     QStringList names;
-    for (const Topic &t : p->topics) {
-        if (t.other) continue;
-        const QString dir = QDir(p->folder).filePath(folderName(t.name));
+    for (const Topic *t : ordered(*p)) {
+        if (t->other) continue;
+        const QString dir = topicDir(*p, *t);
         bool any = false;
         for (const Doc &d : p->docs)
-            if (d.topic == t.id && QFileInfo(d.path).absolutePath() != dir) { ++files; any = true; }
-        if (any) names << folderName(t.name);
+            if (d.topic == t->id && QFileInfo(d.path).absolutePath() != dir) { ++files; any = true; }
+        if (any) names << QDir(p->folder).relativeFilePath(dir);
     }
     return {{"files", files}, {"folders", int(names.size())}, {"names", names}};
 }
@@ -593,15 +753,19 @@ QVariantMap Pods::moveFiles(const QString &id)
     int moved = 0, failed = 0;
     QDir root(p->folder);
     QVector<Move> moves;
-    for (const Topic &t : p->topics) {
-        if (t.other) continue;       // documents that fit nowhere stay where they are
-        const QString name = folderName(t.name);
-        const QString dir = root.filePath(name);
+    for (const Topic *t : ordered(*p)) {
+        if (t->other) continue;       // documents that fit nowhere stay where they are
+        const QString dir = topicDir(*p, *t);
+        const QString rel = root.relativeFilePath(dir);
         for (Doc &d : p->docs) {
-            if (d.topic != t.id || QFileInfo(d.path).absolutePath() == dir) continue;
+            if (d.topic != t->id || QFileInfo(d.path).absolutePath() == dir) continue;
             if (!QFileInfo::exists(dir)) {
-                if (!root.mkpath(name)) { ++failed; continue; }
-                p->madeDirs << dir;
+                // remember each folder made on the way down, deepest last, so Undo can take them away again
+                QStringList made;
+                for (QString x = dir; !QFileInfo::exists(x) && x.startsWith(p->folder) && x != p->folder; x = QFileInfo(x).absolutePath())
+                    made.prepend(x);
+                if (!root.mkpath(rel)) { ++failed; continue; }
+                p->madeDirs << made;
             }
             const QFileInfo fi(d.path);
             QString to = QDir(dir).filePath(fi.fileName());
@@ -610,7 +774,7 @@ QVariantMap Pods::moveFiles(const QString &id)
             if (QFile::rename(d.path, to)) {
                 moves.push_back({d.path, to});
                 d.path = to;
-                d.folder = name;
+                d.folder = rel;
                 ++moved;
             } else {
                 ++failed;      // open in Word, or not ours to move
@@ -646,8 +810,10 @@ QVariantMap Pods::undoMove(const QString &id)
     }
     p->moves = left;
     QStringList kept;
-    for (const QString &dir : std::as_const(p->madeDirs))
-        if (!QDir().rmdir(dir) && QFileInfo::exists(dir)) kept << dir;      // only removed when empty
+    for (int i = p->madeDirs.size() - 1; i >= 0; --i) {      // deepest first; a folder goes only when it is empty
+        const QString &dir = p->madeDirs[i];
+        if (!QDir().rmdir(dir) && QFileInfo::exists(dir)) kept.prepend(dir);
+    }
     p->madeDirs = left.isEmpty() ? QStringList() : kept;
     changed();
     return {{"moved", moved}, {"failed", failed}};
@@ -710,7 +876,11 @@ void Pods::load()
         p.id = o.value(QLatin1String("id")).toString();
         p.name = o.value(QLatin1String("name")).toString();
         p.folder = o.value(QLatin1String("folder")).toString();
-        p.method = o.value(QLatin1String("method")).toString(QStringLiteral("device"));
+        p.method = o.value(QLatin1String("method")).toString(QStringLiteral("words"));
+        if (p.method == QLatin1String("device")) p.method = QStringLiteral("words");
+        p.layout = o.value(QLatin1String("layout")).toString(QStringLiteral("topics"));      // pods from 0.4 were one level
+        p.specName = o.value(QLatin1String("specName")).toString();
+        p.specText = o.value(QLatin1String("specText")).toString();
         p.detail = o.value(QLatin1String("detail")).toInt(1);
         p.created = qint64(o.value(QLatin1String("created")).toDouble());
         p.sorted = qint64(o.value(QLatin1String("sorted")).toDouble());
@@ -723,6 +893,8 @@ void Pods::load()
             tp.summary = t.value(QLatin1String("summary")).toString();
             for (const QJsonValue &k : t.value(QLatin1String("keywords")).toArray()) tp.keywords << k.toString();
             tp.other = t.value(QLatin1String("other")).toBool();
+            tp.number = t.value(QLatin1String("number")).toString();
+            tp.parent = t.value(QLatin1String("parent")).toString();
             p.topics.push_back(tp);
         }
         for (const QJsonValue &dv : o.value(QLatin1String("docs")).toArray()) {
@@ -747,13 +919,14 @@ void Pods::save() const
     for (const Pod &p : m_pods) {
         QJsonArray topics, docs, moves;
         for (const Topic &t : p.topics)
-            topics << QJsonObject{{"id", t.id}, {"name", t.name}, {"summary", t.summary},
-                                  {"keywords", QJsonArray::fromStringList(t.keywords)}, {"other", t.other}};
+            topics << QJsonObject{{"id", t.id}, {"name", t.name}, {"summary", t.summary}, {"number", t.number},
+                                  {"parent", t.parent}, {"keywords", QJsonArray::fromStringList(t.keywords)}, {"other", t.other}};
         for (const Doc &d : p.docs)
             docs << QJsonObject{{"path", d.path}, {"name", d.name}, {"ext", d.ext}, {"folder", d.folder}, {"topic", d.topic},
                                 {"snippet", d.snippet}, {"words", d.words}, {"readable", d.readable}};
         for (const Move &m : p.moves) moves << QJsonObject{{"from", m.from}, {"to", m.to}};
         arr << QJsonObject{{"id", p.id}, {"name", p.name}, {"folder", p.folder}, {"method", p.method}, {"detail", p.detail},
+                           {"layout", p.layout}, {"specName", p.specName}, {"specText", p.specText},
                            {"created", double(p.created)}, {"sorted", double(p.sorted)}, {"topics", topics}, {"docs", docs},
                            {"moves", moves}, {"madeDirs", QJsonArray::fromStringList(p.madeDirs)}};
     }

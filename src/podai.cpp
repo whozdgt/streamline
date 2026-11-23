@@ -234,31 +234,54 @@ std::string Writer::chat(const std::string &system, const std::string &user, int
 
 // ---------------- Grouping ----------------
 
+namespace {
+double dotv(const std::vector<float> &a, const std::vector<float> &b)
+{
+    if (a.empty() || a.size() != b.size()) return 0.0;
+    double s = 0;
+    for (size_t k = 0; k < a.size(); ++k) s += double(a[k]) * b[k];
+    return s;
+}
+// Meaning models never score two texts near zero: even unrelated ones come out fairly similar. So cut-offs are set
+// from the pod's own scores: a typical pair (the median) and the closest pairs (the top 2%).
+struct Spread { double median = 0, high = 1; double at(double reach) const { return median + (high - median) * reach; } };
+Spread spread(std::vector<double> all)
+{
+    Spread s;
+    if (all.empty()) return s;
+    std::sort(all.begin(), all.end());
+    s.median = all[all.size() / 2];
+    s.high = all[std::min(all.size() - 1, size_t(double(all.size()) * 0.98))];
+    return s;
+}
+Spread docSpread(const std::vector<std::vector<float>> &vecs)
+{
+    std::vector<double> all;
+    for (size_t i = 0; i < vecs.size(); ++i)
+        for (size_t j = i + 1; j < vecs.size(); ++j) all.push_back(dotv(vecs[i], vecs[j]));
+    return spread(all);
+}
+double reachFor(int detail) { return detail <= 0 ? 0.30 : detail == 1 ? 0.45 : 0.60; }   // fraction of the way from typical to closest
+} // namespace
+
 std::vector<std::vector<int>> group(const std::vector<std::vector<float>> &vecs, int detail)
 {
-    const size_t n = vecs.size();
-    std::vector<std::vector<int>> groups(n);
-    for (size_t i = 0; i < n; ++i) groups[i] = {int(i)};
-    if (n < 2) return groups;
+    std::vector<int> all(vecs.size());
+    std::iota(all.begin(), all.end(), 0);
+    return groupWithin(vecs, all, detail);
+}
 
+std::vector<std::vector<int>> groupWithin(const std::vector<std::vector<float>> &vecs, const std::vector<int> &subset, int detail)
+{
+    const size_t n = subset.size();
+    std::vector<std::vector<int>> groups(n);
+    for (size_t i = 0; i < n; ++i) groups[i] = {subset[i]};
+    if (n < 2) return groups;
+    // the cut-off comes from the whole pod, so "a topic" means the same thing inside every subject
+    const double cutoff = docSpread(vecs).at(reachFor(detail));
     std::vector<std::vector<double>> sim(n, std::vector<double>(n, 0.0));
-    std::vector<double> all;
     for (size_t i = 0; i < n; ++i)
-        for (size_t j = i + 1; j < n; ++j) {
-            double s = 0;
-            if (!vecs[i].empty() && vecs[i].size() == vecs[j].size())
-                for (size_t k = 0; k < vecs[i].size(); ++k) s += double(vecs[i][k]) * vecs[j][k];
-            sim[i][j] = sim[j][i] = s;
-            all.push_back(s);
-        }
-    // Meaning models never score two texts near zero: even unrelated ones come out fairly similar. So the cut-off is
-    // set from this pod's own scores: how far above a typical pair two documents must be to share a topic.
-    std::vector<double> sorted = all;
-    std::sort(sorted.begin(), sorted.end());
-    const double median = sorted[sorted.size() / 2];
-    const double high = sorted[std::min(sorted.size() - 1, size_t(double(sorted.size()) * 0.98))];
-    const double reach = detail <= 0 ? 0.30 : detail == 1 ? 0.45 : 0.60;      // fraction of the way from typical to closest
-    const double cutoff = median + (high - median) * reach;
+        for (size_t j = i + 1; j < n; ++j) sim[i][j] = sim[j][i] = dotv(vecs[size_t(subset[i])], vecs[size_t(subset[j])]);
 
     std::vector<bool> alive(n, true);
     for (;;) {
@@ -286,31 +309,36 @@ std::vector<std::vector<int>> group(const std::vector<std::vector<float>> &vecs,
     return out;
 }
 
+std::vector<int> match(const std::vector<std::vector<float>> &docs, const std::vector<std::vector<float>> &points)
+{
+    std::vector<int> out(docs.size(), -1);
+    if (points.empty()) return out;
+    std::vector<std::vector<double>> sim(docs.size(), std::vector<double>(points.size()));
+    std::vector<double> all;
+    for (size_t d = 0; d < docs.size(); ++d)
+        for (size_t p = 0; p < points.size(); ++p) { sim[d][p] = dotv(docs[d], points[p]); all.push_back(sim[d][p]); }
+    const Spread sp = spread(all);
+    const double cutoff = sp.at(0.35);
+    for (size_t d = 0; d < docs.size(); ++d) {
+        double best = cutoff;
+        for (size_t p = 0; p < points.size(); ++p)
+            if (sim[d][p] > best) { best = sim[d][p]; out[d] = int(p); }
+    }
+    return out;
+}
+
 std::vector<int> place(const std::vector<std::vector<float>> &vecs, const std::vector<std::vector<int>> &topics,
                        const std::vector<int> &fresh, int detail)
 {
     std::vector<int> out(fresh.size(), -1);
-    const size_t n = vecs.size();
-    if (n < 2) return out;
-    auto dot = [&](size_t i, size_t j) {
-        if (vecs[i].empty() || vecs[i].size() != vecs[j].size()) return 0.0;
-        double s = 0;
-        for (size_t k = 0; k < vecs[i].size(); ++k) s += double(vecs[i][k]) * vecs[j][k];
-        return s;
-    };
-    std::vector<double> all;
-    for (size_t i = 0; i < n; ++i) for (size_t j = i + 1; j < n; ++j) all.push_back(dot(i, j));
-    std::sort(all.begin(), all.end());
-    const double median = all[all.size() / 2];
-    const double high = all[std::min(all.size() - 1, size_t(double(all.size()) * 0.98))];
-    const double reach = detail <= 0 ? 0.30 : detail == 1 ? 0.45 : 0.60;
-    const double cutoff = median + (high - median) * reach;
+    if (vecs.size() < 2) return out;
+    const double cutoff = docSpread(vecs).at(reachFor(detail));
     for (size_t f = 0; f < fresh.size(); ++f) {
         double best = cutoff;
         for (size_t t = 0; t < topics.size(); ++t) {
             if (topics[t].empty()) continue;
             double s = 0;
-            for (int d : topics[t]) s += dot(size_t(fresh[f]), size_t(d));
+            for (int d : topics[t]) s += dotv(vecs[size_t(fresh[f])], vecs[size_t(d)]);
             s /= double(topics[t].size());
             if (s > best) { best = s; out[f] = int(t); }
         }
@@ -343,7 +371,7 @@ std::string field(const std::string &text, const std::string &label)
 }
 } // namespace
 
-Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::string> &others)
+Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::string> &others, int level, const std::string &parent)
 {
     // Each document gets an equal share of about 2,400 tokens (roughly 1,800 words in all): its name, headings and the
     // start of its text. Plenty for the writer to see what the topic is, short enough to be quick on a phone.
@@ -358,9 +386,15 @@ Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::s
     for (const auto &o : others) avoid += (avoid.empty() ? "" : ", ") + o;
     const std::string system =
         "You sort a student's documents into folders. You read documents that belong together and name their shared topic.";
-    const std::string user = list +
-        "These documents belong to one topic. Give the topic a short, specific name of 1 to 4 words, like a folder name "
-        "(for example \"Berlin Conference\", \"Cell Biology\" or \"Macbeth\"), and one sentence saying what they cover."
+    const std::string ask =
+        level == 0 ? "These documents are all from one school or university subject. Name the subject in 1 to 3 words, like a folder name "
+                     "(for example \"History\", \"Biology\", \"English Literature\" or \"Computer Science\"), and say in one sentence what they cover."
+      : level == 2 ? "These documents are about one part of the topic \"" + parent + "\". Name that part in 1 to 4 words, more specific than \""
+                     + parent + "\" (for example \"Cuban Missile Crisis\" within \"Cold War\"), and say in one sentence what they cover."
+                   : std::string("These documents belong to one topic") + (parent.empty() ? std::string() : " within " + parent) +
+                     ". Give the topic a short, specific name of 1 to 4 words, like a folder name "
+                     "(for example \"Berlin Conference\", \"Cell Biology\" or \"Macbeth\"), and one sentence saying what they cover.";
+    const std::string user = list + ask
         + (avoid.empty() ? std::string() : " Other folders are already called: " + avoid + ". Pick a name that is different from these.")
         + " The name must say the subject itself, never a general word like \"Documents\", \"Notes\" or \"Files\"."
         + "\nAnswer in exactly this form:\nName: ...\nSummary: ...";
@@ -376,9 +410,15 @@ Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::s
     // A name that says nothing ("Documents", "Study Notes") is dropped; Pods then names the topic from its key words.
     std::string low = n.name;
     std::transform(low.begin(), low.end(), low.begin(), [](unsigned char c) { return char(std::tolower(c)); });
-    for (const char *vague : {"document", "folder", "file", "topic", "notes", "misc", "untitled", "various", "general", "student"})
+    for (const char *vague : {"document", "folder", "file", "topic", "notes", "misc", "untitled", "various", "general", "student", "subject"})
         if (low.find(vague) != std::string::npos) { n.name.clear(); n.summary.clear(); break; }
     if (std::count(n.name.begin(), n.name.end(), ' ') > 4) { n.name.clear(); n.summary.clear(); }      // a sentence, not a name
+    // the answer form copied back ("Name: ...") instead of filled in
+    if (n.name.find("...") != std::string::npos || n.name.find("\xE2\x80\xA6") != std::string::npos || low.rfind("name", 0) == 0) {
+        n.name.clear();
+        n.summary.clear();
+    }
+    if (n.summary.find("...") != std::string::npos) n.summary.clear();
     return n;
 }
 

@@ -231,19 +231,30 @@ std::string shown(const Model &m, int id)
 }
 
 // Names a group: the words most of its documents share and few documents outside it do.
-void name(const Model &m, Topic &t, size_t total)
+// scope: the documents to tell it apart from (its parent's, for a subtopic; the whole pod when null).
+// banned: word keys not to use (the parent's name, so "Cold War" inside "Cold War" picks something else).
+// keys (out): the word keys of the name it chose.
+void name(const Model &m, Topic &t, size_t total, const std::vector<int> *scope = nullptr,
+          const std::set<std::string> *banned = nullptr, std::set<std::string> *keys = nullptr)
 {
     std::unordered_map<int, int> inCount;
     std::unordered_map<int, double> inWeight;
     for (int d : t.docs)
         for (const auto &kv : m.tf[size_t(d)]) { ++inCount[kv.first]; inWeight[kv.first] += kv.second; }
-    const double size = double(t.docs.size()), outside = double(total - t.docs.size());
+    std::unordered_map<int, int> scopeCount;      // in the scope, outside this group
+    if (scope) {
+        const std::set<int> mine(t.docs.begin(), t.docs.end());
+        for (int d : *scope)
+            if (!mine.count(d)) for (const auto &kv : m.tf[size_t(d)]) ++scopeCount[kv.first];
+    }
+    const double size = double(t.docs.size());
+    const double outside = scope ? double(scope->size() - t.docs.size()) : double(total - t.docs.size());
     std::vector<std::pair<double, int>> scored;
     for (const auto &kv : inCount) {
         const int id = kv.first;
         const double cover = kv.second / size;
         if (t.docs.size() > 1 && kv.second < 2) continue;
-        const double out = outside > 0 ? (m.df[size_t(id)] - kv.second) / outside : 0.0;
+        const double out = outside <= 0 ? 0.0 : scope ? scopeCount[id] / outside : (m.df[size_t(id)] - kv.second) / outside;
         const bool phrase = m.terms[size_t(id)].find(' ') != std::string::npos;
         const double score = cover * cover * std::max(0.05, cover - out) * std::log(1.0 + inWeight[id] / size)
                              * (phrase ? 1.35 : 1.0);
@@ -252,7 +263,9 @@ void name(const Model &m, Topic &t, size_t total)
     std::sort(scored.begin(), scored.end(), [](const auto &a, const auto &b) { return a.first > b.first; });
     std::vector<std::string> picked;
     std::vector<double> pickedCover;
+    std::vector<std::string> pickedKeys;
     std::set<std::string> used;           // word keys already shown, so "Cold War" isn't followed by "War"
+    if (banned) used = *banned;
     // Skip what adds nothing: a word already shown, or a phrase starting with one ("Congo", then "Congo Free").
     // "Lady Macbeth" after "Macbeth" stays: it adds a word at the front.
     auto covered = [&](const std::string &key) {
@@ -266,6 +279,7 @@ void name(const Model &m, Topic &t, size_t total)
         if (covered(key)) continue;
         picked.push_back(shown(m, s.second));
         pickedCover.push_back(inCount[s.second] / size);
+        pickedKeys.push_back(key);
         size_t i = 0;
         while (i < key.size()) {
             size_t j = key.find(' ', i);
@@ -276,13 +290,24 @@ void name(const Model &m, Topic &t, size_t total)
         if (picked.size() >= 6) break;
     }
     if (picked.empty()) { t.name = "Untitled topic"; return; }
+    auto addKeys = [&](const std::string &k) {
+        if (!keys) return;
+        size_t i = 0;
+        while (i < k.size()) {
+            size_t j = k.find(' ', i);
+            if (j == std::string::npos) j = k.size();
+            keys->insert(k.substr(i, j - i));
+            i = j + 1;
+        }
+    };
     // A broad group joins topics that share no single word ("Cells" and "Bonding"): name it after the two biggest.
     if (picked.size() > 2 && pickedCover[0] < 0.75) {
         t.name = picked[0] + " & " + picked[1];
-        t.keywords.assign(picked.begin() + 2, picked.end());
+        t.keywords.assign(picked.begin() + 2, picked.end());      // its words aren't kept from the topics inside: they are those topics' names
     } else {
         t.name = picked[0];
         t.keywords.assign(picked.begin() + 1, picked.end());
+        addKeys(pickedKeys[0]);
     }
 }
 
@@ -372,6 +397,287 @@ std::vector<Topic> nameGroups(const std::vector<Doc> &docs, const std::vector<st
                     if (!p->keywords.empty()) { p->name += " · " + p->keywords.front(); p->keywords.erase(p->keywords.begin()); }
     if (!other.docs.empty()) { std::sort(other.docs.begin(), other.docs.end()); out.push_back(other); }
     return out;
+}
+
+// ---------------- nested ----------------
+
+Grouper wordGrouper(const std::vector<Doc> &docs)
+{
+    return [&docs](const std::vector<int> &subset, int level) {
+        std::vector<Doc> sub;
+        for (int i : subset) sub.push_back(docs[size_t(i)]);
+        std::vector<std::vector<int>> out;
+        for (const Topic &t : sortDocs(sub, level)) {
+            if (t.other) { for (int i : t.docs) out.push_back({subset[size_t(i)]}); continue; }
+            std::vector<int> g;
+            for (int i : t.docs) g.push_back(subset[size_t(i)]);
+            out.push_back(g);
+        }
+        return out;
+    };
+}
+
+std::vector<int> subtree(const std::vector<Node> &nodes, int node)
+{
+    std::vector<int> out = nodes[size_t(node)].docs;
+    for (size_t i = 0; i < nodes.size(); ++i)
+        if (nodes[i].parent == node) {
+            const auto more = subtree(nodes, int(i));
+            out.insert(out.end(), more.begin(), more.end());
+        }
+    return out;
+}
+
+std::vector<Node> nest(const std::vector<Doc> &docs, const Grouper &group)
+{
+    std::vector<Node> nodes;
+    std::vector<int> loose;              // documents that fit no subject: Other
+    std::function<void(const std::vector<int> &, int, int)> add = [&](const std::vector<int> &subset, int level, int parent) {
+        auto direct = [&](const std::vector<int> &d) {
+            if (parent < 0) loose.insert(loose.end(), d.begin(), d.end());
+            else nodes[size_t(parent)].docs.insert(nodes[size_t(parent)].docs.end(), d.begin(), d.end());
+        };
+        if (level > 2 || subset.size() < 3) { direct(subset); return; }
+        std::vector<std::vector<int>> real;
+        std::vector<int> alone;
+        for (const auto &g : group(subset, level)) {
+            if (g.size() >= 2) real.push_back(g);
+            else alone.insert(alone.end(), g.begin(), g.end());
+        }
+        // a level that splits nothing is skipped (a topic, or a subject that is everything there is)
+        const bool splits = real.size() >= 2 || (level == 0 && real.size() == 1 && !alone.empty());
+        if (!splits) {
+            if (real.size() == 1) { add(real[0], level + 1, parent); direct(alone); }
+            else direct(subset);
+            return;
+        }
+        for (const auto &g : real) {
+            Node n;
+            n.parent = parent;
+            n.level = level;
+            nodes.push_back(n);
+            add(g, level + 1, int(nodes.size()) - 1);
+        }
+        direct(alone);
+    };
+    std::vector<int> all(docs.size());
+    for (size_t i = 0; i < docs.size(); ++i) all[i] = int(i);
+    add(all, 0, -1);
+
+    // Names from key words: a subject against the whole pod; a topic against the rest of its subject, without the
+    // subject's own words ("Crises" inside "Cold War", not "Cold War" again). Parents come before their children.
+    const Model m = build(docs);
+    std::vector<std::set<std::string>> keys(nodes.size());
+    for (size_t i = 0; i < nodes.size(); ++i) {
+        Topic t;
+        t.docs = subtree(nodes, int(i));
+        std::sort(t.docs.begin(), t.docs.end());
+        const int p = nodes[i].parent;
+        if (p < 0) {
+            name(m, t, docs.size(), nullptr, nullptr, &keys[i]);
+        } else {
+            const std::vector<int> scope = subtree(nodes, p);
+            std::set<std::string> banned;
+            for (int a = p; a >= 0; a = nodes[size_t(a)].parent) banned.insert(keys[size_t(a)].begin(), keys[size_t(a)].end());
+            name(m, t, docs.size(), &scope, &banned, &keys[i]);
+        }
+        nodes[i].name = t.name;
+        nodes[i].keywords = t.keywords;
+    }
+    if (!loose.empty()) {
+        Node o;
+        o.name = "Other";
+        o.other = true;
+        o.docs = loose;
+        nodes.push_back(o);
+    }
+    return nodes;
+}
+
+// ---------------- specifications ----------------
+
+namespace {
+std::string trimSpace(const std::string &s)
+{
+    const size_t a = s.find_first_not_of(" \t\r\n");
+    if (a == std::string::npos) return {};
+    const size_t b = s.find_last_not_of(" \t\r\n");
+    return s.substr(a, b - a + 1);
+}
+// "3.2.1 Cell structure ........ 14" → number "3.2.1", title "Cell structure". False when the line isn't a point.
+bool pointLine(const std::string &line, std::string &number, std::string &title)
+{
+    size_t i = 0;
+    while (i < line.size() && (line[i] == ' ' || line[i] == '\t')) ++i;
+    const size_t start = i;
+    int parts = 0;
+    for (;;) {
+        const size_t d = i;
+        while (i < line.size() && std::isdigit((unsigned char)line[i])) ++i;
+        if (i == d || i - d > 2) return false;          // 1 or 2 digits a part: "2019" isn't a point
+        ++parts;
+        if (i + 1 < line.size() && line[i] == '.' && std::isdigit((unsigned char)line[i + 1])) { ++i; continue; }
+        break;
+    }
+    number = line.substr(start, i - start);
+    if (i < line.size() && line[i] == '.') ++i;
+    if (i >= line.size() || (line[i] != ' ' && line[i] != '\t')) return false;
+    std::string rest = trimSpace(line.substr(i));
+    // drop a contents page's leader dots and page number
+    while (!rest.empty() && std::isdigit((unsigned char)rest.back())) rest.pop_back();
+    while (!rest.empty() && (rest.back() == '.' || rest.back() == ' ' || rest.back() == '\t')) rest.pop_back();
+    if (rest.size() < 3 || rest.size() > 140) return false;
+    if (!std::isalpha((unsigned char)rest[0]) && (unsigned char)rest[0] < 0x80) return false;
+    if (parts == 1 && std::atoi(number.c_str()) > 40) return false;
+    title = rest;
+    return true;
+}
+} // namespace
+
+std::vector<SpecPoint> parseSpec(const std::string &text)
+{
+    std::vector<std::string> lines;
+    {
+        size_t i = 0;
+        while (i <= text.size()) {
+            size_t j = text.find('\n', i);
+            if (j == std::string::npos) j = text.size();
+            lines.push_back(text.substr(i, j - i));
+            i = j + 1;
+        }
+    }
+    std::vector<SpecPoint> pts;
+    std::map<std::string, size_t> byNumber;
+    int current = -1;
+    for (const std::string &line : lines) {
+        std::string number, title;
+        if (pointLine(line, number, title)) {
+            auto it = byNumber.find(number);
+            if (it != byNumber.end()) {            // seen before: that was the contents page; the text under this one counts
+                current = int(it->second);
+                pts[it->second].title = title;
+                pts[it->second].body.clear();
+                continue;
+            }
+            SpecPoint p;
+            p.number = number;
+            p.title = title;
+            p.depth = int(std::count(number.begin(), number.end(), '.'));
+            byNumber[number] = pts.size();
+            pts.push_back(p);
+            current = int(pts.size()) - 1;
+        } else if (current >= 0 && pts[size_t(current)].body.size() < 2500) {
+            const std::string t = trimSpace(line);
+            if (!t.empty()) pts[size_t(current)].body += t + "\n";
+        }
+    }
+    if (pts.size() >= 3) {
+        for (auto &p : pts) {          // parent: the longest number that starts this one ("3.2" for "3.2.1")
+            std::string n = p.number;
+            while (true) {
+                const size_t dot = n.rfind('.');
+                if (dot == std::string::npos) break;
+                n.resize(dot);
+                auto it = byNumber.find(n);
+                if (it != byNumber.end()) { p.parent = int(it->second); break; }
+            }
+        }
+        return pts;
+    }
+    // No numbering: a point for each block of text, titled by its first line
+    pts.clear();
+    std::string block;
+    auto flush = [&]() {
+        const std::string b = trimSpace(block);
+        block.clear();
+        if (b.size() < 20) return;
+        SpecPoint p;
+        const size_t nl = b.find('\n');
+        p.title = trimSpace(b.substr(0, std::min<size_t>(nl == std::string::npos ? b.size() : nl, 80)));
+        p.body = b;
+        pts.push_back(p);
+    };
+    for (const std::string &line : lines) {
+        if (trimSpace(line).empty()) flush();
+        else block += line + "\n";
+    }
+    flush();
+    return pts;
+}
+
+std::string pointText(const std::vector<SpecPoint> &points, int i)
+{
+    std::string head;
+    for (int p = points[size_t(i)].parent; p >= 0; p = points[size_t(p)].parent) head = points[size_t(p)].title + ". " + head;
+    return head + points[size_t(i)].title + ".\n" + points[size_t(i)].body;
+}
+
+std::vector<int> leafPoints(const std::vector<SpecPoint> &points)
+{
+    std::vector<bool> hasChild(points.size(), false);
+    for (const auto &p : points) if (p.parent >= 0) hasChild[size_t(p.parent)] = true;
+    std::vector<int> out;
+    for (size_t i = 0; i < points.size(); ++i) if (!hasChild[i]) out.push_back(int(i));
+    return out;
+}
+
+std::vector<int> matchPoints(const std::vector<Doc> &docs, const std::vector<std::string> &targets)
+{
+    std::vector<int> out(docs.size(), -1);
+    if (docs.empty() || targets.empty()) return out;
+    // one model over documents and points together, so words are weighed the same in both
+    std::vector<Doc> all = docs;
+    for (const auto &t : targets) all.push_back({std::string(), std::string(), t, std::string()});
+    const Model m = build(all);
+    std::vector<double> bestScore(docs.size(), 0.0);
+    for (size_t d = 0; d < docs.size(); ++d)
+        for (size_t p = 0; p < targets.size(); ++p) {
+            const double s = dot(m.vec[d], m.vec[docs.size() + p]);
+            if (s > bestScore[d]) { bestScore[d] = s; out[d] = int(p); }
+        }
+    // How close counts as a match depends on how wordy the spec and the documents are, so it is set from this pod:
+    // a document must score at least 40% of what a typical document's best match scores.
+    std::vector<double> sorted = bestScore;
+    std::sort(sorted.begin(), sorted.end());
+    const double cutoff = std::max(0.06, 0.4 * sorted[sorted.size() / 2]);
+    for (size_t d = 0; d < docs.size(); ++d) if (bestScore[d] < cutoff) out[d] = -1;
+    return out;
+}
+
+std::vector<Node> specTree(const std::vector<SpecPoint> &points, const std::vector<int> &docPoint)
+{
+    std::vector<Node> nodes;
+    std::map<int, int> nodeOf;          // spec point → node
+    std::function<int(int)> nodeFor = [&](int p) -> int {
+        auto it = nodeOf.find(p);
+        if (it != nodeOf.end()) return it->second;
+        const int parent = points[size_t(p)].parent >= 0 ? nodeFor(points[size_t(p)].parent) : -1;
+        Node n;
+        n.number = points[size_t(p)].number;
+        n.name = points[size_t(p)].title;
+        n.parent = parent;
+        n.level = points[size_t(p)].depth;
+        nodes.push_back(n);
+        nodeOf[p] = int(nodes.size()) - 1;
+        return int(nodes.size()) - 1;
+    };
+    // in the spec's own order
+    std::vector<std::vector<int>> byPoint(points.size());
+    std::vector<int> loose;
+    for (size_t d = 0; d < docPoint.size(); ++d) {
+        if (docPoint[d] >= 0) byPoint[size_t(docPoint[d])].push_back(int(d));
+        else loose.push_back(int(d));
+    }
+    for (size_t p = 0; p < points.size(); ++p)
+        if (!byPoint[p].empty()) nodes[size_t(nodeFor(int(p)))].docs = byPoint[p];
+    if (!loose.empty()) {
+        Node o;
+        o.name = "Not in the spec";
+        o.other = true;
+        o.docs = loose;
+        nodes.push_back(o);
+    }
+    return nodes;
 }
 
 std::vector<int> placeNew(const std::vector<Doc> &docs, const std::vector<std::vector<int>> &topics,

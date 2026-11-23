@@ -177,6 +177,19 @@ Window {
             navigate("pods")
             const id = pods.create(settings.startPod)
             if (id !== "") podsPage.openPod(id)
+            if (id !== "" && settings.startSpec) specTimer.podId = id      // --set startSpec=<file>: then match it to that spec
+        }
+    }
+    Timer {      // --set startSpec=<file>: once the pod's first sort is done, match it to that spec instead
+        id: specTimer
+        property string podId: ""
+        interval: 300; repeat: true
+        running: podId !== ""
+        onTriggered: {
+            if (pods.pod(podId).busy) return
+            const r = pods.readSpecFile("file://" + settings.startSpec)
+            if (!r.error) { pods.setSpec(podId, r.name, r.text); pods.resort(podId, 1); podsPage.openPod(podId) }
+            podId = ""
         }
     }
     Timer {      // --set startAlbum=<name> / startPlay=true: wait for the scan, then open that album or play the first song
