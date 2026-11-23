@@ -74,11 +74,12 @@ jobs:
             fi
             ./spec_test "specs/$name.pdf" --head
             ./spec_test "specs/$name.pdf" | head -260
-            # where a heading's layout needs a closer look (a few lines either side, cut short)
-            for f in "2c" "7402" "Content of topics"; do ./spec_test "specs/$name.pdf" --find "$f"; done
-            for probe in "(h) Transport" "Key topic 2: Involvements"; do
-              out="$(./spec_test "specs/$name.pdf" --around "$probe")"
-              [ -n "$out" ] && echo "around \"$probe\":" && echo "$out"
-            done
+            # where a board's layout needs a closer look: positions, sizes and numbering only (pdftext_test --shape)
+            case "$name" in
+              ocr-*) ./pdftext_test "specs/$name.pdf" --shape "B1.1a" 1 45 30 ;;
+              edexcel-alevel-maths-*) ./pdftext_test "specs/$name.pdf" --shape "What students need to learn" 1 60 4
+                                      ./pdftext_test "specs/$name.pdf" --shape "What students need to learn" 9 40 4 ;;
+              edexcel-igcse-*) ./pdftext_test "specs/$name.pdf" --shape "(h)" 2 25 6 ;;
+            esac
             echo "::endgroup::"
           done
