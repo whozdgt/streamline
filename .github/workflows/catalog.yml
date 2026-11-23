@@ -1,0 +1,68 @@
+name: catalog
+# Streamline's list of exam boards' specifications (specs/catalog.json).
+#  - When the list changes, or by hand: each specification is downloaded as the app downloads it and read with
+#    Streamline's readers (which course it says it is, and how many points it found). Only names and counts are
+#    printed, never the documents.
+#  - Every Monday: a light check that each link still starts a PDF (its first kilobyte only), to notice when a board
+#    moves a document.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '41 5 * * 1'
+  push:
+    branches: [main]
+    paths: ['specs/catalog.json', '.github/workflows/catalog.yml']
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the readers
+        run: g++ -std=c++17 -O2 -Isrc src/pdftext.cpp src/pdfcrypto.cpp src/specread.cpp src/podsort.cpp tests/spec_test.cpp -o spec_test
+      - name: Check the specifications
+        env:
+          LIGHT: ${{ github.event_name == 'schedule' && '1' || '' }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess, urllib.request, concurrent.futures as cf
+          APP_UA = "Streamline/0.7 (+https://github.com/whozdgt/streamline)"      # what the app sends (src/speccatalog.cpp)
+          light = bool(os.environ.get("LIGHT"))
+          specs = json.load(open("specs/catalog.json"))["specs"]
+          os.makedirs("pdf", exist_ok=True)
+          def get(url):
+              headers = {"User-Agent": APP_UA}
+              if light: headers["Range"] = "bytes=0-1023"
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=60) as r:
+                      return r.status, r.read(1024 if light else 80 * 1024 * 1024)
+              except urllib.error.HTTPError as e:
+                  return e.code, b""
+              except Exception as e:
+                  return str(e)[:40], b""
+          def check(s):
+              code, data = get(s["url"])
+              if not data.startswith(b"%PDF"):
+                  return s, False, f"NOT A PDF ({code})", "", 0, False
+              if light:
+                  return s, True, "ok", "", 0, True
+              path = f"pdf/{s['id']}.pdf"
+              open(path, "wb").write(data)
+              out = subprocess.run(["./spec_test", path], capture_output=True, text=True, timeout=120).stdout
+              name = re.search(r"^name: (.*)$", out, re.M)
+              pts = re.search(r"^points: (\d+)", out, re.M)
+              text = subprocess.run(["./spec_test", path, "--text"], capture_output=True, text=True, timeout=120).stdout
+              return s, True, f"{len(data) / 1e6:.1f} MB", name.group(1) if name else "", int(pts.group(1)) if pts else 0, s["code"] in text
+          with cf.ThreadPoolExecutor(4) as ex:
+              results = list(ex.map(check, specs))
+          bad = [r for r in results if not r[1]]
+          for s, ok, info, name, pts, found in results:
+              if light:
+                  print(f"{s['id']:<26} {info}")
+                  continue
+              flag = "" if ok and pts >= 8 and found else "  <--"
+              print(f"{s['id']:<26} {info:<14} {pts:>4} points  {'code ok ' if found else 'NO CODE '} {name}{flag}")
+          print(f"\n{len(results) - len(bad)} of {len(results)} specifications {'reachable' if light else 'downloaded and read'}")
+          for s, ok, info, *_ in bad:
+              print(f"::warning title={s['id']}::{info}: {s['url']}")
+          PY
