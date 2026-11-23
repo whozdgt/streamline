@@ -13,3 +13,9 @@ edexcel-alevel-history-9hi0 | https://qualifications.pearson.com/content/dam/pdf
 edexcel-igcse-biology-4bi1-modular | https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Biology/2024/specification-and-sample-assessments/international-gcse-biology-modular-specification.pdf
 edexcel-alevel-maths-9ma0 | https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf
 ocr-gcse-biology-a-j247 | https://www.ocr.org.uk/Images/234594-specification-accredited-gcse-gateway-science-suite-biology-a-j247.pdf | https://ocr-live-prd95.cambridgeassessment.org.uk/Images/234594-specification-accredited-gcse-gateway-science-suite-biology-a-j247.pdf
+edexcel-gcse-business-1bs0 | https://qualifications.pearson.com/content/dam/pdf/GCSE/Business/2017/specification-and-sample-assessments/gcse-business-spec-2017.pdf
+edexcel-gcse-maths-1ma1 | https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf
+ocr-alevel-maths-h240 | https://www.ocr.org.uk/Images/308723-specification-accredited-a-level-gce-mathematics-a-h240.pdf
+ocr-alevel-economics-h460 | https://www.ocr.org.uk/Images/536455-specification-accredited-a-level-gce-economics-h460.pdf
+aqa-gcse-maths-8300 | https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8300-SP-2015.PDF
+cie-igcse-history-0470 | https://www.cambridgeinternational.org/Images/721327-2027-2028-syllabus.pdf

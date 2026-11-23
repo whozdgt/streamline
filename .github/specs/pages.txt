@@ -99,3 +99,12 @@ ocr | alevel | https://www.ocr.org.uk/qualifications/as-and-a-level/psychology-h
 ocr | alevel | https://www.ocr.org.uk/qualifications/as-and-a-level/history-a-h105-h505-from-2015/
 ocr | alevel | https://www.ocr.org.uk/qualifications/as-and-a-level/sociology-h180-h580-from-2015/
 ocr | alevel | https://www.ocr.org.uk/qualifications/as-and-a-level/religious-studies-h173-h573-from-2016/
+aqa | alevel | https://www.aqa.org.uk/subjects/mathematics/as-and-a-level/mathematics-7357/specification
+aqa | alevel | https://www.aqa.org.uk/subjects/mathematics/as-and-a-level/further-mathematics-7367/specification
+aqa | alevel | https://www.aqa.org.uk/subjects/geography/as-and-a-level/geography-7037/specification
+aqa | alevel | https://www.aqa.org.uk/subjects/religious-studies/as-and-a-level/religious-studies-7062/specification
+aqa | alevel | https://www.aqa.org.uk/subjects/politics/as-and-a-level/politics-7152/specification
+aqa | alevel | https://www.aqa.org.uk/subjects/law/as-and-a-level/law-7162/specification
+aqa | alevel | https://www.aqa.org.uk/subjects/physical-education/as-and-a-level/physical-education-7582/specification
+aqa | alevel | https://www.aqa.org.uk/subjects/philosophy/as-and-a-level/philosophy-7172/specification
+aqa | gcse | https://www.aqa.org.uk/subjects/science/gcse/chemistry-8462/specification

@@ -13,10 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Look for the specification on each page
+        env:
+          ONLY: aqa      # one board's pages ("cambridge", "aqa", "edexcel", "ocr"), or empty for every page
         run: |
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
           grep -v '^#' .github/specs/pages.txt | grep -v '^\s*$' | while IFS='|' read -r board level page; do
             page="$(echo "$page" | xargs)"
+            [ -n "$ONLY" ] && [ "$(echo "$board" | xargs)" != "$ONLY" ] && continue
             code=$(curl -sL -A "$UA" -o page.html -w '%{http_code} %{url_effective}' --retry 2 --max-time 40 "$page" || true)
             links=$(grep -oiE '(href|data-href|data-url)="[^"]+\.pdf[^"]*"' page.html | sed -E 's/^[a-z-]+="//; s/"$//' | grep -iE 'spec|syllabus' | sort -u | head -8)
             echo "PAGE $page -> $code"

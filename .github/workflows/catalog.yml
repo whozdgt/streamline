@@ -11,13 +11,20 @@ on:
     - cron: '41 5 * * 1'
   push:
     branches: [main]
-    paths: ['specs/catalog.json', '.github/workflows/catalog.yml']
+    paths: ['specs/catalog.json', '.github/workflows/catalog.yml', 'src/specread*', 'src/pdftext*']
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # the documents, kept between runs: each is downloaded once, not every time the readers change
+      - uses: actions/cache@v4
+        if: github.event_name != 'schedule'
+        with:
+          path: pdf
+          key: catalog-pdfs-${{ hashFiles('specs/catalog.json') }}
+          restore-keys: catalog-pdfs-
       - name: Build the readers
         run: g++ -std=c++17 -O2 -Isrc src/pdftext.cpp src/pdfcrypto.cpp src/specread.cpp src/podsort.cpp tests/spec_test.cpp -o spec_test
       - name: Check the specifications
@@ -25,7 +32,7 @@ jobs:
           LIGHT: ${{ github.event_name == 'schedule' && '1' || '' }}
         run: |
           python3 - <<'PY'
-          import json, os, re, subprocess, urllib.request, concurrent.futures as cf
+          import hashlib, json, os, re, subprocess, urllib.request, concurrent.futures as cf
           APP_UA = "Streamline/0.7 (+https://github.com/whozdgt/streamline)"      # what the app sends (src/speccatalog.cpp)
           light = bool(os.environ.get("LIGHT"))
           specs = json.load(open("specs/catalog.json"))["specs"]
@@ -41,13 +48,14 @@ jobs:
               except Exception as e:
                   return str(e)[:40], b""
           def check(s):
-              code, data = get(s["url"])
+              path = f"pdf/{s['id']}-{hashlib.sha1(s['url'].encode()).hexdigest()[:8]}.pdf"
+              kept = not light and os.path.exists(path) and open(path, "rb").read(5) == b"%PDF-"
+              code, data = (200, open(path, "rb").read()) if kept else get(s["url"])
               if not data.startswith(b"%PDF"):
                   return s, False, f"NOT A PDF ({code})", "", 0, False
               if light:
                   return s, True, "ok", "", 0, True
-              path = f"pdf/{s['id']}.pdf"
-              open(path, "wb").write(data)
+              if not kept: open(path, "wb").write(data)
               out = subprocess.run(["./spec_test", path], capture_output=True, text=True, errors="replace", timeout=120).stdout
               name = re.search(r"^name: (.*)$", out, re.M)
               pts = re.search(r"^points: (\d+)", out, re.M)

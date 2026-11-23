@@ -17,6 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # the boards' documents, kept between runs so each is downloaded once rather than on every change to the readers
+      - uses: actions/cache@v4
+        with:
+          path: specs
+          key: specs-pdfs-${{ hashFiles('.github/specs/research.txt') }}
+          restore-keys: specs-pdfs-
       - name: Tools
         run: |
           sudo apt-get install -y -qq poppler-utils > /dev/null
@@ -38,7 +44,9 @@ jobs:
             name="$(echo "$name" | xargs)"
             echo "::group::$name"
             got=""
+            if head -c 4 "specs/$name.pdf" 2>/dev/null | grep -q '%PDF'; then got="(kept from an earlier run)"; fi
             for u in $(echo "$urls" | tr '|' ' '); do
+              [ -n "$got" ] && break
               code=$(curl -sL -A "$UA" -o "specs/$name.pdf" -w '%{http_code}' --retry 2 "$u" || true)
               if [ "$code" = 200 ] && head -c 4 "specs/$name.pdf" | grep -q '%PDF'; then got="$u"; break; fi
               echo "  $code  $u"

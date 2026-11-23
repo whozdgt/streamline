@@ -329,7 +329,7 @@ Info identify(const std::string &text)
             info.name = "Edexcel " + level + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
         }
     } else if (info.board == "OCR") {
-        static const std::regex re("(GCSE \\(9.{1,3}1\\)|GCSE|A Level|AS Level|AS and A Level|Level 3 Advanced GCE|Advanced Subsidiary GCE) in ([A-Z][A-Za-z ,&()-]{2,60}?)\\s+([A-Z][0-9]{3})\\b");
+        static const std::regex re("(GCSE \\(9.{1,3}1\\)|GCSE|A Level|AS Level|AS and A Level|Level 3 Advanced GCE|Advanced Subsidiary GCE)\\s+in\\s+([A-Z][A-Za-z ,&()-]{2,60}?)\\s+\\(?([A-Z][0-9]{3})\\)?\\b");
         if (std::regex_search(head, m, re)) {
             std::string level = m[1].str();
             if (level.rfind("GCSE", 0) == 0) level = "GCSE";
@@ -459,19 +459,30 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             }
         }
         if (section < 0) {
-            // OCR: the content is a lettered part of a section ("2c Content of topics B1 to B6") up to the next part
+            // OCR: the content is a lettered part of a section ("2c. Content of topics B1 to B6") up to the next part.
+            // When content parts follow one another, the first is an overview of the next ("2b. Content of GCSE (9–1)
+            // in Biology A", a table of its topics): the content starts at the second.
             static const std::regex part("^([0-9])([a-z])\\.?\\s+(.+)$");
-            std::string label;
+            struct Part { size_t line; std::string label; bool content; };
+            std::vector<Part> parts;
             for (size_t i = 0; i < all.size(); ++i) {
                 std::smatch m;
-                if (!std::regex_match(all[i], m, part)) continue;
+                if (!std::regex_match(all[i], m, part) || tocLine(all[i])) continue;
+                // a contents page lists the parts one after another: the real one is followed by its content
+                std::smatch next;
+                if (i + 1 < all.size() && std::regex_match(all[i + 1], next, part)) continue;
                 const std::string here = m[1].str() + m[2].str();
-                if (section < 0) {
-                    // a contents page lists the parts one after another: the real one is followed by its content
-                    std::smatch next;
-                    const bool listed = i + 1 < all.size() && std::regex_match(all[i + 1], next, part);
-                    if (!listed && !tocLine(all[i]) && contentTitle(m[3].str())) { section = 0; from = i + 1; label = here; }
-                } else if (here != label && !tocLine(all[i])) { to = i; break; }      // the next part ("2d. Prior knowledge…")
+                if (!parts.empty() && parts.back().label == here) continue;      // the same part again ("2c. Topic B7…")
+                parts.push_back({i, here, contentTitle(m[3].str())});
+            }
+            for (size_t k = 0; k < parts.size(); ++k) {
+                if (!parts[k].content) continue;
+                size_t last = k;
+                while (last + 1 < parts.size() && parts[last + 1].content) ++last;
+                section = 0;
+                from = (last > k ? parts[k + 1].line : parts[k].line) + 1;
+                to = last + 1 < parts.size() ? parts[last + 1].line : all.size();
+                break;
             }
         }
         if (section < 0) { from = 0; to = all.size(); }
@@ -524,9 +535,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         if (it != byKey.end()) {
             idx = it->second;
             std::string &old = pts[size_t(idx)].title;
-            // the first sighting was a contents line: "1 The nature and variety of living organisms 13"
-            if (old.empty() || (old.size() > title.size() && old.compare(0, title.size(), title) == 0 &&
-                                std::all_of(old.begin() + long(title.size()), old.end(), [](char c) { return c == ' ' || std::isdigit(uint8_t(c)); })))
+            // the first sighting was a contents line ("1 The nature and variety of living organisms 13"), or a table's
+            // row that ran on into the next cells ("Cell level systems Topic B2: Scaling up …")
+            if (old.empty() || (old.size() > title.size() && title.size() >= 3 && old.compare(0, title.size(), title) == 0 &&
+                                (old[title.size()] == ' ')))
                 old = title;
             merged = true;
         } else {
