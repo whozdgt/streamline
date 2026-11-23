@@ -23,6 +23,7 @@
 #include "cover.h"
 #include "flashcards.h"
 #include "pods.h"
+#include "aimodels.h"
 #include "todos.h"
 #include "folders.h"
 #include "library.h"
@@ -187,6 +188,7 @@ int main(int argc, char *argv[])
     };
     // --set key=value and --mobile: this run only. insert() doesn't announce a change, so nothing is saved.
     if (cli.isSet(mobileOpt)) settings->insert("mobile", true);
+    if (cli.isSet(shotOpt)) settings->insert("screenshot", true);      // pictures for CI: no welcome screen unless asked (startScreen=true)
     for (const QString &kv : cli.values(setOpt)) {
         const qsizetype eq = kv.indexOf(QLatin1Char('='));
         if (eq <= 0) continue;
@@ -236,7 +238,8 @@ int main(int argc, char *argv[])
     social.setServerName([&](const QString &p) { return servers.serverNameFor(p); });
     UpdateChecker updater;
     Flashcards flashcards;
-    Pods pods;
+    AiModels aiModels;
+    Pods pods(&aiModels);
     player.setRemote({
         [&](const QString &p) { return servers.streamUrl(p); },
         [&](const QString &p) { return servers.allowsSelfSigned(p); },
@@ -274,6 +277,7 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("updater", &updater);
     ctx->setContextProperty("flashcards", &flashcards);
     ctx->setContextProperty("pods", &pods);
+    ctx->setContextProperty("ai", &aiModels);
     ctx->setContextProperty("todos", &todos);
     SafeArea safeArea;
     ctx->setContextProperty("safeArea", &safeArea);
@@ -285,7 +289,9 @@ int main(int argc, char *argv[])
         const QStringList wh = cli.value(sizeOpt).split(QLatin1Char('x'));
         if (wh.size() == 2) window->resize(wh[0].toInt(), wh[1].toInt());
         const QString file = cli.value(shotOpt);
-        QTimer::singleShot(3500, &app, [window, file]() {
+        // --set shotDelay=<ms>: wait longer, for work that takes a while (sorting a pod with the AI)
+        const int delay = settings->value(QStringLiteral("shotDelay")).toInt() > 0 ? settings->value(QStringLiteral("shotDelay")).toInt() : 3500;
+        QTimer::singleShot(delay, &app, [window, file]() {
             const QImage img = window->grabWindow();
             if (!img.save(file)) qWarning("screenshot: couldn't save %s", qPrintable(file));
             QCoreApplication::quit();

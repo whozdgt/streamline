@@ -8,20 +8,19 @@
 #include <QVariantMap>
 #include <QVector>
 
-class QNetworkAccessManager;
+class AiModels;
 
 // Pods: pick a folder of documents and Streamline sorts them into topics.
-// Sorting happens on this device (podsort.h) or, if you add your own Anthropic API key, with Claude.
+// Sorting happens on this device: by key words (podsort.h), or by the free on-device AI once its models are
+// downloaded (podai.h, aimodels.h).
 // The topics live in the app (pods.json in the app's data folder); your files stay where they are unless you
 // choose "Move files into topic folders", which can be undone.
 class Pods : public QObject {
     Q_OBJECT
     Q_PROPERTY(int revision READ revision NOTIFY revisionChanged)
-    Q_PROPERTY(bool hasKey READ hasKey NOTIFY revisionChanged)
 public:
-    explicit Pods(QObject *parent = nullptr);
+    explicit Pods(AiModels *models, QObject *parent = nullptr);
     int revision() const { return m_rev; }
-    bool hasKey() const { return !m_key.isEmpty(); }
 
     // pods: each is { id, name, folder, docs, topics, busy, status }
     Q_INVOKABLE QVariantList pods() const;
@@ -33,9 +32,8 @@ public:
     Q_INVOKABLE QString create(const QString &folder);      // starts sorting; returns the new pod's id
     Q_INVOKABLE void remove(const QString &id);             // forgets the pod; never touches the files
     Q_INVOKABLE void rename(const QString &id, const QString &name);
-    Q_INVOKABLE void resort(const QString &id, int detail);  // 0 broad, 1 balanced, 2 specific
+    Q_INVOKABLE void resort(const QString &id, int detail);  // 0 broad, 1 balanced, 2 specific; uses the AI when downloaded
     Q_INVOKABLE void refresh(const QString &id);             // picks up new and deleted files, keeps your topics
-    Q_INVOKABLE void sortWithAi(const QString &id, int detail);
     Q_INVOKABLE void renameTopic(const QString &podId, const QString &topicId, const QString &name);
     Q_INVOKABLE void moveDoc(const QString &podId, const QString &path, const QString &topicId);   // topicId "new" makes a topic
     Q_INVOKABLE QVariantMap moveFiles(const QString &id);    // { moved, failed, folders }
@@ -46,8 +44,6 @@ public:
     Q_INVOKABLE bool openDoc(const QString &path) const;
     Q_INVOKABLE int docCount(const QString &dir) const;      // documents directly in dir (the folder chooser shows it)
 
-    Q_INVOKABLE void setKey(const QString &key);
-    Q_INVOKABLE QString keyHint() const;                     // "sk-ant-…a1b2"
 
     // Android 11+: reading documents (not just music) needs "All files access"
     Q_INVOKABLE bool filesAllowed() const;
@@ -87,7 +83,6 @@ private:
     Pod *find(const QString &id);
     const Pod *find(const QString &id) const;
     void run(const QString &id, const QString &status, int detail, int kind);   // kind: 0 sort, 1 refresh, 2 AI
-    void askAi(const QString &id, const QVector<Scanned> &docs, int detail);
     void finish(Pod *p, const QString &error = QString());
     Topic &otherTopic(Pod &p);
     void dropEmptyTopics(Pod &p);
@@ -97,7 +92,6 @@ private:
     void changed() { save(); ++m_rev; emit revisionChanged(); }
 
     QVector<Pod> m_pods;
-    QString m_key;
     int m_rev = 0;
-    QNetworkAccessManager *m_net = nullptr;
+    AiModels *m_models = nullptr;
 };

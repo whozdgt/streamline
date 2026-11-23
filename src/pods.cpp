@@ -1,5 +1,7 @@
 #include "pods.h"
 #include "podsort.h"
+#include "aimodels.h"
+#include "podai.h"
 #ifdef Q_OS_ANDROID
 #include "android.h"
 #endif
@@ -14,9 +16,6 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
 #include <QRegularExpression>
 #include <QSaveFile>
 #include <QSet>
@@ -38,8 +37,6 @@ namespace {
 
 const int kMaxFiles = 1500;
 const int kMaxChars = 200000;          // per document: plenty to tell what it is about
-// Claude, for "Sort with AI". The cheapest current model is plenty for naming topics.
-const char *kModel = "claude-haiku-5-5";
 
 QString newId() { return QUuid::createUuid().toString(QUuid::WithoutBraces); }
 qint64 now() { return QDateTime::currentMSecsSinceEpoch(); }
@@ -231,16 +228,30 @@ QString mimeOf(const QString &ext)
 struct Result {
     QVector<Pods::Scanned> docs;
     std::vector<podsort::Topic> topics;   // sorting
+    std::vector<std::string> summaries;   // sorting with the writer: one per topic
+    QString method = QStringLiteral("words");   // words | ai | ai-writer
+    QString note;                         // something went wrong with the AI and key words were used instead
     std::vector<int> placed;              // refreshing: the topic each new document joins, -1 for none
     std::vector<int> fresh;               // refreshing: which documents are new
 };
 
+std::vector<podai::DocText> docTexts(const QVector<Pods::Scanned> &docs, const std::vector<int> &which)
+{
+    std::vector<podai::DocText> v;
+    for (int i : which) {
+        const auto &d = docs[i];
+        v.push_back({(d.title.isEmpty() || d.title == d.name ? d.name : d.name + QStringLiteral(": ") + d.title).toStdString(),
+                     d.headings.toStdString(), d.body.toStdString()});
+    }
+    return v;
+}
+
 } // namespace
 
-Pods::Pods(QObject *parent) : QObject(parent)
+Pods::Pods(AiModels *models, QObject *parent) : QObject(parent), m_models(models)
 {
     load();
-    m_key = QSettings().value(QStringLiteral("pods/apiKey")).toString();
+    podai::quiet();
 }
 
 Pods::Pod *Pods::find(const QString &id)
@@ -295,7 +306,8 @@ QVariantMap Pods::pod(const QString &id, const QString &query) const
     }
     const QStringList details = {QStringLiteral("broad"), QStringLiteral("balanced"), QStringLiteral("specific")};
     const QString sortedLabel = p->sorted == 0 ? QString()
-        : (p->method == QLatin1String("ai") ? QStringLiteral("Sorted with Claude") : QStringLiteral("Sorted on this device"))
+        : (p->method == QLatin1String("ai-writer") ? QStringLiteral("Sorted and named by on-device AI")
+           : p->method == QLatin1String("ai") ? QStringLiteral("Sorted by on-device AI") : QStringLiteral("Sorted by key words"))
               + QStringLiteral(" · ") + details.value(p->detail) + QStringLiteral(" · ") + when;
     return {{"id", p->id}, {"name", p->name}, {"folder", QDir::toNativeSeparators(p->folder)}, {"detail", p->detail},
             {"method", p->method}, {"sortedLabel", sortedLabel}, {"busy", p->busy}, {"status", p->status},
@@ -347,15 +359,6 @@ void Pods::rename(const QString &id, const QString &name)
 
 void Pods::resort(const QString &id, int detail) { run(id, QStringLiteral("Sorting…"), qBound(0, detail, 2), 0); }
 void Pods::refresh(const QString &id) { if (const Pod *p = find(id)) run(id, QStringLiteral("Looking for new documents…"), p->detail, 1); }
-void Pods::sortWithAi(const QString &id, int detail)
-{
-    if (m_key.isEmpty()) {
-        if (Pod *p = find(id)) { p->error = QStringLiteral("Add your Anthropic API key first."); ++m_rev; emit revisionChanged(); }
-        return;
-    }
-    run(id, QStringLiteral("Reading your documents…"), qBound(0, detail, 2), 2);
-}
-
 void Pods::run(const QString &id, const QString &status, int detail, int kind)
 {
     Pod *p = find(id);
@@ -372,6 +375,15 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
     for (const Doc &d : p->docs) known.insert(d.path, d.topic);
     for (const Topic &t : p->topics) if (!t.other) topicIds << t.id;
     const QString folder = p->folder;
+    const QString meaningPath = m_models ? m_models->path(QStringLiteral("meaning")) : QString();
+    const QString writerPath = m_models ? m_models->path(QStringLiteral("writer")) : QString();
+
+    // the worker says how far it has got; the pod's status line shows it
+    auto say = [this, id](const QString &text) {
+        QMetaObject::invokeMethod(this, [this, id, text]() {
+            if (Pod *p = find(id); p && p->busy) { p->status = text; ++m_rev; emit revisionChanged(); }
+        }, Qt::QueuedConnection);
+    };
 
     auto *w = new QFutureWatcher<Result>(this);
     connect(w, &QFutureWatcher<Result>::finished, this, [this, w, id, detail, kind]() {
@@ -379,16 +391,17 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         w->deleteLater();
         Pod *p = find(id);
         if (!p) return;
-        if (kind == 2) { askAi(id, r.docs, detail); return; }
         if (r.docs.isEmpty()) { finish(p, QStringLiteral("No documents found in this folder (Word, OpenDocument, text or PDF).")); return; }
         if (kind == 0) {
             p->topics.clear();
             p->docs.clear();
-            for (const auto &t : r.topics) {
+            for (size_t k = 0; k < r.topics.size(); ++k) {
+                const auto &t = r.topics[k];
                 Topic tp;
                 tp.id = newId();
                 tp.name = QString::fromStdString(t.name);
-                for (const auto &k : t.keywords) tp.keywords << QString::fromStdString(k);
+                if (k < r.summaries.size()) tp.summary = QString::fromStdString(r.summaries[k]);
+                for (const auto &kw : t.keywords) tp.keywords << QString::fromStdString(kw);
                 tp.other = t.other;
                 p->topics.push_back(tp);
                 for (int i : t.docs) {
@@ -397,7 +410,7 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
                 }
             }
             p->detail = detail;
-            p->method = QStringLiteral("device");
+            p->method = r.method;
             p->sorted = now();
         } else {
             QHash<QString, QString> before;
@@ -418,22 +431,80 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
             p->docs = docs;
             dropEmptyTopics(*p);
         }
-        finish(p);
+        finish(p, r.note);
     });
-    w->setFuture(QtConcurrent::run([folder, kind, detail, known, topicIds]() {
+    w->setFuture(QtConcurrent::run([folder, kind, detail, known, topicIds, meaningPath, writerPath, say]() {
         Result r;
         r.docs = scanFolder(folder);
-        if (kind == 0 && !r.docs.isEmpty()) {
-            r.topics = podsort::sortDocs(toSortDocs(r.docs), detail);
-        } else if (kind == 1 && !r.docs.isEmpty()) {
+        const int n = int(r.docs.size());
+        if (n == 0) return r;
+        const auto words = toSortDocs(r.docs);
+
+        // The meaning model reads every document (its name, headings and text, in a few pieces when it is long)
+        std::vector<std::vector<float>> vecs;
+        if (!meaningPath.isEmpty() && n > 1) {
+            podai::Meaning m;
+            std::string err;
+            if (m.load(meaningPath.toStdString(), err)) {
+                for (int i = 0; i < n; ++i) {
+                    if (i % 4 == 0) say(QStringLiteral("Reading documents with on-device AI… %1 of %2").arg(i + 1).arg(n));
+                    const auto &d = r.docs[i];
+                    vecs.push_back(m.read((d.title.isEmpty() ? d.name : d.name + QStringLiteral(": ") + d.title).toStdString(),
+                                          d.headings.toStdString(), d.body.toStdString()));
+                }
+            } else {
+                r.note = QStringLiteral("The meaning model couldn't start, so key words were used. Try removing and downloading it again.");
+            }
+        }
+
+        if (kind == 1) {      // refresh: new documents join the topic they fit best
             std::vector<std::vector<int>> groups(size_t(topicIds.size()));
-            for (int i = 0; i < r.docs.size(); ++i) {
+            for (int i = 0; i < n; ++i) {
                 const auto it = known.constFind(r.docs[i].path);
                 if (it == known.constEnd()) { r.fresh.push_back(i); continue; }
                 const qsizetype k = topicIds.indexOf(*it);
                 if (k >= 0) groups[size_t(k)].push_back(i);
             }
-            if (!r.fresh.empty()) r.placed = podsort::placeNew(toSortDocs(r.docs), groups, r.fresh, detail);
+            if (!r.fresh.empty())
+                r.placed = vecs.size() == size_t(n) ? podai::place(vecs, groups, r.fresh, detail)
+                                                    : podsort::placeNew(words, groups, r.fresh, detail);
+            return r;
+        }
+
+        if (vecs.size() == size_t(n)) {
+            r.topics = podsort::nameGroups(words, podai::group(vecs, detail));
+            r.method = QStringLiteral("ai");
+        } else {
+            r.topics = podsort::sortDocs(words, detail);
+        }
+        r.summaries.assign(r.topics.size(), std::string());
+
+        // The writer reads the documents in each topic and names it
+        if (!writerPath.isEmpty()) {
+            say(QStringLiteral("Starting the writer…"));
+            podai::Writer wr;
+            std::string err;
+            if (wr.load(writerPath.toStdString(), err)) {
+                std::vector<std::string> names;
+                int done = 0, total = 0;
+                for (const auto &t : r.topics) if (!t.other) ++total;
+                for (size_t k = 0; k < r.topics.size(); ++k) {
+                    auto &t = r.topics[k];
+                    if (t.other) continue;
+                    say(QStringLiteral("Naming topics… %1 of %2").arg(++done).arg(total));
+                    const podai::Named nm = podai::name(wr, docTexts(r.docs, t.docs), names);
+                    if (!nm.name.empty()) {
+                        bool clash = false;
+                        for (const auto &o : names) if (QString::fromStdString(o).compare(QString::fromStdString(nm.name), Qt::CaseInsensitive) == 0) clash = true;
+                        if (!clash) t.name = nm.name;
+                    }
+                    r.summaries[k] = nm.summary;
+                    names.push_back(t.name);
+                }
+                r.method = r.method == QLatin1String("ai") ? QStringLiteral("ai-writer") : r.method;
+            } else if (r.note.isEmpty()) {
+                r.note = QStringLiteral("The writer model couldn't start, so topics were named by their key words.");
+            }
         }
         return r;
     }));
@@ -464,106 +535,6 @@ void Pods::dropEmptyTopics(Pod &p)
     for (const Doc &d : p.docs) used.insert(d.topic);
     for (int i = p.topics.size() - 1; i >= 0; --i)
         if (!used.contains(p.topics[i].id)) p.topics.remove(i);
-}
-
-// ---- Sorting with Claude ----
-
-void Pods::askAi(const QString &id, const QVector<Scanned> &docs, int detail)
-{
-    Pod *p = find(id);
-    if (!p) return;
-    if (docs.isEmpty()) { finish(p, QStringLiteral("No documents found in this folder.")); return; }
-    p->status = QStringLiteral("Asking Claude to sort %1 documents…").arg(docs.size());
-    ++m_rev;
-    emit revisionChanged();
-
-    // Each document gets a share of about 120,000 characters: its name, folder, headings and the start of its text.
-    const int each = qBound(300, 120000 / int(docs.size()), 2500);
-    QString list;
-    for (int i = 0; i < docs.size(); ++i) {
-        const Scanned &d = docs[i];
-        list += QStringLiteral("[%1] %2.%3").arg(i).arg(d.name, d.ext);
-        if (!d.rel.isEmpty()) list += QStringLiteral(" (folder: %1)").arg(d.rel);
-        list += QLatin1Char('\n');
-        if (!d.headings.isEmpty()) list += QStringLiteral("Headings: ") + d.headings.left(400).simplified() + QLatin1Char('\n');
-        if (d.readable) list += QStringLiteral("Text: ") + d.body.left(each).simplified() + QLatin1Char('\n');
-        else list += QStringLiteral("(text not readable; sort by its name)\n");
-        list += QLatin1Char('\n');
-    }
-    const QString how = detail == 0 ? QStringLiteral("Use a few broad topics, roughly one per subject.")
-                       : detail == 2 ? QStringLiteral("Use narrow, specific topics: split a subject into its separate topics.")
-                                     : QStringLiteral("Use topics about as specific as a unit or chapter of a course.");
-    const QString prompt = QStringLiteral(
-        "These are %1 documents from one folder of someone's files, often school or study notes. Group them into topics "
-        "by what they are about. %2 Topic names are short (1 to 4 words) and specific, such as \"Berlin Conference\" or "
-        "\"Cell Biology\". Every document goes in exactly one topic. Documents that fit no topic go in a topic named "
-        "\"Other\".\n\nReply with JSON only, no other text, in this form:\n"
-        "{\"topics\": [{\"name\": \"…\", \"summary\": \"one short sentence on what these documents cover\", \"docs\": [0, 4, 7]}]}\n\n"
-        "The documents:\n\n%3").arg(docs.size()).arg(how, list);
-
-    QJsonObject body{{"model", QString::fromLatin1(kModel)}, {"max_tokens", 8000},
-                     {"messages", QJsonArray{QJsonObject{{"role", "user"}, {"content", prompt}}}}};
-    QNetworkRequest req(QUrl(QStringLiteral("https://api.anthropic.com/v1/messages")));
-    req.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json"));
-    req.setRawHeader("x-api-key", m_key.toUtf8());
-    req.setRawHeader("anthropic-version", "2023-06-01");
-    req.setTransferTimeout(180000);
-    if (!m_net) m_net = new QNetworkAccessManager(this);
-    QNetworkReply *reply = m_net->post(req, QJsonDocument(body).toJson(QJsonDocument::Compact));
-    connect(reply, &QNetworkReply::finished, this, [this, reply, id, docs, detail]() {
-        reply->deleteLater();
-        Pod *p = find(id);
-        if (!p) return;
-        const int code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        const QJsonObject res = QJsonDocument::fromJson(reply->readAll()).object();
-        if (code == 401) { finish(p, QStringLiteral("Your API key wasn't accepted. Check it under Pods › Sort with Claude.")); return; }
-        if (code != 200) {
-            const QString msg = res.value(QLatin1String("error")).toObject().value(QLatin1String("message")).toString();
-            finish(p, QStringLiteral("Claude couldn't sort this pod: ") + (msg.isEmpty() ? reply->errorString() : msg));
-            return;
-        }
-        QString text;
-        for (const QJsonValue &c : res.value(QLatin1String("content")).toArray())
-            if (c.toObject().value(QLatin1String("type")).toString() == QLatin1String("text")) text += c.toObject().value(QLatin1String("text")).toString();
-        const qsizetype a = text.indexOf(QLatin1Char('{')), b = text.lastIndexOf(QLatin1Char('}'));
-        const QJsonArray topics = a >= 0 && b > a
-            ? QJsonDocument::fromJson(text.mid(a, b - a + 1).toUtf8()).object().value(QLatin1String("topics")).toArray()
-            : QJsonArray();
-        if (topics.isEmpty()) { finish(p, QStringLiteral("Claude's answer couldn't be read. Try again, or sort on this device.")); return; }
-
-        p->topics.clear();
-        p->docs.clear();
-        QVector<bool> placed(docs.size(), false);
-        for (const QJsonValue &tv : topics) {
-            const QJsonObject t = tv.toObject();
-            Topic tp;
-            tp.id = newId();
-            tp.name = t.value(QLatin1String("name")).toString().simplified().left(60);
-            tp.summary = t.value(QLatin1String("summary")).toString().simplified();
-            tp.other = tp.name.compare(QLatin1String("Other"), Qt::CaseInsensitive) == 0;
-            if (tp.name.isEmpty()) tp.name = QStringLiteral("Untitled topic");
-            bool any = false;
-            for (const QJsonValue &dv : t.value(QLatin1String("docs")).toArray()) {
-                const int i = dv.toInt(-1);
-                if (i < 0 || i >= docs.size() || placed[i]) continue;
-                placed[i] = true;
-                any = true;
-                const Scanned &s = docs[i];
-                p->docs.push_back({s.path, s.name, s.ext, s.rel, tp.id, snippetOf(s.body), s.words, s.readable});
-            }
-            if (any) p->topics.push_back(tp);
-        }
-        for (int i = 0; i < docs.size(); ++i)      // anything Claude left out goes in Other
-            if (!placed[i]) {
-                const Scanned &s = docs[i];
-                p->docs.push_back({s.path, s.name, s.ext, s.rel, otherTopic(*p).id, snippetOf(s.body), s.words, s.readable});
-            }
-        std::stable_sort(p->topics.begin(), p->topics.end(), [](const Topic &x, const Topic &y) { return !x.other && y.other; });
-        p->detail = detail;
-        p->method = QStringLiteral("ai");
-        p->sorted = now();
-        finish(p);
-    });
 }
 
 // ---- Changing topics by hand ----
@@ -702,22 +673,6 @@ bool Pods::openDoc(const QString &path) const
 int Pods::docCount(const QString &dir) const
 {
     return int(QDir(dir).entryList(filters(), QDir::Files | QDir::Readable, QDir::NoSort).size());
-}
-
-void Pods::setKey(const QString &key)
-{
-    m_key = key.trimmed();
-    QSettings st;
-    if (m_key.isEmpty()) st.remove(QStringLiteral("pods/apiKey"));
-    else st.setValue(QStringLiteral("pods/apiKey"), m_key);
-    ++m_rev;
-    emit revisionChanged();
-}
-
-QString Pods::keyHint() const
-{
-    if (m_key.size() < 12) return m_key.isEmpty() ? QString() : QStringLiteral("•••");
-    return m_key.left(7) + QStringLiteral("…") + m_key.right(4);
 }
 
 bool Pods::filesAllowed() const

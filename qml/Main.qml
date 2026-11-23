@@ -894,6 +894,18 @@ Window {
             onCloseRequested: win.authOpen = false
         }
 
+        // The first time the app opens: a welcome, and the offer of the free on-device AI for Pods
+        StartScreen {
+            z: 120
+            visible: settings.startScreen === true || (!ai.offered && settings.screenshot !== true)
+            x: -safeArea.left / win.uiS
+            y: -safeArea.top / win.uiS
+            width: win.width / win.uiS
+            height: win.height / win.uiS
+            topInset: safeArea.top / win.uiS
+            bottomInset: safeArea.bottom / win.uiS
+        }
+
         // Confetti and a greeting after a new account is made. Above everything, takes no clicks.
         Welcome { id: welcome; z: 100; anchors.fill: parent }
         Connections { target: account; function onSignedUp(name) { welcome.play(name) } }

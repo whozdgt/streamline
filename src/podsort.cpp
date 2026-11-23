@@ -350,6 +350,30 @@ std::vector<Topic> sortDocs(const std::vector<Doc> &docs, int detail)
     return out;
 }
 
+std::vector<Topic> nameGroups(const std::vector<Doc> &docs, const std::vector<std::vector<int>> &groups)
+{
+    std::vector<Topic> out;
+    if (docs.empty()) return out;
+    const Model m = build(docs);
+    Topic other;
+    other.other = true;
+    other.name = "Other";
+    for (const auto &g : groups) {
+        if (g.size() == 1 && docs.size() > 2) { other.docs.push_back(g[0]); continue; }
+        Topic t;
+        t.docs = g;
+        name(m, t, docs.size());
+        out.push_back(t);
+    }
+    for (size_t i = 0; i < out.size(); ++i)
+        for (size_t j = i + 1; j < out.size(); ++j)
+            if (out[i].name == out[j].name)
+                for (Topic *p : {&out[i], &out[j]})
+                    if (!p->keywords.empty()) { p->name += " · " + p->keywords.front(); p->keywords.erase(p->keywords.begin()); }
+    if (!other.docs.empty()) { std::sort(other.docs.begin(), other.docs.end()); out.push_back(other); }
+    return out;
+}
+
 std::vector<int> placeNew(const std::vector<Doc> &docs, const std::vector<std::vector<int>> &topics,
                           const std::vector<int> &fresh, int detail)
 {

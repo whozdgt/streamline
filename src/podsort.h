@@ -29,6 +29,9 @@ struct Topic {
 // detail: 0 = fewer, broader topics, 1 = balanced, 2 = more, narrower topics
 std::vector<Topic> sortDocs(const std::vector<Doc> &docs, int detail);
 
+// Names groups found some other way (the on-device AI): each gets its key words as a name; groups of one go in Other.
+std::vector<Topic> nameGroups(const std::vector<Doc> &docs, const std::vector<std::vector<int>> &groups);
+
 // Refreshing a pod: which of the existing topics each new document fits best, or -1 for none.
 // topics[i] lists the indexes (into docs) of the documents already in topic i; fresh lists the new documents.
 std::vector<int> placeNew(const std::vector<Doc> &docs, const std::vector<std::vector<int>> &topics,

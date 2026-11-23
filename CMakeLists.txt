@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(musicplayer VERSION 0.4.0 LANGUAGES CXX)
+project(musicplayer VERSION 0.5.0 LANGUAGES CXX)
 
 if(WIN32)
   enable_language(RC)      # the program's icon and version information
@@ -66,7 +66,8 @@ qt_add_executable(musicplayer
   src/social.cpp src/social.h src/folders.cpp src/folders.h
   src/playstats.cpp src/playstats.h src/safearea.h
   src/flashcards.cpp src/flashcards.h src/todos.cpp src/todos.h
-  src/pods.cpp src/pods.h src/podsort.cpp src/podsort.h)
+  src/pods.cpp src/pods.h src/podsort.cpp src/podsort.h
+  src/podai.cpp src/podai.h src/aimodels.cpp src/aimodels.h)
 
 target_compile_definitions(musicplayer PRIVATE APP_VERSION="${PROJECT_VERSION}")
 if(PARAPLAY_STORE)
@@ -77,7 +78,7 @@ qt_add_qml_module(musicplayer
   URI Music
   VERSION 1.0
   QML_FILES
-    qml/Main.qml qml/PodsPage.qml qml/Icon.qml qml/IconButton.qml qml/Cover.qml qml/Progress.qml
+    qml/Main.qml qml/PodsPage.qml qml/StartScreen.qml qml/AiModelRow.qml qml/Icon.qml qml/IconButton.qml qml/Cover.qml qml/Progress.qml
     qml/QualityChip.qml qml/NavItem.qml qml/Sidebar.qml qml/SongList.qml qml/RoundImage.qml qml/Dock.qml qml/LibraryPage.qml qml/AlbumHeader.qml
     qml/Groups.qml qml/Carousel.qml qml/PlayerBar.qml qml/ExpandedPlayer.qml qml/SettingsPanel.qml
     qml/SectionLabel.qml qml/ToggleRow.qml qml/Slider255.qml qml/ColorEditor.qml
@@ -99,6 +100,9 @@ target_link_libraries(musicplayer PRIVATE
 # Pods read Word files, which are zip archives; Qt's own zip reader is a private part of Qt (Gui, or Core from 6.11 or so).
 find_package(Qt6 QUIET COMPONENTS CorePrivate GuiPrivate)
 target_link_libraries(musicplayer PRIVATE Qt6::CorePrivate Qt6::GuiPrivate)
+# Pods' on-device AI
+include(cmake/llama.cmake)
+target_link_libraries(musicplayer PRIVATE llama)
 
 if(ANDROID)
   target_sources(musicplayer PRIVATE src/android.cpp src/android.h src/androidmedia.cpp src/androidmedia.h)

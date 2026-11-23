@@ -8,9 +8,9 @@ name: linux
 on:
   push:
     branches: [main]
-    paths: ['src/**', 'qml/**', 'CMakeLists.txt', 'packaging/**', 'update.sh', '.github/workflows/linux.yml']
+    paths: ['src/**', 'qml/**', 'CMakeLists.txt', 'cmake/**', 'packaging/**', 'update.sh', '.github/workflows/linux.yml']
   pull_request:
-    paths: ['src/**', 'qml/**', 'CMakeLists.txt', 'packaging/**', 'update.sh', '.github/workflows/linux.yml']
+    paths: ['src/**', 'qml/**', 'CMakeLists.txt', 'cmake/**', 'packaging/**', 'update.sh', '.github/workflows/linux.yml']
   workflow_dispatch:
 
 permissions:

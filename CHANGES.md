@@ -1,3 +1,10 @@
+# Streamline 0.5: on-device AI for Pods
+- **Free AI that runs on your device.** Two open models read your documents and sort them by what they're about. Nothing is sent anywhere, there's nothing to pay, and once downloaded they work offline.
+  - **Meaning model** (BGE small, 37 MB): reads each document's name, headings and text, in pieces through long documents, and groups documents by meaning, even when they share no words.
+  - **Writer model** (Qwen2.5 0.5B Instruct, 491 MB): reads the documents in each topic and names the topic, with a one-line summary.
+- **Welcome screen** the first time Streamline opens, offering the models. "Not now" is fine: they can be downloaded, cancelled or removed any time on the Pods page. Downloads carry on from where they stopped and are checked before use.
+- Without the models, Pods sort by key words as before. "Sort with Claude" and the API key are gone.
+
 # Streamline 0.4: Pods
 - **Pods** (Study › Pods on a phone, Pods in the sidebar on a computer): pick a folder of documents and Streamline sorts them into topics, named after what the documents in each share. Reads Word (.docx), OpenDocument (.odt), text and Markdown files, including the folders inside; older Word (.doc), RTF and PDF files are sorted by their name.
 - Choose broad, balanced or specific topics. Rename topics, move a document to another topic, search a pod, and preview a document's text or open it in Word.

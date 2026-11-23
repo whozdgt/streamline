@@ -34,6 +34,17 @@ jobs:
       - name: Pods sorting test
         run: g++ -std=c++17 -O2 -Wall -Isrc src/podsort.cpp tests/podsort_test.cpp -o podsort_test && ./podsort_test
 
+      # The on-device AI on the same made-up documents, with the real models from the ai-models release.
+      - name: On-device AI test
+        run: |
+          cmake -S tests -B build-tests -G Ninja -DCMAKE_BUILD_TYPE=Release > /dev/null
+          cmake --build build-tests > /dev/null
+          mkdir -p models
+          for f in meaning-bge-small-en-v1.5-q8_0.gguf writer-qwen2.5-0.5b-instruct-q4_k_m.gguf; do
+            curl -fsSL --retry 3 -o "models/$f" "https://github.com/$GITHUB_REPOSITORY/releases/download/ai-models/$f"
+          done
+          ./build-tests/podai_test models/meaning-bge-small-en-v1.5-q8_0.gguf models/writer-qwen2.5-0.5b-instruct-q4_k_m.gguf
+
       - name: Starts and exits (no display needed)
         run: QT_QPA_PLATFORM=offscreen ./build/musicplayer --version
 
@@ -62,7 +73,7 @@ jobs:
           mkdir -p shots
           shot() {      # shot <name> <WxH> [options…]
             local name="$1" size="$2"; shift 2
-            QT_QPA_PLATFORM=xcb timeout 40 xvfb-run -a -s "-screen 0 1600x1000x24" \
+            QT_QPA_PLATFORM=xcb timeout "${SHOT_TIMEOUT:-40}" xvfb-run -a -s "-screen 0 1600x1000x24" \
               ./build/musicplayer --music /tmp/music --size "$size" --screenshot "shots/$name.png" "$@" > "shots/$name.log" 2>&1 || true
             ls -l "shots/$name.png" 2>/dev/null || { echo "::warning::no screenshot for $name"; tail -5 "shots/$name.log"; }
           }
@@ -78,6 +89,18 @@ jobs:
           shot phone-pods 390x844 --mobile --set startPod=/tmp/docs
           shot phone-pods-classic 390x844 --mobile --set theme=classic --set startPod=/tmp/docs
           shot phone-pods-list 390x844 --mobile --set startView=pods
+          # the welcome screen, then a pod sorted by the on-device AI (the models from the AI test above)
+          shot phone-start 390x844 --mobile --set startScreen=true
+          shot phone-start-classic 390x844 --mobile --set theme=classic --set startScreen=true
+          shot desktop-start 1280x800 --set startScreen=true
+          appdata="$(dirname "$(find "$HOME" -name pods.json | head -1)")"
+          if [ -d "$appdata" ] && [ -d models ]; then
+            mkdir -p "$appdata/models" && cp models/*.gguf "$appdata/models/"
+            cp -r /tmp/docs /tmp/study-ai
+            SHOT_TIMEOUT=150 shot phone-pods-ai 390x844 --mobile --set startPod=/tmp/study-ai --set shotDelay=100000
+            SHOT_TIMEOUT=150 shot desktop-pods-ai 1280x800 --set startPod=/tmp/study-ai --set shotDelay=4000
+            shot phone-pods-ai-list 390x844 --mobile --set startView=pods
+          fi
           shot phone-tucked 390x844 --mobile --set startPlay=true --set startTucked=true --set startView=todos
           shot phone-tucked-classic 390x844 --mobile --set theme=classic --set startPlay=true --set startTucked=true --set startView=todos
           STREAMLINE_FAKE_INSETS=60,34 shot phone-settings-insets 390x844 --mobile --set theme=classic --set startPlay=true --set startSettings=look

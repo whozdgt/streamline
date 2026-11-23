@@ -162,25 +162,15 @@ Item {
                     }
                 }
 
-                Card {      // Claude, optional
-                    Text { text: "Sort with Claude (optional)"; font.pixelSize: 15; font.weight: Font.DemiBold; color: settings.ink }
+                Card {      // the free on-device AI
+                    Text { text: "On-device AI"; font.pixelSize: 15; font.weight: Font.DemiBold; color: settings.ink }
                     Para {
-                        text: "Sorting on this device is free and private. Claude gives better topic names and a one-line summary of each topic. "
-                            + "It sends each document's name and the start of its text to Anthropic, with your own API key "
-                            + "(make one at console.anthropic.com; you pay for what you use, usually well under a penny per pod)."
+                        text: "Two free AI models that read your documents and sort them by what they're about. They run on this device: "
+                            + "your documents never leave it, and once downloaded they work offline. Without them, pods sort by key words."
                     }
-                    Row {
-                        visible: pods.hasKey
-                        spacing: 16
-                        Text { anchors.verticalCenter: parent.verticalCenter; text: { pods.revision; return "Key saved: " + pods.keyHint() } font.pixelSize: 13; color: settings.ink }
-                        Link { anchors.verticalCenter: parent.verticalCenter; text: "Remove"; font.underline: true; onClicked: pods.setKey("") }
-                    }
-                    Flow {
-                        visible: !pods.hasKey
-                        width: parent.width
-                        spacing: 10
-                        Field { id: keyField; width: root.narrow ? parent.width : 360; secret: true; placeholder: "Paste your API key (sk-ant-…)"; onAccepted: pods.setKey(text) }
-                        Btn { label: "Save key"; primary: false; onClicked: { pods.setKey(keyField.text); keyField.clear() } }
+                    Repeater {
+                        model: { ai.revision; return ai.models() }
+                        AiModelRow { required property var modelData; width: parent.width; info: modelData }
                     }
                 }
             }
@@ -309,12 +299,18 @@ Item {
                     Flow {
                         width: parent.width
                         spacing: 10
-                        Btn { label: "Sort on this device"; enabled: !root.info.busy; onClicked: pods.resort(root.podId, root.detail) }
-                        Btn { label: "Sort with Claude"; primary: false; enabled: !root.info.busy && pods.hasKey; onClicked: pods.sortWithAi(root.podId, root.detail) }
+                        Btn { label: "Sort again"; enabled: !root.info.busy; onClicked: pods.resort(root.podId, root.detail) }
                         Btn { label: "Check for new files"; primary: false; enabled: !root.info.busy; onClicked: pods.refresh(root.podId) }
                     }
-                    Para { text: pods.hasKey ? "Sorting again replaces topic names you have changed. “Check for new files” keeps them, and puts new documents in the topic they fit best."
-                                             : "Sorting again replaces topic names you have changed. To sort with Claude, add an API key on the Pods page." }
+                    Para {
+                        text: { ai.revision
+                            const m = ai.installed("meaning"), w = ai.installed("writer")
+                            const how = m && w ? "Sorts with the on-device AI: the meaning model groups your documents and the writer names each topic."
+                                : m ? "Sorts with the on-device AI's meaning model. Download the writer on the Pods page to have topics named and summed up."
+                                : w ? "Groups by key words, then the writer names each topic. Download the meaning model on the Pods page to group by meaning."
+                                : "Sorts by key words. Download the free on-device AI on the Pods page to sort by meaning."
+                            return how + " Sorting again replaces topic names you have changed; “Check for new files” keeps them." }
+                    }
                 }
 
                 // the real files
