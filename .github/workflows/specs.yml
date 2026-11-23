@@ -49,6 +49,12 @@ jobs:
             ms=$(( ($(date +%s%N) - start) / 1000000 ))
             pdftotext -raw "specs/$name.pdf" "specs/$name.ref.txt"
             echo "RESULT $name: read in ${ms} ms, $(cat "specs/$name.err"), words match pdftotext: $(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt")"
+            ./spec_test "specs/$name.pdf" --head
             ./spec_test "specs/$name.pdf" | head -260
+            # where a heading's layout needs a closer look (a few lines either side, cut short)
+            for probe in "1.1 Understand" "2 The last years" "2.1 understand" "1 Proof" "Topic 1"; do
+              out="$(./spec_test "specs/$name.pdf" --around "$probe")"
+              [ -n "$out" ] && echo "around \"$probe\":" && echo "$out"
+            done
             echo "::endgroup::"
           done

@@ -7,6 +7,8 @@
 #include <cstring>
 #include <fstream>
 #include <sstream>
+#include <string>
+#include <vector>
 int main(int argc, char **argv)
 {
     if (argc < 2) { std::fprintf(stderr, "usage: spec_test <spec.pdf|spec.txt> [--text]\n"); return 2; }
@@ -20,6 +22,23 @@ int main(int argc, char **argv)
         text = pdftext::text(doc);
     }
     if (argc > 2 && std::strcmp(argv[2], "--text") == 0) { std::fputs(text.c_str(), stdout); return 0; }
+    if (argc > 2 && std::strcmp(argv[2], "--head") == 0) {      // the cover page's first lines, to check the name is found
+        std::istringstream in(text);
+        std::string line;
+        for (int i = 0; i < 12 && std::getline(in, line); ++i) std::printf("  | %s\n", line.substr(0, 80).c_str());
+        return 0;
+    }
+    if (argc > 3 && std::strcmp(argv[2], "--around") == 0) {    // a few lines either side of the first line starting with argv[3]
+        std::vector<std::string> ls;
+        std::istringstream in(text);
+        for (std::string line; std::getline(in, line);) ls.push_back(line);
+        for (size_t i = 0; i < ls.size(); ++i)
+            if (ls[i].rfind(argv[3], 0) == 0) {
+                for (size_t j = i >= 4 ? i - 4 : 0; j < ls.size() && j <= i + 4; ++j) std::printf("  %s %s\n", j == i ? ">" : " ", ls[j].substr(0, 50).c_str());
+                break;
+            }
+        return 0;
+    }
     const auto info = specread::identify(text);
     const auto pts = podsort::parseSpec(text);
     size_t leaves = podsort::leafPoints(pts).size();

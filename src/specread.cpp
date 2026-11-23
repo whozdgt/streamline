@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <functional>
 #include <map>
 #include <regex>
 #include <set>
@@ -116,6 +117,9 @@ bool parseKey(const std::string &line, Key &k)
         k.id = id;
         k.title = trim(line.substr(i));
         k.rank = rank;
+        // "Section 6 7). Use of…", "Paper 3 Statistics and Mechanics. Students are required…": a sentence, not a heading
+        if (!k.title.empty() && (!std::isalpha(uint8_t(k.title[0])) || k.title.size() > 75)) return false;
+        if (k.title.find(". ") != std::string::npos) return false;
         return true;
     }
     return false;
@@ -159,7 +163,7 @@ bool tocLine(const std::string &raw)
     return std::isalpha(uint8_t(c)) || c == ')' || c == '?';
 }
 
-std::string cleanTitle(std::string t)
+std::string cleanTitle(std::string t, bool page = false)
 {
     static const char *tails[] = {"Notes and examples", "Learning outcomes", "(continued)", "continued", "Continued",
                                   "\xE2\x84\xA2", "\xC2\xAE"};
@@ -167,7 +171,7 @@ std::string cleanTitle(std::string t)
         again = false;
         t = trim(t);
         // contents-page leaders and page numbers
-        while (!t.empty() && (std::isdigit(uint8_t(t.back())) || t.back() == '.') && t.size() > 3) {
+        while (page && !t.empty() && (std::isdigit(uint8_t(t.back())) || t.back() == '.') && t.size() > 3) {
             const size_t sp = t.find_last_of(' ');
             const std::string last = sp == std::string::npos ? t : t.substr(sp + 1);
             if (std::all_of(last.begin(), last.end(), [](char c) { return std::isdigit(uint8_t(c)) || c == '.'; })) {
@@ -273,16 +277,16 @@ Info identify(const std::string &text)
         static const std::regex re("Cambridge (International AS (?:&|and) A Level|IGCSE|O Level|International A Level|International AS Level)\\S* ([A-Z][A-Za-z ,&()-]{2,40}?) ([0-9]{4})");
         if (std::regex_search(head, m, re)) info.name = "Cambridge " + clean(m[1].str()) + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
     } else if (info.board == "Edexcel") {
-        static const std::regex re("(GCSE \\(9\\S1\\)|International GCSE|Advanced Subsidiary GCE|Advanced GCE|GCE A level|International Advanced Level) in ([A-Z][A-Za-z ,&-]{2,40}?) \\(([0-9A-Z]{4})\\)");
+        static const std::regex re("(GCSE|International GCSE|Advanced Subsidiary GCE|Advanced GCE|GCE A level|International Advanced Level)(?: \\(9.{1,3}1\\))?(?: in)? ([A-Z][A-Za-z ,&-]{2,40}?) \\(([0-9A-Z]{4})\\)");
         if (std::regex_search(head, m, re)) {
             std::string level = m[1].str();
-            if (level.rfind("GCSE (9", 0) == 0) level = "GCSE";
+            if (level == "Advanced GCE" || level == "GCE A level") level = "A level";
             else if (level == "Advanced GCE" || level == "GCE A level") level = "A level";
             else if (level == "Advanced Subsidiary GCE") level = "AS level";
             info.name = "Edexcel " + level + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
         }
     } else if (info.board == "AQA") {
-        static const std::regex re("(GCSE|AS AND A-LEVEL|AS and A-level|A-LEVEL|A-level|AS|Level 3 Extended Project|EXTENDED PROJECT)\\s+([A-Z][A-Z ,&'-]{2,40}?)\\s*\\(([0-9]{4})(?:, ?[0-9]{4})?\\)");
+        static const std::regex re("(GCSE|AS AND A-LEVEL|AS and A-level|A-LEVEL|A-level|AS|Level 3 Extended Project|EXTENDED PROJECT)\\s+([A-Za-z][A-Za-z ,&'-]{2,40}?)\\s*\\(([0-9]{4})(?:, ?([0-9]{4}))?\\)");
         if (std::regex_search(head, m, re)) {
             std::string subj = lower(clean(m[2].str()));
             bool cap = true;
@@ -295,7 +299,7 @@ Info identify(const std::string &text)
             }
             std::string level = m[1].str();
             if (lower(level).find("a-level") != std::string::npos) level = "A-level";
-            info.name = "AQA " + level + " " + subj + " (" + m[3].str() + ")";
+            info.name = "AQA " + level + " " + subj + " (" + (m[4].matched ? m[4].str() : m[3].str()) + ")";
         }
     }
     return info;
@@ -324,13 +328,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     // 2. The subject content: from "3 Subject content" (not its entry on the contents page) to the next part of the
     //    document that isn't content ("4 Details of the assessment"). Several content parts in a row count as one.
     size_t from = 0, to = all.size();
+    bool foundSection = false;
     {
         int section = -1;
         for (size_t i = 0; i < all.size(); ++i) {
             Num n;
             if (!parseNum(all[i], n) || n.parts.size() != 1 || !n.prefix.empty()) continue;
-            if (tocLine(all[i])) continue;
             if (section < 0) {
+                if (tocLine(all[i])) continue;
                 if (contentTitle(cleanTitle(n.title))) { section = n.parts[0]; from = i + 1; }
                 continue;
             }
@@ -341,6 +346,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (n.parts[0] == section + 1 && contentTitle(cleanTitle(n.title))) section = n.parts[0];      // AS, then A-level
         }
         if (section < 0) { from = 0; to = all.size(); }
+        foundSection = section >= 0;
     }
     const std::vector<std::string> lines(all.begin() + long(from), all.begin() + long(to));
     const std::string board = identify(text).board;
@@ -350,6 +356,16 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     if (board == "AQA")
         for (const auto &l : lines) { std::string c, t; if (parseCode2(l, c, t)) ++code2s; }
     const bool useCode2 = code2s >= 3;
+    // Is the numbering the backbone ("4.1.1 Cell structure", as AQA and Cambridge), or are "Paper"/"Topic" headings
+    // (as Edexcel)? In a numbered document, a "Paper 1" or "Section A" heading belongs inside the numbering.
+    int dottedHeadings = 0, keyHeadings = 0;
+    for (const auto &l : lines) {
+        Num n;
+        Key k;
+        if (parseNum(l, n) && n.parts.size() >= 2 && !statementLike(n.title)) ++dottedHeadings;
+        else if (parseKey(l, k)) ++keyHeadings;
+    }
+    const bool numbered = dottedHeadings >= 5 && dottedHeadings >= keyHeadings;
 
     std::vector<podsort::SpecPoint> pts;
     std::vector<int> rankOf;                     // per point
@@ -361,6 +377,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     std::vector<Open> stack;
     int lastTop = 0;
     int topSection = 0;
+    char lastLetter = 0;
+    bool rawEndsComma = false;
+    int justOpened = -1;        // the point whose heading was the line before: its title may carry on
 
     auto open = [&](int rank, const std::string &number, const std::string &title, bool isDotted) -> int {
         while (!stack.empty() && stack.back().rank >= rank) stack.pop_back();
@@ -413,13 +432,16 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         Num n;
         Key k;
         char letter = 0;
-        if (tocLine(l) && ((parseNum(l, n) && !statementLike(n.title)) || parseKey(l, k))) continue;      // the contents page
+        // a contents page (in pasted text, where the subject content wasn't found and the whole text is read)
+        const bool toc = tocLine(l) && (!foundSection || l.find("....") != std::string::npos);
+        if (toc && ((parseNum(l, n) && !statementLike(n.title)) || parseKey(l, k))) continue;
         std::string code, title;
         int made = -1;
 
         if (parseKey(l, k)) {
             int rank = k.rank;
-            if (useCode2 && k.keyword == "Part") rank = 52;
+            if (numbered) rank += 50;
+            if (useCode2 && k.keyword == "Part") rank = 75;
             made = open(rank, k.keyword + " " + k.id, cleanTitle(k.title), false);
             if (rank < 30) lastTop = 0;
         } else if (useCode2 && parseCode2(l, code, title)) {
@@ -448,8 +470,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // a subtopic ("4.1.1 Cell structure"), or a statement ("2.4 know the similarities…")
                 std::string parentNum = number.substr(0, number.rfind('.'));
                 std::string prevNum = parentNum + "." + std::to_string(n.parts.back() - 1);
-                const bool fits = n.parts.back() <= 1 || numbersSeen.count(prevNum) || numbersSeen.count(parentNum) ||
-                                  !statementLike(n.title) || n.parts.back() == 2;
+                const bool fits = !statementLike(n.title) || numbersSeen.count(prevNum) ||
+                                  (n.parts.back() <= 1 && (numbersSeen.count(parentNum) || n.parts.size() == 2));
                 numbersSeen.insert(number);
                 if (statement && (letterOpen() || !fits)) body(l);
                 else {
@@ -459,23 +481,35 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             } else body(l);
             if (made >= 0) numbersSeen.insert(number);
         } else if (parseLetter(l, letter, title)) {
-            if (!statementLike(title) && !stack.empty()) made = open(31, std::string("(") + letter + ")", cleanTitle(title), false);
-            else body(l);
+            const bool chain = letter == 'a' || lastLetter == letter - 1;
+            if (!statementLike(title) && !stack.empty() && !dottedOpen() && chain) {
+                made = open(31, std::string("(") + letter + ")", cleanTitle(title), false);
+                lastLetter = letter;
+            } else body(l);
         } else {
-            // a heading's title that wrapped onto this line ("1.1 The microscope in cell" + "studies")
-            if (!stack.empty() && i > 0 && !pts[size_t(stack.back().point)].title.empty()) {
-                std::string &bt = pts[size_t(stack.back().point)].title;
-                const std::string &bb = pts[size_t(stack.back().point)].body;
+            // a heading's title that wrapped onto this line: "1.1 The microscope in cell" + "studies",
+            // "2 The last years of Edward the" + "Confessor", "2 Knowledge," + "selection and use of sources"
+            if (justOpened >= 0 && !stack.empty() && stack.back().point == justOpened && l.size() < 40) {
+                std::string &bt = pts[size_t(justOpened)].title;
                 const unsigned char c0 = uint8_t(l[0]);
-                if (bb.empty() && c0 < 0x80 && std::islower(c0) && l.size() < 45 && bt.size() < 70 &&
-                    bt.back() != '.' && bt.back() != ':' && bt.find("\xE2\x80\xA6") == std::string::npos) {
+                const std::string lastWord = bt.substr(bt.find_last_of(' ') == std::string::npos ? 0 : bt.find_last_of(' ') + 1);
+                static const std::set<std::string> joiners = {"the", "of", "and", "to", "in", "for", "with", "on", "a", "an", "at",
+                                                              "by", "from", "into", "its", "their", "his", "her", "&", "–", "-"};
+                const bool open = bt.find("\xE2\x80\xA6") == std::string::npos && !bt.empty() && bt.back() != '.' && bt.back() != ':';
+                const bool carries = (c0 < 0x80 && std::islower(c0)) || joiners.count(lower(lastWord)) || rawEndsComma;
+                if (open && carries && bt.size() < 90 && l[0] != '\xE2' && l[0] != '-' && l[0] != '(') {
                     bt += " " + cleanTitle(l);
+                    if (!pts[size_t(justOpened)].body.empty()) body(l);
+                    rawEndsComma = l.back() == ',';
                     continue;
                 }
             }
             body(l);
         }
-        (void)made;
+        if (made >= 0) {
+            justOpened = made;
+            rawEndsComma = !l.empty() && l.back() == ',';
+        } else justOpened = -1;
     }
 
     // 3. AS and A-level content in one document: keep the later (A-level) copy of a point that appears in both
@@ -508,6 +542,42 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             p.parent = q >= 0 ? remap[size_t(q)] : -1;
         }
         pts.swap(kept);
+    }
+    {
+        auto numKey = [](const std::string &num) {
+            std::vector<int> k;
+            size_t i = 0;
+            while (i < num.size() && !std::isdigit(uint8_t(num[i]))) ++i;
+            if (i > 2 || i == num.size()) return k;      // not a plain number ("Topic 1", "AA"): keep the document's order
+            while (i < num.size()) {
+                size_t j = i;
+                while (j < num.size() && std::isdigit(uint8_t(num[j]))) ++j;
+                if (j == i) break;
+                k.push_back(std::atoi(num.substr(i, j - i).c_str()));
+                i = j + 1;
+            }
+            return k;
+        };
+        std::vector<std::vector<int>> kids(pts.size() + 1);
+        for (size_t i = 0; i < pts.size(); ++i) kids[size_t(pts[i].parent + 1)].push_back(int(i));
+        for (auto &list : kids)
+            std::stable_sort(list.begin(), list.end(), [&](int a, int b) {
+                const auto ka = numKey(pts[size_t(a)].number), kb = numKey(pts[size_t(b)].number);
+                if (ka.empty() || kb.empty()) return false;
+                return ka < kb;
+            });
+        std::vector<int> order, remap(pts.size(), -1);
+        std::function<void(int)> walk = [&](int parent) {
+            for (int c : kids[size_t(parent + 1)]) { remap[size_t(c)] = int(order.size()); order.push_back(c); walk(c); }
+        };
+        walk(-1);
+        std::vector<podsort::SpecPoint> sorted;
+        for (int i : order) {
+            podsort::SpecPoint p = pts[size_t(i)];
+            p.parent = p.parent >= 0 ? remap[size_t(p.parent)] : -1;
+            sorted.push_back(p);
+        }
+        pts.swap(sorted);
     }
     for (auto &p : pts) {
         p.depth = 0;
