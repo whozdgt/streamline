@@ -4,6 +4,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <mutex>
 #include <numeric>
@@ -371,7 +373,7 @@ std::string field(const std::string &text, const std::string &label)
 }
 } // namespace
 
-Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::string> &others, int level, const std::string &parent)
+Named nameOnce(Writer &w, const std::vector<DocText> &docs, const std::vector<std::string> &others, int level, const std::string &parent, bool simple)
 {
     // Each document gets an equal share of about 2,400 tokens (roughly 1,800 words in all): its name, headings and the
     // start of its text. Plenty for the writer to see what the topic is, short enough to be quick on a phone.
@@ -398,7 +400,10 @@ Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::s
         + (avoid.empty() ? std::string() : " Other folders are already called: " + avoid + ". Pick a name that is different from these.")
         + " The name must say the subject itself, never a general word like \"Documents\", \"Notes\" or \"Files\"."
         + "\nAnswer in exactly this form:\nName: ...\nSummary: ...";
-    const std::string reply = w.chat(system, user, 90);
+    const std::string simpleUser = list + (level == 0 ? "Which school subject are these documents from? Answer with only the subject, for example: History"
+                                                        : "What is the one topic these documents share? Answer with only the topic in 1 to 4 words, for example: Cell Biology");
+    const std::string reply = simple ? "Name: " + w.chat(system, simpleUser, 16) : w.chat(system, user, 90);
+    if (std::getenv("PODAI_TRACE")) std::fprintf(stderr, "writer (level %d): %s\n---\n", level, reply.c_str());
     Named n;
     n.name = field(reply, "Name");
     n.summary = field(reply, "Summary");
@@ -407,6 +412,16 @@ Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::s
     // one sentence is enough
     const size_t stop = n.summary.find(". ");
     if (stop != std::string::npos) n.summary.resize(stop + 1);
+    // "History Notes" → "History": a general word on the end is taken off
+    for (bool again = true; again;) {
+        again = false;
+        const size_t sp = n.name.rfind(' ');
+        if (sp == std::string::npos) break;
+        std::string last = n.name.substr(sp + 1);
+        std::transform(last.begin(), last.end(), last.begin(), [](unsigned char c) { return char(std::tolower(c)); });
+        for (const char *v : {"documents", "document", "notes", "files", "folder", "materials", "studies", "work", "topics", "subject"})
+            if (last == v) { n.name.resize(sp); again = true; break; }
+    }
     // A name that says nothing ("Documents", "Study Notes") is dropped; Pods then names the topic from its key words.
     std::string low = n.name;
     std::transform(low.begin(), low.end(), low.begin(), [](unsigned char c) { return char(std::tolower(c)); });
@@ -419,6 +434,18 @@ Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::s
         n.summary.clear();
     }
     if (n.summary.find("...") != std::string::npos) n.summary.clear();
+    return n;
+}
+
+// One more try with a plainer question when the first answer was no use
+Named name(Writer &w, const std::vector<DocText> &docs, const std::vector<std::string> &others, int level, const std::string &parent)
+{
+    Named n = nameOnce(w, docs, others, level, parent, false);
+    if (n.name.empty()) {
+        const std::string summary = n.summary;
+        n = nameOnce(w, docs, others, level, parent, true);
+        if (n.summary.empty()) n.summary = summary;
+    }
     return n;
 }
 

@@ -484,6 +484,16 @@ std::vector<Node> nest(const std::vector<Doc> &docs, const Grouper &group)
         nodes[i].name = t.name;
         nodes[i].keywords = t.keywords;
     }
+    // A subject whose key words don't come to one name ("Cell & Bonding") is named after its two biggest topics.
+    for (size_t i = nodes.size(); i-- > 0;) {
+        if (nodes[i].name.find(" & ") == std::string::npos) continue;
+        std::vector<std::pair<size_t, int>> kids;
+        for (size_t j = 0; j < nodes.size(); ++j)
+            if (nodes[j].parent == int(i)) kids.push_back({subtree(nodes, int(j)).size(), int(j)});
+        if (kids.size() < 2) continue;
+        std::sort(kids.begin(), kids.end(), [](const auto &a, const auto &b) { return a.first > b.first; });
+        nodes[i].name = nodes[size_t(kids[0].second)].name + " & " + nodes[size_t(kids[1].second)].name + (kids.size() > 2 ? " …" : "");
+    }
     if (!loose.empty()) {
         Node o;
         o.name = "Other";
