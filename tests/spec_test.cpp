@@ -3,6 +3,7 @@
 #include "pdftext.h"
 #include "podsort.h"
 #include "specread.h"
+#include <cstdint>
 #include <cstdio>
 #include <cstring>
 #include <fstream>
@@ -51,7 +52,9 @@ int main(int argc, char **argv)
     size_t leaves = podsort::leafPoints(pts).size();
     std::printf("board: %s\nname: %s\npoints: %zu (to match: %zu)\n", info.board.c_str(), info.name.c_str(), pts.size(), leaves);
     for (const auto &p : pts) {
-        std::string t = p.title.size() > 70 ? p.title.substr(0, 70) + "..." : p.title;
+        size_t cut = 70;
+        while (cut < p.title.size() && (uint8_t(p.title[cut]) & 0xC0) == 0x80) --cut;      // not inside a character
+        std::string t = p.title.size() > 70 ? p.title.substr(0, cut) + "..." : p.title;
         std::printf("%*s%s%s%s  [%zu]\n", p.depth * 2, "", p.number.c_str(), p.number.empty() ? "" : " ", t.c_str(), p.body.size());
     }
     return 0;

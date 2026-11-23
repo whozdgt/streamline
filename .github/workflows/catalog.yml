@@ -48,10 +48,10 @@ jobs:
                   return s, True, "ok", "", 0, True
               path = f"pdf/{s['id']}.pdf"
               open(path, "wb").write(data)
-              out = subprocess.run(["./spec_test", path], capture_output=True, text=True, timeout=120).stdout
+              out = subprocess.run(["./spec_test", path], capture_output=True, text=True, errors="replace", timeout=120).stdout
               name = re.search(r"^name: (.*)$", out, re.M)
               pts = re.search(r"^points: (\d+)", out, re.M)
-              text = subprocess.run(["./spec_test", path, "--text"], capture_output=True, text=True, timeout=120).stdout
+              text = subprocess.run(["./spec_test", path, "--text"], capture_output=True, text=True, errors="replace", timeout=120).stdout
               return s, True, f"{len(data) / 1e6:.1f} MB", name.group(1) if name else "", int(pts.group(1)) if pts else 0, s["code"] in text
           with cf.ThreadPoolExecutor(4) as ex:
               results = list(ex.map(check, specs))
