@@ -125,6 +125,17 @@ bool parseKey(const std::string &line, Key &k)
     return false;
 }
 
+// Edexcel History's periods: "c1000–c1500: Crime and punishment in medieval England", "1900–present: …"
+bool parsePeriod(const std::string &line, std::string &id, std::string &title)
+{
+    static const std::regex re("^(c?[0-9]{3,4}\\s*(?:\xE2\x80\x93|-|to)\\s*(?:c?[0-9]{2,4}|present|the present day))\\s*:\\s*(\\S.{2,90})$");
+    std::smatch m;
+    if (!std::regex_match(line, m, re)) return false;
+    id = m[1].str();
+    title = m[2].str();
+    return true;
+}
+
 // "(a) Characteristics of living organisms", "a) …", "a. …"
 bool parseLetter(const std::string &line, char &letter, std::string &title)
 {
@@ -259,12 +270,13 @@ Info identify(const std::string &text)
     Info info;
     const std::string head = text.substr(0, 6000);
     const std::string low = lower(head);
-    if (low.find("cambridge") != std::string::npos && (low.find("igcse") != std::string::npos || low.find("a level") != std::string::npos ||
+    if (low.find("ocr.org.uk") != std::string::npos || low.find("cambridge ocr") != std::string::npos || low.find("oxford cambridge and rsa") != std::string::npos)
+        info.board = "OCR";
+    else if (low.find("cambridge") != std::string::npos && (low.find("igcse") != std::string::npos || low.find("a level") != std::string::npos ||
                                                        low.find("o level") != std::string::npos || low.find("cambridgeinternational") != std::string::npos))
         info.board = "Cambridge";
     else if (low.find("pearson edexcel") != std::string::npos || low.find("edexcel") != std::string::npos) info.board = "Edexcel";
     else if (low.find("aqa") != std::string::npos) info.board = "AQA";
-    else if (low.find("ocr.org.uk") != std::string::npos || low.find("oxford cambridge and rsa") != std::string::npos) info.board = "OCR";
     else if (low.find("wjec") != std::string::npos || low.find("eduqas") != std::string::npos) info.board = "WJEC";
 
     std::smatch m;
@@ -277,7 +289,7 @@ Info identify(const std::string &text)
         static const std::regex re("Cambridge (International AS (?:&|and) A Level|IGCSE|O Level|International A Level|International AS Level)\\S* ([A-Z][A-Za-z ,&()-]{2,40}?) ([0-9]{4})");
         if (std::regex_search(head, m, re)) info.name = "Cambridge " + clean(m[1].str()) + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
     } else if (info.board == "Edexcel") {
-        static const std::regex re("(GCSE|International GCSE|Advanced Subsidiary GCE|Advanced GCE|GCE A level|International Advanced Level)(?: \\(9.{1,3}1\\))?(?: in)? ([A-Z][A-Za-z ,&-]{2,40}?) \\(([0-9A-Z]{4})\\)");
+        static const std::regex re("(GCSE|International GCSE|Advanced Subsidiary GCE|Advanced GCE|GCE A level|International Advanced Level)(?: \\(9.{1,3}1\\))?(?: in)? ([A-Z][A-Za-z ,&()-]{2,50}?) \\(([0-9A-Z]{4,5})\\)");
         if (std::regex_search(head, m, re)) {
             std::string level = m[1].str();
             if (level == "Advanced GCE" || level == "GCE A level") level = "A level";
@@ -286,9 +298,35 @@ Info identify(const std::string &text)
             info.name = "Edexcel " + level + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
         }
     } else if (info.board == "AQA") {
-        static const std::regex re("(GCSE|AS AND A-LEVEL|AS and A-level|A-LEVEL|A-level|AS|Level 3 Extended Project|EXTENDED PROJECT)\\s+([A-Za-z][A-Za-z ,&'-]{2,40}?)\\s*\\(([0-9]{4})(?:, ?([0-9]{4}))?\\)");
-        if (std::regex_search(head, m, re)) {
-            std::string subj = lower(clean(m[2].str()));
+        // The cover: "GCSE / ENGLISH / LITERATURE / (8702)", or "AS AND / A-LEVEL / PSYCHOLOGY / AS (7181) / A-level (7182)"
+        std::vector<std::string> cover;
+        {
+            size_t i = 0;
+            while (i < head.size() && cover.size() < 8) {
+                size_t j = head.find('\n', i);
+                if (j == std::string::npos) j = head.size();
+                const std::string l = trim(head.substr(i, j - i));
+                if (!l.empty()) cover.push_back(l);
+                i = j + 1;
+            }
+        }
+        std::string level, subject, code;
+        static const std::regex codeRe("\\(([0-9]{4})\\)");
+        for (const auto &l : cover) {
+            const std::string u = lower(l);
+            std::smatch cm;
+            if (std::regex_search(l, cm, codeRe)) code = cm[1].str();      // the last one: the A-level's
+            if (u == "gcse" || u == "as and" || u == "a-level" || u == "as" || u == "as and a-level") {
+                level = u.find("a-level") != std::string::npos ? "A-level" : u == "gcse" ? "GCSE" : (level.empty() ? "AS" : level);
+                if (u == "as and") level = "A-level";
+                continue;
+            }
+            const bool caps = std::none_of(l.begin(), l.end(), [](char c) { return std::islower(uint8_t(c)); }) &&
+                              std::any_of(l.begin(), l.end(), [](char c) { return std::isalpha(uint8_t(c)); });
+            if (caps && l.find('(') == std::string::npos && !level.empty() && code.empty()) subject += (subject.empty() ? "" : " ") + l;
+        }
+        if (!subject.empty() && !code.empty()) {
+            std::string subj = lower(subject);
             bool cap = true;
             for (char &c : subj) { if (cap && std::isalpha(uint8_t(c))) { c = char(std::toupper(uint8_t(c))); cap = false; } if (c == ' ') cap = true; }
             for (const char *w : {" And ", " Of ", " The "}) {
@@ -297,9 +335,7 @@ Info identify(const std::string &text)
                 size_t p;
                 while ((p = subj.find(w)) != std::string::npos) subj.replace(p, std::strlen(w), lw);
             }
-            std::string level = m[1].str();
-            if (lower(level).find("a-level") != std::string::npos) level = "A-level";
-            info.name = "AQA " + level + " " + subj + " (" + (m[4].matched ? m[4].str() : m[3].str()) + ")";
+            info.name = "AQA " + (level.empty() ? std::string("GCSE") : level) + " " + subj + " (" + code + ")";
         }
     }
     return info;
@@ -323,6 +359,26 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             kept.push_back(l);
         }
         all.swap(kept);
+    }
+
+    // A statement's number in a column of its own comes out on a line by itself: put it back with its text
+    {
+        std::vector<std::string> joined;
+        for (size_t i = 0; i < all.size(); ++i) {
+            const std::string &l = all[i];
+            bool bare = !l.empty() && l.size() <= 8;
+            size_t dots = 0;
+            for (size_t k = 0; bare && k < l.size(); ++k) {
+                const char c = l[k];
+                if (c == '.') ++dots;
+                else if (!std::isdigit(uint8_t(c)) && !(k < 2 && std::isupper(uint8_t(c)))) bare = false;
+            }
+            if (bare && dots >= 1 && i + 1 < all.size() && std::isalpha(uint8_t(all[i + 1][0]))) {
+                joined.push_back(l + " " + all[i + 1]);
+                ++i;
+            } else joined.push_back(l);
+        }
+        all.swap(joined);
     }
 
     // 2. The subject content: from "3 Subject content" (not its entry on the contents page) to the next part of the
@@ -379,8 +435,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     int topSection = 0;
     char lastLetter = 0;
     bool rawEndsComma = false;
+    bool justMerged = false, justKeyword = false;
     int justOpened = -1;        // the point whose heading was the line before: its title may carry on
 
+    bool merged = false;
     auto open = [&](int rank, const std::string &number, const std::string &title, bool isDotted) -> int {
         while (!stack.empty() && stack.back().rank >= rank) stack.pop_back();
         const int parent = stack.empty() ? -1 : stack.back().point;
@@ -389,8 +447,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         int idx;
         if (it != byKey.end()) {
             idx = it->second;
-            if (pts[size_t(idx)].title.empty()) pts[size_t(idx)].title = title;
+            std::string &old = pts[size_t(idx)].title;
+            // the first sighting was a contents line: "1 The nature and variety of living organisms 13"
+            if (old.empty() || (old.size() > title.size() && old.compare(0, title.size(), title) == 0 &&
+                                std::all_of(old.begin() + long(title.size()), old.end(), [](char c) { return c == ' ' || std::isdigit(uint8_t(c)); })))
+                old = title;
+            merged = true;
         } else {
+            merged = false;
             podsort::SpecPoint p;
             p.number = number;
             p.title = title;
@@ -412,6 +476,20 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     };
     auto dottedOpen = [&]() {
         for (const auto &o : stack) if (dotted[size_t(o.point)]) return true;
+        return false;
+    };
+    // is a numbered point with this first number ("2", "2.3") open already?
+    auto dottedOpenWith = [&](int major) {
+        for (const auto &o : stack) {
+            const std::string &num = pts[size_t(o.point)].number;
+            if (!num.empty() && std::isdigit(uint8_t(num[0])) && std::atoi(num.c_str()) == major) return true;
+        }
+        return false;
+    };
+    auto topicFor = [&](int major) {
+        const int parent = stack.empty() ? -1 : stack.back().point;
+        (void)parent;
+        for (const auto &o : stack) if (pts[size_t(o.point)].number == std::to_string(major)) return true;
         return false;
     };
     auto letterOpen = [&]() {
@@ -437,8 +515,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         if (toc && ((parseNum(l, n) && !statementLike(n.title)) || parseKey(l, k))) continue;
         std::string code, title;
         int made = -1;
+        bool keywordLine = false;
+        std::string periodId;
 
-        if (parseKey(l, k)) {
+        if (parsePeriod(l, periodId, title)) {
+            made = open(numbered ? 72 : 22, periodId, cleanTitle(title), false);
+            keywordLine = true;
+        } else if (parseKey(l, k)) {
+            keywordLine = true;
             int rank = k.rank;
             if (numbered) rank += 50;
             if (useCode2 && k.keyword == "Part") rank = 75;
@@ -467,6 +551,22 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     lastTop = v;
                 } else body(l);
             } else if (n.parts.size() >= 2) {
+                if (n.parts.size() == 2 && n.parts[1] == 1 && n.prefix.empty() && i > 0 && !dottedOpenWith(n.parts[0])) {
+                    const std::string &prev = lines[i - 1];
+                    Num pn;
+                    Key pk;
+                    const bool titleLike = prev.size() >= 3 && prev.size() <= 40 && std::isupper(uint8_t(prev[0])) && prev.back() != '.' &&
+                                           !parseNum(prev, pn) && !parseKey(prev, pk) &&
+                                           std::none_of(prev.begin(), prev.end(), [](char c) { return std::isdigit(uint8_t(c)); });
+                    if (titleLike && !topicFor(n.parts[0])) {
+                        if (!stack.empty()) {      // it went into the text of the point before: take it back
+                            std::string &b = pts[size_t(stack.back().point)].body;
+                            if (b.size() >= prev.size() + 1 && b.compare(b.size() - prev.size() - 1, prev.size(), prev) == 0) b.resize(b.size() - prev.size() - 1);
+                        }
+                        open(30, std::to_string(n.parts[0]), cleanTitle(prev), false);
+                        lastTop = n.parts[0];
+                    }
+                }
                 // a subtopic ("4.1.1 Cell structure"), or a statement ("2.4 know the similarities…")
                 std::string parentNum = number.substr(0, number.rfind('.'));
                 std::string prevNum = parentNum + "." + std::to_string(n.parts.back() - 1);
@@ -489,14 +589,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         } else {
             // a heading's title that wrapped onto this line: "1.1 The microscope in cell" + "studies",
             // "2 The last years of Edward the" + "Confessor", "2 Knowledge," + "selection and use of sources"
-            if (justOpened >= 0 && !stack.empty() && stack.back().point == justOpened && l.size() < 40) {
+            if (justOpened >= 0 && !stack.empty() && stack.back().point == justOpened && l.size() < 40 && !justMerged) {
                 std::string &bt = pts[size_t(justOpened)].title;
                 const unsigned char c0 = uint8_t(l[0]);
                 const std::string lastWord = bt.substr(bt.find_last_of(' ') == std::string::npos ? 0 : bt.find_last_of(' ') + 1);
                 static const std::set<std::string> joiners = {"the", "of", "and", "to", "in", "for", "with", "on", "a", "an", "at",
                                                               "by", "from", "into", "its", "their", "his", "her", "&", "–", "-"};
                 const bool open = bt.find("\xE2\x80\xA6") == std::string::npos && !bt.empty() && bt.back() != '.' && bt.back() != ':';
-                const bool carries = (c0 < 0x80 && std::islower(c0)) || joiners.count(lower(lastWord)) || rawEndsComma;
+                const bool carries = (c0 < 0x80 && std::islower(c0) && !justKeyword) || joiners.count(lower(lastWord)) || rawEndsComma;
                 if (open && carries && bt.size() < 90 && l[0] != '\xE2' && l[0] != '-' && l[0] != '(') {
                     bt += " " + cleanTitle(l);
                     if (!pts[size_t(justOpened)].body.empty()) body(l);
@@ -508,6 +608,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         }
         if (made >= 0) {
             justOpened = made;
+            justMerged = merged;
+            justKeyword = keywordLine;
             rawEndsComma = !l.empty() && l.back() == ',';
         } else justOpened = -1;
     }

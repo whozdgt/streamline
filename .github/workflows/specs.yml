@@ -49,10 +49,16 @@ jobs:
             ms=$(( ($(date +%s%N) - start) / 1000000 ))
             pdftotext -raw "specs/$name.pdf" "specs/$name.ref.txt"
             echo "RESULT $name: read in ${ms} ms, $(cat "specs/$name.err"), words match pdftotext: $(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt")"
+            # fonts whose characters couldn't be read (only when many words differ from pdftotext)
+            if [ "$(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt" | cut -c1-3)" != "1.0" ] && \
+               [ "$(python3 -c "print(float('$(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt")') < 0.97)")" = True ]; then
+              PDFTEXT_DEBUG=1 ./pdftext_test "specs/$name.pdf" > /dev/null 2> debug.txt; grep '^font' debug.txt | sort -t= -k7 -n -r | head -15
+              pdffonts "specs/$name.pdf" | head -30
+            fi
             ./spec_test "specs/$name.pdf" --head
             ./spec_test "specs/$name.pdf" | head -260
             # where a heading's layout needs a closer look (a few lines either side, cut short)
-            for probe in "1.1 Understand" "2 The last years" "2.1 understand" "1 Proof" "Topic 1"; do
+            for probe in "1.13" "2.10" "4.2.3.1" "3.2.3.1" "(h) Transport" "Key topic 2: Involvements"; do
               out="$(./spec_test "specs/$name.pdf" --around "$probe")"
               [ -n "$out" ] && echo "around \"$probe\":" && echo "$out"
             done

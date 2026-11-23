@@ -7,6 +7,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstdlib>
+#include <cstdio>
 #include <cstring>
 #include <map>
 #include <memory>
@@ -486,6 +487,8 @@ M matrixOf(const Obj &arr)
 // ============================================================ fonts
 
 struct Font {
+    std::string name, subtype, encoding;      // for the diagnostics (PDFTEXT_DEBUG)
+    mutable long used = 0, unmapped = 0;
     bool composite = false;
     std::vector<std::array<uint32_t, 3>> spaces;           // code byte length, lowest, highest
     std::unordered_map<uint32_t, std::string> uni;         // ToUnicode
@@ -999,6 +1002,9 @@ std::shared_ptr<Font> Reader::loadFont(const Obj &fontRef, const std::string &fa
     if (fd.t != Obj::Dict) return f;
     const Obj *sub = fd.get("Subtype");
     f->composite = sub && sub->isName("Type0");
+    if (const Obj *bf = fd.get("BaseFont")) f->name = bf->s;
+    if (sub) f->subtype = sub->s;
+    if (const Obj *e = fd.get("Encoding")) f->encoding = e->t == Obj::Name ? e->s : e->t == Obj::Ref ? "stream/dict" : "dict";
     const Obj *tu = fd.get("ToUnicode");
     if (tu && tu->t == Obj::Ref) parseToUnicode(*f, streamOf(tu->num));
 
@@ -1147,6 +1153,8 @@ void Reader::content(const std::string &data, const Obj &resources, M ctm, int d
             g.size = std::hypot(trm.c, trm.d);
             if (g.size <= 0) g.size = std::abs(gs.fs);
             g.text = f.text(code);
+            ++f.used;
+            if (g.text.empty()) ++f.unmapped;
             out.push_back(std::move(g));
         }
     };
@@ -1365,6 +1373,13 @@ Document Reader::run()
         doc.pages.push_back(std::move(pg));
         streams.clear();      // a page's drawing isn't needed again; fonts and their maps are kept
     }
+    if (std::getenv("PDFTEXT_DEBUG"))
+        for (const auto &kv : fonts) {
+            const Font &f = *kv.second;
+            if (!f.used) continue;
+            std::fprintf(stderr, "font %s %s %s enc=%s tounicode=%zu spaces=%zu glyphs=%ld unmapped=%ld\n", kv.first.c_str(),
+                         f.name.c_str(), f.subtype.c_str(), f.encoding.c_str(), f.uni.size(), f.spaces.size(), f.used, f.unmapped);
+        }
     return doc;
 }
 
