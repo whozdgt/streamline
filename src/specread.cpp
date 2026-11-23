@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cstdint>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <functional>
@@ -268,6 +269,31 @@ bool contentTitle(const std::string &title)
     return t.size() < 70 && t.find("contents") == std::string::npos;
 }
 
+// A line's shape for debugging, without its words: numbers and codes kept, each other word an x (X if capitalised)
+std::string shape(const std::string &line)
+{
+    std::string out, word;
+    auto flush = [&]() {
+        if (word.empty()) return;
+        const bool digits = std::any_of(word.begin(), word.end(), [](char c) { return std::isdigit(uint8_t(c)); });
+        const bool letters = std::any_of(word.begin(), word.end(), [](char c) { return std::isalpha(uint8_t(c)) || (uint8_t(c) & 0x80); });
+        out += digits || !letters ? word : std::string(std::isupper(uint8_t(word[0])) ? "X" : "x");
+        out += ' ';
+        word.clear();
+    };
+    for (char c : line) { if (c == ' ') flush(); else word.push_back(c); }
+    flush();
+    return out.substr(0, 80);
+}
+
+// A table's column heading rather than a topic: "Topic title", "Sub-topic"
+bool columnHeading(const std::string &title)
+{
+    static const std::set<std::string> words = {"title", "topic", "topic title", "sub-topic", "subtopic", "sub-topic title",
+                                                "content", "topic content", "learning outcomes", "description", "contents"};
+    return words.count(lower(trim(title))) > 0;
+}
+
 } // namespace
 
 Info identify(const std::string &text)
@@ -370,16 +396,19 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     std::vector<std::string> all = splitLines(text);
 
     // 1. Lines repeated on page after page: running headers and footers, column headings
+    //    (Numbered lines count only when repeated exactly: "1.1 Understand and use the" and "2.1 Understand and use
+    //    the" are two statements that begin alike, not a running header.)
     {
-        std::unordered_map<std::string, int> freq;
-        for (const auto &l : all) ++freq[norm(l)];
+        std::unordered_map<std::string, int> freq, exact;
+        for (const auto &l : all) { ++freq[norm(l)]; ++exact[l]; }
         std::vector<std::string> kept;
         for (const auto &l : all) {
-            const int f = freq[norm(l)];
             Num n;
             Key k;
-            const bool heading = (parseNum(l, n) && !statementLike(n.title)) || parseKey(l, k);
-            if (l.size() <= 160 && (f >= 8 || (f >= 4 && !heading))) continue;
+            const bool bareNumber = !l.empty() && l.size() <= 2 && std::all_of(l.begin(), l.end(), [](char c) { return std::isdigit(uint8_t(c)); });
+            const bool numberedLine = parseNum(l, n) || parseKey(l, k) || bareNumber;
+            const int f = numberedLine ? exact[l] : freq[norm(l)];
+            if (l.size() <= 160 && (f >= 8 || (f >= 4 && !numberedLine))) continue;
             kept.push_back(l);
         }
         all.swap(kept);
@@ -447,6 +476,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         }
         if (section < 0) { from = 0; to = all.size(); }
         foundSection = section >= 0;
+        if (std::getenv("SPECREAD_DEBUG"))
+            std::fprintf(stderr, "content: lines %zu to %zu of %zu; from \"%s\" to \"%s\"\n", from, to, all.size(),
+                         from > 0 ? shape(all[from - 1]).c_str() : "", to < all.size() ? shape(all[to]).c_str() : "");
     }
     const std::vector<std::string> lines(all.begin() + long(from), all.begin() + long(to));
     const std::string board = identify(text).board;
@@ -563,6 +595,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         bool keywordLine = false;
         std::string periodId;
 
+        if ((parseNum(l, n) && columnHeading(n.title)) || (parseKey(l, k) && columnHeading(k.title))) continue;
         if (parsePeriod(l, periodId, title)) {
             made = open(numbered ? 72 : 22, periodId, cleanTitle(title), false);
             keywordLine = true;
@@ -578,7 +611,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (!heads) rank += 50;
             }
             if (useCode2 && k.keyword == "Part") rank = 75;
-            made = open(rank, k.keyword + " " + k.id, cleanTitle(k.title), false);
+            // "Topic B1: Cell level systems" is the topic an overview listed as "B1 Cell level systems": the same point
+            const bool code = std::any_of(k.id.begin(), k.id.end(), [](char c) { return std::isalpha(uint8_t(c)); }) &&
+                              std::any_of(k.id.begin(), k.id.end(), [](char c) { return std::isdigit(uint8_t(c)); });
+            made = open(rank, code ? k.id : k.keyword + " " + k.id, cleanTitle(k.title), false);
             if (rank < 30) lastTop = 0;
         } else if (useCode2 && parseCode2(l, code, title)) {
             made = open(50, code, cleanTitle(title), false);
@@ -604,20 +640,40 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     made = open(30, number, t, false);
                     lastTop = v;
                 } else body(l);
+            } else if (n.parts.size() == 1 && !statement && t.size() >= 3) {
+                made = open(30, number, t, false);      // a lettered theme or topic: "OT1 Mathematical argument, language and proof"
             } else if (n.parts.size() >= 2) {
-                if (n.parts.size() == 2 && n.parts[1] == 1 && n.prefix.empty() && i > 0 && !dottedOpenWith(n.parts[0])) {
-                    const std::string &prev = lines[i - 1];
+                if (n.parts.size() == 2 && n.parts[1] == 1 && n.prefix.empty() && i > 0 && !dottedOpenWith(n.parts[0]) && !topicFor(n.parts[0])) {
+                    // The topic is named just before its first statement: on the line before ("Proof", then "1.1"), or
+                    // in a column of its own, its number and then its name on a line or two ("2", "Algebra and",
+                    // "functions", then "2.1").
                     Num pn;
                     Key pk;
-                    const bool titleLike = prev.size() >= 3 && prev.size() <= 40 && std::isupper(uint8_t(prev[0])) && prev.back() != '.' &&
-                                           !parseNum(prev, pn) && !parseKey(prev, pk) &&
-                                           std::none_of(prev.begin(), prev.end(), [](char c) { return std::isdigit(uint8_t(c)); });
-                    if (titleLike && !topicFor(n.parts[0])) {
-                        if (!stack.empty()) {      // it went into the text of the point before: take it back
-                            std::string &b = pts[size_t(stack.back().point)].body;
-                            if (b.size() >= prev.size() + 1 && b.compare(b.size() - prev.size() - 1, prev.size(), prev) == 0) b.resize(b.size() - prev.size() - 1);
+                    auto nameLike = [&](const std::string &x) {
+                        return x.size() >= 2 && x.size() <= 40 && x.back() != '.' && !parseNum(x, pn) && !parseKey(x, pk) &&
+                               std::none_of(x.begin(), x.end(), [](char c) { return std::isdigit(uint8_t(c)); });
+                    };
+                    size_t first = i, take = 0;      // the name's lines: [first, i)
+                    const std::string major = std::to_string(n.parts[0]);
+                    for (size_t back = 2; back <= 4 && back <= i; ++back)
+                        if (lines[i - back] == major) {
+                            bool ok = true;
+                            for (size_t j = i - back + 1; j < i; ++j) ok = ok && nameLike(lines[j]);
+                            if (ok && std::isupper(uint8_t(lines[i - back + 1][0]))) { first = i - back + 1; take = back; }
+                            break;
                         }
-                        open(30, std::to_string(n.parts[0]), cleanTitle(prev), false);
+                    if (!take && nameLike(lines[i - 1]) && lines[i - 1].size() >= 3 && std::isupper(uint8_t(lines[i - 1][0]))) { first = i - 1; take = 1; }
+                    if (take) {
+                        std::string name;
+                        for (size_t j = first; j < i; ++j) name += (name.empty() ? "" : " ") + lines[j];
+                        if (!stack.empty()) {      // those lines went into the text of the point before: take them back
+                            std::string &b = pts[size_t(stack.back().point)].body;
+                            for (size_t j = i; j-- > i - take;) {
+                                const std::string &x = lines[j];
+                                if (b.size() >= x.size() + 1 && b.compare(b.size() - x.size() - 1, x.size(), x) == 0) b.resize(b.size() - x.size() - 1);
+                            }
+                        }
+                        open(30, major, cleanTitle(name), false);
                         lastTop = n.parts[0];
                     }
                 }
@@ -635,8 +691,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             } else body(l);
             if (made >= 0) numbersSeen.insert(plain);
         } else if (parseLetter(l, letter, title)) {
-            const bool chain = letter == 'a' || lastLetter == letter - 1;
-            if (!statementLike(title) && !stack.empty() && !dottedOpen() && chain) {
+            // in sequence ("(a)", then "(b)"), or one listed already: a section's overview lists its parts, then each
+            // part follows ("(h) Transport (i) Excretion …", then "(h) Transport" and its statements)
+            const bool chain = letter == 'a' || lastLetter == letter - 1 ||
+                               (justOpened >= 0 && rankOf[size_t(justOpened)] == 30);      // the first part of a topic: lettering can carry on from the last topic
+            bool listed = false;
+            for (auto it = stack.rbegin(); it != stack.rend(); ++it)
+                if (it->rank < 31) { listed = byKey.count({it->point, std::string("(") + letter + ")"}) > 0; break; }
+            if (!statementLike(title) && !stack.empty() && !dottedOpen() && (chain || listed)) {
                 made = open(31, std::string("(") + letter + ")", cleanTitle(title), false);
                 lastLetter = letter;
             } else body(l);
@@ -717,12 +779,17 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         };
         std::vector<std::vector<int>> kids(pts.size() + 1);
         for (size_t i = 0; i < pts.size(); ++i) kids[size_t(pts[i].parent + 1)].push_back(int(i));
+        // each run of numbered points is put in number order; a point without a number ("Paper 1", "Topic 2") stays
+        // where the document has it, between the runs
         for (auto &list : kids)
-            std::stable_sort(list.begin(), list.end(), [&](int a, int b) {
-                const auto ka = numKey(pts[size_t(a)].number), kb = numKey(pts[size_t(b)].number);
-                if (ka.empty() || kb.empty()) return false;
-                return ka < kb;
-            });
+            for (size_t a = 0; a < list.size();) {
+                size_t b = a;
+                while (b < list.size() && !numKey(pts[size_t(list[b])].number).empty()) ++b;
+                std::stable_sort(list.begin() + long(a), list.begin() + long(b), [&](int x, int y) {
+                    return numKey(pts[size_t(x)].number) < numKey(pts[size_t(y)].number);
+                });
+                a = b + 1;
+            }
         std::vector<int> order, remap(pts.size(), -1);
         std::function<void(int)> walk = [&](int parent) {
             for (int c : kids[size_t(parent + 1)]) { remap[size_t(c)] = int(order.size()); order.push_back(c); walk(c); }

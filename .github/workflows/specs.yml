@@ -73,7 +73,7 @@ jobs:
           PY
             fi
             ./spec_test "specs/$name.pdf" --head
-            ./spec_test "specs/$name.pdf" | head -260
+            SPECREAD_DEBUG=1 ./spec_test "specs/$name.pdf" 2>&1 | head -260
             # where a board's layout needs a closer look: positions, sizes and numbering only (pdftext_test --shape)
             case "$name" in
               ocr-*) ./pdftext_test "specs/$name.pdf" --shape "B1.1a" 1 45 30 ;;

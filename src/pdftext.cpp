@@ -1427,12 +1427,18 @@ std::string text(const Document &doc, bool dropRunning)
         }
         const size_t need = std::max<size_t>(3, size_t(std::ceil(0.3 * double(n))));
         for (const auto &kv : pagesWith) if (kv.second >= need) running.insert(kv.first);
-        running.insert("#");      // page numbers on their own
     }
     std::string out;
     for (const Page &p : doc.pages) {
+        // a number on its own at the top or bottom of the page is its page number (one in the middle of the page is
+        // a table's, such as a topic's number in a column of its own)
+        double lo = 1e9, hi = -1e9;
+        for (const Line &l : p.lines) { lo = std::min(lo, l.y); hi = std::max(hi, l.y); }
+        const double band = std::max(12.0, 0.07 * (hi - lo));
         for (const Line &l : p.lines) {
-            if (!running.empty() && running.count(normalise(l.text))) continue;
+            const std::string key = normalise(l.text);
+            if (!running.empty() && running.count(key)) continue;
+            if (dropRunning && key == "#" && (l.y <= lo + band || l.y >= hi - band)) continue;
             out += l.text;
             out += '\n';
         }
