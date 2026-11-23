@@ -1,0 +1,46 @@
+name: models
+# Copies the free, open AI models Pods use from Hugging Face to the "ai-models" release, so the app downloads them
+# from one place with a known checksum. Runs when this file changes, or by hand (Actions › models › Run workflow).
+#   meaning model: BGE small (BAAI, MIT licence) — turns text into numbers that are close when the meaning is close
+#   writer model:  Qwen2.5 Instruct (Alibaba, Apache 2.0) — writes the topic names and summaries
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/models.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download
+        run: |
+          set -u
+          get() {      # get <file> <url>…: the first address that works
+            local out="$1"; shift
+            for u in "$@"; do
+              echo "trying $u"
+              if curl -fL --retry 4 --retry-delay 5 -o "$out" "$u"; then ls -l "$out"; return 0; fi
+            done
+            echo "::error::couldn't download $out"; return 1
+          }
+          get meaning-bge-small-en-v1.5-q8_0.gguf \
+            https://huggingface.co/CompendiumLabs/bge-small-en-v1.5-gguf/resolve/main/bge-small-en-v1.5-q8_0.gguf \
+            https://huggingface.co/ggml-org/bge-small-en-v1.5-Q8_0-GGUF/resolve/main/bge-small-en-v1.5-q8_0.gguf
+          get writer-qwen2.5-0.5b-instruct-q4_k_m.gguf \
+            https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf
+          get writer-qwen2.5-1.5b-instruct-q4_k_m.gguf \
+            https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf
+          for f in *.gguf; do head -c 4 "$f" | grep -q GGUF || { echo "::error::$f is not a GGUF file"; exit 1; }; done
+          sha256sum *.gguf | tee SHA256SUMS
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view ai-models -R "$GITHUB_REPOSITORY" > /dev/null 2>&1 || \
+            gh release create ai-models -R "$GITHUB_REPOSITORY" --prerelease --title "AI models for Pods" \
+              --notes "Free, open models that Streamline downloads for sorting documents on your device. BGE small (BAAI, MIT licence) and Qwen2.5 Instruct (Alibaba, Apache 2.0 licence). Not a release of the app."
+          gh release upload ai-models -R "$GITHUB_REPOSITORY" --clobber *.gguf SHA256SUMS
