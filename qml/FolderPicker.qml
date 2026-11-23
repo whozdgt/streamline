@@ -6,12 +6,13 @@ Item {
     id: root
     property string startPath: ""          // opens here when it exists
     property string path: ""               // "" = the list of storage places
+    property bool docs: false              // choosing a folder of documents for a pod, not music
     signal chosen(string dir)
     signal cancelled()
     readonly property color pri: settings.ink
     readonly property color muted: Qt.rgba(pri.r, pri.g, pri.b, 0.72)
     readonly property var entries: path === "" ? folders.roots() : folders.list(path)
-    readonly property int songs: path === "" ? 0 : folders.audioCount(path)
+    readonly property int songs: path === "" ? 0 : (docs ? pods.docCount(path) : folders.audioCount(path))
 
     onVisibleChanged: if (visible) path = folders.isDir(startPath) ? startPath : ""
 
@@ -29,7 +30,7 @@ Item {
             anchors { fill: parent; margins: 16 }
             spacing: 10
 
-            Text { text: "Choose your music folder"; font.pixelSize: 18; font.weight: Font.DemiBold; color: root.pri }
+            Text { text: root.docs ? "Choose a folder of documents" : "Choose your music folder"; font.pixelSize: 18; font.weight: Font.DemiBold; color: root.pri }
 
             RowLayout {      // where you are, and a way back up
                 Layout.fillWidth: true
@@ -46,7 +47,7 @@ Item {
                     elide: Text.ElideMiddle
                     font.pixelSize: 12
                     color: root.muted
-                    text: root.path === "" ? "Pick where your music is kept" : root.path
+                    text: root.path === "" ? (root.docs ? "Pick the folder to sort" : "Pick where your music is kept") : root.path
                 }
             }
 
@@ -89,8 +90,9 @@ Item {
                 wrapMode: Text.Wrap
                 font.pixelSize: 12
                 color: root.songs > 0 ? settings.accent : root.muted
-                text: root.songs > 0 ? root.songs + " songs directly in this folder. Folders inside it are included too."
-                                     : "No songs directly in this folder. Folders inside it are included too."
+                readonly property string what: root.docs ? "documents" : "songs"
+                text: root.songs > 0 ? root.songs + " " + what + " directly in this folder. Folders inside it are included too."
+                                     : "No " + what + " directly in this folder. Folders inside it are included too."
             }
 
             RowLayout {

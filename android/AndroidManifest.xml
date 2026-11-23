@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.github.whozdgt.streamline"
     android:installLocation="auto"
     android:versionCode="-- %%INSERT_VERSION_CODE%% --"
@@ -12,6 +13,10 @@
     <!-- Android 13 and newer ask for "audio files", older versions for "storage". -->
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <!-- Pods read and tidy documents anywhere in shared storage: "All files access" on Android 11+, storage before that.
+         Asked for only when you make a pod. -->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- lets the app open Android's installer for its own updates (the user still has to allow it once) -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />

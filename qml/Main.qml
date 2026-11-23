@@ -49,7 +49,7 @@ Window {
     property string promptPath: ""
     property string currentPlaylist: ""
     onSearchOpenChanged: { if (searchOpen) searchBar.open(); else library.search = "" }
-    property string view: "home"           // home | library | songs | albums | artists | playlists | profile | friends | user | friendpl | flashcards | todos
+    property string view: "home"           // home | library | songs | albums | artists | playlists | profile | friends | user | friendpl | flashcards | pods | todos
     property string backView: ""
     property string userBack: "home"        // where "back" goes from someone's profile
     property string profileMode: "edit"     // edit | preview (your own profile page)
@@ -74,6 +74,7 @@ Window {
     // The phone's Back button / swipe: close the top-most thing, or go up one level. False = nothing left to close.
     function handleBack() {
         if (folderPicker.visible) { folderPicker.visible = false; return true }
+        if (docPicker.visible) { docPicker.visible = false; return true }
         if (addServerOpen) { addServerOpen = false; return true }
         if (authOpen) { authOpen = false; return true }
         if (imagePopup.visible) { imagePopup.visible = false; return true }
@@ -88,6 +89,7 @@ Window {
         if (library.filterKind !== "") { navigate(backView || "home"); return true }
         if (phone && (view === "songs" || view === "albums" || view === "artists" || view === "playlists")) { navigate("library"); return true }
         if (view === "flashcards" && flashcardsPage.goBack()) return true
+        if (view === "pods" && podsPage.goBack()) return true
         if (view === "todos" && todosPage.goBack()) return true
         if (view !== "home") { navigate("home"); return true }
         return false
@@ -105,6 +107,8 @@ Window {
     function navigate(v) { library.clearFilter(); searchOpen = false; drawerOpen = false; backView = ""; view = v; barsTucked = false }
     // Phones: scrolling down a page tucks the tabs away, scrolling back up (or reaching the top) brings them back.
     property bool barsTucked: false
+    property string studyView: "flashcards"
+    onViewChanged: if (view === "flashcards" || view === "pods") studyView = view
     property real lastScrollY: 0
     function noteScroll(y) {
         if (!phone) return
@@ -116,10 +120,10 @@ Window {
     }
     // Phones: which tab is lit, and what tapping one does
     readonly property string currentTab: searchOpen ? "search"
-        : (view === "home" ? "home" : view === "flashcards" ? "study" : view === "todos" ? "todos" : (view === "friends" || view === "user" || view === "friendpl") ? "friends" : "library")
+        : (view === "home" ? "home" : (view === "flashcards" || view === "pods") ? "study" : view === "todos" ? "todos" : (view === "friends" || view === "user" || view === "friendpl") ? "friends" : "library")
     function openTab(k) {
         if (k === "search") { navigate("songs"); searchOpen = true; return }
-        if (k === "study") { navigate("flashcards"); return }
+        if (k === "study") { navigate(studyView); return }      // the Study tab remembers Flashcards or Pods
         if (k === "todos") { navigate("todos"); return }
         navigate(k)
     }
@@ -169,6 +173,11 @@ Window {
         if (settings.startPanel === "addServer") addServerOpen = true
         if (settings.startPanel === "auth") authOpen = true
         if (settings.startAlbum || settings.startPlay || settings.startTucked) startTimer.start()
+        if (settings.startPod) {      // --set startPod=<folder>: make (or open) a pod for that folder and show it
+            navigate("pods")
+            const id = pods.create(settings.startPod)
+            if (id !== "") podsPage.openPod(id)
+        }
     }
     Timer {      // --set startAlbum=<name> / startPlay=true: wait for the scan, then open that album or play the first song
         id: startTimer
@@ -272,7 +281,7 @@ Window {
                 onSourceSelected: (id) => {
                     win.drawerOpen = false
                     library.source = id
-                    if (win.view === "profile" || win.view === "playlists" || win.view === "friends" || win.view === "user" || win.view === "friendpl" || win.view === "flashcards" || win.view === "todos") win.navigate("songs")
+                    if (win.view === "profile" || win.view === "playlists" || win.view === "friends" || win.view === "user" || win.view === "friendpl" || win.view === "flashcards" || win.view === "pods" || win.view === "todos") win.navigate("songs")
                 }
                 onAddServerRequested: { win.drawerOpen = false; win.addServerOpen = true }
                 onUpdateClicked: { win.drawerOpen = false; settingsPanel.show("about"); win.settingsOpen = true }
@@ -296,6 +305,7 @@ Window {
                             : library.filterKind !== "" ? "‹ " + library.filterName
                             : win.view === "library" ? "Library"
                             : win.view === "flashcards" ? "Flashcards"
+                            : win.view === "pods" ? "Pods"
                             : win.view === "todos" ? "To-dos"
                             : (win.view === "albums" ? "Albums" : win.view === "artists" ? "Artists" : win.view === "playlists" ? "Playlists" : win.view === "profile" ? "Profile" : "Songs")
                         font.pixelSize: win.phone ? (topLevel ? 32 : 24) : (settings.round ? 34 : 28)
@@ -372,6 +382,25 @@ Window {
                             color: win.pri
                         }
                         MouseArea { anchors.fill: parent; onClicked: settings.phoneGrid = !settings.phoneGrid }
+                    }
+                    Row {   // phone: the Study tab holds Flashcards and Pods
+                        visible: win.phone && (win.view === "flashcards" || win.view === "pods")
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 8
+                        Repeater {
+                            model: [{ k: "flashcards", t: "Flashcards" }, { k: "pods", t: "Pods" }]
+                            Rectangle {
+                                required property var modelData
+                                readonly property bool sel: win.view === modelData.k
+                                width: stTxt.implicitWidth + 28; height: 34
+                                radius: settings.round ? height / 2 : 0
+                                color: sel ? win.pri : settings.boxFill
+                                border.width: settings.round ? 0 : 1
+                                border.color: sel ? win.pri : settings.boxLine
+                                Text { id: stTxt; anchors.centerIn: parent; text: parent.modelData.t; font.pixelSize: 13; color: parent.sel ? settings.onInk : win.pri }
+                                MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: win.navigate(parent.modelData.k) }
+                            }
+                        }
                     }
                     Row {   // Edit | Preview, on your own profile page
                         visible: win.view === "profile" && account.signedIn
@@ -513,6 +542,15 @@ Window {
                     bottomMargin: win.dockSpace
                     onContentYChanged: win.noteScroll(contentY)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
+                }
+                PodsPage {
+                    id: podsPage
+                    visible: win.view === "pods"
+                    gutter: win.gutter
+                    bottomMargin: win.dockSpace
+                    onContentYChanged: win.noteScroll(contentY)
+                    anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
+                    onChooseFolder: docPicker.visible = true
                 }
                 TodosPage {
                     id: todosPage
@@ -829,6 +867,15 @@ Window {
             onChooseFolderRequested: folderPicker.visible = true
         }
 
+        FolderPicker {      // Pods: a folder of documents
+            id: docPicker
+            z: 62
+            anchors.fill: parent
+            visible: false
+            docs: true
+            onChosen: (dir) => { visible = false; const id = pods.create(dir); if (id !== "") podsPage.openPod(id) }
+            onCancelled: visible = false
+        }
         FolderPicker {
             id: folderPicker
             z: 62
@@ -926,10 +973,10 @@ Window {
         }
     }
 
-    Shortcut { sequence: "Space"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || (win.view !== "flashcards" && win.view !== "todos")); onActivated: player.toggle() }
+    Shortcut { sequence: "Space"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || (win.view !== "flashcards" && win.view !== "pods" && win.view !== "todos")); onActivated: player.toggle() }
     Shortcut { sequence: "Left"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || win.view === "songs"); onActivated: player.seek(player.position - 5) }
     Shortcut { sequence: "Right"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || win.view === "songs"); onActivated: player.seek(player.position + 5) }
-    Shortcut { sequence: "N"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || (win.view !== "flashcards" && win.view !== "todos")); onActivated: player.next() }
-    Shortcut { sequence: "P"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || (win.view !== "flashcards" && win.view !== "todos")); onActivated: player.prev() }
-    Shortcut { sequence: "Escape"; onActivated: { if (folderPicker.visible) folderPicker.visible = false; else if (win.addServerOpen) win.addServerOpen = false; else if (win.authOpen) win.authOpen = false; else if (imagePopup.visible) imagePopup.visible = false; else if (prompt.visible) prompt.visible = false; else if (win.menuPath !== "") win.menuPath = ""; else if (win.sourceOpen) win.sourceOpen = false; else if (win.searchOpen) win.searchOpen = false; else if (win.settingsOpen) { if (!settingsPanel.goBack()) win.settingsOpen = false } else if (!win.expanded && (win.view === "user" || win.view === "friendpl")) win.back(); else if (!win.expanded && win.view === "flashcards") flashcardsPage.goBack(); else if (!win.expanded && win.view === "todos") todosPage.goBack(); else win.expanded = false } }
+    Shortcut { sequence: "N"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || (win.view !== "flashcards" && win.view !== "pods" && win.view !== "todos")); onActivated: player.next() }
+    Shortcut { sequence: "P"; enabled: !win.settingsOpen && !win.searchOpen && !prompt.visible && !imagePopup.visible && !win.authOpen && !win.addServerOpen && (win.expanded || (win.view !== "flashcards" && win.view !== "pods" && win.view !== "todos")); onActivated: player.prev() }
+    Shortcut { sequence: "Escape"; onActivated: { if (folderPicker.visible) folderPicker.visible = false; else if (docPicker.visible) docPicker.visible = false; else if (win.addServerOpen) win.addServerOpen = false; else if (win.authOpen) win.authOpen = false; else if (imagePopup.visible) imagePopup.visible = false; else if (prompt.visible) prompt.visible = false; else if (win.menuPath !== "") win.menuPath = ""; else if (win.sourceOpen) win.sourceOpen = false; else if (win.searchOpen) win.searchOpen = false; else if (win.settingsOpen) { if (!settingsPanel.goBack()) win.settingsOpen = false } else if (!win.expanded && (win.view === "user" || win.view === "friendpl")) win.back(); else if (!win.expanded && win.view === "flashcards") flashcardsPage.goBack(); else if (!win.expanded && win.view === "pods") podsPage.goBack(); else if (!win.expanded && win.view === "todos") todosPage.goBack(); else win.expanded = false } }
 }

@@ -9,6 +9,10 @@
 namespace android {
 bool audioAllowed();            // may the app read music files in shared storage?
 void askForAudio();
+// Pods read documents anywhere in shared storage: Android 11+ calls that "All files access", a switch in Settings.
+bool filesAllowed();
+void askFiles();                // opens that Settings page (or asks for storage on Android 10 and older)
+bool openFile(const QString &path, const QString &mime);   // opens a document in another app (Word, Docs…)
 #ifndef PARAPLAY_STORE          // the Play Store build can't install apps, not even its own updates
 bool canInstallApks();          // has the user allowed this app to install apps (needed to update itself)?
 void askInstallApks();          // opens the system page where they allow it

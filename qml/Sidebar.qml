@@ -93,6 +93,7 @@ Rectangle {
                     Text { id: todoText; anchors.centerIn: parent; text: parent.todo; font.pixelSize: 11; color: settings.onInk }
                 }
             }
+            NavItem { width: parent.width; text: "Pods"; active: root.view === "pods"; onClicked: root.select("pods") }
             NavItem {
                 width: parent.width; text: "To-dos"
                 active: root.view === "todos"

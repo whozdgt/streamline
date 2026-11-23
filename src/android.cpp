@@ -55,6 +55,67 @@ void clearException()
 }
 } // namespace
 
+bool filesAllowed()
+{
+    if (sdkInt() >= 30) return QJniObject::callStaticMethod<jboolean>("android/os/Environment", "isExternalStorageManager", "()Z");
+    const QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    if (!activity.isValid()) return false;
+    const QJniObject name = QJniObject::fromString(QStringLiteral("android.permission.READ_EXTERNAL_STORAGE"));
+    return activity.callMethod<jint>("checkSelfPermission", "(Ljava/lang/String;)I", name.object<jstring>()) == 0;
+}
+
+void askFiles()
+{
+    const QJniObject ctx = QNativeInterface::QAndroidApplication::context();
+    if (!ctx.isValid()) return;
+    if (sdkInt() < 30) {
+        QJniEnvironment env;
+        const jclass stringClass = env->FindClass("java/lang/String");
+        jobjectArray list = env->NewObjectArray(2, stringClass, nullptr);
+        const QJniObject r = QJniObject::fromString(QStringLiteral("android.permission.READ_EXTERNAL_STORAGE"));
+        const QJniObject w = QJniObject::fromString(QStringLiteral("android.permission.WRITE_EXTERNAL_STORAGE"));
+        env->SetObjectArrayElement(list, 0, r.object<jstring>());
+        env->SetObjectArrayElement(list, 1, w.object<jstring>());
+        ctx.callMethod<void>("requestPermissions", "([Ljava/lang/String;I)V", list, jint(8));
+        env->DeleteLocalRef(list);
+        env->DeleteLocalRef(stringClass);
+        return;
+    }
+    const QJniObject action = QJniObject::fromString(QStringLiteral("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION"));
+    QJniObject intent("android/content/Intent", "(Ljava/lang/String;)V", action.object<jstring>());
+    const QJniObject uriText = QJniObject::fromString(QStringLiteral("package:") + packageName(ctx));
+    const QJniObject uri = QJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;",
+                                                              uriText.object<jstring>());
+    intent.callObjectMethod("setData", "(Landroid/net/Uri;)Landroid/content/Intent;", uri.object());
+    intent.callObjectMethod("addFlags", "(I)Landroid/content/Intent;", jint(0x10000000));       // FLAG_ACTIVITY_NEW_TASK
+    ctx.callMethod<void>("startActivity", "(Landroid/content/Intent;)V", intent.object());
+    clearException();
+}
+
+bool openFile(const QString &path, const QString &mime)
+{
+    const QJniObject ctx = QNativeInterface::QAndroidApplication::context();
+    if (!ctx.isValid()) return false;
+    const QJniObject file("java/io/File", "(Ljava/lang/String;)V", QJniObject::fromString(path).object<jstring>());
+    const QJniObject authority = QJniObject::fromString(packageName(ctx) + QStringLiteral(".qtprovider"));
+    const QJniObject uri = QJniObject::callStaticObjectMethod(
+        "androidx/core/content/FileProvider", "getUriForFile",
+        "(Landroid/content/Context;Ljava/lang/String;Ljava/io/File;)Landroid/net/Uri;",
+        ctx.object(), authority.object<jstring>(), file.object());
+    clearException();
+    if (!uri.isValid()) return false;
+    const QJniObject action = QJniObject::fromString(QStringLiteral("android.intent.action.VIEW"));
+    QJniObject intent("android/content/Intent", "(Ljava/lang/String;)V", action.object<jstring>());
+    const QJniObject type = QJniObject::fromString(mime);
+    intent.callObjectMethod("setDataAndType", "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
+                            uri.object(), type.object<jstring>());
+    intent.callObjectMethod("addFlags", "(I)Landroid/content/Intent;", jint(0x1 | 0x10000000));   // read permission, new task
+    ctx.callMethod<void>("startActivity", "(Landroid/content/Intent;)V", intent.object());
+    QJniEnvironment env;
+    if (env->ExceptionCheck()) { env->ExceptionClear(); return false; }      // no app on the phone opens this kind of file
+    return true;
+}
+
 #ifndef PARAPLAY_STORE
 bool canInstallApks()
 {

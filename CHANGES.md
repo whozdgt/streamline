@@ -1,3 +1,12 @@
+# Streamline 0.4: Pods
+- **Pods** (Study › Pods on a phone, Pods in the sidebar on a computer): pick a folder of documents and Streamline sorts them into topics, named after what the documents in each share. Reads Word (.docx), OpenDocument (.odt), text and Markdown files, including the folders inside; older Word (.doc), RTF and PDF files are sorted by their name.
+- Choose broad, balanced or specific topics. Rename topics, move a document to another topic, search a pod, and preview a document's text or open it in Word.
+- Sorting happens on your device. **Sort with Claude** is optional: with your own Anthropic API key it gives better topic names and a summary of each topic.
+- Topics live in Streamline until you choose **Move the files into topic folders**, which makes a folder per topic and moves the files into them. It can be undone.
+- "Check for new files" adds new documents to the topic they fit best and keeps the topic names you changed.
+- On Android, Pods ask once for "All files access", which reading documents needs.
+- On a phone, the player in the bottom bar shows previous, play and next instead of the song's name. The album-colour glow reaches the top and bottom of the screen, and Settings covers it.
+
 # Streamline 0.3.1: Linux package, and a tidier phone layout
 - **Linux:** a ready-made package for CachyOS, Arch, EndeavourOS and Manjaro (any desktop, including Hyprland): `streamline-x86_64.pkg.tar.zst` on the `linux-latest` release, installed with `sudo pacman -U`. pacman brings everything it needs. Settings › About › Update now installs newer packages through pacman.
 - On Linux, Streamline now has its own names: the program `streamline`, its own menu entry and icon, the window class `streamline` (for Hyprland rules), and its own media-key name. It no longer installs over Paraplay.

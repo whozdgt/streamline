@@ -31,6 +31,9 @@ jobs:
       - name: Build
         run: cmake --build build -j"$(nproc)"
 
+      - name: Pods sorting test
+        run: g++ -std=c++17 -O2 -Wall -Isrc src/podsort.cpp tests/podsort_test.cpp -o podsort_test && ./podsort_test
+
       - name: Starts and exits (no display needed)
         run: QT_QPA_PLATFORM=offscreen ./build/musicplayer --version
 
@@ -53,7 +56,8 @@ jobs:
         run: |
           pm="pacman"
           pacman --help 2>&1 | grep -q -- --disable-sandbox && pm="pacman --disable-sandbox"
-          $pm -S --noconfirm --needed xorg-server-xvfb mesa ffmpeg ttf-jetbrains-mono > /dev/null
+          $pm -S --noconfirm --needed xorg-server-xvfb mesa ffmpeg ttf-jetbrains-mono zip > /dev/null
+          bash .github/scripts/demo-docs.sh /tmp/docs
           bash .github/scripts/demo-music.sh /tmp/music > /dev/null
           mkdir -p shots
           shot() {      # shot <name> <WxH> [options…]
@@ -70,6 +74,10 @@ jobs:
           shot phone-library 390x844 --mobile --set startView=library
           shot phone-album 390x844 --mobile --set "startAlbum=Night Drive"
           shot phone-playing 390x844 --mobile --set startPlay=true --set startView=library
+          shot desktop-pods 1280x800 --set startPod=/tmp/docs
+          shot phone-pods 390x844 --mobile --set startPod=/tmp/docs
+          shot phone-pods-classic 390x844 --mobile --set theme=classic --set startPod=/tmp/docs
+          shot phone-pods-list 390x844 --mobile --set startView=pods
           shot phone-tucked 390x844 --mobile --set startPlay=true --set startTucked=true --set startView=todos
           shot phone-tucked-classic 390x844 --mobile --set theme=classic --set startPlay=true --set startTucked=true --set startView=todos
           STREAMLINE_FAKE_INSETS=60,34 shot phone-settings-insets 390x844 --mobile --set theme=classic --set startPlay=true --set startSettings=look

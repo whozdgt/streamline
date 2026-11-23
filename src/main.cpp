@@ -22,6 +22,7 @@
 #include "artistimages.h"
 #include "cover.h"
 #include "flashcards.h"
+#include "pods.h"
 #include "todos.h"
 #include "folders.h"
 #include "library.h"
@@ -235,6 +236,7 @@ int main(int argc, char *argv[])
     social.setServerName([&](const QString &p) { return servers.serverNameFor(p); });
     UpdateChecker updater;
     Flashcards flashcards;
+    Pods pods;
     player.setRemote({
         [&](const QString &p) { return servers.streamUrl(p); },
         [&](const QString &p) { return servers.allowsSelfSigned(p); },
@@ -271,6 +273,7 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("folders", &folders);
     ctx->setContextProperty("updater", &updater);
     ctx->setContextProperty("flashcards", &flashcards);
+    ctx->setContextProperty("pods", &pods);
     ctx->setContextProperty("todos", &todos);
     SafeArea safeArea;
     ctx->setContextProperty("safeArea", &safeArea);
