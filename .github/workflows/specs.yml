@@ -49,11 +49,26 @@ jobs:
             ms=$(( ($(date +%s%N) - start) / 1000000 ))
             pdftotext -raw "specs/$name.pdf" "specs/$name.ref.txt"
             echo "RESULT $name: read in ${ms} ms, $(cat "specs/$name.err"), words match pdftotext: $(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt")"
-            # fonts whose characters couldn't be read (only when many words differ from pdftotext)
-            if [ "$(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt" | cut -c1-3)" != "1.0" ] && \
-               [ "$(python3 -c "print(float('$(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt")') < 0.97)")" = True ]; then
-              PDFTEXT_DEBUG=1 ./pdftext_test "specs/$name.pdf" > /dev/null 2> debug.txt; grep '^font' debug.txt | sort -t= -k7 -n -r | head -15
-              pdffonts "specs/$name.pdf" | head -30
+            # when many words differ from pdftotext: which fonts lost characters, and which pages differ most
+            if python3 -c "import sys; sys.exit(0 if float('$(python3 f1.py "specs/$name.mine.txt" "specs/$name.ref.txt")') < 0.97 else 1)"; then
+              PDFTEXT_DEBUG=1 ./pdftext_test "specs/$name.pdf" > /dev/null 2> debug.txt; grep '^font' debug.txt | head -25
+              ./pdftext_test "specs/$name.pdf" --pages > mine.pages; pdftotext -raw "specs/$name.pdf" ref.pages
+              python3 - <<'PY'
+          import re, collections
+          w = lambda t: re.findall(r"\w+", t.lower())
+          mine = open("mine.pages", encoding="utf-8", errors="replace").read().split("\f")
+          ref = open("ref.pages", encoding="utf-8", errors="replace").read().split("\f")
+          scores = []
+          for i in range(min(len(mine), len(ref))):
+              a, b = collections.Counter(w(mine[i])), collections.Counter(w(ref[i]))
+              c = sum((a & b).values()); p = c / max(1, sum(a.values())); r = c / max(1, sum(b.values()))
+              scores.append(((2*p*r/(p+r)) if p + r else (1.0 if not a and not b else 0.0), i))
+          print("pages below 0.9:", sum(1 for s, _ in scores if s < 0.9), "of", len(scores))
+          for s, i in sorted(scores)[:3]:
+              print(f"page {i+1}: {s:.2f}")
+              print("   mine:", [l[:40] for l in mine[i].strip().split("\n")[:4]])
+              print("   ref: ", [l[:40] for l in ref[i].strip().split("\n")[:4]])
+          PY
             fi
             ./spec_test "specs/$name.pdf" --head
             ./spec_test "specs/$name.pdf" | head -260
