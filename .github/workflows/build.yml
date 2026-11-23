@@ -32,7 +32,7 @@ jobs:
         run: cmake --build build -j"$(nproc)"
 
       - name: Pods sorting test
-        run: g++ -std=c++17 -O2 -Wall -Isrc src/podsort.cpp tests/podsort_test.cpp -o podsort_test && ./podsort_test
+        run: g++ -std=c++17 -O2 -Wall -Isrc src/podsort.cpp src/specread.cpp tests/podsort_test.cpp -o podsort_test && ./podsort_test
 
       # The on-device AI on the same made-up documents, with the real models from the ai-models release.
       - name: On-device AI test

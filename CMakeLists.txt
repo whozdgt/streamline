@@ -67,7 +67,8 @@ qt_add_executable(musicplayer
   src/playstats.cpp src/playstats.h src/safearea.h
   src/flashcards.cpp src/flashcards.h src/todos.cpp src/todos.h
   src/pods.cpp src/pods.h src/podsort.cpp src/podsort.h
-  src/podai.cpp src/podai.h src/aimodels.cpp src/aimodels.h)
+  src/podai.cpp src/podai.h src/aimodels.cpp src/aimodels.h
+  src/specread.cpp src/specread.h src/pdftext.cpp src/pdftext.h src/pdfcrypto.cpp src/pdfcrypto.h src/pdfglyphs.inc)
 
 target_compile_definitions(musicplayer PRIVATE APP_VERSION="${PROJECT_VERSION}")
 if(PARAPLAY_STORE)
