@@ -39,6 +39,10 @@ public:
     Q_INVOKABLE QVariantMap setSpec(const QString &id, const QString &name, const QString &text);   // { points } or { error }
     Q_INVOKABLE QVariantMap readSpecFile(const QString &url) const;   // { name, text, board } or { error }: PDF, Word, OpenDocument, text
     static QVariantMap specFromData(const QByteArray &data, const QString &fileName);
+    // Reads a spec (in the background) and matches the pod to it; specLoaded() says how it went. A file chosen on
+    // this device, or a spec downloaded from its board (source: where from; name: what the list calls it).
+    Q_INVOKABLE void loadSpecFile(const QString &id, const QString &url);
+    void loadSpecData(const QString &id, const QByteArray &data, const QString &name, const QString &source = QString());
     Q_INVOKABLE void refresh(const QString &id);             // picks up new and deleted files, keeps your topics
     Q_INVOKABLE void renameTopic(const QString &podId, const QString &topicId, const QString &name);
     Q_INVOKABLE void moveDoc(const QString &podId, const QString &path, const QString &topicId);   // topicId "new" makes a topic
@@ -64,6 +68,7 @@ public:
 
 signals:
     void revisionChanged();
+    void specLoaded(const QString &podId, const QVariantMap &result);     // { name, points } or { error }
 
 private:
     struct Doc {
@@ -82,6 +87,9 @@ private:
         QString id, name, folder, method = QStringLiteral("words");
         QString layout = QStringLiteral("nested");     // topics | nested (Subjects › Topics › Subtopics) | spec
         QString specName, specText;                    // layout "spec": the specification documents are matched to
+        QString specSource;                            // where it was downloaded from ("" for a file or pasted text)
+        mutable int specPoints = -1;                   // how many points it has (worked out when first asked)
+        bool specBusy = false;                         // reading a spec (not saved)
         int detail = 1;
         qint64 created = 0, sorted = 0;
         QVector<Topic> topics;

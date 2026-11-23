@@ -104,6 +104,11 @@ jobs:
             cp -r /tmp/docs /tmp/gcse && cp tests/spec_sample.txt "/tmp/Combined Studies spec.txt"
             SHOT_TIMEOUT=200 shot phone-pods-spec 390x844 --mobile --set startPod=/tmp/gcse --set "startSpec=/tmp/Combined Studies spec.txt" --set shotDelay=150000
             SHOT_TIMEOUT=60 shot desktop-pods-spec 1280x800 --set startPod=/tmp/gcse --set shotDelay=4000
+            # the spec finder, and a spec downloaded from its board's website (AQA's is an encrypted PDF)
+            shot phone-spec-finder 390x844 --mobile --set startPod=/tmp/docs --set startFinder=biology
+            cp -r /tmp/docs /tmp/gcse-aqa
+            SHOT_TIMEOUT=230 shot phone-spec-download 390x844 --mobile --set startPod=/tmp/gcse-aqa --set startCatalog=aqa-8461 --set shotDelay=180000
+            grep -i -E "spec|catalog|network|ssl" shots/phone-spec-download.log | head -10 || true
           fi
           shot phone-tucked 390x844 --mobile --set startPlay=true --set startTucked=true --set startView=todos
           shot phone-tucked-classic 390x844 --mobile --set theme=classic --set startPlay=true --set startTucked=true --set startView=todos

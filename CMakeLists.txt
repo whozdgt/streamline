@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(musicplayer VERSION 0.6.0 LANGUAGES CXX)
+project(musicplayer VERSION 0.7.0 LANGUAGES CXX)
 
 if(WIN32)
   enable_language(RC)      # the program's icon and version information
@@ -68,7 +68,10 @@ qt_add_executable(musicplayer
   src/flashcards.cpp src/flashcards.h src/todos.cpp src/todos.h
   src/pods.cpp src/pods.h src/podsort.cpp src/podsort.h
   src/podai.cpp src/podai.h src/aimodels.cpp src/aimodels.h
-  src/specread.cpp src/specread.h src/pdftext.cpp src/pdftext.h src/pdfcrypto.cpp src/pdfcrypto.h src/pdfglyphs.inc)
+  src/specread.cpp src/specread.h src/pdftext.cpp src/pdftext.h src/pdfcrypto.cpp src/pdfcrypto.h src/pdfglyphs.inc
+  src/speccatalog.cpp src/speccatalog.h)
+# The exam boards' specifications the spec finder knows: links only (see specs/catalog.json)
+qt_add_resources(musicplayer speccatalog PREFIX "/specs" BASE "${CMAKE_CURRENT_SOURCE_DIR}/specs" FILES specs/catalog.json)
 
 target_compile_definitions(musicplayer PRIVATE APP_VERSION="${PROJECT_VERSION}")
 if(PARAPLAY_STORE)

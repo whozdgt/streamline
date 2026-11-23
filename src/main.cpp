@@ -23,6 +23,7 @@
 #include "cover.h"
 #include "flashcards.h"
 #include "pods.h"
+#include "speccatalog.h"
 #include "aimodels.h"
 #include "todos.h"
 #include "folders.h"
@@ -240,6 +241,7 @@ int main(int argc, char *argv[])
     Flashcards flashcards;
     AiModels aiModels;
     Pods pods(&aiModels);
+    SpecCatalog specCatalog(&pods);
     player.setRemote({
         [&](const QString &p) { return servers.streamUrl(p); },
         [&](const QString &p) { return servers.allowsSelfSigned(p); },
@@ -278,6 +280,7 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("flashcards", &flashcards);
     ctx->setContextProperty("pods", &pods);
     ctx->setContextProperty("ai", &aiModels);
+    ctx->setContextProperty("specs", &specCatalog);
     ctx->setContextProperty("todos", &todos);
     SafeArea safeArea;
     ctx->setContextProperty("safeArea", &safeArea);

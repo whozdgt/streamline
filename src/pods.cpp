@@ -366,9 +366,10 @@ QVariantMap Pods::pod(const QString &id, const QString &query) const
     const QString shape = p->layout == QLatin1String("spec") ? QStringLiteral("matched to ") + (p->specName.isEmpty() ? QStringLiteral("your spec") : p->specName)
                         : p->layout == QLatin1String("nested") ? QStringLiteral("subjects › topics") : details.value(p->detail) + QStringLiteral(" topics");
     const QString sortedLabel = p->sorted == 0 ? QString() : how + QStringLiteral(" · ") + shape + QStringLiteral(" · ") + when;
-    const int points = p->specText.isEmpty() ? 0 : int(podsort::parseSpec(p->specText.toStdString()).size());
+    if (p->specPoints < 0) p->specPoints = p->specText.isEmpty() ? 0 : int(podsort::parseSpec(p->specText.toStdString()).size());
     return {{"id", p->id}, {"name", p->name}, {"folder", QDir::toNativeSeparators(p->folder)}, {"detail", p->detail},
-            {"layout", p->layout}, {"specName", p->specName}, {"specPoints", points},
+            {"layout", p->layout}, {"specName", p->specName}, {"specPoints", p->specPoints}, {"specSource", p->specSource},
+            {"specBusy", p->specBusy},
             {"method", p->method}, {"sortedLabel", sortedLabel}, {"busy", p->busy}, {"status", p->status},
             {"error", p->error}, {"moved", !p->moves.isEmpty()}, {"docCount", int(p->docs.size())},
             {"shown", shown}, {"topics", topics}};
@@ -442,9 +443,65 @@ QVariantMap Pods::setSpec(const QString &id, const QString &name, const QString 
     p->specName = name.simplified().left(80);
     if (p->specName.isEmpty()) p->specName = QStringLiteral("Your spec");
     p->specText = text.left(600000);
+    p->specSource.clear();
+    p->specPoints = int(pts.size());
     p->layout = QStringLiteral("spec");
     changed();
     return {{"points", int(pts.size())}};
+}
+
+void Pods::loadSpecFile(const QString &id, const QString &url)
+{
+    const QUrl u(url);
+    const QString path = u.isLocalFile() ? u.toLocalFile() : url;      // Android hands over content:// addresses
+    QFile f(path);
+    if (!f.open(QIODevice::ReadOnly)) { emit specLoaded(id, {{"error", "Couldn't open that file."}}); return; }
+    QString name = u.fileName();
+    if (name.isEmpty() || name.contains(QLatin1Char('%'))) name = QFileInfo(path).fileName();
+    loadSpecData(id, f.read(kMaxPdfBytes), QFileInfo(name).completeBaseName());
+}
+
+void Pods::loadSpecData(const QString &id, const QByteArray &data, const QString &name, const QString &source)
+{
+    Pod *p = find(id);
+    if (!p) return;
+    p->specBusy = true;
+    ++m_rev;
+    emit revisionChanged();
+    auto *w = new QFutureWatcher<QVariantMap>(this);
+    connect(w, &QFutureWatcher<QVariantMap>::finished, this, [this, w, id, name, source]() {
+        w->deleteLater();
+        QVariantMap r = w->result();
+        Pod *p = find(id);
+        if (!p) return;
+        p->specBusy = false;
+        if (r.contains(QLatin1String("error"))) {
+            ++m_rev;
+            emit revisionChanged();
+        } else {
+            // a spec from the list keeps the list's name; a file is named after the course it says it is for
+            p->specName = (source.isEmpty() ? r.value(QLatin1String("name")).toString() : name).simplified().left(80);
+            if (p->specName.isEmpty()) p->specName = QStringLiteral("Your spec");
+            p->specText = r.value(QLatin1String("text")).toString().left(600000);
+            p->specPoints = r.value(QLatin1String("points")).toInt();
+            p->specSource = source;
+            p->layout = QStringLiteral("spec");
+            r.remove(QLatin1String("text"));
+            r.insert(QStringLiteral("name"), p->specName);
+            changed();
+            run(id, QStringLiteral("Matching your documents to the spec…"), p->detail, 0);
+        }
+        emit specLoaded(id, r);
+    });
+    w->setFuture(QtConcurrent::run([data, name]() {
+        QVariantMap r = Pods::specFromData(data, name);
+        if (r.contains(QLatin1String("error"))) return r;
+        const auto pts = podsort::parseSpec(r.value(QLatin1String("text")).toString().toStdString());
+        if (pts.size() < 2)
+            return QVariantMap{{"error", "That doesn't look like a specification: no numbered points (such as \"3.2.1 Cell structure\") or sections were found."}};
+        r.insert(QStringLiteral("points"), int(pts.size()));
+        return r;
+    }));
 }
 
 QVariantMap Pods::readSpecFile(const QString &url) const
@@ -912,6 +969,7 @@ void Pods::load()
         p.layout = o.value(QLatin1String("layout")).toString(QStringLiteral("topics"));      // pods from 0.4 were one level
         p.specName = o.value(QLatin1String("specName")).toString();
         p.specText = o.value(QLatin1String("specText")).toString();
+        p.specSource = o.value(QLatin1String("specSource")).toString();
         p.detail = o.value(QLatin1String("detail")).toInt(1);
         p.created = qint64(o.value(QLatin1String("created")).toDouble());
         p.sorted = qint64(o.value(QLatin1String("sorted")).toDouble());
@@ -957,7 +1015,7 @@ void Pods::save() const
                                 {"snippet", d.snippet}, {"words", d.words}, {"readable", d.readable}};
         for (const Move &m : p.moves) moves << QJsonObject{{"from", m.from}, {"to", m.to}};
         arr << QJsonObject{{"id", p.id}, {"name", p.name}, {"folder", p.folder}, {"method", p.method}, {"detail", p.detail},
-                           {"layout", p.layout}, {"specName", p.specName}, {"specText", p.specText},
+                           {"layout", p.layout}, {"specName", p.specName}, {"specText", p.specText}, {"specSource", p.specSource},
                            {"created", double(p.created)}, {"sorted", double(p.sorted)}, {"topics", topics}, {"docs", docs},
                            {"moves", moves}, {"madeDirs", QJsonArray::fromStringList(p.madeDirs)}};
     }

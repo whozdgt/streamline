@@ -25,6 +25,12 @@ Item {
     property string layout: "nested"        // what the next "Sort again" makes: nested | topics | spec
     property bool pasting: false            // the box for pasting a spec is open
     property string specNote: ""
+    property bool finding: false            // the spec finder is open
+    property string specBoard: ""
+    property string specStage: ""
+    property int specShown: 30
+    readonly property var specResults: { specs.revision; return finding ? specs.find(specQuery.text, specBoard, specStage) : [] }
+    onSpecResultsChanged: specShown = 30
     property bool allowed: pods.filesAllowed()
 
     readonly property bool narrow: width < 640
@@ -40,6 +46,16 @@ Item {
     readonly property color warn: "#e5484d"
 
     function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s") }
+    function siteOf(url) { const m = /^https?:\/\/(?:www\.)?([^\/]+)/.exec(url); return m ? m[1] : url }
+    Connections {      // a spec chosen from the list or as a file has been read
+        target: pods
+        function onSpecLoaded(id, r) {
+            if (id !== root.podId) return
+            if (r.error) { root.specNote = r.error; return }
+            root.specNote = "Found " + root.plural(r.points, "point") + " in " + r.name + "."
+            root.finding = false
+        }
+    }
     function goBack() {
         if (mode === "doc") { mode = "pod"; return true }
         if (mode === "pod") { mode = "list"; podId = ""; return true }
@@ -47,12 +63,15 @@ Item {
     }
     function openPod(id) {
         podId = id; query = ""; note = ""; renaming = false; renamingTopic = ""; confirmMove = false; confirmDelete = false
-        expanded = ({}); collapsed = ({}); pasting = false; specNote = ""
+        expanded = ({}); collapsed = ({}); pasting = false; specNote = ""; finding = false
         const info = pods.pod(id)
         detail = info.detail !== undefined ? info.detail : 1
         layout = info.layout || "nested"
         mode = "pod"
         flick.contentY = 0
+    }
+    function openFinder(query) {      // the spec finder, open at a search (CI screenshots)
+        layout = "spec"; finding = true; specQuery.text = query
     }
     function openDoc(path) {
         docPath = path
@@ -349,16 +368,141 @@ Item {
                         spacing: 10
                         Para {
                             color: settings.ink
-                            text: root.info.specName ? "Spec: " + root.info.specName + " · " + root.info.specPoints + " points"
-                                : "Add your spec: the specification from your exam board's website (AQA, Edexcel, OCR, WJEC…) or your module's outline. "
-                                  + "Choose the file, or open it, copy all of its text and paste it."
+                            visible: !!root.info.specName
+                            text: "Spec: " + root.info.specName + " · " + root.plural(root.info.specPoints || 0, "point")
+                        }
+                        Link {
+                            visible: !!root.info.specSource
+                            text: "See it on " + root.siteOf(root.info.specSource || "")
+                            font.underline: true
+                            onClicked: Qt.openUrlExternally(root.info.specSource)
+                        }
+                        Para {
+                            visible: !root.info.specName
+                            text: "Add your course’s specification: find it in the list of exam boards’ specs (Cambridge, AQA, Edexcel, OCR), "
+                                  + "or choose the file (PDF, Word or text), or paste its text."
                         }
                         Flow {
                             width: parent.width
                             spacing: 10
+                            Btn {
+                                label: root.info.specName ? "Find another spec" : "Find your spec"
+                                primary: !root.info.specName
+                                visible: !root.finding
+                                onClicked: { root.finding = true; root.pasting = false; root.specNote = ""; specs.update(); specQuery.focusInput() }
+                            }
                             Btn { label: root.info.specName ? "Choose another file" : "Choose a file"; primary: false; onClicked: specDialog.open() }
-                            Btn { label: "Paste text"; primary: false; visible: !root.pasting; onClicked: { root.pasting = true; specBox.focusInput() } }
+                            Btn { label: "Paste text"; primary: false; visible: !root.pasting; onClicked: { root.pasting = true; root.finding = false; specBox.focusInput() } }
                         }
+
+                        // the spec finder: the boards' specifications, downloaded from the board's own website
+                        Column {
+                            visible: root.finding
+                            width: parent.width
+                            spacing: 10
+                            Field {
+                                id: specQuery
+                                width: root.narrow ? parent.width : 420
+                                placeholder: "Search, for example “AQA GCSE Biology” or “9700”"
+                                onAccepted: if (root.specResults.length === 1) specs.use(root.podId, root.specResults[0].id)
+                            }
+                            Flow {
+                                width: parent.width
+                                spacing: 8
+                                Repeater {
+                                    model: [{ k: "", t: "All boards" }, { k: "Cambridge", t: "Cambridge" }, { k: "AQA", t: "AQA" },
+                                            { k: "Edexcel", t: "Edexcel" }, { k: "OCR", t: "OCR" }]
+                                    Pill { required property var modelData; label: modelData.t; selected: root.specBoard === modelData.k; onClicked: root.specBoard = modelData.k }
+                                }
+                            }
+                            Flow {
+                                width: parent.width
+                                spacing: 8
+                                Repeater {
+                                    model: [{ k: "", t: "Any level" }, { k: "gcse", t: "GCSE and IGCSE" }, { k: "alevel", t: "AS and A level" }]
+                                    Pill { required property var modelData; label: modelData.t; selected: root.specStage === modelData.k; onClicked: root.specStage = modelData.k }
+                                }
+                            }
+                            Column {
+                                width: parent.width
+                                spacing: 0
+                                Repeater {
+                                    model: root.specResults.slice(0, root.specShown)
+                                    Rectangle {
+                                        id: specRow
+                                        required property var modelData
+                                        required property int index
+                                        width: parent.width
+                                        height: rowCol.implicitHeight + 16
+                                        color: rowMa.containsMouse ? settings.boxHover : "transparent"
+                                        radius: settings.round ? 8 : 0
+                                        Rectangle { visible: specRow.index > 0; width: parent.width; height: 1; color: settings.boxLine }
+                                        Column {
+                                            id: rowCol
+                                            x: 8; y: 8
+                                            width: parent.width - 16
+                                            spacing: 2
+                                            Text { width: parent.width; text: specRow.modelData.name; font.pixelSize: 14; color: settings.ink; wrapMode: Text.Wrap }
+                                            Text {
+                                                width: parent.width
+                                                text: (specRow.modelData.exams ? "Exams " + specRow.modelData.exams + " · " : "") + "from " + specRow.modelData.site
+                                                font.pixelSize: 12; color: settings.inkSoft; elide: Text.ElideRight
+                                            }
+                                        }
+                                        MouseArea {
+                                            id: rowMa
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            cursorShape: Qt.PointingHandCursor
+                                            enabled: !specs.busy && !root.info.specBusy
+                                            onClicked: { root.specNote = ""; specs.use(root.podId, specRow.modelData.id) }
+                                        }
+                                    }
+                                }
+                            }
+                            Link {
+                                visible: root.specResults.length > root.specShown
+                                text: "Show all " + root.specResults.length
+                                font.underline: true
+                                onClicked: root.specShown = 1000
+                            }
+                            Para {
+                                visible: root.specResults.length === 0
+                                text: "No specs in the list match that. Try fewer words, or download it from your exam board’s website and choose the file."
+                            }
+                            Para {
+                                font.pixelSize: 12
+                                text: "Each spec is downloaded from its exam board’s own website and read on this device. "
+                                      + root.plural(specs.count, "spec") + " in the list."
+                            }
+                            Link { text: "Close the list"; font.underline: true; onClicked: root.finding = false }
+                        }
+
+                        // downloading, then reading
+                        Column {
+                            visible: (specs.busy && specs.podId === root.podId) || !!root.info.specBusy
+                            width: parent.width
+                            spacing: 6
+                            Text {
+                                text: specs.busy ? specs.status : "Reading the spec…"
+                                font.pixelSize: 13; color: settings.ink
+                            }
+                            Rectangle {
+                                width: Math.min(parent.width, 360); height: 4
+                                clip: true
+                                color: Qt.rgba(settings.ink.r, settings.ink.g, settings.ink.b, 0.15)
+                                Rectangle {
+                                    height: parent.height
+                                    color: settings.accent
+                                    width: specs.busy && specs.progress >= 0 ? parent.width * specs.progress : parent.width * 0.3
+                                    x: specs.busy && specs.progress >= 0 ? 0 : sweep.x
+                                    Item { id: sweep; NumberAnimation on x { from: 0; to: 250; duration: 1100; loops: Animation.Infinite; running: !(specs.busy && specs.progress >= 0) } }
+                                }
+                            }
+                            Link { visible: specs.busy; text: "Cancel"; font.underline: true; onClicked: specs.cancel() }
+                        }
+                        Para { visible: !!specs.error && specs.podId === root.podId && !specs.busy; text: specs.error; color: root.warn }
+
                         Column {
                             visible: root.pasting
                             width: parent.width
@@ -407,14 +551,7 @@ Item {
                     id: specDialog
                     title: "Choose your spec"
                     nameFilters: ["Specifications (*.pdf *.docx *.odt *.txt *.md)", "All files (*)"]
-                    onAccepted: {
-                        const r = pods.readSpecFile(selectedFile.toString())
-                        if (r.error) { root.specNote = r.error; return }
-                        const s = pods.setSpec(root.podId, r.name, r.text)
-                        if (s.error) { root.specNote = s.error; return }
-                        root.specNote = "Found " + s.points + " points."
-                        pods.resort(root.podId, root.detail)
-                    }
+                    onAccepted: { root.specNote = ""; root.finding = false; pods.loadSpecFile(root.podId, selectedFile.toString()) }
                 }
 
                 // the real files
