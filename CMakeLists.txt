@@ -96,9 +96,9 @@ qt_add_qml_module(musicplayer
 
 target_link_libraries(musicplayer PRIVATE
   Qt6::Core Qt6::Gui Qt6::Qml Qt6::Quick Qt6::Concurrent Qt6::Network)
-# Pods read Word files, which are zip archives; Qt's own zip reader is a private part of Qt Gui.
-find_package(Qt6 QUIET COMPONENTS GuiPrivate)
-target_link_libraries(musicplayer PRIVATE Qt6::GuiPrivate)
+# Pods read Word files, which are zip archives; Qt's own zip reader is a private part of Qt (Gui, or Core from 6.11 or so).
+find_package(Qt6 QUIET COMPONENTS CorePrivate GuiPrivate)
+target_link_libraries(musicplayer PRIVATE Qt6::CorePrivate Qt6::GuiPrivate)
 
 if(ANDROID)
   target_sources(musicplayer PRIVATE src/android.cpp src/android.h src/androidmedia.cpp src/androidmedia.h)

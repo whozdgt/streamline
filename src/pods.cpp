@@ -26,7 +26,12 @@
 #include <QUuid>
 #include <QXmlStreamReader>
 #include <QtConcurrent/QtConcurrentRun>
+// Qt's zip reader: part of Qt Gui up to 6.10 or so, Qt Core in newer versions
+#if __has_include(<QtCore/private/qzipreader_p.h>)
+#include <QtCore/private/qzipreader_p.h>
+#else
 #include <QtGui/private/qzipreader_p.h>
+#endif
 #include <algorithm>
 
 namespace {
