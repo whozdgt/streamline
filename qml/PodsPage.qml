@@ -29,7 +29,7 @@ Item {
     property string specBoard: ""
     property string specStage: ""
     property int specShown: 30
-    readonly property var specResults: { specs.revision; return finding ? specs.find(specQuery.text, specBoard, specStage) : [] }
+    readonly property var specResults: { specs.version; return finding ? specs.find(specQuery.text, specBoard, specStage) : [] }
     onSpecResultsChanged: specShown = 30
     property bool allowed: pods.filesAllowed()
 

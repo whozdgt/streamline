@@ -21,7 +21,8 @@ class SpecCatalog : public QObject {
     Q_PROPERTY(QString status READ status NOTIFY changed)       // "Downloading from AQA's website…"
     Q_PROPERTY(QString error READ error NOTIFY changed)
     Q_PROPERTY(QString podId READ podId NOTIFY changed)         // the pod the download is for
-    Q_PROPERTY(int count READ count NOTIFY changed)
+    Q_PROPERTY(int count READ count NOTIFY listChanged)
+    Q_PROPERTY(int version READ version NOTIFY listChanged)     // the list's date (20261124); changes only with the list
 public:
     explicit SpecCatalog(Pods *pods, QObject *parent = nullptr);
     int revision() const { return m_rev; }
@@ -31,6 +32,7 @@ public:
     QString error() const { return m_error; }
     QString podId() const { return m_podId; }
     int count() const { return int(m_entries.size()); }
+    int version() const { return m_version; }
 
     // [{ id, name, board, level, subject, code, exams, site, page }], best first. stage: "" | "gcse" | "alevel"
     Q_INVOKABLE QVariantList find(const QString &query, const QString &board, const QString &stage) const;
@@ -46,6 +48,7 @@ public:
 
 signals:
     void changed();
+    void listChanged();
 
 private:
     void load();

@@ -150,7 +150,7 @@ void SpecCatalog::update()
         m_entries = list;
         QSaveFile f(cachePath());
         if (f.open(QIODevice::WriteOnly)) { f.write(data); f.commit(); }
-        bump();
+        emit listChanged();
     });
 }
 
