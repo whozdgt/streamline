@@ -1,0 +1,44 @@
+name: spec-research
+# Looks at how exam boards lay out their public specification PDFs, to teach Pods' spec reader. Prints each PDF's
+# format (encryption, fonts, compression) and the shape of its headings. It doesn't keep or publish the documents.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/spec-research.yml', '.github/specs/research.txt']
+
+jobs:
+  look:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools
+        run: sudo apt-get install -y -qq poppler-utils qpdf > /dev/null
+      - name: Download and describe
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          mkdir -p specs
+          grep -v '^#' .github/specs/research.txt | grep -v '^\s*$' | while IFS='|' read -r name urls; do
+            name="$(echo "$name" | xargs)"
+            echo "::group::$name"
+            got=""
+            for u in $(echo "$urls" | tr '|' ' '); do
+              code=$(curl -sL -A "$UA" -o "specs/$name.pdf" -w '%{http_code}' --retry 2 "$u" || true)
+              if [ "$code" = 200 ] && head -c 4 "specs/$name.pdf" | grep -q '%PDF'; then got="$u"; break; fi
+              echo "  $code  $u"
+            done
+            if [ -z "$got" ]; then echo "RESULT $name: NOT DOWNLOADED"; echo "::endgroup::"; continue; fi
+            echo "RESULT $name: ok $(stat -c %s "specs/$name.pdf") bytes from $got"
+            pdfinfo "specs/$name.pdf" 2>/dev/null | grep -E '^(Producer|Creator|Pages|Encrypted|PDF version|Tagged)'
+            echo "object streams: $(grep -ac '/ObjStm' "specs/$name.pdf")  xref streams: $(grep -ac '/Type */XRef' "specs/$name.pdf")"
+            echo "fonts (type, encoding, has ToUnicode):"
+            pdffonts "specs/$name.pdf" 2>/dev/null | tail -n +3 | awk '{n=NF; print $(n-6), $(n-5), $(n-4), "uni=" $(n-2)}' | sort | uniq -c | sort -rn | head -8
+            pdftotext -raw "specs/$name.pdf" "specs/$name.txt"
+            echo "lines: $(wc -l < "specs/$name.txt")"
+            echo "--- heading-like lines (first 140)"
+            grep -nE '^\s*(([0-9]{1,2}(\.[0-9]{1,2}){0,4})|Topic [0-9]+|Key topic [0-9]+|Paper [0-9]+|Option [0-9A-Z]+|Component [0-9]+|Section [0-9A-Z]+|Unit [0-9]+|[A-Z]{1,2}[0-9]+(\.[0-9]+)*[a-z]?)[ .:)–-]+[A-Za-z]' "specs/$name.txt" \
+              | cut -c1-90 | head -140
+            echo "--- how lines start (top 25 patterns)"
+            sed -E 's/^\s+//; s/[A-Za-z]{2,}/w/g; s/[0-9]+/9/g' "specs/$name.txt" | cut -c1-6 | sort | uniq -c | sort -rn | head -25
+            echo "::endgroup::"
+          done

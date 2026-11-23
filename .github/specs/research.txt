@@ -1,0 +1,14 @@
+# name | url [| another url to try]
+cie-igcse-biology-0610 | https://www.cambridgeinternational.org/Images/697203-2026-2028-syllabus.pdf
+cie-alevel-biology-9700 | https://www.cambridgeinternational.org/Images/664560-2025-2027-syllabus.pdf
+cie-igcse-maths-0580 | https://www.cambridgeinternational.org/Images/662466-2025-2027-syllabus.pdf
+aqa-gcse-biology-8461 | https://filestore.aqa.org.uk/resources/biology/specifications/AQA-8461-SP-2016.PDF
+aqa-gcse-history-8145 | https://filestore.aqa.org.uk/resources/history/specifications/AQA-8145-SP-2016.PDF
+aqa-alevel-biology-7402 | https://filestore.aqa.org.uk/resources/biology/specifications/AQA-7401-7402-SP-2015.PDF
+aqa-alevel-psychology-7182 | https://filestore.aqa.org.uk/resources/psychology/specifications/AQA-7181-7182-SP-2015.PDF
+aqa-gcse-english-lit-8702 | https://filestore.aqa.org.uk/resources/english/specifications/AQA-8702-SP-2014.PDF
+edexcel-gcse-history-1hi0 | https://qualifications.pearson.com/content/dam/pdf/GCSE/History/2016/specification-and-sample-assessments/gcse-9-1-history-specification.pdf | https://qualifications.pearson.com/content/dam/pdf/GCSE/History/2016/Specification%20and%20sample%20assessments/gcse-9-1-history-specification.pdf
+edexcel-gcse-biology-1bi0 | https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/specification/GCSE_Biology_Spec.pdf | https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Specification/GCSE_Biology_Spec.pdf
+edexcel-alevel-history-9hi0 | https://qualifications.pearson.com/content/dam/pdf/A%20Level/History/2015/Specification%20and%20sample%20assessments/9781446949993-gce2015-al-history-iss4.pdf
+edexcel-igcse-biology-4bi1-modular | https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Biology/2024/specification-and-sample-assessments/international-gcse-biology-modular-specification.pdf
+edexcel-alevel-maths-9ma0 | https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf
