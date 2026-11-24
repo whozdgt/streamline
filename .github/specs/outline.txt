@@ -1,15 +1,11 @@
 # the specs spec-outline.yml reads: ids from specs/catalog.json, or URLs
-cambridge-9702-2025
-cambridge-9626-2025
-cambridge-0417-2026
 edexcel-9ma0
-edexcel-9ec0
-edexcel-ybi11
-edexcel-9ph0
-ocr-j247
 ocr-h505
 aqa-7162
 cambridge-0470-2027
 cambridge-0457-2025
 edexcel-1hi0
-cambridge-0495-2025
+cambridge-0580-2028
+edexcel-1ma1
+edexcel-1et0
+aqa-8145

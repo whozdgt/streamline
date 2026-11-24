@@ -45,7 +45,13 @@ bool statementLike(const std::string &title)
 {
     if (title.empty()) return true;
     const unsigned char c = uint8_t(title[0]);
-    if (c < 0x80 && std::islower(c)) return true;
+    if (c < 0x80 && std::islower(c)) {
+        // "eSecurity", "iGCSE": a name, not a statement in lower case
+        size_t e = 1;
+        while (e < title.size() && std::isalpha(uint8_t(title[e]))) ++e;
+        const bool camel = std::any_of(title.begin() + 1, title.begin() + long(e), [](char x) { return std::isupper(uint8_t(x)); });
+        if (!camel) return true;
+    }
     static const std::set<std::string> verbs = {
         "describe", "state", "explain", "calculate", "convert", "identify", "investigate", "define", "outline", "use",
         "interpret", "compare", "relate", "recall", "know", "understand", "recognise", "recognize", "draw", "construct",
@@ -56,6 +62,9 @@ bool statementLike(const std::string &title)
         "subtract", "complete", "label", "appreciate", "consider", "assess", "argue", "justify", "summarise",
         "summarize", "review", "examine", "explore", "recognize", "quote", "rearrange", "obtain", "verify", "perform",
         "record", "present", "process", "test", "observe", "plan", "evaluate", "comment", "give", "provide"};
+    // "Work, energy and power": a list of things, not a command ("work out…")
+    const size_t sp = title.find(' ');
+    if (sp != std::string::npos && sp > 0 && title[sp - 1] == ',') return false;
     return verbs.count(firstWord(title)) > 0;
 }
 
@@ -146,7 +155,9 @@ bool parseKey(const std::string &line, Key &k)
         if (numbers >= 3 || k.title.find('%') != std::string::npos) return false;
         // "Paper 1 Paper 2": a table's column headings, not a heading with a title
         Key again;
-        if (!k.title.empty() && parseKey(k.title, again) && again.title.empty()) return false;
+        if (!k.title.empty() && parseKey(k.title, again) && (again.title.empty() || lower(again.keyword) == lower(k.keyword) &&
+                                                               lower(again.title).rfind(lower(k.keyword), 0) == 0))
+            return false;
         return true;
     }
     return false;
@@ -582,6 +593,39 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 to = end;
             }
         }
+        if (section < 0) {
+            // Edexcel's A levels and International A levels: no numbered content section. The content is its themes,
+            // topics or units, each heading followed by its points ("Theme 1: Introduction to markets and market
+            // failure", then "1.1 Nature of economics"; "Topic 1: Working as a Physicist", then "1. know and
+            // understand…"), from the first such heading (not the contents page's, nor an overview's, which aren't
+            // followed by their points) up to "Assessment" or the appendices
+            for (size_t i = 0; i < all.size() && section < 0; ++i) {
+                Key k;
+                if (!parseKey(all[i], k) || tocLine(all[i]) || k.title.empty() || k.id.empty() || !std::isdigit(uint8_t(k.id[0]))) continue;
+                const std::string kw = lower(k.keyword);
+                if (kw != "theme" && kw != "topic" && kw != "unit" && kw != "key topic") continue;
+                const int id = std::atoi(k.id.c_str());
+                bool follows = false;
+                for (size_t j = i + 1; j < all.size() && j < i + 70; ++j) {
+                    Num n;
+                    Key other;
+                    if (parseKey(all[j], other) && other.rank <= 20) break;      // another heading first: an overview
+                    if (!parseNum(all[j], n) || !n.prefix.empty()) continue;
+                    follows = (n.parts.size() >= 2 && n.parts[0] == id && n.parts[1] == 1) || (n.parts.size() == 1 && n.parts[0] == 1 && id == 1);
+                    break;
+                }
+                if (!follows) continue;
+                size_t end = all.size();
+                for (size_t j = i + 1; j < all.size(); ++j) {
+                    const std::string u = lower(all[j]);
+                    if (tocLine(all[j])) continue;
+                    if (u == "assessment" || u.rfind("assessment summary", 0) == 0 || u.rfind("appendix 1", 0) == 0) { end = j; break; }
+                }
+                section = 0;
+                from = i;
+                to = end;
+            }
+        }
         if (section < 0) { from = 0; to = all.size(); }
         foundSection = section >= 0;
         g_diag = {foundSection, from, to, all.size()};
@@ -658,7 +702,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     auto body = [&](const std::string &l) {
         if (stack.empty()) return;
         std::string &b = pts[size_t(stack.back().point)].body;
-        if (b.size() < 4000) b += l + "\n";
+        if (b.size() < 6000) b += l + "\n";
     };
     auto dottedOpen = [&]() {
         for (const auto &o : stack) if (dotted[size_t(o.point)]) return true;
@@ -795,7 +839,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // a topic ("2 Organisation of the organism"), or a numbered learning statement under a subtopic
                 const int v = n.parts[0];
                 bool heading = !statement;
-                if (heading && dottedOpen()) heading = v == lastTop || (v == lastTop + 1 && nextDottedMajor(i) == v);
+                // inside a topic, the next topic: the one after it, or a later one when its own points follow (so one
+                // topic missed doesn't take those after it with it); not a new section ("4 Subject content – A-level")
+                // (or the next topic with no subtopics of its own: Cambridge IGCSE ICT's "3 Storage devices and media")
+                if (heading && dottedOpen()) {
+                    const int next = nextDottedMajor(i);
+                    heading = v == lastTop || (v > lastTop && next == v && (v == lastTop + 1 || !contentTitle(t))) ||
+                              (v == lastTop + 1 && next > v && !contentTitle(t));
+                }
                 if (heading) {
                     made = open(30, number, t, false);
                     lastTop = v;
@@ -811,6 +862,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     Key pk;
                     auto nameLike = [&](const std::string &x) {
                         return x.size() >= 2 && x.size() <= 40 && x.back() != '.' && !parseNum(x, pn) && !parseKey(x, pk) &&
+                               !contentTitle(x) && lower(x) != "content" &&
                                std::none_of(x.begin(), x.end(), [](char c) { return std::isdigit(uint8_t(c)); });
                     };
                     size_t first = i, take = 0;      // the name's lines: [first, i)
@@ -930,7 +982,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (it == first.end()) { first[key] = int(i); continue; }
             twin[i] = it->second;
             std::string &b = pts[size_t(it->second)].body;
-            if (b.size() < 6000) b += pts[i].body;
+            if (b.size() < 9000) b += pts[i].body;
         }
     }
 

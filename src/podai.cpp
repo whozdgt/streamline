@@ -414,7 +414,7 @@ SpecIndex readSpec(Meaning &m, const std::vector<podsort::SpecPoint> &points, co
         x.whole[i] = m.embed(podsort::pointText(points, int(i)));
         const std::string &body = points[i].body;
         const size_t chunk = 700;
-        for (size_t at = 0; at < body.size() && x.pieces[i].size() < 6; at += chunk) {
+        for (size_t at = 0; at < body.size() && x.pieces[i].size() < 9; at += chunk) {      // its first 6,300 bytes
             size_t end = std::min(body.size(), at + chunk);
             while (end < body.size() && (static_cast<unsigned char>(body[end]) & 0xC0) == 0x80) ++end;
             x.pieces[i].push_back(m.embed(titlePath(points, int(i)) + ": " + body.substr(at, end - at)));
