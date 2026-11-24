@@ -3,7 +3,9 @@
 #include "pdftext.h"
 #include "podsort.h"
 #include "specread.h"
+#include <algorithm>
 #include <cstdint>
+#include <cstdlib>
 #include <cstdio>
 #include <cstring>
 #include <fstream>
@@ -37,13 +39,15 @@ int main(int argc, char **argv)
         return 0;
     }
     if (argc > 3 && std::strcmp(argv[2], "--around") == 0) {    // a few lines either side of the first line starting with argv[3]
-        std::vector<std::string> ls;
+        std::vector<std::string> ls;                              // (or of the first argv[4] such lines)
         std::istringstream in(text);
         for (std::string line; std::getline(in, line);) ls.push_back(line);
-        for (size_t i = 0; i < ls.size(); ++i)
+        const int want = argc > 4 ? std::max(1, std::atoi(argv[4])) : 1;
+        int shown = 0;
+        for (size_t i = 0; i < ls.size() && shown < want; ++i)
             if (ls[i].rfind(argv[3], 0) == 0) {
+                if (shown++) std::printf("  ---- line %zu\n", i);
                 for (size_t j = i >= 8 ? i - 8 : 0; j < ls.size() && j <= i + 6; ++j) std::printf("  %s %s\n", j == i ? ">" : " ", ls[j].substr(0, 70).c_str());
-                break;
             }
         return 0;
     }
