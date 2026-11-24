@@ -116,10 +116,11 @@ struct Key {
 bool parseKey(const std::string &line, Key &k)
 {
     static const std::vector<std::pair<std::string, int>> words = {
-        {"key topic", 20}, {"topic area", 19}, {"area of study", 20}, {"content area", 20}, {"paper", 10},
+        {"key topic", 20}, {"topic area", 19}, {"area of study", 20}, {"content area", 20}, {"paper", 10}, {"depth study", 16},
         {"component", 12}, {"unit", 12}, {"section", 14}, {"option", 16}, {"theme", 18}, {"module", 18},
         {"chapter", 18}, {"topic", 20}, {"part", 24}};
     if (line.size() > 140 || line.empty() || !std::isupper(uint8_t(line[0]))) return false;
+    if (line.rfind("Core content: ", 0) == 0) return parseKey(line.substr(14), k);      // Cambridge IGCSE History's options
     const std::string low = lower(line);
     for (const auto &[w, rank] : words) {
         if (low.compare(0, w.size(), w) != 0) continue;
@@ -472,7 +473,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             const bool bareNumber = !l.empty() && l.size() <= 2 && std::all_of(l.begin(), l.end(), [](char c) { return std::isdigit(uint8_t(c)); });
             const bool numberedLine = parseNum(l, n) || parseKey(l, k) || bareNumber;
             const int f = numberedLine ? exact[l] : freq[norm(l)];
-            if (l.size() <= 160 && (f >= 8 || (f >= 4 && !numberedLine))) continue;
+            // a topic's heading repeated at the top of each of its pages ("1 Number", Cambridge IGCSE Mathematics)
+            // stays: it is the topic, and its copies are the same point
+            const bool topicHeading = parseNum(l, n) && n.parts.size() == 1 && n.prefix.empty() && !statementLike(n.title) &&
+                                      !contentTitle(cleanTitle(n.title)) && !adminTitle(cleanTitle(n.title)) && n.title.size() >= 3;
+            if (l.size() <= 160 && !topicHeading && (f >= 8 || (f >= 4 && !numberedLine))) continue;
             kept.push_back(l);
         }
         all.swap(kept);
@@ -536,6 +541,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // a contents page lists the parts one after another: the real one is followed by its content
                 std::smatch next;
                 if (i + 1 < all.size() && std::regex_match(all[i + 1], next, part)) continue;
+                int near = 0;      // (or with a line between: five parts within a few lines are a list)
+                for (size_t j = i >= 4 ? i - 4 : 0; j < all.size() && j <= i + 4; ++j) if (std::regex_match(all[j], next, part)) ++near;
+                if (near >= 5) continue;
                 const std::string here = m[1].str() + m[2].str();
                 if (!parts.empty() && parts.back().label == here) continue;      // the same part again ("2c. Topic B7…")
                 const std::string title = lower(cleanTitle(m[3].str()));
@@ -591,6 +599,27 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 section = 0;
                 from = i + 1;
                 to = end;
+            }
+        }
+        if (section < 0) {
+            // Cambridge Global Perspectives: skills, not content, and a "Topic list" to research: each topic a point
+            for (size_t i = 0; i < all.size(); ++i) {
+                if (lower(all[i]) != "topic list") continue;
+                std::vector<podsort::SpecPoint> topics;
+                for (size_t j = i + 1; j < all.size(); ++j) {
+                    Num n;
+                    Key k;
+                    if ((parseNum(all[j], n) && n.parts.size() == 1 && n.prefix.empty()) || parseKey(all[j], k)) break;      // the next part
+                    const std::string &x = all[j];
+                    if (x.size() < 3 || x.size() > 60 || !std::isupper(uint8_t(x[0])) || x.back() == '.' || x.back() == ':' || x.back() == ',') continue;
+                    podsort::SpecPoint p;
+                    p.title = cleanTitle(x);
+                    topics.push_back(p);
+                }
+                if (topics.size() >= 5) {
+                    g_diag = {true, i + 1, i + 1 + topics.size(), all.size()};
+                    return topics;
+                }
             }
         }
         if (section < 0) {
@@ -1021,6 +1050,29 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             p.parent = q >= 0 ? remap[size_t(q)] : -1;
         }
         pts.swap(kept);
+    }
+    // 5. A numbered point inside a heading of another number, when the point its number says it belongs to is there:
+    //    put it there (Cambridge IGCSE Mathematics' Extended-only subtopics, "1.17 Exponential growth and decay",
+    //    come after the last Core topic, 9 Statistics)
+    {
+        auto plainNumber = [](const std::string &n) {
+            return !n.empty() && std::isdigit(uint8_t(n[0])) && std::all_of(n.begin(), n.end(), [](char c) { return std::isdigit(uint8_t(c)) || c == '.'; });
+        };
+        std::map<std::string, int> byNumber;
+        for (size_t i = 0; i < pts.size(); ++i) if (plainNumber(pts[i].number)) byNumber.emplace(pts[i].number, int(i));
+        for (size_t i = 0; i < pts.size(); ++i) {
+            const std::string &n = pts[i].number;
+            const size_t dot = n.rfind('.');
+            if (!plainNumber(n) || dot == std::string::npos) continue;
+            const std::string up = n.substr(0, dot);
+            const int p = pts[i].parent;
+            if (p >= 0 && pts[size_t(p)].number == up) continue;
+            const auto it = byNumber.find(up);
+            if (it == byNumber.end() || it->second == int(i)) continue;
+            bool loop = false;      // never under a point inside it
+            for (int q = it->second; q >= 0 && !loop; q = pts[size_t(q)].parent) loop = q == int(i);
+            if (!loop) pts[i].parent = it->second;
+        }
     }
     {
         auto numKey = [](const std::string &num) {
