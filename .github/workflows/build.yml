@@ -7,6 +7,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write      # to publish the interface screenshots as a pre-release
 

@@ -18,6 +18,11 @@ on:
     paths: ['src/**', 'qml/**', 'CMakeLists.txt', 'cmake/**', 'packaging/**', '.github/workflows/windows.yml']
   workflow_dispatch:
 
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write      # to attach the files to a release
 

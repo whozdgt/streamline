@@ -12,6 +12,11 @@ on:
     paths: ['src/pdftext*', 'src/pdfcrypto*', 'src/pdfglyphs.inc', 'src/specread*', 'src/podsort*',
             'tests/spec_test.cpp', 'tests/pdftext_test.cpp', 'tests/layouts/**', '.github/specs/**', '.github/workflows/specs.yml']
 
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   read:
     runs-on: ubuntu-latest

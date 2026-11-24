@@ -10,6 +10,11 @@ on:
     paths: ['src/specread*', 'src/podsort*', 'src/podai*', 'src/pdftext*', 'src/pdfcrypto*', 'specs/catalog.json',
             'tests/course_check.cpp', '.github/specs/show-leaves.txt', '.github/workflows/courses.yml']
 
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest

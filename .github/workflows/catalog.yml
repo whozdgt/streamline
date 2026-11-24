@@ -13,6 +13,11 @@ on:
     branches: [main]
     paths: ['specs/catalog.json', '.github/workflows/catalog.yml', 'src/specread*', 'src/pdftext*']
 
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest

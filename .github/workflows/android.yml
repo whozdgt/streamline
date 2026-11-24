@@ -32,6 +32,11 @@ on:
     paths: ['android/**', 'src/**', 'qml/**', 'CMakeLists.txt', 'cmake/**', 'packaging/android/**', '.github/workflows/android.yml', '.github/scripts/**']
   workflow_dispatch:
 
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write      # to attach the APK to a release
 

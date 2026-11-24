@@ -13,6 +13,11 @@ on:
     paths: ['src/**', 'qml/**', 'CMakeLists.txt', 'cmake/**', 'packaging/**', 'update.sh', '.github/workflows/linux.yml']
   workflow_dispatch:
 
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write      # to publish the package as a pre-release
 

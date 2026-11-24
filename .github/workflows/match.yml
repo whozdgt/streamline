@@ -8,6 +8,11 @@ on:
     branches: [main]
     paths: ['src/podai*', 'src/podsort*', 'src/specread*', 'tests/match_eval.cpp', 'tests/match/**', '.github/workflows/match.yml']
 
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   eval:
     runs-on: ubuntu-latest

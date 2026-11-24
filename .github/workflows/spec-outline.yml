@@ -8,6 +8,11 @@ on:
   push:
     branches: [main]
     paths: ['.github/specs/outline.txt', '.github/workflows/spec-outline.yml']
+# a newer push supersedes a run still going for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   outline:
     runs-on: ubuntu-latest
