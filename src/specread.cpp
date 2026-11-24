@@ -744,14 +744,23 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // A paper or component ("Paper 4") holds its own numbering, which starts again at 1 (Cambridge
                 // A Level History: topics 1–9 for Papers 1 and 2, then 1–9 again for Paper 4), or holds topics
                 // ("Topic 1: The origins of the First World War") rather than numbers
+                // or the next topic, when its numbers carry on from the last paper's (Cambridge IGCSE Sociology:
+                // Paper 1's topics 1–3, then Paper 2's 4–6)
                 if (!heads && k.rank <= 12) {
+                    int openMajor = -1;      // the numbered point open now ("3" in 3.3.3), if any
+                    for (const auto &o : stack) {
+                        const std::string &num = pts[size_t(o.point)].number;
+                        if (!num.empty() && std::isdigit(uint8_t(num[0]))) { openMajor = std::atoi(num.c_str()); break; }
+                    }
                     for (size_t j = i + 1; j < lines.size() && j < i + 80; ++j) {
                         Num nn;
                         Key kk;
                         if (parseKey(lines[j], kk) && kk.rank > k.rank && kk.rank <= 20 && !kk.title.empty()) { heads = true; break; }
                         if (parseNum(lines[j], nn) && !statementLike(nn.title)) {
-                            heads = nn.prefix.empty() && nn.parts[0] == 1 && (nn.parts.size() == 1 || nn.parts[1] == 1) &&
-                                    !numbersSeen.empty();
+                            const bool restart = nn.prefix.empty() && nn.parts[0] == 1 && (nn.parts.size() == 1 || nn.parts[1] == 1) &&
+                                                 !numbersSeen.empty();
+                            const bool nextTopic = nn.prefix.empty() && openMajor >= 0 && nn.parts[0] != openMajor;
+                            heads = restart || nextTopic;
                             break;
                         }
                     }
@@ -900,7 +909,32 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         } else justOpened = -1;
     }
 
-    // 3. AS and A-level content in one document: keep the later (A-level) copy of a point that appears in both
+    // 3. Points that aren't: a heading that is mostly figures ("0 123 0 1232323f", a number line; "20 0 0", a table's
+    //    marks), or a topic numbered 0. And the same point twice, number and title (Cambridge IGCSE Mathematics lists
+    //    its Core content, then its Extended content under the same numbers): one point, with both texts.
+    std::vector<bool> gone(pts.size(), false);
+    std::vector<int> twin(pts.size(), -1);
+    {
+        std::map<std::pair<std::string, std::string>, int> first;
+        for (size_t i = 0; i < pts.size(); ++i) {
+            const std::string &t = pts[i].title;
+            int words = 0, run = 0;      // words of three letters or more ("France, 1774–1814" has one)
+            for (unsigned char c : t + " ") {
+                if (std::isalpha(c)) ++run;
+                else { if (run >= 3) ++words; run = 0; }
+            }
+            if ((t.size() >= 3 && words == 0) || pts[i].number == "0") { gone[i] = true; continue; }
+            if (pts[i].number.empty() || t.empty()) continue;
+            const auto key = std::make_pair(pts[i].number, lower(t));
+            const auto it = first.find(key);
+            if (it == first.end()) { first[key] = int(i); continue; }
+            twin[i] = it->second;
+            std::string &b = pts[size_t(it->second)].body;
+            if (b.size() < 6000) b += pts[i].body;
+        }
+    }
+
+    // 4. AS and A-level content in one document: keep the later (A-level) copy of a point that appears in both
     {
         std::map<std::pair<std::string, int>, int> last;
         std::vector<bool> drop(pts.size(), false);
@@ -924,13 +958,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             const bool holder = pts[i].title.empty() && !pts[i].number.empty() && std::isalpha(uint8_t(pts[i].number[0])) &&
                                 pts[i].number.find(' ') != std::string::npos &&
                                 std::any_of(pts.begin(), pts.end(), [&](const podsort::SpecPoint &c) { return c.parent == int(i); });
-            if (drop[i] || (pts[i].title.empty() && !holder)) continue;
+            if (drop[i] || gone[i] || twin[i] >= 0 || (pts[i].title.empty() && !holder)) continue;
             remap[i] = int(kept.size());
             kept.push_back(pts[i]);
         }
         for (auto &p : kept) {
             int q = p.parent;
-            while (q >= 0 && remap[size_t(q)] < 0) q = pts[size_t(q)].parent;      // skip removed parents
+            // skip removed parents; a twin's points go in the point it is the same as
+            while (q >= 0 && remap[size_t(q)] < 0) q = twin[size_t(q)] >= 0 ? twin[size_t(q)] : pts[size_t(q)].parent;
             p.parent = q >= 0 ? remap[size_t(q)] : -1;
         }
         pts.swap(kept);

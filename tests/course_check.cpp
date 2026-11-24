@@ -50,7 +50,11 @@ std::string lower(std::string s)
 std::string digits(const std::string &num)
 {
     size_t i = 0;
-    if (num.size() > 3 && std::isalpha(uint8_t(num[0])) && num.find(' ') != std::string::npos) i = num.find(' ') + 1;
+    // a paper's tag ("P4 1.1"): a capital and figures, then a space
+    const size_t sp = num.find(' ');
+    if (sp != std::string::npos && sp >= 2 && std::isupper(uint8_t(num[0])) &&
+        std::all_of(num.begin() + 1, num.begin() + long(sp), [](char c) { return std::isdigit(uint8_t(c)); }))
+        i = sp + 1;
     if (i >= num.size() || !std::isdigit(uint8_t(num[i]))) return {};
     std::string d = num.substr(i);
     for (char c : d) if (!std::isdigit(uint8_t(c)) && c != '.') return {};
@@ -62,13 +66,12 @@ bool oddTitle(const std::string &t, std::string &why)
     const std::string l = lower(t);
     if (t.size() < 3) { why = "too short"; return true; }
     if (t.size() > 160) { why = "very long"; return true; }
-    const unsigned char c0 = uint8_t(t[0]);
-    if (c0 < 0x80 && std::islower(c0)) { why = "starts in lower case"; return true; }
+    // (a title can start in lower case: Cambridge's "fundamental economic problem of scarcity")
     int letters = 0;
     for (unsigned char c : t) if (std::isalpha(c)) ++letters;
     if (letters * 2 < int(t.size())) { why = "mostly not words"; return true; }
     static const char *words[] = {"amended", "rewardable", "candidates must", "candidates should", "students must", "marks ",
-                                  "mark scheme", "copyright", "©", "www.", "http", "see page", "continued", "page ",
+                                  "mark scheme", "©", "www.", "http", "see page", "continued", "page ",
                                   "assessment objective", "weighting", "guided learning hours"};
     for (const char *w : words) if (l.find(w) != std::string::npos) { why = std::string("says \"") + w + "\""; return true; }
     // ends with a page number: "Forging a new society 88"

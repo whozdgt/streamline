@@ -1,7 +1,8 @@
 name: spec-outline
-# The shape of one specification as Streamline's PDF reader sees it: its heading-like lines (numbers, "Topic",
-# "Paper", options), numbered, and the points the spec reader makes of it. For working out a board's layout when a
-# spec is read wrongly. The spec is the URL in .github/specs/outline.txt.
+# The shape of specifications as Streamline's PDF reader sees them: where it found the subject content, the
+# heading-like lines (numbers, codes, "Topic", "Paper", options…), numbered, and the points the reader makes of them.
+# For working out a board's layout when a spec is read wrongly. Which specs: .github/specs/outline.txt (ids from
+# specs/catalog.json, or URLs). Prints only headings and numbers.
 on:
   workflow_dispatch:
   push:
@@ -12,11 +13,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Read it
+      - name: Read them
         run: |
           g++ -std=c++17 -O2 -Isrc src/pdftext.cpp src/pdfcrypto.cpp src/specread.cpp src/podsort.cpp tests/spec_test.cpp -o spec_test
-          url="$(grep -v '^#' .github/specs/outline.txt | head -1)"
-          curl -fsSL -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --retry 2 -o spec.pdf "$url"
-          ./spec_test spec.pdf --outline
-          echo "----- points -----"
-          ./spec_test spec.pdf
+          python3 - <<'PY'
+          import json, subprocess, urllib.request
+          cat = {s["id"]: s for s in json.load(open("specs/catalog.json"))["specs"]}
+          for line in open(".github/specs/outline.txt"):
+              want = line.strip()
+              if not want or want.startswith("#"): continue
+              url = cat[want]["url"] if want in cat else want
+              print(f"\n######## {want}", flush=True)
+              try:
+                  req = urllib.request.Request(url, headers={"User-Agent": "Streamline/0.8 (+https://github.com/whozdgt/streamline)"})
+                  data = urllib.request.urlopen(req, timeout=90).read()
+              except Exception as e:
+                  print("not downloaded:", e); continue
+              open("spec.pdf", "wb").write(data)
+              print(subprocess.run(["./spec_test", "spec.pdf", "--outline"], capture_output=True, text=True, errors="replace").stdout, flush=True)
+              print("----- points -----")
+              print(subprocess.run(["./spec_test", "spec.pdf"], capture_output=True, text=True, errors="replace").stdout[:20000], flush=True)
+          PY

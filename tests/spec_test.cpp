@@ -48,15 +48,21 @@ int main(int argc, char **argv)
         return 0;
     }
     if (argc > 2 && std::strcmp(argv[2], "--outline") == 0) {     // the heading-like lines, numbered, cut short: the shape
-        std::istringstream in(text);                                  // of a document, without its text
-        int i = 0;
-        for (std::string line; std::getline(in, line); ++i) {
-            const std::string l = line.substr(0, 60);
-            const bool head = (!l.empty() && std::isdigit(uint8_t(l[0]))) || l.rfind("Topic", 0) == 0 || l.rfind("Paper", 0) == 0 ||
-                              l.rfind("Component", 0) == 0 || l.find("option") != std::string::npos || l.find("Option") != std::string::npos ||
-                              l.find("AS Level") != std::string::npos || l.find("A Level") != std::string::npos ||
-                              l.rfind("Key question", 0) == 0 || l.rfind("Content", 0) == 0;
-            if (head) std::printf("%6d  %s\n", i, l.c_str());
+        podsort::parseSpec(text);                                     // of a document, without its text
+        const auto d = specread::lastDiagnostics();
+        std::printf("content: %s, lines %zu to %zu of %zu\n", d.contentFound ? "found" : "NOT FOUND (whole text read)", d.from, d.to, d.lines);
+        std::istringstream in(text);
+        int i = 0, shown = 0;
+        for (std::string line; std::getline(in, line) && shown < 900; ++i) {
+            const std::string l = line.substr(0, 64);
+            const uint8_t c0 = l.empty() ? 0 : uint8_t(l[0]);
+            const bool code = l.size() > 2 && std::isupper(c0) && (std::isdigit(uint8_t(l[1])) || (std::isupper(uint8_t(l[1])) && std::isdigit(uint8_t(l[2]))));
+            static const char *keys[] = {"Topic", "Paper", "Component", "Unit", "Theme", "Section", "Key topic", "Area", "Option",
+                                         "Content", "Subject content", "Assessment", "Appendix", "Key question", "Module", "Part ", "Core", "Extended"};
+            bool head = std::isdigit(c0) || code || c0 == '(';
+            for (const char *k : keys) head = head || l.rfind(k, 0) == 0;
+            head = head || l.find(" option") != std::string::npos;
+            if (head) { std::printf("%6d  %s\n", i, l.c_str()); ++shown; }
         }
         return 0;
     }
