@@ -1,5 +1,5 @@
 {
- "version": 20261124,
+ "version": 2026112401,
  "about": "Official links to exam boards' course specifications. Streamline downloads one from its board's website when you choose it; the documents themselves aren't kept here. Checked every week by .github/workflows/catalog.yml.",
  "specs": [
   {
@@ -556,7 +556,8 @@
    "level": "GCSE",
    "subject": "Chemistry",
    "code": "8462",
-   "url": "https://filestore.aqa.org.uk/resources/chemistry/specifications/AQA-8462-SP-2016.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/chemistry/specifications/AQA-8462-SP-2016.PDF",
+   "page": "https://www.aqa.org.uk/subjects/chemistry/gcse/chemistry-8462/specification"
   },
   {
    "id": "aqa-8463",
@@ -705,18 +706,20 @@
   {
    "id": "aqa-7357",
    "board": "AQA",
-   "level": "AS and A-level",
+   "level": "A-level",
    "subject": "Mathematics",
    "code": "7357",
-   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7356-7357-SP-2017.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7357-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/mathematics/a-level/mathematics-7357/specification"
   },
   {
    "id": "aqa-7367",
    "board": "AQA",
-   "level": "AS and A-level",
+   "level": "A-level",
    "subject": "Further Mathematics",
    "code": "7367",
-   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7366-7367-SP-2017.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7367-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/mathematics/a-level/mathematics-7367/specification"
   },
   {
    "id": "aqa-7182",
@@ -745,10 +748,11 @@
   {
    "id": "aqa-7037",
    "board": "AQA",
-   "level": "AS and A-level",
+   "level": "A-level",
    "subject": "Geography",
    "code": "7037",
-   "url": "https://filestore.aqa.org.uk/resources/geography/specifications/AQA-7036-7037-SP-2016.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/geography/specifications/AQA-7037-SP-2016.PDF",
+   "page": "https://www.aqa.org.uk/subjects/geography/a-level/geography-7037/specification"
   },
   {
    "id": "aqa-7136",
@@ -793,42 +797,47 @@
   {
    "id": "aqa-7062",
    "board": "AQA",
-   "level": "AS and A-level",
+   "level": "A-level",
    "subject": "Religious Studies",
    "code": "7062",
-   "url": "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-7061-7062-SP-2016.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-7062-SP-2016.PDF",
+   "page": "https://www.aqa.org.uk/subjects/religious-studies/a-level/religious-studies-7062/specification"
   },
   {
    "id": "aqa-7152",
    "board": "AQA",
-   "level": "AS and A-level",
+   "level": "A-level",
    "subject": "Politics",
    "code": "7152",
-   "url": "https://filestore.aqa.org.uk/resources/politics/specifications/AQA-7151-7152-SP-2017.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/politics/specifications/AQA-7152-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/politics/a-level/politics-7152/specification"
   },
   {
    "id": "aqa-7162",
    "board": "AQA",
-   "level": "AS and A-level",
+   "level": "A-level",
    "subject": "Law",
    "code": "7162",
-   "url": "https://filestore.aqa.org.uk/resources/law/specifications/AQA-7161-7162-SP-2017.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/law/specifications/AQA-7162-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/law/a-level/law-7162/specification"
   },
   {
    "id": "aqa-7582",
    "board": "AQA",
-   "level": "AS and A-level",
+   "level": "A-level",
    "subject": "Physical Education",
    "code": "7582",
-   "url": "https://filestore.aqa.org.uk/resources/pe/specifications/AQA-7581-7582-SP-2016.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/pe/specifications/AQA-7582-SP-2016.PDF",
+   "page": "https://www.aqa.org.uk/subjects/physical-education/a-level/physical-education-7582/specification"
   },
   {
    "id": "aqa-7172",
    "board": "AQA",
-   "level": "AS and A-level",
+   "level": "A-level",
    "subject": "Philosophy",
    "code": "7172",
-   "url": "https://filestore.aqa.org.uk/resources/philosophy/specifications/AQA-7171-7172-SP-2017.PDF"
+   "url": "https://filestore.aqa.org.uk/resources/philosophy/specifications/AQA-7172-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/philosophy/a-level/philosophy-7172/specification"
   },
   {
    "id": "aqa-7447",
