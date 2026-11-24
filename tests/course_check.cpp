@@ -153,7 +153,9 @@ int main(int argc, char **argv)
             int bad = 0;
             for (size_t i = 0; i < pts.size(); ++i) {
                 const std::string d = digits(pts[i].number);
-                if (d.empty()) continue;
+                // (a number without dots can be a part of a subsection: "1 The nature of economics" in "1.3.1
+                // Introductory concepts", Edexcel International A level Economics)
+                if (d.empty() || d.find('.') == std::string::npos) continue;
                 for (int q = pts[i].parent; q >= 0; q = pts[size_t(q)].parent) {
                     const std::string pd = digits(pts[size_t(q)].number);
                     if (pd.empty()) continue;

@@ -1,0 +1,21 @@
+# spec: https://filestore.aqa.org.uk/resources/english/specifications/AQA-7701-7702-SP-2015.PDF
+# A-level English Language notes written for this test: revision notes, essay plans and coursework planning. Each is
+# under the point it is about, numbered as the spec's A-level content is.
+=== 4.1.1 | paper 1 section A
+Textual variations and representations: comparing a travel blog about Paris with a 19th century diary entry, mode (spoken, written, blended), genre, audience and purpose, how the writers represent the city and themselves, register and formality.
+=== 4.1.3 | CLD
+Children's language development: Halliday's functions of language, Piaget's cognitive theory, Vygotsky and the zone of proximal development, Chomsky's LAD vs Skinner's behaviourism, Bruner's LASS. Phonological development: deletion, substitution, assimilation. Holophrastic and telegraphic stages, virtuous errors, overextension. Kroll's stages of writing.
+=== 4.2.1 | language change + diversity
+Language change: Aitchison's crumbling castle, damp spoon and infectious disease metaphors, Johnson's dictionary, prescriptivism vs descriptivism, semantic change (pejoration, amelioration, broadening, narrowing). Diversity: regional dialects, sociolect, Lakoff's deficit model of gender and language, Tannen's difference model, Labov's department store study.
+=== 4.2.3 | discourses
+Language discourses: how texts represent attitudes to language, e.g. a newspaper column complaining that text speak is ruining English; writing an opinion article that challenges the prescriptivist view.
+=== 4.3.1 | NEA investigation
+Language investigation: 2000 word NEA, choose data like football commentary or political speeches, methodology, collecting and transcribing data, analysis using language levels, conclusions and evaluation.
+=== 4.3.2 | original writing
+Original writing NEA: 750 word piece (a short story or a piece of travel writing) with a style model and a 750 word commentary.
+=== - | chemistry
+Covalent bonds share a pair of electrons.
+=== - | geography
+Coastal erosion: hydraulic action, abrasion, attrition, solution.
+=== - | music
+guitar lesson 4pm

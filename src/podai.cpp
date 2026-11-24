@@ -279,14 +279,15 @@ static Tuning tuningFor(size_t dims)
     return {3.6, 4.6, 0.8, 0.63, 0.68, 2.4};
 }
 
-// Points that are not content of their own, such as AQA's "Key ideas" (ideas that run through the whole subject):
-// anything at all can look a little like them, so nothing is filed there.
+// Points that are not content of their own, such as AQA's "Key ideas" (ideas that run through the whole subject), or
+// the "Opportunities for skills development and independent thinking" at the end of each of AQA Environmental
+// Science's topics: anything at all can look a little like them, so nothing is filed there.
 static bool fileable(const podsort::SpecPoint &p)
 {
     std::string t;
     for (char c : p.title) t += char(std::tolower(static_cast<unsigned char>(c)));
     while (!t.empty() && (t.back() == ' ' || t.back() == '.')) t.pop_back();
-    return t != "key ideas" && t != "key concepts";
+    return t != "key ideas" && t != "key concepts" && t.rfind("opportunities for skills development", 0) != 0;
 }
 struct Spread { double median = 0, high = 1; double at(double reach) const { return median + (high - median) * reach; } };
 Spread spread(std::vector<double> all)

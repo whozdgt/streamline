@@ -1,0 +1,30 @@
+# spec: https://filestore.aqa.org.uk/resources/history/specifications/AQA-7041-7042-SP-2015.PDF
+# A-level History notes written for this test, for AQA's options (a student studies one breadth study and one depth
+# study). Each is under the option it is about; where two options cover the same years (Russia in 1H and 2N, the Stuarts
+# in 1D and 2E, which AQA doesn't let a student take together) either is right.
+=== 1H;2N | russia
+Alexander II's emancipation of the serfs 1861, the zemstva, Alexander III and counter-reform, Witte's industrialisation, the 1905 revolution and the October Manifesto, the Dumas, Stolypin's reforms, the February Revolution, Lenin and the October Revolution, War Communism, NEP, Stalin's Five Year Plans, Khrushchev's de-Stalinisation.
+=== 1C | tudors
+Henry VII's consolidation of power, Lambert Simnel and Perkin Warbeck, Henry VIII and Wolsey, the break with Rome, Cromwell, Edward VI's Protestant reformation, Mary I and the Spanish marriage, Elizabeth's religious settlement 1559, the Spanish Armada, Elizabethan poverty and the poor laws.
+=== 2O | democracy and nazism
+The Weimar Republic: the Treaty of Versailles, the Spartacists and the Kapp Putsch, hyperinflation 1923, Stresemann and the golden years, the Depression and the rise of the Nazis, Hitler becomes Chancellor 1933, the Enabling Act, the Night of the Long Knives, Nazi economic policy, the Volksgemeinschaft, persecution of the Jews.
+=== 2S | making of modern britain
+Building a new Britain 1951-1979: post-war consensus, Macmillan and affluence, Wilson and the social revolution of the 1960s, decolonisation, Heath and the three day week, the winter of discontent. Modern Britain: Thatcher, the miners' strike, privatisation, Blair and New Labour.
+=== 1J | british empire
+The High Water Mark of the British Empire: the Indian Mutiny 1857, the Scramble for Africa, the Boer War, Imperial retreat: Indian independence 1947, Suez 1956, decolonisation in Africa, the winds of change speech.
+=== 2N;1H | revolution and dictatorship russia
+The Russian Revolution and the rise of Stalin 1917-1929: the Provisional Government, Bolshevik consolidation, the Civil War, Lenin's death and the power struggle with Trotsky. Stalin's rule: collectivisation, the purges and the Great Terror, the Great Patriotic War, High Stalinism.
+=== 2R | cold war
+The Cold War: Yalta and Potsdam, the iron curtain, the Berlin Blockade, the Korean War, the Cuban Missile Crisis, Vietnam, detente and SALT, the Second Cold War, Reagan and Gorbachev, the end of the Cold War 1991.
+=== 1D;2E | stuart britain
+Absolutism challenged: James I and Parliament, Charles I and personal rule, ship money, Laud, the Civil War. Monarchy restored: Cromwell and the Protectorate, the Restoration 1660, the Glorious Revolution 1688, the Bill of Rights.
+=== 2E;1D | english revolution
+The origins of the English Civil War: Charles I's personal rule, the Scottish rebellion, the Long Parliament, the Grand Remonstrance. Radicalism, Republic and Restoration: the Levellers, the execution of Charles I, Cromwell and the New Model Army.
+=== 1F | industrialisation and the people
+The impact of industrialisation: Pitt the Younger, Peterloo, Catholic emancipation, the Great Reform Act 1832, Chartism, the repeal of the Corn Laws, Gladstone and Disraeli.
+=== - | biology
+DNA replication is semi conservative - Meselson and Stahl.
+=== - | maths
+sin^2 x + cos^2 x = 1
+=== - | to do
+return library books by thurs

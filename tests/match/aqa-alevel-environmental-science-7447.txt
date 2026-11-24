@@ -1,0 +1,43 @@
+# spec: https://filestore.aqa.org.uk/resources/science/specifications/AQA-7447-SP-2017.PDF
+# A-level Environmental Science notes written for this test: revision notes, fieldwork write-ups and exam answers.
+# Each is under the point it is about.
+=== 3.1.1.1;3.1.1.2 | early earth
+Conditions that allowed early life: liquid water, temperature range, the early atmosphere with no oxygen, volcanic CO2. Photosynthesis by cyanobacteria raised O2, formed the ozone layer, carbon locked up in limestone and fossil fuels.
+=== 3.1.2.3.3 | captive breeding
+Captive breeding and release programmes: problems of small populations, inbreeding depression, studbooks, loss of natural behaviour, habitat must be available for release, eg the Arabian oryx and the California condor.
+=== 3.1.2.3.2 | CITES etc
+Legislation and protocols: CITES (trade in endangered species), the Ramsar convention for wetlands, SSSIs, National Parks, the EU Habitats Directive, Biodiversity Action Plans.
+=== 3.1.3.3 | succession
+Ecological succession: pioneer species, seral stages, climatic climax, plagioclimax maintained by grazing, burning (heather moorland) or mowing. Deflected succession to conserve chalk grassland.
+=== 3.2.1.3 | ozone
+Ozone depletion: CFCs and UV-C, chlorine free radicals breaking down O3 in the stratosphere, polar stratospheric clouds, the Montreal Protocol, HCFCs and HFCs as replacements.
+=== 3.2.2.3 | ocean currents
+Thermohaline circulation: the global conveyor belt, cold salty water sinking in the North Atlantic, the Gulf Stream bringing heat to NW Europe, what happens if melting ice reduces salinity.
+=== 3.2.3.4;3.2.3.5 | mineral exploration
+Exploratory techniques: satellite remote sensing, gravimetry, seismic surveys, resistivity, magnetometry, trial drilling. Mine viability: ore grade, size of reserve, market price, transport, cut-off ore grade, environmental constraints.
+=== 3.2.4.3 | nitrogen cycle
+Nitrogen fixation by Rhizobium in root nodules, nitrification (Nitrosomonas, Nitrobacter), denitrification in waterlogged soils, Haber process fertilisers, leaching of nitrates and eutrophication.
+=== 3.2.5.2 | soil erosion
+Causes of soil degradation: deforestation, overgrazing, ploughing up and down slopes, salinisation from irrigation, compaction by machinery, loss of organic matter. Wind and water erosion.
+=== 3.3.2;3.3.3 | energy resources
+Features of energy resources: energy density, reliability, intermittency, storage, transportability. Wind power and the capacity factor, nuclear fission, fossil fuel reserves and peak oil, fracking for shale gas.
+=== 3.3.4.2.2 | building energy
+Building energy conservation: cavity wall insulation, loft insulation, double glazing, U-values, passive solar design, heat pumps, Passivhaus standard.
+=== 3.4.3.2.2 | acid rain
+Acid precipitation: SO2 and NOx from burning fossil fuels, wet and dry deposition, effects on lakes (aluminium toxicity to fish) and forests, liming lakes, flue gas desulfurisation.
+=== 3.4.3.2.9 | eutrophication
+Nutrient pollution: nitrate and phosphate from fertilisers and sewage, algal blooms, reduced light, decomposers increase BOD, deoxygenation, fish deaths. Control: buffer strips, phosphate stripping at sewage works.
+=== 3.5.2.2;3.5.2.3 | fishing
+Fishing: maximum sustainable yield, overfishing of cod, bycatch, quotas, mesh size, no take zones. Aquaculture: salmon farming, problems of sea lice, escapes and pollution from feed.
+=== 3.5.3.3 | deforestation
+Deforestation in the Amazon: cattle ranching, soy, logging, roads. Effects: loss of biodiversity, carbon release, changes to the hydrological cycle, soil erosion. REDD+.
+=== 3.6.4.2 | footprints
+Biocapacity and ecological footprints, global hectares, Earth Overshoot Day, comparison between countries.
+=== 3.7.2.1;3.7.2.2 | fieldwork
+Sampling techniques: random and systematic sampling, quadrats, transects, kick sampling of invertebrates in a stream, Lincoln index mark-release-recapture, Simpson's diversity index.
+=== - | business
+Herzberg's two factor theory - hygiene factors and motivators.
+=== - | maths
+the derivative of e^x is e^x
+=== - | jobs
+shift at Tesco sat 9-5

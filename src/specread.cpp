@@ -139,6 +139,11 @@ bool parseKey(const std::string &line, Key &k)
         {"chapter", 18}, {"topic", 20}, {"part", 24}};
     if (line.size() > 140 || line.empty() || !std::isupper(uint8_t(line[0]))) return false;
     if (line.rfind("Core content: ", 0) == 0) return parseKey(line.substr(14), k);      // Cambridge IGCSE History's options
+    // Edexcel A level History's options: "Paper 1, Option 1A:" (its title on the next line), "Paper 3, Option 34.1: …"
+    if (line.rfind("Paper ", 0) == 0) {
+        const size_t o = line.find(", Option ");
+        if (o != std::string::npos && o <= 8) return parseKey(line.substr(o + 2), k);
+    }
     const std::string low = lower(line);
     for (const auto &[w, rank] : words) {
         if (low.compare(0, w.size(), w) != 0) continue;
@@ -147,7 +152,7 @@ bool parseKey(const std::string &line, Key &k)
         ++i;
         const size_t s = i;
         while (i < line.size() && (std::isalnum(uint8_t(line[i])) ||
-                                   (line[i] == '.' && i > s && std::isdigit(uint8_t(line[i - 1])) && i + 1 < line.size() && std::isdigit(uint8_t(line[i + 1])))))
+                                   (line[i] == '.' && i > s && std::isalnum(uint8_t(line[i - 1])) && i + 1 < line.size() && std::isdigit(uint8_t(line[i + 1])))))
             ++i;
         std::string id = line.substr(s, i - s);
         static const std::set<std::string> spelled = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
@@ -180,8 +185,8 @@ bool parseKey(const std::string &line, Key &k)
         if (numbers >= 3 || k.title.find('%') != std::string::npos) return false;
         // "Paper 1 Paper 2": a table's column headings, not a heading with a title
         Key again;
-        if (!k.title.empty() && parseKey(k.title, again) && (again.title.empty() || lower(again.keyword) == lower(k.keyword) &&
-                                                               lower(again.title).rfind(lower(k.keyword), 0) == 0))
+        if (!k.title.empty() && parseKey(k.title, again) && (again.title.empty() || (lower(again.keyword) == lower(k.keyword) &&
+                                                               lower(again.title).rfind(lower(k.keyword), 0) == 0)))
             return false;
         return true;
     }
@@ -490,8 +495,37 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     {
         std::unordered_map<std::string, int> freq, exact;
         for (const auto &l : all) { ++freq[norm(l)]; ++exact[l]; }
+        // A topic's name at the top of each of its pages, then "continued" ("Algebra and", "functions", "continued":
+        // Edexcel A level Maths, whose topics have no number of their own but their statements'): those copies go,
+        // and the name where the topic starts stays, however often it is repeated
+        std::vector<char> keep(all.size(), 0), drop(all.size(), 0);
+        {
+            auto nameLine = [](const std::string &x) {
+                return x.size() >= 2 && x.size() <= 40 && x.back() != '.' && x.back() != ',' && x.back() != ':' && x.back() != ';' &&
+                       std::none_of(x.begin(), x.end(), [](char c) { return std::isdigit(uint8_t(c)); });
+            };
+            std::set<std::vector<std::string>> names;
+            for (size_t i = 1; i < all.size(); ++i) {
+                const std::string c = lower(trim(all[i]));
+                if (c != "continued" && c != "(continued)" && c != "cont." && c != "(cont.)") continue;
+                size_t k = 0;
+                while (k < 3 && k < i && nameLine(all[i - 1 - k])) ++k;
+                while (k > 0 && !std::isupper(uint8_t(all[i - k][0]))) --k;
+                if (!k) continue;
+                for (size_t j = i - k; j <= i; ++j) drop[j] = 1;
+                names.insert(std::vector<std::string>(all.begin() + long(i - k), all.begin() + long(i)));
+            }
+            for (const auto &nm : names)
+                for (size_t j = 0; j + nm.size() < all.size(); ++j) {
+                    if (drop[j] || !std::equal(nm.begin(), nm.end(), all.begin() + long(j))) continue;
+                    for (size_t q = j; q < j + nm.size(); ++q) keep[q] = 1;
+                }
+        }
         std::vector<std::string> kept;
-        for (const auto &l : all) {
+        for (size_t idx = 0; idx < all.size(); ++idx) {
+            const std::string &l = all[idx];
+            if (drop[idx]) continue;
+            if (keep[idx]) { kept.push_back(l); continue; }
             Num n;
             Key k;
             const bool bareNumber = !l.empty() && l.size() <= 2 && std::all_of(l.begin(), l.end(), [](char c) { return std::isdigit(uint8_t(c)); });
@@ -501,7 +535,12 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             // stays: it is the topic, and its copies are the same point
             const bool topicHeading = parseNum(l, n) && n.parts.size() == 1 && n.prefix.empty() && !statementLike(n.title) &&
                                       !contentTitle(cleanTitle(n.title)) && !adminTitle(cleanTitle(n.title)) && n.title.size() >= 3;
-            if (l.size() <= 160 && !topicHeading && (f >= 8 || (f >= 4 && !numberedLine))) continue;
+            // a word or two that comes up a few times is text in a narrow column, wrapped ("environmental",
+            // "distribution of": Edexcel A level Geography's key ideas), not a running header: only a heading
+            // repeated on page after page goes
+            const bool fragment = l.size() < 12 || std::count(l.begin(), l.end(), ' ') < 1;
+            const int need = numberedLine ? 8 : fragment ? 10 : 4;
+            if (l.size() <= 160 && !topicHeading && f >= need) continue;
             kept.push_back(l);
         }
         all.swap(kept);
@@ -522,7 +561,18 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (bare && dots >= 1 && i + 1 < all.size() && std::isalpha(uint8_t(all[i + 1][0]))) {
                 joined.push_back(l + " " + all[i + 1]);
                 ++i;
-            } else joined.push_back(l);
+                continue;
+            }
+            // and a subtopic beside its first statement, two columns on one line ("2.1 Develop code 2.1.1 Be able to
+            // write programs in a high-level…": Edexcel International GCSE Computer Science): two lines
+            static const std::regex beside("^([0-9]+(?:\\.[0-9]+)+) ([A-Za-z][^0-9]{2,50}?) (([0-9]+(?:\\.[0-9]+)+)\\.[0-9]+ [A-Za-z].*)$");
+            std::smatch m;
+            if (l.size() < 200 && std::regex_match(l, m, beside) && m[1].str() == m[4].str()) {
+                joined.push_back(m[1].str() + " " + m[2].str());
+                joined.push_back(m[3].str());
+                continue;
+            }
+            joined.push_back(l);
         }
         all.swap(joined);
     }
@@ -550,6 +600,24 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (n.parts[0] == section + 1 && contentTitle(cleanTitle(n.title))) {      // AS, then A-level
                 section = n.parts[0];
                 sectionStarts.push_back(i);
+            }
+        }
+        // AS content, then A-level content ("3 Subject content – AS", "4 Subject content – A-level": AQA's AS and
+        // A-level specifications): the A-level's has all of the AS's topics again, numbered its own way, so it is
+        // the content; the AS copy would only be the same points twice ("3.2.2.1 Culture and Identity" and "4.2.1
+        // Culture and Identity", AQA A-level Sociology)
+        if (section >= 0 && sectionStarts.size() == 1 && from > 0) {
+            auto level = [&](size_t line) {      // what comes after the dash: "– AS", "- A-level"
+                const std::string &t = all[line];
+                size_t dash = t.rfind(" \xE2\x80\x93 ");
+                size_t skip = 5;
+                if (dash == std::string::npos) { dash = t.rfind(" - "); skip = 3; }
+                return dash == std::string::npos ? std::string() : lower(trim(t.substr(dash + skip)));
+            };
+            const std::string first = level(from - 1), second = level(sectionStarts[0]);
+            if (first == "as" && (second == "a-level" || second == "a level")) {
+                from = sectionStarts[0] + 1;
+                sectionStarts.clear();
             }
         }
         if (section < 0) {
@@ -675,10 +743,13 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     // a contents line ends in its page number, among others like it; "Unit P1: Pure Mathematics 1" on its
                     // own is the unit's heading
                     const bool listed = tocLine(all[i]) && ((i + 1 < all.size() && tocLine(all[i + 1])) || (i > 0 && tocLine(all[i - 1])));
-                    if (listed || k.title.empty() || k.id.empty() || !std::isupper(uint8_t(k.title[0]))) continue;
+                    // (an option's title can be on the line after it: "Paper 1, Option 1A:", "The crusades, c1095–1204")
+                    const bool titleBelow = k.title.empty() && lower(k.keyword) == "option" && i + 1 < all.size() &&
+                                            !all[i + 1].empty() && std::isupper(uint8_t(all[i + 1][0]));
+                    if (listed || (k.title.empty() && !titleBelow) || k.id.empty() || (!k.title.empty() && !std::isupper(uint8_t(k.title[0])))) continue;
                 }
                 const std::string kw = lower(k.keyword);
-                if (kw != "theme" && kw != "topic" && kw != "unit" && kw != "key topic") continue;
+                if (kw != "theme" && kw != "topic" && kw != "unit" && kw != "key topic" && kw != "option") continue;
                 const int id = std::isdigit(uint8_t(k.id[0])) ? std::atoi(k.id.c_str()) : 1;      // "Unit P1": its points start at 1
                 for (size_t j = i + 1; j < all.size() && j < i + 70 && !follows; ++j) {
                     Num n;
@@ -736,6 +807,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     struct Open { int rank; int point; };
     std::vector<Open> stack;
     int lastTop = 0;
+    int innerLast = 0;          // the last of a subsection's own numbered parts ("5 Specialisation…" in 1.3.1), if any
+    int listNext = 0;           // the next item of a numbered list in the text ("1. Python", "2. C#"), and its line
+    size_t listLine = 0;
     int topSection = 0;
     char lastLetter = 0;
     bool rawEndsComma = false;
@@ -898,7 +972,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             const bool code = std::any_of(k.id.begin(), k.id.end(), [](char c) { return std::isalpha(uint8_t(c)); }) &&
                               std::any_of(k.id.begin(), k.id.end(), [](char c) { return std::isdigit(uint8_t(c)); });
             made = open(rank, code ? k.id : k.keyword + " " + k.id, cleanTitle(k.title), false);
-            if (rank < 30) lastTop = 0;
+            if (rank < 30) { lastTop = 0; innerLast = 0; }
         } else if (useCode2 && parseCode2(l, code, title)) {
             made = open(50, code, cleanTitle(title), false);
         } else if (board == "OCR" && l.size() > 8 && std::isupper(uint8_t(l[0])) && std::isdigit(uint8_t(l[1])) && std::isdigit(uint8_t(l[2])) &&
@@ -921,6 +995,39 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // a topic ("2 Organisation of the organism"), or a numbered learning statement under a subtopic
                 const int v = n.parts[0];
                 bool heading = !statement;
+                // a numbered list in the text, after the line that brings it in ("…the following programming
+                // languages:", "1. Python", "2. C#", "3. Java.": Edexcel International GCSE Computer Science)
+                if (heading && ((v == 1 && i > 0 && !lines[i - 1].empty() && lines[i - 1].back() == ':') ||
+                                (listNext > 0 && v == listNext && listLine + 1 == i))) {
+                    listNext = v + 1;
+                    listLine = i;
+                    body(l);
+                    justOpened = -1;
+                    continue;
+                }
+                // a subsection's own numbered parts ("1.3.1 Introductory concepts", then "1 The nature of economics",
+                // "2 The economic problem"…, carrying on into the next subsection: 1.3.2's first part is 7; Edexcel
+                // International A level Economics): not topics, as a topic can't come after its own subsection
+                int deep = -1;      // the open point with three numbers or more ("1.3.1"), if it is the innermost numbered one
+                for (auto it = stack.rbegin(); it != stack.rend(); ++it) {
+                    const std::string &num = pts[size_t(it->point)].number;
+                    if (num.empty() || !std::isdigit(uint8_t(num[0]))) continue;
+                    if (dotted[size_t(it->point)] && std::count(num.begin(), num.end(), '.') >= 2) deep = it->point;
+                    if (dotted[size_t(it->point)]) break;
+                }
+                if (heading && deep >= 0 && v != lastTop && !topicFor(v) &&
+                    (v <= std::atoi(pts[size_t(deep)].number.c_str()) || (innerLast > 0 && v == innerLast + 1))) {
+                    // (under the subsection, whatever was open inside it)
+                    while (!stack.empty() && stack.back().point != deep) stack.pop_back();
+                    made = open(rankOf[size_t(deep)] + 1, number, t, false);
+                    innerLast = v;
+                    if (made >= 0) numbersSeen.insert(plain);
+                    justOpened = made;
+                    justMerged = merged;
+                    justKeyword = false;
+                    rawEndsComma = !l.empty() && l.back() == ',';
+                    continue;
+                }
                 // inside a topic, the next topic: the one after it, or a later one when its own points follow (so one
                 // topic missed doesn't take those after it with it); not a new section ("4 Subject content – A-level")
                 // (or the next topic with no subtopics of its own: Cambridge IGCSE ICT's "3 Storage devices and media")
@@ -928,6 +1035,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     const int next = nextDottedMajor(i);
                     heading = v == lastTop || (v > lastTop && next == v && (v == lastTop + 1 || !contentTitle(t))) ||
                               (v == lastTop + 1 && next > v && !contentTitle(t));
+                } else if (heading && lastTop == 0 && v > 1) {
+                    // before the first topic, a number the content's own numbering hasn't reached: an item of a list
+                    // ("6 The internally assessed Practical Endorsement", then Module 1's 1.1: OCR A Level Chemistry A)
+                    const int next = nextDottedMajor(i);
+                    if (next >= 1 && next < v) heading = false;
                 }
                 if (heading) {
                     made = open(30, number, t, false);
@@ -943,7 +1055,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     Num pn;
                     Key pk;
                     auto nameLike = [&](const std::string &x) {
-                        return x.size() >= 2 && x.size() <= 40 && x.back() != '.' && !parseNum(x, pn) && !parseKey(x, pk) &&
+                        return x.size() >= 2 && x.size() <= 40 && x.back() != '.' && x.back() != ':' && !parseNum(x, pn) && !parseKey(x, pk) &&
                                !contentTitle(x) && lower(x) != "content" &&
                                std::none_of(x.begin(), x.end(), [](char c) { return std::isdigit(uint8_t(c)); });
                     };
@@ -1007,6 +1119,16 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 lastLetter = letter;
             } else body(l);
         } else {
+            // a heading with nothing after its name, and its title on the next line ("Paper 1, Option 1A:", then "The
+            // crusades, c1095–1204": Edexcel A level History)
+            if (justOpened >= 0 && justKeyword && !stack.empty() && stack.back().point == justOpened &&
+                pts[size_t(justOpened)].title.empty() && l.size() >= 3 && l.size() <= 100 && std::isupper(uint8_t(l[0])) &&
+                l.back() != '.') {
+                pts[size_t(justOpened)].title = cleanTitle(l);
+                justKeyword = false;
+                rawEndsComma = l.back() == ',';
+                continue;
+            }
             // a subtopic named above its coded statements: "Structure and calculation", then "N1 order positive and
             // negative integers…" (the statements' codes, N1, A1, G1, aren't numbers of the document's own)
             if (i + 1 < lines.size() && !stack.empty() && l.size() >= 3 && l.size() <= 60 && std::isupper(uint8_t(l[0])) &&
@@ -1033,11 +1155,18 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                                                               "by", "from", "into", "its", "their", "his", "her", "&", "–", "-"};
                 const bool open = bt.find("\xE2\x80\xA6") == std::string::npos && !bt.empty() && bt.back() != '.' && bt.back() != ':';
                 // a line of its own that starts with a command ("use standard units…") is a statement, not more title
-                const bool command = c0 < 0x80 && std::islower(c0) && statementLike(l) && firstWord(l) != "and" && firstWord(l) != "of";
+                // (judged by its first word: "frontiers", "economies" carry a title on, as in "3 Production possibility" +
+                // "frontiers", Edexcel International A level Economics)
+                std::string capital = l;
+                if (c0 < 0x80) capital[0] = char(std::toupper(c0));
+                const bool command = c0 < 0x80 && std::islower(c0) && statementLike(capital) && firstWord(l) != "and" && firstWord(l) != "of";
                 const bool carries = ((c0 < 0x80 && std::islower(c0) && !justKeyword) || joiners.count(lower(lastWord)) || rawEndsComma) &&
                                      !(command && !joiners.count(lower(lastWord)) && !rawEndsComma);
-                if (open && carries && bt.size() < 90 && l[0] != '\xE2' && l[0] != '-' && l[0] != '(') {
-                    bt += " " + cleanTitle(l);
+                // (a word broken at its hyphen carries on whatever its case: "1 Late Anglo-" + "Saxon England,")
+                const bool broken = !bt.empty() && bt.back() == '-' && bt.size() >= 2 && std::isalpha(uint8_t(bt[bt.size() - 2])) &&
+                                    std::isalpha(c0);
+                if (open && (carries || broken) && bt.size() < 90 && l[0] != '\xE2' && l[0] != '-' && l[0] != '(') {
+                    bt += (broken ? "" : " ") + cleanTitle(l);
                     if (!pts[size_t(justOpened)].body.empty()) body(l);
                     rawEndsComma = l.back() == ',';
                     continue;
@@ -1067,10 +1196,15 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (std::isalpha(c)) ++run;
                 else { if (run >= 3) ++words; run = 0; }
             }
-            // and the parts of a unit's description (Edexcel International A level: "P1.1 Unit description")
+            // and the parts of a unit's description (Edexcel International A level: "P1.1 Unit description"); and the
+            // assessment objectives and maths skills a spec lists among its content ("AO2 10 marks", AQA A-level
+            // History's NEA; "MS2.2 Students could use and manipulate equations", AQA Environmental Science)
             const std::string lt = lower(t);
+            const std::string &num = pts[i].number;
+            const bool objective = num.size() >= 3 && ((num[0] == 'A' && num[1] == 'O') || (num[0] == 'M' && num[1] == 'S')) &&
+                                   std::isdigit(uint8_t(num[2])) && num.find(' ') == std::string::npos;
             if ((!t.empty() && words == 0) || pts[i].number == "0" || lt == "unit description" || lt == "assessment information" ||
-                lt == "unit content" || lt == "content") { gone[i] = true; continue; }
+                lt == "unit content" || lt == "content" || objective) { gone[i] = true; continue; }
             if (pts[i].number.empty() || t.empty()) continue;
             const auto key = std::make_pair(pts[i].number, lower(t));
             auto it = first.find(key);

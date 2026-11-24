@@ -1,0 +1,37 @@
+# spec: https://www.cambridgeinternational.org/Images/697352-2026-2028-syllabus.pdf
+# AS & A Level Law notes written for this test: case notes, problem-question answers and essay plans. Each is under
+# the point it is about.
+=== 1.1.4 | statutory interpretation
+Literal rule (Whiteley v Chappell), golden rule (Adler v George, Re Sigsworth), mischief rule (Heydon's case, Smith v Hughes), purposive approach (Jones v Tower Boot). Intrinsic and extrinsic aids, Pepper v Hart and Hansard.
+=== 1.1.5 | precedent
+Judicial precedent: stare decisis, ratio decidendi vs obiter dicta, the hierarchy of the courts, the Practice Statement 1966, distinguishing, overruling, reversing, persuasive precedent. Young v Bristol Aeroplane exceptions.
+=== 1.2.2 | ADR
+Alternative dispute resolution: negotiation, mediation, conciliation, arbitration (Arbitration Act 1996), tribunals. Advantages: cheaper, quicker, private, less formal. Disadvantages: imbalance of power, no precedent.
+=== 1.3.3 | juries + magistrates
+Lay personnel: magistrates (selection, training, role in criminal cases) and juries (selection, role in the Crown Court, jury equity, R v Ponting, advantages and disadvantages, jury tampering).
+=== 2.1.1;2.1.2 | AR + MR
+Actus reus: voluntary act, omissions (R v Pittwood, R v Miller, Stone and Dobinson), causation in fact (but for test, R v White) and in law (R v Pagett, R v Smith, novus actus interveniens). Mens rea: intention (direct and oblique, R v Woollin), recklessness (R v Cunningham, R v G), coincidence of AR and MR (Thabo Meli).
+=== 2.2.1 | theft
+Theft s1 Theft Act 1968: appropriation (s3, R v Gomez), property (s4), belonging to another (s5), dishonesty (s2 and Ivey v Genting test), intention to permanently deprive (s6).
+=== 2.2.3 | burglary
+Burglary s9(1)(a) and s9(1)(b): entry (R v Collins, R v Brown, R v Ryan), building or part of a building, as a trespasser, intent to steal, inflict GBH or do unlawful damage.
+=== 2.3.3 | sentencing aims
+Aims of sentencing: retribution, deterrence (individual and general), rehabilitation, protection of the public, reparation. Custodial and community sentences, fines, discharges.
+=== 3.1.2 | offer and acceptance
+Offer vs invitation to treat (Fisher v Bell, Pharmaceutical Society v Boots, Partridge v Crittenden), unilateral offers (Carlill v Carbolic Smoke Ball), termination of offer, acceptance and the postal rule (Adams v Lindsell), counter-offers (Hyde v Wrench).
+=== 3.1.4 | consideration
+Consideration must be sufficient but need not be adequate (Chappell v Nestle), past consideration (Re McArdle), existing duty (Stilk v Myrick, Williams v Roffey), promissory estoppel.
+=== 3.3.2;3.3.3 | breach + frustration
+Discharge of contract: performance, breach (actual and anticipatory), frustration (Taylor v Caldwell, Krell v Henry, Herne Bay Steam Boat v Hutton).
+=== 4.1.2;4.1.3 | negligence
+Duty of care: Donoghue v Stevenson neighbour principle, Caparo test (foreseeability, proximity, fair just and reasonable). Breach: the reasonable man, risk factors (Bolton v Stone, Paris v Stepney), professional standard (Bolam).
+=== 4.2.1 | occupiers liability
+Occupiers' Liability Act 1957 for lawful visitors and 1984 for trespassers, children (Glasgow Corporation v Taylor), warnings, independent contractors.
+=== 4.4.1;4.4.2 | defences + remedies
+Defences in tort: consent (volenti), contributory negligence. Remedies: damages (compensatory, special and general), injunctions.
+=== - | chem
+Ionisation energy increases across a period.
+=== - | music
+grade 6 piano exam next week - scales in B flat minor
+=== - | lift share
+lift with Josh at 7.50

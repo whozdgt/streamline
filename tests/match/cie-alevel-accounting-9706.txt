@@ -1,0 +1,33 @@
+# spec: https://www.cambridgeinternational.org/Images/697417-2026-2028-syllabus.pdf
+# AS & A Level Accounting notes written for this test: worked examples, layouts and exam answers. Each is under the
+# point it is about.
+=== 1.3.2 | depreciation
+Changing asset values: straight-line and reducing balance depreciation, revaluation, disposal of non-current assets account, profit or loss on disposal, accumulated depreciation.
+=== 1.4.2;1.4.3 | trial balance + bank rec
+Trial balance and errors that don't affect its agreement: omission, commission, principle, original entry, complete reversal, compensating. Suspense accounts. Bank reconciliation statement: unpresented cheques, outstanding lodgements, bank charges, updating the cash book.
+=== 1.4.4 | control accounts
+Trade receivables and trade payables control accounts, contra entries, sales and purchases ledgers, discounts allowed and received, irrecoverable debts.
+=== 1.5.1;1.5.2 | sole trader accounts
+Accruals and prepayments, irrecoverable debts and the allowance for doubtful debts, inventory valuation (lower of cost and net realisable value). Statement of profit or loss and statement of financial position for a sole trader.
+=== 1.5.3 | partnerships
+Partnership agreement, appropriation account: interest on capital, salaries, interest on drawings, share of profit; current accounts vs capital accounts; the Partnership Act 1890 if no agreement.
+=== 1.6.2 | ratios
+Profitability ratios: gross margin, profit margin, ROCE. Liquidity: current ratio, liquid (acid test) ratio. Efficiency: trade receivables turnover, trade payables turnover, inventory turnover. Gearing, interest cover.
+=== 2.2.2;2.2.3 | absorption vs marginal
+Absorption costing: overhead allocation and apportionment, overhead absorption rates per machine hour or labour hour, under and over absorption. Marginal costing: contribution, make or buy decisions, limiting factors, special orders.
+=== 2.2.4 | CVP
+Cost-volume-profit analysis: break-even point = fixed costs / contribution per unit, margin of safety, target profit, break-even charts.
+=== 3.1.4 | manufacturing
+Manufacturing account: prime cost, factory overheads, work in progress, cost of production, factory profit and unrealised profit on inventory.
+=== 3.1.5;3.2.3 | companies + audit
+Limited company financial statements, share capital, share premium, dividends, rights issues and bonus issues, statement of changes in equity, statement of cash flows (IAS 7). Auditing: internal and external auditors, true and fair view, stewardship.
+=== 4.2.1 | standard costing
+Standard costing and variance analysis: material price and usage variances, labour rate and efficiency variances, sales price and volume variances, flexed budgets, reconciliation of budgeted and actual profit.
+=== 4.4.1 | NPV
+Investment appraisal: payback, accounting rate of return, net present value with discount factors, internal rate of return, sensitivity analysis.
+=== - | geography
+Hjulstrom curve - erosion, transport and deposition of particles by velocity.
+=== - | sociology
+Feminist views of the family: dual burden, domestic violence.
+=== - | phone
+new SIM arrives Friday

@@ -28,3 +28,8 @@ edexcel-9ge0
 aqa-7042
 edexcel-yph11
 edexcel-4ec1
+edexcel-9hi0
+edexcel-4cp0
+edexcel-yec11
+ocr-h432
+edexcel-4ma1

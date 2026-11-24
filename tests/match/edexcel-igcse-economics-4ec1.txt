@@ -1,0 +1,31 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Economics/2017/Specification%20and%20SAMS/international-gcse-spec-9781446942789.pdf
+# International GCSE Economics notes written for this test: revision notes and exam answers. Each is under the point
+# it is about.
+=== 1.1.1 | scarcity
+The economic problem: scarcity, finite resources and unlimited wants, opportunity cost, production possibility curves and shifts in the PPC.
+=== 1.1.3 | demand and supply
+Demand curves, movements along vs shifts, factors that shift supply, equilibrium price and quantity, excess demand and excess supply.
+=== 1.1.4 | PED
+Price elasticity of demand = % change in quantity demanded / % change in price, elastic and inelastic, the effect on total revenue, income elasticity, price elasticity of supply.
+=== 1.1.6 | externalities
+External costs and benefits of production and consumption, social cost = private cost + external cost, government responses: taxes, subsidies, regulation, tradable pollution permits.
+=== 1.2.2 | specialisation
+Productivity and division of labour: specialisation, advantages and disadvantages of the division of labour, labour productivity.
+=== 1.2.4 | competition
+Business competition: competitive markets, monopoly and oligopoly, barriers to entry, effects of competition on consumers and firms, mergers.
+=== 1.2.5 | labour market
+The labour market: demand for labour as a derived demand, supply of labour, wage determination, why wages differ, trade unions, the national minimum wage.
+=== 2.1.1 | macro objectives
+Macroeconomic objectives: economic growth (GDP), low unemployment, low and stable inflation (CPI), balance of payments stability, redistribution of income.
+=== 2.1.2 | fiscal and monetary
+Government policies: fiscal policy (taxation and government spending, budget deficits), monetary policy (interest rates set by the central bank), supply-side policies.
+=== 2.2.2 | trade
+International trade: advantages of free trade, protectionism (tariffs, quotas, subsidies), trade blocs, the World Trade Organisation.
+=== 2.2.3 | exchange rates
+Exchange rates: floating exchange rates, appreciation and depreciation, effects on imports, exports and inflation, SPICED and WPIDEC.
+=== - | biology
+Osmosis is the movement of water across a partially permeable membrane.
+=== - | english
+Macbeth Act 1 Scene 7: "I have no spur to prick the sides of my intent".
+=== - | football
+training tues 6pm, bring shin pads

@@ -1,0 +1,29 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Physics/2018/Specification%20and%20Sample%20Assessment/9781446957783_IAL_Physics_Iss3.pdf
+# International Advanced Level Physics notes written for this test: revision notes, practical write-ups and exam
+# answers. Each is under the point it is about.
+=== 1.3 | suvat and moments
+Equations of motion for uniform acceleration (suvat), projectiles, Newton's laws, moments and the principle of moments, centre of gravity, kinetic and gravitational potential energy, work done, power and efficiency.
+=== 1.4 | materials
+Materials: density, Stokes' law and viscosity, upthrust, Hooke's law, stress, strain and the Young modulus, stress-strain graphs, elastic and plastic deformation, elastic strain energy.
+=== 2.3 | waves
+Waves: transverse and longitudinal, the wave equation v = f lambda, superposition and standing waves, diffraction and interference, refraction and total internal reflection, the photoelectric effect, photons and electron diffraction.
+=== 2.4 | circuits
+Electric circuits: current as the rate of flow of charge, potential difference, resistance and resistivity, I-V characteristics, series and parallel, potential dividers, internal resistance and emf.
+=== 4.4 | fields
+Electric fields and capacitors: Coulomb's law, field strength E = F/Q, capacitance, charging and discharging (time constant RC). Magnetic fields: flux density, F = BIl, electromagnetic induction, Faraday's and Lenz's laws.
+=== 4.5 | particles
+Nuclear and particle physics: alpha particle scattering, particle accelerators (linac and cyclotron), quarks and leptons, conservation laws in particle interactions, matter and antimatter.
+=== 5.3 | thermal
+Thermodynamics: specific heat capacity, specific latent heat, internal energy, absolute zero, the ideal gas equation pV = NkT, kinetic theory.
+=== 5.4 | radioactivity
+Nuclear decay: alpha, beta and gamma radiation, background radiation, half-life, decay constant, the exponential decay equation.
+=== 5.5 | SHM
+Oscillations: simple harmonic motion, a = -omega^2 x, mass-spring systems and simple pendulums, damping, forced oscillations and resonance.
+=== 5.6 | astro
+Astrophysics and cosmology: gravitational fields, Newton's law of gravitation, the Hertzsprung-Russell diagram, Stefan-Boltzmann law, Wien's law, standard candles, red shift, Hubble's law and the age of the universe.
+=== - | chemistry
+Le Chatelier: increasing temperature favours the endothermic direction.
+=== - | business
+Ansoff's matrix - market penetration vs diversification.
+=== - | dentist
+dentist 3.15 wed

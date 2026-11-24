@@ -1,0 +1,37 @@
+# spec: https://www.cambridgeinternational.org/Images/662482-2025-2027-syllabus.pdf
+# AS & A Level Information Technology notes written for this test: revision notes and exam answers. Each is under the
+# point it is about.
+=== 1.3 | encryption
+Encryption: symmetric vs asymmetric, public and private keys, protocols that use encryption (SSL/TLS, HTTPS), encryption in hard disks, email and HTTPS.
+=== 1.4 | validation
+Checking the accuracy of data: validation (range check, type check, length check, format check, presence check, check digit) vs verification (visual checking, double data entry, parity check, checksum).
+=== 2.2;2.3 | system software
+System software: compilers, interpreters, linkers, device drivers, operating systems. Utility software: anti-virus, backup, data compression, disk defragmentation, formatting, file copying.
+=== 2.5 | user interfaces
+Types of user interface: command line interface, graphical user interface, dialogue interface, gesture based interface; advantages and disadvantages of each.
+=== 3.1;3.2 | sensors
+Monitoring vs control systems: sensors (temperature, pressure, light, moisture, pH), ADC and DAC, microprocessor compares readings with preset values, actuators. Example: a greenhouse control system.
+=== 5.2 | malware
+Malware: viruses, worms, trojans, spyware, adware, ransomware, rootkits, malicious bots. Phishing, pharming, smishing, vishing and how to protect against them.
+=== 7.1 | expert systems
+Expert systems: knowledge base, rule base, inference engine, explanation system, user interface. Uses: medical diagnosis, mineral prospecting, car engine fault diagnosis.
+=== 10.2 | 3NF
+Normalisation: first normal form (no repeating groups), second normal form (no partial dependencies), third normal form (no non-key dependencies), primary keys, foreign keys, composite keys.
+=== 12.1 | crypto
+Digital currencies: cryptocurrencies like Bitcoin, blockchain, mining, digital wallets, advantages and disadvantages vs traditional currencies.
+=== 14.6 | protocols
+Network protocols: TCP/IP, HTTP, HTTPS, FTP, SMTP, POP3, IMAP, protocol stacks and layers.
+=== 14.9;14.10 | network security
+Network security: firewalls, proxy servers, intrusion detection, biometrics, authentication. Disaster recovery management: risk assessment, backups, restoring data and systems.
+=== 15.3 | Gantt
+Project management tools: Gantt charts, PERT charts, critical path analysis, work breakdown structure.
+=== 16.8;16.9 | agile + prototyping
+Methods of software development: waterfall, agile, iterative, rapid application development. Prototyping: evolutionary vs throw-away prototypes.
+=== 18.1 | mail merge
+Mail merge: master document, data source, merge fields, filtering records, uses for personalised letters and labels.
+=== - | geography
+Glacial erosion: plucking and abrasion produce corries and aretes.
+=== - | psychology
+Milgram's study of obedience: 65% went to 450 volts.
+=== - | shopping
+milk, eggs, bread, bin bags

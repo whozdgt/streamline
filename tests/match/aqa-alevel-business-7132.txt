@@ -1,0 +1,41 @@
+# spec: https://filestore.aqa.org.uk/resources/business/specifications/AQA-7131-7132-SP-2015.PDF
+# A-level Business notes written for this test: case study answers, model definitions and essay plans. Each is under
+# the point (or section) it is about.
+=== 3.1.2 | business forms
+Sole traders, partnerships, private and public limited companies, limited liability, shareholders vs stakeholders, share prices and market capitalisation, not-for-profit organisations and social enterprises, why some businesses go public (IPO).
+=== 3.1.3 | PESTLE
+Businesses operate within an external environment: competition, market conditions, incomes, interest rates, demographic factors, environmental issues and fair trade. Impact on costs and demand.
+=== 3.2.1;3.2.2 | leadership styles
+Management and leadership: autocratic, democratic, paternalistic, laissez-faire; Tannenbaum Schmidt continuum, Blake Mouton grid. Decision making: scientific decision making, decision trees and expected values, intuition, risk and uncertainty.
+=== 3.2.3 | stakeholders
+Stakeholder mapping (Mendelow's matrix: power and interest), stakeholder needs and conflicts, shareholders vs stakeholders debate.
+=== 3.3.2;3.3.3 | market research + STP
+Market research: primary and secondary, sampling, correlation, confidence intervals, extrapolation. Price and income elasticity of demand. Segmentation, targeting and positioning, niche vs mass marketing, position maps.
+=== 3.3.4 | marketing mix
+The 7Ps: product, price, place, promotion, people, process, physical environment. Product life cycle, Boston matrix, pricing strategies (skimming, penetration, cost plus, psychological), digital marketing and e-commerce.
+=== 3.4.2;3.4.3 | ops performance
+Operational data: labour productivity, unit costs, capacity utilisation = actual output / maximum output x 100. Economies and diseconomies of scale, lean production, just in time, kaizen, quality: quality assurance vs quality control, TQM. Supply chain and outsourcing.
+=== 3.5.2 | ratios + break even
+Analysing financial performance: budgets and variances (favourable and adverse), cash flow forecasts, break-even analysis, contribution per unit, margin of safety, profit margins (gross, operating, net).
+=== 3.5.3;3.5.4 | finance
+Sources of finance: internal (retained profit, sale of assets) and external (loans, overdrafts, share capital, venture capital, crowdfunding). Improving cash flow: factoring, sale and leaseback, cutting costs, improving profits.
+=== 3.6.4 | motivation theories
+Motivation: Taylor's scientific management, Mayo and the Hawthorne studies, Maslow's hierarchy of needs, Herzberg's two factor theory (hygiene factors vs motivators). Financial incentives (piece rate, commission, profit sharing) and non-financial (job enrichment, empowerment, teamworking).
+=== 3.7.2;3.7.3 | ratio analysis
+Analysing the internal position: financial ratios - ROCE, current ratio, gearing, inventory turnover, payables and receivables days; human resources data; core competencies; SWOT.
+=== 3.7.4;3.7.5;3.7.6;3.7.7 | PESTLE + Porter
+External environment: political, legal, economic (exchange rates, interest rates, inflation, business cycle), social, technological, environmental change. Porter's five forces: rivalry, buyer power, supplier power, threat of new entrants, threat of substitutes.
+=== 3.7.8 | investment appraisal
+Investment appraisal: payback period, average rate of return, net present value with discount factors, sensitivity analysis, non-financial factors.
+=== 3.8.1;3.8.2 | Ansoff + Porter generic
+Ansoff's matrix: market penetration, product development, market development, diversification and their risks. Porter's generic strategies: cost leadership, differentiation, focus. Bowman's strategic clock, competitive advantage.
+=== 3.9.3 | going global
+Internationalisation: reasons to trade internationally, offshoring and reshoring, entering international markets via exporting, licensing, alliances, direct investment; multinational corporations and their impact; Bartlett and Ghoshal.
+=== 3.10.1;3.10.2 | change + culture
+Managing change: Lewin's force field analysis, causes of change, resistance to change and how to overcome it (Kotter and Schlesinger). Organisational culture: Handy's cultures (power, role, task, person), Hofstede's national cultures.
+=== - | biology
+The light dependent reaction happens in the thylakoids.
+=== - | history
+Causes of WW1: alliances, militarism, imperialism, nationalism.
+=== - | gym
+leg day wed

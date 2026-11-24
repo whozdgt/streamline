@@ -1,0 +1,31 @@
+# spec: https://filestore.aqa.org.uk/resources/pe/specifications/AQA-7582-SP-2016.PDF
+# A-level PE notes written for this test: diagrams described in words, exam answers and revision cards. Each is under
+# the point it is about.
+=== 3.1.1.2 | heart
+Cardiac conduction system: SA node, AV node, bundle of His, Purkinje fibres. Heart rate, stroke volume, cardiac output = SV x HR, Starling's law, venous return mechanisms (skeletal muscle pump, respiratory pump, pocket valves), the vascular shunt, a-vO2 difference.
+=== 3.1.1.6 | energy systems
+ATP-PC system, anaerobic glycolytic system, aerobic system (Krebs cycle, electron transport chain), energy continuum, EPOC (fast and slow components), lactate threshold, OBLA, VO2 max.
+=== 3.1.2.1 | skill classification
+Skill continuums: open-closed, gross-fine, discrete-serial-continuous, self paced-externally paced, simple-complex, low-high organisation. Transfer of skills: positive, negative, zero, bilateral.
+=== 3.1.2.4 | feedback
+Types of guidance: visual, verbal, manual, mechanical. Feedback: intrinsic and extrinsic, knowledge of results, knowledge of performance, positive and negative.
+=== 3.1.3.1.2 | rational recreation
+Industrial and post-industrial 1780-1900: urbanisation, the factory system, Saturday half day, rational recreation, public schools and the development of football, the role of the church, professionalism vs amateurism.
+=== 3.2.1.3 | injury
+Injury prevention: warm up and cool down, screening, protective equipment. Rehabilitation: proprioceptive training, strength training, hyperbaric chambers, cryotherapy, ice baths, massage, sleep and nutrition.
+=== 3.2.2.2;3.2.2.3 | levers + Newton
+First, second and third class levers, mechanical advantage. Newton's three laws of motion applied to sprinting, velocity, acceleration, momentum, distance-time and velocity-time graphs.
+=== 3.2.2.5;3.2.2.6 | projectiles + fluids
+Projectile motion: height of release, speed of release, angle of release, parabolic flight paths of a shot put vs a badminton shuttle. Fluid mechanics: drag, lift, the Bernoulli principle in ski jumping and cycling.
+=== 3.2.3.1.3;3.2.3.1.4 | arousal + anxiety
+Drive theory, inverted U theory, catastrophe theory, zone of optimal functioning, peak flow experience. Somatic vs cognitive anxiety, trait vs state, measuring anxiety with questionnaires (SCAT), observations and physiological measures.
+=== 3.2.3.1.9 | group dynamics
+Tuckman's forming, storming, norming, performing; Steiner's model of group productivity, the Ringelmann effect and social loafing, Carron's antecedents of cohesion.
+=== 3.2.4.5 | drugs in sport
+Performance enhancing drugs: EPO, anabolic steroids, beta blockers, stimulants. Blood doping, gene doping. WADA, the whereabouts system, arguments for and against drug taking, testing.
+=== - | maths
+Find dy/dx for y = sin 2x.
+=== - | economics
+Monopoly: price maker, high barriers to entry, supernormal profit in the long run.
+=== - | match
+home vs Rovers sat 2pm

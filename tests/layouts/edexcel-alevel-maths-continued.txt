@@ -1,0 +1,69 @@
+Pearson Edexcel Level 3 Advanced GCE in Mathematics (9MA0)
+Paper 1 and Paper 2: Pure Mathematics
+To support the co-teaching of this qualification with the AS Mathematics qualification,
+common content has been highlighted in bold.
+Proof
+1.1 Understand and use the
+structure of mathematical
+proof, proceeding from
+given assumptions
+Examples of proofs:
+Proof by deduction
+Proof by contradiction
+(including proof of the
+irrationality of 2 and the
+infinity of primes, and
+application to unfamiliar
+proofs).
+Algebra and
+functions
+2.1 Understand and use the
+laws of indices for all
+rational exponents.
+The equivalence of these forms should be known.
+2.2 Use and manipulate surds,
+including rationalising the
+denominator.
+Students should be able to simplify algebraic surds.
+Algebra and
+functions
+continued
+2.3 Work with quadratic
+functions and their graphs.
+The discriminant of a quadratic function.
+2.4 Solve simultaneous
+equations in two variables by
+elimination and by substitution.
+Algebra and
+functions
+continued
+2.5 Solve linear and quadratic
+inequalities in a single
+variable.
+Algebra and
+functions
+continued
+2.6 Manipulate polynomials
+algebraically.
+Algebra and
+functions
+continued
+2.7 Understand and use
+graphs of functions.
+Coordinate
+geometry in the
+(x, y) plane
+3.1 Understand and use the
+equation of a straight line.
+3.2 Understand and use the
+coordinate geometry of the circle.
+Coordinate
+geometry in the
+(x, y) plane
+continued
+3.3 Understand and use the
+parametric equations of curves.
+Sequences and
+series
+4.1 Understand and use the
+binomial expansion.

@@ -1,0 +1,25 @@
+Pearson Edexcel International GCSE in Computer Science (4CP0)
+Topic 1: Problem solving
+Students should:
+1.1 Understand algorithms
+1.1.1 Understand how to use structure diagrams
+1.1.2 Understand how to produce algorithms
+1.2 Develop code
+1.2.1 Be able to write programs
+Topic 2: Programming
+Learning to program is a core component of a computer science course.
+They will develop their knowledge and skills in at least one of the
+following programming languages:
+1. Python
+2. C#
+3. Java.
+Students should:
+2.1 Develop code 2.1.1 Be able to write programs in a high-level
+programming language.
+2.1.2 Understand the benefit of producing
+programs that are easy to read
+2.2 Constructs
+2.2.1 Understand the structural components of a program
+Topic 3: Data
+3.1 Binary
+3.1.1 Understand that computers use binary
