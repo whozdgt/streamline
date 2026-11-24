@@ -780,7 +780,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // a topic ("2 Organisation of the organism"), or a numbered learning statement under a subtopic
                 const int v = n.parts[0];
                 bool heading = !statement;
-                if (heading && dottedOpen()) heading = v == lastTop || (v > lastTop && nextDottedMajor(i) == v);
+                if (heading && dottedOpen()) heading = v == lastTop || (v == lastTop + 1 && nextDottedMajor(i) == v);
                 if (heading) {
                     made = open(30, number, t, false);
                     lastTop = v;
