@@ -611,6 +611,7 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         QCryptographicHash h(QCryptographicHash::Sha1);
         h.addData(p->specText.toUtf8());
         h.addData(QFileInfo(meaningPath).fileName().toUtf8());
+        h.addData("reader 2");      // the spec reader changes: read the spec afresh
         specCache = dir + QLatin1Char('/') + QString::fromLatin1(h.result().toHex().left(24)) + QStringLiteral(".bin");
     }
 

@@ -139,6 +139,9 @@ bool parseKey(const std::string &line, Key &k)
         for (size_t c = 0; c < k.title.size(); ++c)
             if (std::isdigit(uint8_t(k.title[c])) && (c == 0 || !std::isdigit(uint8_t(k.title[c - 1])))) ++numbers;
         if (numbers >= 3 || k.title.find('%') != std::string::npos) return false;
+        // "Paper 1 Paper 2": a table's column headings, not a heading with a title
+        Key again;
+        if (!k.title.empty() && parseKey(k.title, again) && again.title.empty()) return false;
         return true;
     }
     return false;
@@ -723,11 +726,28 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 const size_t depth = size_t(std::count(k.id.begin(), k.id.end(), '.')) + 1;
                 for (size_t j = i + 1; j < lines.size() && j < i + 60; ++j) {
                     Num nn;
+                    Key kk;
+                    if (parseKey(lines[j], kk) && kk.rank <= k.rank) break;      // the next heading like it comes first
                     if (parseNum(lines[j], nn) && nn.parts.size() > depth) {
                         std::string lead = nn.prefix;
                         for (size_t d = 0; d < depth; ++d) lead += (d ? "." : "") + std::to_string(nn.parts[d]);
                         heads = lead == k.id;
                         break;
+                    }
+                }
+                // A paper or component ("Paper 4") holds its own numbering, which starts again at 1 (Cambridge
+                // A Level History: topics 1–9 for Papers 1 and 2, then 1–9 again for Paper 4), or holds topics
+                // ("Topic 1: The origins of the First World War") rather than numbers
+                if (!heads && k.rank <= 12) {
+                    for (size_t j = i + 1; j < lines.size() && j < i + 80; ++j) {
+                        Num nn;
+                        Key kk;
+                        if (parseKey(lines[j], kk) && kk.rank > k.rank && kk.rank <= 20 && !kk.title.empty()) { heads = true; break; }
+                        if (parseNum(lines[j], nn) && !statementLike(nn.title)) {
+                            heads = nn.prefix.empty() && nn.parts[0] == 1 && (nn.parts.size() == 1 || nn.parts[1] == 1) &&
+                                    !numbersSeen.empty();
+                            break;
+                        }
                     }
                 }
                 if (!heads) rank += 50;
@@ -760,7 +780,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // a topic ("2 Organisation of the organism"), or a numbered learning statement under a subtopic
                 const int v = n.parts[0];
                 bool heading = !statement;
-                if (heading && dottedOpen()) heading = v == lastTop || (v == lastTop + 1 && nextDottedMajor(i) == v);
+                if (heading && dottedOpen()) heading = v == lastTop || (v > lastTop && nextDottedMajor(i) == v);
                 if (heading) {
                     made = open(30, number, t, false);
                     lastTop = v;
@@ -894,7 +914,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         std::vector<int> remap(pts.size(), -1);
         std::vector<podsort::SpecPoint> kept;
         for (size_t i = 0; i < pts.size(); ++i) {
-            if (drop[i] || pts[i].title.empty()) continue;
+            // a heading with nothing but its name ("Paper 4") stays when it holds points of its own
+            const bool holder = pts[i].title.empty() && !pts[i].number.empty() && std::isalpha(uint8_t(pts[i].number[0])) &&
+                                pts[i].number.find(' ') != std::string::npos &&
+                                std::any_of(pts.begin(), pts.end(), [&](const podsort::SpecPoint &c) { return c.parent == int(i); });
+            if (drop[i] || (pts[i].title.empty() && !holder)) continue;
             remap[i] = int(kept.size());
             kept.push_back(pts[i]);
         }
@@ -946,6 +970,26 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             sorted.push_back(p);
         }
         pts.swap(sorted);
+    }
+    // The same number twice (Cambridge A Level History: "1.1" in Papers 1 and 2, and again in Paper 4): the later ones
+    // are told apart by the paper or component they are in ("P4 1.1"), so each point has a number of its own
+    {
+        std::set<std::string> used;
+        for (size_t i = 0; i < pts.size(); ++i) {
+            std::string &num = pts[i].number;
+            if (num.empty() || !std::isdigit(uint8_t(num[0]))) continue;
+            if (used.insert(num).second) continue;
+            for (int q = pts[i].parent; q >= 0; q = pts[size_t(q)].parent) {
+                const std::string &an = pts[size_t(q)].number;
+                const size_t sp = an.find(' ');
+                if (sp == std::string::npos) continue;
+                const std::string word = lower(an.substr(0, sp));
+                if (word != "paper" && word != "component" && word != "unit") continue;
+                const std::string tag = std::string(1, char(std::toupper(uint8_t(an[0])))) + an.substr(sp + 1);      // "Paper 4" → "P4"
+                if (used.insert(tag + " " + num).second) num = tag + " " + num;
+                break;
+            }
+        }
     }
     for (auto &p : pts) {
         p.depth = 0;
