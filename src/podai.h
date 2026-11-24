@@ -76,7 +76,9 @@ SpecIndex readSpec(Meaning &m, const std::vector<podsort::SpecPoint> &points, co
 // of the spec. A document that stands out for nothing is in no point (-1): a shopping list, another subject's notes.
 struct Placement {
     int point = -1, second = -1;
+    int best = -1;              // the closest point, placed or not
     double standout = 0;
+    double fit = 0;             // how close the document's best piece comes to that point's text (cosine)
     bool sure = false;          // well clear of the rest, and of the next best
 };
 // docPieces: each document read in pieces (Meaning::readPieces); words: key-word scores [document][leaf]

@@ -484,6 +484,8 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
         const auto z = zscores(total);
         Placement &pl = out[d];
         pl.standout = z[b1];
+        pl.best = leaves[b1];
+        pl.fit = byPieces[b1];
         pl.point = pl.standout >= kStandoutMatch ? leaves[b1] : -1;
         pl.second = nl > 1 ? leaves[b2] : -1;
         pl.sure = pl.point >= 0 && pl.standout >= kStandoutSure && z[b1] - z[b2] >= kMarginSure;

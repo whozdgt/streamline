@@ -313,25 +313,43 @@ int main(int argc, char **argv)
         const auto placed = podai::matchSpec(P, points, spec, L);
         int right = 0, wrong = 0, missed = 0, counted = 0, offIn = 0, offs = 0, sureRight = 0, sureWrong = 0;
         std::vector<std::string> lines;
+        std::vector<double> rightFit, offFit;
+        auto tag = [&](const podai::Placement &pl) {
+            char b[96];
+            std::snprintf(b, sizeof b, "  [best %s, stand-out %.2f, fit %.3f]", pl.best >= 0 ? points[size_t(pl.best)].number.c_str() : "-",
+                          pl.standout, pl.fit);
+            return std::string(b);
+        };
         for (size_t d = 0; d < nd; ++d) {
             const auto &pl = placed[d];
+            if (offTopic[d]) offFit.push_back(pl.fit);
+            else if (label[d] >= 0 && pl.best >= 0) {
+                bool e = false;
+                for (int a : also[d]) e = e || under_(pl.best, a);
+                if (e) rightFit.push_back(pl.fit);
+            }
             if (offTopic[d]) {
                 ++offs;
-                if (pl.point >= 0) { ++offIn; lines.push_back("    - " + notes[d].title + "  ->  " + points[size_t(pl.point)].number + " (should be in no point)"); }
+                if (pl.point >= 0) { ++offIn; lines.push_back("    - " + notes[d].title + "  ->  " + points[size_t(pl.point)].number + " " + points[size_t(pl.point)].title.substr(0, 40) + " (should be in no point)" + tag(pl)); }
+                else lines.push_back("    - " + notes[d].title + "  ->  none" + tag(pl));
                 continue;
             }
             if (label[d] < 0) continue;
             ++counted;
-            if (pl.point < 0) { ++missed; lines.push_back("    " + notes[d].label + " " + notes[d].title + "  ->  none"); continue; }
+            if (pl.point < 0) { ++missed; lines.push_back("    " + notes[d].label + " " + notes[d].title + "  ->  none" + tag(pl)); continue; }
             bool e = false;
             for (int a : also[d]) e = e || under_(pl.point, a);
             (e ? right : wrong)++;
             if (pl.sure) (e ? sureRight : sureWrong)++;
             if (!e) lines.push_back("    " + notes[d].label + " " + notes[d].title + "  ->  " + points[size_t(pl.point)].number + " " +
-                                    points[size_t(pl.point)].title.substr(0, 50) + (pl.sure ? " (sure)" : " (check)"));
+                                    points[size_t(pl.point)].title.substr(0, 50) + (pl.sure ? " (sure)" : " (check)") + tag(pl));
         }
         std::printf("\nthe app: %d of %d right, %d wrong, %d left out; sure about %d right and %d wrong; %d of %d others put in a point\n",
                     right, counted, wrong, missed, sureRight, sureWrong, offIn, offs);
+        std::sort(rightFit.begin(), rightFit.end());
+        std::printf("fit of the closest point: right notes lowest %.3f, 10th pct %.3f; others highest %.3f\n",
+                    rightFit.empty() ? 0 : rightFit.front(), rightFit.empty() ? 0 : rightFit[rightFit.size() / 10],
+                    offFit.empty() ? 0 : *std::max_element(offFit.begin(), offFit.end()));
         if (showMisses) for (const auto &l : lines) std::printf("%s\n", l.c_str());
     }
     std::printf("\n(%.1fs)\n", secs());
