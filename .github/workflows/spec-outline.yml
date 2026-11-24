@@ -27,6 +27,9 @@ jobs:
           for line in open(".github/specs/outline.txt"):
               want = line.strip()
               if not want or want.startswith("#"): continue
+              # "id | around | 2.1 ": a few lines either side of the first line starting with "2.1 ", instead
+              extra = [x for x in want.split(" | ")[1:]]
+              want = want.split(" | ")[0]
               url = cat[want]["url"] if want in cat else want
               print(f"\n######## {want}", flush=True)
               try:
@@ -35,6 +38,9 @@ jobs:
               except Exception as e:
                   print("not downloaded:", e); continue
               open("spec.pdf", "wb").write(data)
+              if extra and extra[0] == "around":
+                  print(subprocess.run(["./spec_test", "spec.pdf", "--around", extra[1]], capture_output=True, text=True, errors="replace").stdout, flush=True)
+                  continue
               print(subprocess.run(["./spec_test", "spec.pdf", "--outline"], capture_output=True, text=True, errors="replace").stdout, flush=True)
               print("----- points -----")
               print(subprocess.run(["./spec_test", "spec.pdf"], capture_output=True, text=True, errors="replace").stdout[:20000], flush=True)

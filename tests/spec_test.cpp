@@ -42,7 +42,7 @@ int main(int argc, char **argv)
         for (std::string line; std::getline(in, line);) ls.push_back(line);
         for (size_t i = 0; i < ls.size(); ++i)
             if (ls[i].rfind(argv[3], 0) == 0) {
-                for (size_t j = i >= 4 ? i - 4 : 0; j < ls.size() && j <= i + 4; ++j) std::printf("  %s %s\n", j == i ? ">" : " ", ls[j].substr(0, 50).c_str());
+                for (size_t j = i >= 8 ? i - 8 : 0; j < ls.size() && j <= i + 6; ++j) std::printf("  %s %s\n", j == i ? ">" : " ", ls[j].substr(0, 70).c_str());
                 break;
             }
         return 0;

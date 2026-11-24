@@ -1,5 +1,8 @@
-# the specs spec-outline.yml reads: ids from specs/catalog.json, or URLs
-edexcel-9ec0
-edexcel-1ma1
-edexcel-yma01
-edexcel-9ph0
+# the specs spec-outline.yml reads: ids from specs/catalog.json, or URLs ("id | around | 2.1 " shows the lines around one)
+edexcel-9ma0 | around | 2.1 
+edexcel-9ma0 | around | 1.1 
+ocr-h432 | around | 6 The internally
+edexcel-yec11 | around | 5 Specialisation
+edexcel-4cp0 | around | 3 Java
+aqa-8145 | around | Part one
+edexcel-1sc0 | around | 1.1 Describe how the Dalton
