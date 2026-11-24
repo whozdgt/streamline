@@ -50,7 +50,8 @@ int main(int argc, char **argv)
     if (argc > 2 && std::strcmp(argv[2], "--outline") == 0) {     // the heading-like lines, numbered, cut short: the shape
         podsort::parseSpec(text);                                     // of a document, without its text
         const auto d = specread::lastDiagnostics();
-        std::printf("content: %s, lines %zu to %zu of %zu\n", d.contentFound ? "found" : "NOT FOUND (whole text read)", d.from, d.to, d.lines);
+        std::printf("content: %s, lines %zu to %zu of %zu\n  from: %s\n  to:   %s\n", d.contentFound ? "found" : "NOT FOUND (whole text read)", d.from, d.to,
+                    d.lines, d.first.c_str(), d.end.c_str());
         std::istringstream in(text);
         int i = 0, shown = 0;
         for (std::string line; std::getline(in, line) && shown < 900; ++i) {

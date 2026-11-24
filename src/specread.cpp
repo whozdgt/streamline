@@ -10,6 +10,7 @@
 #include <map>
 #include <regex>
 #include <set>
+#include <sstream>
 #include <unordered_map>
 
 namespace specread {
@@ -62,6 +63,16 @@ bool statementLike(const std::string &title)
         "subtract", "complete", "label", "appreciate", "consider", "assess", "argue", "justify", "summarise",
         "summarize", "review", "examine", "explore", "recognize", "quote", "rearrange", "obtain", "verify", "perform",
         "record", "present", "process", "test", "observe", "plan", "evaluate", "comment", "give", "provide"};
+    // "CORE PRACTICAL 1: Determine the acceleration…": a label in capitals inside a list of statements
+    {
+        std::istringstream in(title);
+        std::string w1, w2;
+        in >> w1 >> w2;
+        auto caps = [](const std::string &w) {
+            return w.size() >= 2 && std::all_of(w.begin(), w.end(), [](char c) { return std::isupper(uint8_t(c)) || c == ':'; });
+        };
+        if (caps(w1) && caps(w2) && w1.size() + w2.size() >= 7) return true;
+    }
     // "Work, energy and power": a list of things, not a command ("work out…")
     const size_t sp = title.find(' ');
     if (sp != std::string::npos && sp > 0 && title[sp - 1] == ',') return false;
@@ -134,7 +145,10 @@ bool parseKey(const std::string &line, Key &k)
         std::string id = line.substr(s, i - s);
         static const std::set<std::string> spelled = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
         const bool dottedId = id.find('.') != std::string::npos && id.size() <= 8;      // "1.1"
-        const bool ok = !id.empty() && (id.size() <= 3 || dottedId || spelled.count(lower(id)));
+        // a code of letters and figures: OCR's "Unit Y101: Alfred and the Making of England 871–1016"
+        const bool codeId = id.size() <= 5 && std::isalpha(uint8_t(id[0])) &&
+                            std::all_of(id.begin() + 1, id.end(), [](char c) { return std::isdigit(uint8_t(c)); });
+        const bool ok = !id.empty() && (id.size() <= 3 || dottedId || codeId || spelled.count(lower(id)));
         if (!ok) return false;
         if (id.size() > 1 && std::all_of(id.begin(), id.end(), [](char c) { return std::isalpha(uint8_t(c)); }) && !spelled.count(lower(id)))
             return false;      // "Section Assessment…" is a sentence, not a heading
@@ -617,7 +631,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     topics.push_back(p);
                 }
                 if (topics.size() >= 5) {
-                    g_diag = {true, i + 1, i + 1 + topics.size(), all.size()};
+                    g_diag = {true, i + 1, i + 1 + topics.size(), all.size(), all[i], std::string()};
                     return topics;
                 }
             }
@@ -638,7 +652,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 for (size_t j = i + 1; j < all.size() && j < i + 70; ++j) {
                     Num n;
                     Key other;
-                    if (parseKey(all[j], other) && other.rank <= 20) break;      // another heading first: an overview
+                    if (parseKey(all[j], other) && lower(other.keyword) == kw) break;      // another theme first: an overview
                     if (!parseNum(all[j], n) || !n.prefix.empty()) continue;
                     follows = (n.parts.size() >= 2 && n.parts[0] == id && n.parts[1] == 1) || (n.parts.size() == 1 && n.parts[0] == 1 && id == 1);
                     break;
@@ -657,7 +671,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         }
         if (section < 0) { from = 0; to = all.size(); }
         foundSection = section >= 0;
-        g_diag = {foundSection, from, to, all.size()};
+        g_diag = {foundSection, from, to, all.size(), from < all.size() ? all[from].substr(0, 60) : std::string(),
+                  to < all.size() ? all[to].substr(0, 60) : std::string()};
         if (std::getenv("SPECREAD_DEBUG"))
             std::fprintf(stderr, "content: lines %zu to %zu of %zu; from \"%s\" to \"%s\"\n", from, to, all.size(),
                          from > 0 ? shape(all[from - 1]).c_str() : "", to < all.size() ? shape(all[to]).c_str() : "");
@@ -1007,8 +1022,18 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if ((t.size() >= 3 && words == 0) || pts[i].number == "0") { gone[i] = true; continue; }
             if (pts[i].number.empty() || t.empty()) continue;
             const auto key = std::make_pair(pts[i].number, lower(t));
-            const auto it = first.find(key);
-            if (it == first.end()) { first[key] = int(i); continue; }
+            auto it = first.find(key);
+            if (it == first.end()) {
+                // or the same code, its title cut short in one of them ("Y201 The Rise of Islam c.550–750", listed,
+                // then as a unit's heading)
+                if (std::isalpha(uint8_t(pts[i].number[0])))
+                    for (auto f = first.lower_bound({pts[i].number, std::string()}); f != first.end() && f->first.first == pts[i].number; ++f) {
+                        const std::string &a = f->first.second, b = lower(t);
+                        const size_t n = std::min(a.size(), b.size());
+                        if (n >= 8 && a.compare(0, n, b, 0, n) == 0) { it = f; break; }
+                    }
+                if (it == first.end()) { first[key] = int(i); continue; }
+            }
             twin[i] = it->second;
             std::string &b = pts[size_t(it->second)].body;
             if (b.size() < 9000) b += pts[i].body;

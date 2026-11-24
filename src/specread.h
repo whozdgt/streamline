@@ -31,6 +31,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text);
 struct Diagnostics {
     bool contentFound = false;      // it found where the subject content starts (otherwise it read the whole text)
     size_t from = 0, to = 0, lines = 0;
+    std::string first, end;         // the content's first line, and the line it ends at (cut short)
 };
 Diagnostics lastDiagnostics();
 
