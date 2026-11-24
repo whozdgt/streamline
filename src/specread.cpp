@@ -46,6 +46,13 @@ bool statementLike(const std::string &title)
 {
     if (title.empty()) return true;
     const unsigned char c = uint8_t(title[0]);
+    // a formula, not a heading: "1 ≤ A < 10 and n is an integer"
+    if (c >= 0x80 && title.compare(0, 3, "\xE2\x80\x98") != 0 && title.compare(0, 3, "\xE2\x80\x9C") != 0) {
+        // (letters with accents start headings too: "É…")
+        if (title.size() >= 3 && (title.compare(0, 2, "\xE2\x89") == 0 || title.compare(0, 2, "\xE2\x88") == 0 || title.compare(0, 2, "\xC3\x97") == 0))
+            return true;
+    }
+    if (c == '<' || c == '>' || c == '=' || c == '+' || c == '*' || c == '/') return true;
     if (c < 0x80 && std::islower(c)) {
         // "eSecurity", "iGCSE": a name, not a statement in lower case
         size_t e = 1;
@@ -950,6 +957,16 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                             break;
                         }
                     if (!take && nameLike(lines[i - 1]) && lines[i - 1].size() >= 3 && std::isupper(uint8_t(lines[i - 1][0]))) { first = i - 1; take = 1; }
+                    // a name that wrapped onto two or three lines, after the last topic's text ("proofs).", then
+                    // "Algebra and", "functions", then "2.1": Edexcel A level Maths)
+                    for (int kk = int(std::min<size_t>(3, i)); kk >= 2 && !take; --kk) {
+                        const size_t k = size_t(kk);
+                        bool ok = std::isupper(uint8_t(lines[i - k][0]));
+                        for (size_t j = i - k; j < i && ok; ++j) ok = nameLike(lines[j]);
+                        const std::string &before = i - k > 0 ? lines[i - k - 1] : std::string(".");
+                        const bool after = !before.empty() && (before.back() == '.' || before.back() == ')');
+                        if (ok && after) { first = i - k; take = k; }
+                    }
                     if (take) {
                         std::string name;
                         for (size_t j = first; j < i; ++j) name += (name.empty() ? "" : " ") + lines[j];
@@ -1058,14 +1075,13 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             const auto key = std::make_pair(pts[i].number, lower(t));
             auto it = first.find(key);
             if (it == first.end()) {
-                // or the same code, its title cut short in one of them ("Y201 The Rise of Islam c.550–750", listed,
-                // then as a unit's heading)
-                if (std::isalpha(uint8_t(pts[i].number[0])))
-                    for (auto f = first.lower_bound({pts[i].number, std::string()}); f != first.end() && f->first.first == pts[i].number; ++f) {
-                        const std::string &a = f->first.second, b = lower(t);
-                        const size_t n = std::min(a.size(), b.size());
-                        if (n >= 8 && a.compare(0, n, b, 0, n) == 0) { it = f; break; }
-                    }
+                // or the same number, its title cut short in one of them ("Y201 The Rise of Islam c.550–750", listed,
+                // then as a unit's heading; a statement that ran on into the next line in one copy)
+                for (auto f = first.lower_bound({pts[i].number, std::string()}); f != first.end() && f->first.first == pts[i].number; ++f) {
+                    const std::string &a = f->first.second, b = lower(t);
+                    const size_t n = std::min(a.size(), b.size());
+                    if (n >= (std::isalpha(uint8_t(pts[i].number[0])) ? 8u : 20u) && a.compare(0, n, b, 0, n) == 0) { it = f; break; }
+                }
                 if (it == first.end()) { first[key] = int(i); continue; }
             }
             twin[i] = it->second;
