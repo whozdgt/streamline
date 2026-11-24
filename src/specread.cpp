@@ -664,7 +664,12 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     k.keyword = "topic";
                     k.id = "1";
                     k.title = top.title;
-                } else if (tocLine(all[i]) || k.title.empty() || k.id.empty()) continue;
+                } else {
+                    // a contents line ends in its page number, among others like it; "Unit P1: Pure Mathematics 1" on its
+                    // own is the unit's heading
+                    const bool listed = tocLine(all[i]) && ((i + 1 < all.size() && tocLine(all[i + 1])) || (i > 0 && tocLine(all[i - 1])));
+                    if (listed || k.title.empty() || k.id.empty() || !std::isupper(uint8_t(k.title[0]))) continue;
+                }
                 const std::string kw = lower(k.keyword);
                 if (kw != "theme" && kw != "topic" && kw != "unit" && kw != "key topic") continue;
                 const int id = std::isdigit(uint8_t(k.id[0])) ? std::atoi(k.id.c_str()) : 1;      // "Unit P1": its points start at 1
@@ -840,7 +845,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 for (size_t j = i + 1; j < lines.size() && j < i + 60; ++j) {
                     Num nn;
                     Key kk;
-                    if (parseKey(lines[j], kk) && kk.rank <= k.rank) break;      // the next heading like it comes first
+                    // the next heading like it comes first (not a mention in a sentence: "builds on Theme 2: The UK
+                    // economy – performance and policies, and …")
+                    if (parseKey(lines[j], kk) && kk.rank <= k.rank) {
+                        const std::string &tt = kk.title;
+                        const bool runsOn = !tt.empty() && (tt.back() == ',' || (tt.size() > 4 && (tt.compare(tt.size() - 4, 4, " and") == 0 ||
+                                                                                                   tt.compare(tt.size() - 3, 3, " or") == 0)));
+                        if (!runsOn) break;
+                    }
                     if (parseNum(lines[j], nn) && nn.parts.size() > depth) {
                         std::string lead = nn.prefix;
                         for (size_t d = 0; d < depth; ++d) lead += (d ? "." : "") + std::to_string(nn.parts[d]);
@@ -1038,7 +1050,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (std::isalpha(c)) ++run;
                 else { if (run >= 3) ++words; run = 0; }
             }
-            if ((!t.empty() && words == 0) || pts[i].number == "0") { gone[i] = true; continue; }
+            // and the parts of a unit's description (Edexcel International A level: "P1.1 Unit description")
+            const std::string lt = lower(t);
+            if ((!t.empty() && words == 0) || pts[i].number == "0" || lt == "unit description" || lt == "assessment information" ||
+                lt == "unit content" || lt == "content") { gone[i] = true; continue; }
             if (pts[i].number.empty() || t.empty()) continue;
             const auto key = std::make_pair(pts[i].number, lower(t));
             auto it = first.find(key);
@@ -1174,7 +1189,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (sp == std::string::npos) continue;
                 const std::string word = lower(an.substr(0, sp));
                 if (word != "paper" && word != "component" && word != "unit") continue;
-                const std::string tag = std::string(1, char(std::toupper(uint8_t(an[0])))) + an.substr(sp + 1);      // "Paper 4" → "P4"
+                // "Paper 4" → "P4"; "Unit P1" → "P1"
+                const std::string id = an.substr(sp + 1);
+                const std::string tag = std::isalpha(uint8_t(id[0])) ? id : std::string(1, char(std::toupper(uint8_t(an[0])))) + id;
                 if (used.insert(tag + " " + num).second) num = tag + " " + num;
                 break;
             }
