@@ -259,11 +259,21 @@ double dotv(const std::vector<float> &a, const std::vector<float> &b)
 // from the pod's own scores: a typical pair (the median) and the closest pairs (the top 2%).
 // Spec matching: how far (in standard deviations of the spec's points) a document's best point must stand out to be
 // matched, and to be sure (and well clear of the next best). Set on tests/match (CI's "match" run).
-const double kStandoutMatch = 3.6, kStandoutSure = 4.6, kMarginSure = 0.8;
-// How close (cosine) a document's best piece has to come to the point's own text at all: notes on other subjects
-// can still stand out a little for some point, but never come this close (tests/match: right notes 0.66 and up,
-// others 0.66 at most, mostly far below). A document that comes very close may stand out a little less.
-const double kFitFloor = 0.63, kFitClose = 0.70, kStandoutClose = 3.3;
+// When a document goes under a point. Each meaning model spreads its numbers differently, so each has its own
+// settings, set on the notes in tests/match (tests/match_eval.cpp prints where each note would go and why).
+//   standout: how far the best point stands above the rest (z-score); a document is filed from `match`, and is
+//     `sure` (no need to check it) from `sure` when it is also `margin` clear of the next best point
+//   fit: how close (cosine) the document's best piece comes to the point's own text. Notes on other subjects can
+//     still stand out a little for some point, but don't come this close; from `fitClose`, standing out from
+//     `standoutClose` is enough.
+struct Tuning {
+    double match, sure, margin, fitFloor, fitClose, standoutClose;
+};
+static Tuning tuningFor(size_t dims)
+{
+    if (dims >= 768) return {3.0, 4.6, 0.8, 0.57, 0.57, 3.0};   // BGE base
+    return {3.6, 4.6, 0.8, 0.63, 0.70, 3.3};                     // BGE small
+}
 
 // Points that are not content of their own, such as AQA's "Key ideas" (ideas that run through the whole subject):
 // anything at all can look a little like them, so nothing is filed there.
@@ -468,6 +478,7 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
         if (fileable(points[size_t(allLeaves[k])])) { leaves.push_back(allLeaves[k]); column.push_back(k); }
     if (leaves.empty()) return out;
     const size_t nl = leaves.size();
+    const Tuning t = tuningFor(spec.title.empty() ? 0 : spec.title[0].size());
     for (size_t d = 0; d < docPieces.size(); ++d) {
         const auto &P = docPieces[d];
         if (P.empty()) continue;
@@ -510,11 +521,11 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
         pl.standout = z[b1];
         pl.best = leaves[b1];
         pl.fit = byPieces[b1];
-        const bool fits = pl.fit >= kFitFloor &&
-                          (pl.standout >= kStandoutMatch || (pl.standout >= kStandoutClose && pl.fit >= kFitClose));
+        const bool fits = pl.fit >= t.fitFloor &&
+                          (pl.standout >= t.match || (pl.standout >= t.standoutClose && pl.fit >= t.fitClose));
         pl.point = fits ? leaves[b1] : -1;
         pl.second = nl > 1 ? leaves[b2] : -1;
-        pl.sure = pl.point >= 0 && pl.standout >= kStandoutSure && z[b1] - z[b2] >= kMarginSure;
+        pl.sure = pl.point >= 0 && pl.standout >= t.sure && z[b1] - z[b2] >= t.margin;
     }
     return out;
 }
