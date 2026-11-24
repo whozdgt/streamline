@@ -21,6 +21,7 @@ jobs:
             page="$(echo "$page" | xargs)"
             [ -n "$ONLY" ] && [ "$(echo "$board" | xargs)" != "$ONLY" ] && continue
             code=$(curl -sL -A "$UA" -o page.html -w '%{http_code} %{url_effective}' --retry 2 --max-time 40 "$page" || true)
+            sed -i 's#\\/#/#g' page.html      # addresses written in a page's data as https:\/\/…
             links=$(grep -oiE '(href|data-href|data-url)="[^"]+\.pdf[^"]*"' page.html | sed -E 's/^[a-z-]+="//; s/"$//' | grep -iE 'spec|syllabus' | sort -u | head -8)
             # pages built by script keep their links in data (AQA): any address of a PDF anywhere in the page
             [ -z "$links" ] && links=$(grep -oiE '[^"'"'"' <>()\\]+\.pdf' page.html | grep -iE 'spec|syllabus|-SP-' | sort -u | head -8)
