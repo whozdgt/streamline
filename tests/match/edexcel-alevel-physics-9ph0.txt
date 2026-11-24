@@ -1,0 +1,29 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/A%20Level/Physics/2015/Specification%20and%20sample%20assessments/pearsonedexcel-alevel-physics-spec.pdf
+# A level Physics notes written for this test: core practical write-ups, worked examples and revision sheets. Each is
+# under the topic it is about.
+=== Topic 2 | CP1 free fall
+Core practical 1: determine the acceleration of a freely-falling object using light gates or a ball dropped through a trapdoor and timer. Plot 2s against t^2, gradient = g. Equations of uniformly accelerated motion, projectiles, resolving vectors, moments, Newton's laws, momentum, work, kinetic and gravitational potential energy, power and efficiency.
+=== Topic 3 | resistivity + emf
+Core practical 2: electrical resistivity of a wire, R = rho l / A, micrometer for diameter. Core practical 3: e.m.f. and internal resistance of a cell, V = E - Ir, plot V against I. Current as rate of flow of charge, I = nqvA, potential dividers, thermistors and LDRs, Kirchhoff's laws.
+=== Topic 4 | materials
+Density, upthrust, Stokes' law F = 6 pi eta r v for viscous drag, core practical 4 falling ball viscosity. Hooke's law, stress, strain, Young modulus core practical 5, force-extension graphs and elastic strain energy.
+=== Topic 5 | waves and photons
+Wave equation v = f lambda, speed of sound core practical, standing waves on a string, refraction and critical angle, lenses and power of a lens P = 1/f, polarisation, diffraction grating n lambda = d sin theta, electron diffraction and de Broglie, photoelectric effect E = hf, work function, line spectra.
+=== Topic 6 | circular motion + collisions
+Impulse = F delta t = delta p, conservation of momentum in two dimensions, elastic and inelastic collisions, angular velocity omega = v/r, centripetal force F = mv^2/r.
+=== Topic 7 | fields + capacitors
+Electric fields E = F/Q, Coulomb's law, capacitance C = Q/V, energy stored 1/2 QV, charging and discharging Q = Q0 e^(-t/RC). Magnetic flux, F = BIl, Faraday's law and Lenz's law, alternating current, rms values.
+=== Topic 8 | particles
+Alpha particle scattering, the nuclear model, particle accelerators (linac, cyclotron), detectors, the standard model: quarks, leptons, baryons, mesons, conservation laws, E = mc^2 and annihilation.
+=== Topic 9 | thermo
+Specific heat capacity and specific latent heat, internal energy, absolute zero, ideal gas equation pV = NkT, Boyle's law core practical, kinetic theory, 1/2 m <c^2> = 3/2 kT.
+=== Topic 10;Topic 11 | space + radioactivity
+Black body radiation, Stefan-Boltzmann law, Wien's law, Hertzsprung-Russell diagram, standard candles, red shift and Hubble's law. Nuclear radiation: alpha, beta, gamma, background radiation, half-life, decay constant, binding energy, fission and fusion.
+=== Topic 13 | SHM
+Simple harmonic motion: a = -omega^2 x, x = A cos omega t, mass-spring and simple pendulum, damping, resonance, forced oscillations, core practical on a mass-spring system.
+=== - | business
+Porter's five forces, Ansoff's matrix, SWOT analysis.
+=== - | RS
+The ontological argument: Anselm's definition of God as that than which nothing greater can be conceived.
+=== - | work rota
+shifts fri 5-10, sun 10-4

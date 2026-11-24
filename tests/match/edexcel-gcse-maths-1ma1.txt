@@ -1,0 +1,27 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf
+# GCSE Maths notes and worked examples written for this test. Each is under the area it is about (an area accepts any
+# point inside it).
+=== 1 | HCF LCM primes
+Prime factor decomposition: 360 = 2^3 x 3^2 x 5. HCF and LCM using Venn diagrams. Index laws, standard form 3.2 x 10^5, recurring decimals to fractions, upper and lower bounds, rounding to significant figures, estimation.
+=== 1 | fractions percentages
+Add and subtract fractions with different denominators, mixed numbers. Percentage increase and decrease using multipliers, reverse percentages, compound interest 1.05^n.
+=== 2 | expanding + factorising
+Expand double brackets (x + 3)(x - 5) = x^2 - 2x - 15. Factorise quadratics, difference of two squares, completing the square, solving quadratics with the formula, simultaneous equations, rearranging formulae, inequalities on a number line.
+=== 2 | sequences + graphs
+nth term of linear sequences 4n + 3, quadratic sequences, Fibonacci. Straight line graphs y = mx + c, gradient and intercept, parallel and perpendicular lines, quadratic and cubic graphs, turning points, real-life graphs, gradient as rate of change.
+=== 3 | ratio + proportion
+Share 120 in the ratio 3:5, best buys, speed distance time, density = mass / volume, pressure, direct and inverse proportion y = k/x, growth and decay, compound measures.
+=== 4 | angles and shapes
+Angles in parallel lines (alternate, corresponding), angles in polygons, interior angles sum = (n - 2) x 180. Constructions with compasses, loci, bearings, transformations: reflection, rotation, enlargement, translation by a vector. Circle theorems.
+=== 4 | pythagoras + trig
+Pythagoras a^2 + b^2 = c^2, SOH CAH TOA, exact values of sin 30 = 0.5, area and perimeter, volume of prisms, cones and spheres, arc length and sector area, surface area, similar shapes, sine and cosine rule.
+=== 5 | probability
+Probability scale, relative frequency, sample space diagrams, Venn diagrams, tree diagrams for independent and dependent events, probability of AND (multiply) and OR (add), expected outcomes.
+=== 6 | stats
+Mean, median, mode and range from frequency tables, grouped data, cumulative frequency and box plots, histograms with frequency density, scatter graphs and correlation, sampling.
+=== - | biology
+Photosynthesis: carbon dioxide + water -> glucose + oxygen.
+=== - | english
+Inspector Calls: Priestley's message about social responsibility.
+=== - | birthday
+Gran's birthday Sunday, buy card

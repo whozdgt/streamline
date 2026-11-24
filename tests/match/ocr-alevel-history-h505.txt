@@ -1,0 +1,25 @@
+# spec: https://www.ocr.org.uk/Images/170128-specification-accredited-a-level-gce-history-a-h505.pdf
+# A Level History notes written for this test, for OCR's units (a student studies one from each group). Each is under
+# the unit it is about.
+=== Y106 | henry viii
+Henry VII's legacy and Henry VIII's early years: Wolsey's domestic policy, the Amicable Grant 1525, the King's Great Matter and the break with Rome, the Act of Supremacy 1534, Cromwell's reforms, the dissolution of the monasteries, the Pilgrimage of Grace 1536, Edward VI and Somerset, Mary I and the Wyatt rebellion.
+=== Y113 | thatcher
+Britain 1930-1997: the National Government, appeasement, the impact of the Second World War on Britain, Attlee's welfare state and the NHS, Churchill and Eden, Macmillan, decolonisation, Wilson and the 1960s, Heath and the miners' strikes, Thatcher's economic policies, privatisation, the Falklands War, Major and Europe.
+=== Y221 | weimar to nazis
+Democracy and Dictatorships in Germany 1919-1963: the Weimar Republic, hyperinflation 1923, Stresemann, the rise of the Nazis, Hitler's consolidation of power, the Nazi economy and society, the Holocaust, the Second World War, division of Germany, Adenauer and the West German economic miracle, East Germany under Ulbricht.
+=== Y219 | russia 1894-1941
+Nicholas II, the 1905 Revolution, the impact of the First World War, the February and October revolutions 1917, Lenin and the Civil War, War Communism and NEP, Stalin's rise to power, collectivisation and the Five Year Plans, the purges.
+=== Y223 | cold war europe
+The origins of the Cold War, the Truman Doctrine and Marshall Plan, the Berlin Blockade 1948-49, NATO and the Warsaw Pact, Hungary 1956, the Berlin Wall 1961, the Prague Spring 1968, detente and Ostpolitik, Solidarity in Poland, Gorbachev and the collapse of communism in Eastern Europe 1989.
+=== Y319 | civil rights USA
+Civil Rights in the USA 1865-1992: African Americans after Reconstruction, Jim Crow laws, Plessy v Ferguson, Booker T Washington and Du Bois, Brown v Board 1954, Montgomery Bus Boycott, Martin Luther King, the Civil Rights Act 1964, Black Power, Native Americans, women's rights, labour rights and trade unions.
+=== Y318 | russia and its rulers
+Russia and its Rulers 1855-1964: the nature of autocratic and communist government, Alexander II's reforms, Stalin's dictatorship, Khrushchev; the condition of the peasantry, emancipation of the serfs, collectivisation; the impact of war and revolution.
+=== Y306 | tudor rebellions
+Rebellion and Disorder under the Tudors 1485-1603: Lambert Simnel and Perkin Warbeck, the Cornish rebellion 1497, the Pilgrimage of Grace, the Western and Kett's rebellions 1549, Wyatt 1554, the Northern Rebellion 1569, Tyrone's rebellion in Ireland, Essex 1601; causes: religion, taxation, succession, economic grievances.
+=== - | maths
+integrate x^2 from 0 to 3 = 9
+=== - | chem
+Le Chatelier's principle: increasing pressure shifts equilibrium to the side with fewer moles of gas.
+=== - | uni
+UCAS deadline 29 Jan, personal statement draft 3

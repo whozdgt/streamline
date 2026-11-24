@@ -1,0 +1,33 @@
+# spec: https://filestore.aqa.org.uk/resources/science/specifications/AQA-8464-SP-2016.PDF
+# GCSE Combined Science (Trilogy) notes written for this test, from all three sciences. Each is under the topic it is
+# about (a topic accepts any point inside it).
+=== 4.1 | cells
+Eukaryotic vs prokaryotic cells, animal and plant cell organelles, specialised cells, microscopy and magnification = image size / actual size. Mitosis and the cell cycle, stem cells. Diffusion, osmosis and active transport.
+=== 4.2 | organisation
+Digestive system and enzymes (amylase, protease, lipase), food tests, the heart and blood vessels, coronary heart disease, statins and stents, plant tissues: xylem and phloem, transpiration.
+=== 4.3 | infection
+Communicable diseases: viral (measles, HIV, TMV), bacterial (salmonella, gonorrhoea), fungal (rose black spot), protist (malaria). The immune system, vaccination, antibiotics and painkillers, drug development and clinical trials.
+=== 4.4 | photosynthesis + respiration
+Photosynthesis equation and limiting factors (light intensity, CO2, temperature), inverse square law. Aerobic and anaerobic respiration, oxygen debt, metabolism.
+=== 4.5;4.6 | homeostasis + inheritance
+Homeostasis: nervous system, reflex arc, endocrine system, blood glucose and diabetes, hormones in reproduction, contraception. Inheritance: DNA, meiosis, genetic crosses with Punnett squares, inherited disorders, variation and evolution, selective breeding, genetic engineering.
+=== 5.1 | atoms and periodic table
+Atomic structure, isotopes, the history of the atom from plum pudding to Bohr, electronic structure, the periodic table, group 1, group 7, group 0.
+=== 5.3;5.4 | moles + reactions
+Conservation of mass, relative formula mass, moles (higher), reactivity series, extraction of metals, reactions of acids, making salts, pH, electrolysis of molten and aqueous compounds.
+=== 5.6;5.7 | rates + organic
+Rate of reaction and collision theory, catalysts, reversible reactions and equilibrium. Crude oil, fractional distillation, alkanes, cracking and alkenes.
+=== 5.9 | atmosphere
+Evolution of the atmosphere, greenhouse gases and climate change, carbon footprint, atmospheric pollutants from fuels (carbon monoxide, sulfur dioxide, particulates).
+=== 6.1;6.2 | energy + electricity
+Energy stores and systems, kinetic energy 1/2 mv^2, GPE = mgh, specific heat capacity, power, efficiency, energy resources. Circuits: V = IR, series and parallel, I-V graphs, mains electricity, the National Grid.
+=== 6.4 | atoms + radiation
+Atomic structure in physics, alpha beta gamma, nuclear equations, half-life, contamination vs irradiation.
+=== 6.5;6.6 | forces + waves
+Scalars and vectors, resultant forces, Newton's laws, stopping distances, momentum (higher). Transverse and longitudinal waves, wave speed = frequency x wavelength, electromagnetic waves and their uses.
+=== - | english lang
+Paper 1 Q5 descriptive writing: use the five senses, vary sentence lengths.
+=== - | french
+mon collège, les matières, j'aime les maths parce que c'est intéressant
+=== - | shopping
+batteries, sellotape, birthday card
