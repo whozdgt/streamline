@@ -1,0 +1,46 @@
+name: match
+# How often Pods put a document under the right point of a specification: students' notes written for the test
+# (tests/match/*.txt, each under the point it is about) matched to the boards' real specifications, downloaded from
+# the boards' websites, by each way of matching (tests/match_eval.cpp). Prints percentages and the misses' numbers.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['src/podai*', 'src/podsort*', 'src/specread*', 'tests/match_eval.cpp', 'tests/match/**', '.github/workflows/match.yml']
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # llama.cpp takes a few minutes to build: keep the build between runs
+      - uses: actions/cache@v4
+        with:
+          path: build-tests
+          key: match-build-${{ hashFiles('cmake/llama.cmake') }}-${{ github.sha }}
+          restore-keys: match-build-${{ hashFiles('cmake/llama.cmake') }}-
+      - uses: actions/cache@v4
+        with:
+          path: specs
+          key: match-specs-${{ hashFiles('tests/match/*.txt') }}
+          restore-keys: match-specs-
+      - name: Build
+        run: |
+          cmake -S tests -B build-tests -DCMAKE_BUILD_TYPE=Release > /dev/null
+          cmake --build build-tests -j4 --target match_eval 2>&1 | grep -E "error|Built target match_eval" || true
+      - name: The meaning model
+        run: |
+          mkdir -p models
+          curl -fsSL --retry 3 -o models/meaning.gguf "https://github.com/$GITHUB_REPOSITORY/releases/download/ai-models/meaning-bge-small-en-v1.5-q8_0.gguf"
+      - name: Match the notes to their specs
+        run: |
+          UA="Streamline/0.7 (+https://github.com/whozdgt/streamline)"
+          mkdir -p specs
+          for notes in tests/match/*.txt; do
+            name=$(basename "$notes" .txt)
+            url=$(grep -m1 '^# spec: ' "$notes" | cut -c9-)
+            echo "::group::$name"
+            head -c 5 "specs/$name.pdf" 2>/dev/null | grep -q '%PDF' || curl -fsSL -A "$UA" --retry 2 -o "specs/$name.pdf" "$url"
+            ./build-tests/match_eval models/meaning.gguf "specs/$name.pdf" "$notes" --misses
+            echo "::endgroup::"
+          done

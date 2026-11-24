@@ -2,6 +2,7 @@
 #   podsort_test                         key words
 #   nest_test spec_sample.txt            nested sorting and spec matching by key words
 #   podai_test meaning.gguf [writer.gguf] [spec.txt]   the on-device AI (models from the ai-models release)
+#   match_eval meaning.gguf spec.pdf match/notes.txt   how often documents go to the right spec point
 cmake_minimum_required(VERSION 3.21)
 project(pods_tests LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
@@ -21,3 +22,6 @@ add_executable(spec_test spec_test.cpp ${SRC}/podsort.cpp ${SRC}/specread.cpp ${
 target_include_directories(spec_test PRIVATE ${SRC})
 add_executable(pdftext_test pdftext_test.cpp ${SRC}/pdftext.cpp ${SRC}/pdfcrypto.cpp)
 target_include_directories(pdftext_test PRIVATE ${SRC})
+add_executable(match_eval match_eval.cpp ${SRC}/podai.cpp ${SRC}/podsort.cpp ${SRC}/specread.cpp ${SRC}/pdftext.cpp ${SRC}/pdfcrypto.cpp)
+target_include_directories(match_eval PRIVATE ${SRC})
+target_link_libraries(match_eval PRIVATE llama)

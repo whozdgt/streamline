@@ -1,0 +1,66 @@
+# spec: https://www.cambridgeinternational.org/Images/697209-2026-2028-syllabus.pdf
+# Revision notes written for this test, the way a student might write them, each under the point it is about.
+=== 1.1 | measuring things
+Use a ruler for lengths, a measuring cylinder for volumes, and a stopwatch for time. To measure a small distance like the thickness of a sheet of paper, measure a stack of 100 sheets and divide. Time 20 swings of a pendulum and divide by 20 for the period. Scalars have only a size (distance, speed, time, mass, energy, temperature); vectors also have a direction (force, weight, velocity, acceleration, momentum). Resultant of two vectors at right angles: Pythagoras.
+=== 1.2 | speed and acceleration graphs
+speed = distance / time. On a distance-time graph the gradient is the speed. On a speed-time graph the gradient is the acceleration and the area under the line is the distance travelled. Acceleration = change in velocity / time. Free fall acceleration g is about 9.8 m/s2 near the Earth. Terminal velocity when air resistance equals weight.
+=== 1.3 | mass vs weight
+Mass is a measure of the quantity of matter in an object. Weight is a gravitational force on an object that has mass. W = mg. Gravitational field strength is force per unit mass. A balance compares weights; mass doesn't change on the Moon but weight does.
+=== 1.4 | density practical
+density = mass / volume. For a regular solid measure the sides and calculate the volume; for an irregular object use displacement in a measuring cylinder. An object floats on a liquid if its density is less than the liquid's. Mixing liquids that don't mix: the denser one sinks.
+=== 1.5.1 | Hooke's law and forces
+Forces can change the size and shape of an object. Plot a load-extension graph for a spring: it is a straight line through the origin up to the limit of proportionality. k = F / x is the spring constant. Resultant force: F = ma. Friction between surfaces and drag act against motion. Circular motion needs a force towards the centre.
+=== 1.5.2 | moments
+The moment of a force is a measure of its turning effect: moment = force x perpendicular distance from the pivot. Principle of moments: for an object in equilibrium, the sum of clockwise moments equals the sum of anticlockwise moments. Experiment with a metre rule balanced on a pivot and masses hung on it.
+=== 1.5.3 | centre of gravity
+Find the centre of gravity of an irregular flat card by hanging it from a pin with a plumb line from two different points. An object is more stable if its centre of gravity is low and its base is wide.
+=== 1.6 | momentum
+momentum p = mv. Impulse = force x time = change in momentum. Conservation of momentum in collisions: total momentum before = total momentum after. Resultant force = change in momentum / time, which is why airbags and crumple zones increase the time of a collision to reduce the force.
+=== 1.7.1 | energy stores
+Energy stores: kinetic, gravitational potential, chemical, elastic (strain), nuclear, electrostatic and internal (thermal). Energy is transferred mechanically, electrically, by heating and by waves. Ek = 1/2 m v^2, change in GPE = mgh. Conservation of energy and Sankey diagrams.
+=== 1.7.3 | energy resources
+Ways of producing electricity: chemical energy in fossil fuels, biofuels, water (waves, tides, hydroelectric dams), geothermal, nuclear fuel, light from the Sun with solar cells, wind. Advantages and disadvantages: renewable or not, available all the time, reliability, scale, environmental impact. The Sun is the main source of energy for most of our resources; nuclear fusion in the Sun.
+=== 1.7.4 | power and efficiency
+Power is the work done per unit time and the energy transferred per unit time. P = W/t = E/t. Efficiency = useful energy output / total energy input x 100 percent, or useful power output / total power input.
+=== 1.8 | pressure
+pressure = force / area. Snowshoes spread weight over a large area; a sharp knife has a small area. Pressure under a liquid increases with depth: change in pressure = density x g x change in height. Hydraulic systems.
+=== 2.1.2 | particle model
+Solids have particles closely packed in a regular pattern that vibrate about fixed positions; liquids are close but irregular and move around each other; gases are far apart and move randomly at high speed. Brownian motion: smoke particles are hit by fast moving air molecules. Gas pressure is caused by particles colliding with the walls.
+=== 2.1.3 | gas laws
+For a fixed mass of gas at constant temperature, pV = constant. When temperature increases at constant volume the pressure increases because the particles move faster. Absolute zero is -273 degrees C; convert to kelvin by adding 273.
+=== 2.2.2 | specific heat capacity
+Specific heat capacity is the energy required per unit mass per unit temperature increase: c = delta E / (m delta theta). Experiment: heat a block of aluminium with an electrical heater, measure energy with a joulemeter and temperature rise with a thermometer.
+=== 2.2.3 | melting boiling evaporation
+Melting and boiling happen at fixed temperatures with no change in temperature while the state changes. Evaporation cools the liquid because the more energetic particles escape from the surface. The rate of evaporation increases with temperature, surface area and air movement over the surface.
+=== 2.3.1 | conduction
+Thermal conduction in solids: atoms vibrate and pass energy to neighbours, and in metals free electrons transfer energy quickly. Good and bad thermal conductors: metals conduct well, plastics, wood and air are insulators. Experiment: rods of different metals with wax and drawing pins.
+=== 2.3.3 | radiation
+Thermal radiation is infrared radiation, and all objects emit it. It does not need a medium so it can travel through a vacuum. Dull black surfaces are good absorbers and emitters; shiny white surfaces are good reflectors. Leslie cube experiment. The Earth's temperature depends on the balance between incoming radiation and radiation emitted.
+=== 3.1 | wave properties
+Waves transfer energy without transferring matter. Wavelength, frequency, amplitude, crest, trough, wavefront. wave speed = frequency x wavelength. Transverse waves vibrate at right angles to the direction of travel (light, water waves); longitudinal waves vibrate along it (sound). Ripple tank: reflection, refraction at a change of depth, diffraction through a gap.
+=== 3.2.2 | refraction and critical angle
+Refraction of light passing from air into glass: it slows down and bends towards the normal. Refractive index n = sin i / sin r. Total internal reflection happens when the angle of incidence is greater than the critical angle, n = 1 / sin c. Optical fibres use total internal reflection in medicine and communications.
+=== 3.2.3 | lenses
+A converging lens brings parallel rays to the principal focus. Ray diagrams for an object beyond 2F give a real, inverted, diminished image. A converging lens used as a magnifying glass gives a virtual image. Long sight is corrected with converging lenses, short sight with diverging lenses.
+=== 3.3 | EM spectrum uses and dangers
+Radio waves, microwaves, infrared, visible light, ultraviolet, X-rays and gamma rays all travel at the same speed in a vacuum, 3 x 10^8 m/s. Uses: radio and TV, satellite phones, remote controls, fibre optics, security marking, medical scanning, sterilising. Harmful effects: microwaves heat internal organs, infrared burns, UV damages the eyes and causes skin cancer, X-rays and gamma cause mutation.
+=== 3.4 | sound and echoes
+Sound is a longitudinal wave of compressions and rarefactions and needs a medium. The speed of sound in air is about 330-350 m/s; measure it with an echo or two microphones. Human hearing range 20 Hz to 20 000 Hz. Ultrasound has a frequency above 20 kHz and is used for scanning. Louder means bigger amplitude, higher pitch means higher frequency.
+=== 4.2.4 | resistance and IV graphs
+Resistance R = V / I. For a metallic conductor at constant temperature the I-V graph is a straight line through the origin; a filament lamp's resistance increases as it gets hotter; a diode only lets current flow one way. Resistance of a wire is proportional to its length and inversely proportional to its cross-sectional area.
+=== 4.3.2 | series and parallel circuits
+In a series circuit the current is the same everywhere and the potential differences add up. In parallel, the current from the source is larger than the current in each branch, and the combined resistance of two resistors in parallel is less than either one. Lamps in a house are connected in parallel so they can be switched separately.
+=== 4.4 | mains safety
+Hazards: damaged insulation, overheating cables, damp conditions. A fuse or circuit breaker protects the circuit; the fuse rating should be just above the normal current. Earthing a metal case: if the live wire touches the case, a large current flows to earth and the fuse melts. Double insulation.
+=== 4.5.1 | electromagnetic induction
+A conductor moving across a magnetic field, or a changing magnetic field linking a coil, induces an e.m.f. The induced e.m.f. increases with the speed of movement, the strength of the field and the number of turns. The direction of the induced e.m.f. opposes the change causing it.
+=== 4.5.6 | transformers
+A transformer has primary and secondary coils wound on a soft iron core. Vs/Vp = Ns/Np. Step-up transformers increase the voltage for transmission so the current is smaller and less energy is lost as heat in the cables: P = I^2 R. For a 100 percent efficient transformer, IpVp = IsVs.
+=== 5.2.2 | alpha beta gamma
+Alpha particles are helium nuclei: very ionising, stopped by paper. Beta particles are high speed electrons: stopped by a few mm of aluminium. Gamma rays are electromagnetic radiation: weakly ionising, reduced by thick lead. Deflection in electric and magnetic fields.
+=== 5.2.4 | half-life
+The half-life of a radioactive isotope is the time taken for half the nuclei in a sample to decay. Use a decay curve to find it, allowing for background radiation. Uses of isotopes depend on their half-life: smoke alarms use alpha emitters with a long half-life, medical tracers use gamma emitters with a short half-life.
+=== 6.1.2 | solar system
+The Solar System has one star, the Sun, eight planets, minor planets, moons and comets. The four inner planets are rocky and small; the four outer planets are gaseous and large. Planets formed from an accretion disc of dust and gas. Orbital speed v = 2 pi r / T. The strength of the Sun's gravitational field decreases further from the Sun.
+=== 6.2.3 | big bang
+The Universe is expanding. Redshift: light from distant galaxies has a longer wavelength than expected, and the further away a galaxy is the faster it is moving away. Cosmic microwave background radiation is evidence for the Big Bang. Hubble constant H0 = v / d; the age of the Universe is about 1/H0.

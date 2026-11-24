@@ -67,6 +67,8 @@ std::string pointText(const std::vector<SpecPoint> &points, int i);
 std::vector<int> leafPoints(const std::vector<SpecPoint> &points);
 // By key words: the point (index into `targets`) each document is closest to, or -1 when nothing is close.
 std::vector<int> matchPoints(const std::vector<Doc> &docs, const std::vector<std::string> &targets);
+// How much each document's words have in common with each target's (TF-IDF cosine), [document][target]
+std::vector<std::vector<double>> matchScores(const std::vector<Doc> &docs, const std::vector<std::string> &targets);
 // The tree for a spec: the points documents matched, inside the points above them; unmatched documents in Other.
 std::vector<Node> specTree(const std::vector<SpecPoint> &points, const std::vector<int> &docPoint);
 

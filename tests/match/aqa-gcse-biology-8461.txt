@@ -1,0 +1,109 @@
+# spec: https://filestore.aqa.org.uk/resources/biology/specifications/AQA-8461-SP-2016.PDF
+# Revision notes written for this test, the way a student might write them, each under the point it is about.
+=== 4.1.1.1 | prokaryotes vs eukaryotes
+Bacteria are prokaryotic cells. They are much smaller than plant or animal cells. They have no nucleus: the genetic material is a single loop of DNA floating in the cytoplasm, and many also have small rings of DNA called plasmids. Eukaryotic cells (animals, plants, fungi, protists) keep their DNA inside a nucleus. Orders of magnitude: a bacterium is about 1 micrometre, an animal cell about 10-30 micrometres.
+=== 4.1.1.2 | cell structure notes
+Animal cell parts: nucleus (contains genetic material, controls the cell), cytoplasm (where most chemical reactions happen), cell membrane (controls what goes in and out), mitochondria (aerobic respiration), ribosomes (protein synthesis).
+Plant cells also have: chloroplasts which absorb light, a permanent vacuole full of cell sap, and a cell wall made of cellulose that strengthens the cell.
+=== 4.1.1.2 | plant cell revision mat
+Label the plant cell: cell wall, cell membrane, cytoplasm, nucleus, permanent vacuole, chloroplast, mitochondria, ribosomes. Chloroplasts are where photosynthesis happens because they contain chlorophyll, which absorbs light. The cellulose cell wall keeps the cell rigid. Algae cells also have a cell wall.
+=== 4.1.1.3 | specialised cells
+Sperm cells have a tail to swim and lots of mitochondria for energy, plus enzymes in the head to get into the egg. Nerve cells are long with branched endings to carry impulses around the body. Muscle cells contract and contain many mitochondria. Root hair cells have a large surface area to absorb water and mineral ions. Xylem cells are hollow tubes; phloem cells have sieve plates.
+=== 4.1.1.4 | differentiation
+As an organism develops, cells differentiate to form different types of cells. Most animal cells differentiate at an early stage, but many plant cells keep the ability to differentiate throughout life. In mature animals cell division is mainly for repair and replacement. Differentiating cells gain different sub-cellular structures so they can do a particular job.
+=== 4.1.1.5 | microscopy and magnification
+Electron microscopes have a much higher magnification and resolving power than light microscopes, so we can see sub-cellular structures like ribosomes in much finer detail.
+magnification = size of image / size of real object
+Convert units: 1 mm = 1000 micrometres. Use standard form for very small numbers.
+Required practical: prepare a slide of onion cells, stain with iodine, focus with the low power objective first.
+=== 4.1.1.6 | growing bacteria practical
+Bacteria multiply by binary fission as often as once every 20 minutes. Grow them in nutrient broth or on agar gel plates. Sterilise Petri dishes and culture media, pass the inoculating loop through a flame, tape the lid on (not all the way round) and incubate at 25 degrees in school. Measure the clear zone around antibiotic discs: area = pi r squared.
+=== 4.1.2.1 | chromosomes
+The nucleus contains chromosomes made of DNA molecules. Each chromosome carries a large number of genes. In body cells chromosomes are normally found in pairs.
+=== 4.1.2.2 | mitosis flashcards
+Q: what happens before a cell divides? A: it grows, makes more ribosomes and mitochondria, and the DNA replicates to form two copies of each chromosome.
+Q: mitosis? A: one set of chromosomes is pulled to each end of the cell and the nucleus divides. Then the cytoplasm and membrane divide to make two identical cells.
+Mitosis is used for growth and repair and for asexual reproduction.
+=== 4.1.2.3 | stem cells essay
+Stem cells are undifferentiated cells that can become many types of cell. Embryonic stem cells can be cloned and made to differentiate into most cell types, so they might treat diabetes or paralysis. Adult bone marrow stem cells can form many types of blood cell. In therapeutic cloning an embryo is made with the same genes as the patient so the cells are not rejected. Meristem tissue in plants can make clones of plants quickly. There are ethical and religious objections and a risk of transferring viral infection.
+=== 4.1.3.1 | diffusion
+Diffusion is the spreading out of particles from an area of higher concentration to an area of lower concentration. Oxygen and carbon dioxide diffuse in gas exchange, and urea diffuses from cells into the blood plasma to go to the kidney. The rate depends on the difference in concentration (gradient), the temperature and the surface area of the membrane. Single-celled organisms have a large surface area to volume ratio. Lungs: alveoli; small intestine: villi; fish: gills.
+=== 4.1.3.2 | osmosis required practical
+Osmosis is the diffusion of water from a dilute solution to a concentrated solution through a partially permeable membrane.
+Method: cut potato cylinders, weigh them, put them in sugar solutions of different concentrations for 24 hours, then dry and reweigh. Calculate percentage change in mass and plot against concentration.
+=== 4.1.3.3 | active transport
+Active transport moves substances from a more dilute solution to a more concentrated solution (against a concentration gradient), so it needs energy from respiration. Root hair cells absorb mineral ions from very dilute solutions in the soil. In the gut, sugar molecules are absorbed into the blood even when the concentration there is higher.
+=== 4.2.2.1 | digestive enzymes
+Carbohydrases break down carbohydrates to simple sugars; amylase breaks down starch. Proteases break down proteins to amino acids. Lipases break down lipids to fatty acids and glycerol. Bile is made in the liver and stored in the gall bladder; it is alkaline to neutralise stomach acid and it emulsifies fat into small droplets. Lock and key theory: the substrate fits the active site; high temperature denatures the enzyme. Food tests: Benedict's for sugars, iodine for starch, biuret for protein.
+=== 4.2.2.2 | heart notes
+The heart pumps blood around the body in a double circulatory system. The right ventricle pumps blood to the lungs for gas exchange; the left ventricle pumps blood around the rest of the body. The natural resting heart rate is controlled by a group of cells in the right atrium that act as a pacemaker. Arteries have thick muscular walls, veins have valves, capillaries are one cell thick. Coronary arteries supply the heart muscle with oxygen.
+=== 4.2.2.3 | blood components
+Blood is a tissue made of plasma, in which red blood cells, white blood cells and platelets are suspended. Red blood cells have no nucleus and contain haemoglobin to carry oxygen; they are biconcave. White blood cells defend against pathogens. Platelets help the blood to clot. Plasma carries carbon dioxide, urea, hormones and dissolved food.
+=== 4.2.2.4 | CHD and stents
+In coronary heart disease layers of fatty material build up inside the coronary arteries, narrowing them and reducing blood flow, so the heart muscle gets less oxygen. Stents keep the arteries open. Statins reduce blood cholesterol. Faulty heart valves can be replaced with biological or mechanical valves. Heart failure may be treated with a transplant or an artificial heart.
+=== 4.2.2.6 | lifestyle and disease
+Risk factors are linked to an increased rate of a disease. Smoking increases the risk of lung disease and lung cancer; obesity is a risk factor for Type 2 diabetes; alcohol affects liver and brain function; carcinogens such as ionising radiation increase the risk of cancer. Many diseases are caused by an interaction of factors, and the human cost and financial cost to the NHS are large.
+=== 4.2.2.7 | cancer
+Cancer is the result of changes in cells that lead to uncontrolled growth and division. Benign tumours are growths of abnormal cells contained in one area within a membrane; they do not invade other parts. Malignant tumour cells are cancers: they invade neighbouring tissues and spread through the blood to form secondary tumours.
+=== 4.2.3.2 | transpiration notes
+Root hair cells take in water, xylem carries water and mineral ions up the plant, and phloem moves dissolved sugars (translocation). Transpiration is the loss of water vapour from the leaves through stomata; guard cells open and close the stomata. The rate increases with temperature, humidity going down, air movement and light intensity. Use a potometer to measure water uptake.
+=== 4.3.1.2 | measles HIV TMV
+Measles is a viral disease spread by droplets from sneezes and coughs; symptoms are fever and a red skin rash. HIV initially causes a flu-like illness; antiretroviral drugs stop it becoming AIDS. It is spread by sexual contact or exchange of body fluids. Tobacco mosaic virus gives a mosaic pattern of discolouration on leaves which reduces photosynthesis.
+=== 4.3.1.3 | salmonella and gonorrhoea
+Salmonella food poisoning is spread by bacteria ingested in food or food prepared in unhygienic conditions; poultry are vaccinated against it. Symptoms: fever, abdominal cramps, vomiting and diarrhoea caused by toxins. Gonorrhoea is a sexually transmitted disease with a thick yellow or green discharge; it was treated with penicillin until many resistant strains appeared. Use condoms to prevent spread.
+=== 4.3.1.6 | body defences
+Non-specific defences: the skin is a barrier, the nose has hairs and mucus, the trachea and bronchi have cilia and mucus, and the stomach makes hydrochloric acid which kills pathogens. If a pathogen gets in, white blood cells use phagocytosis, make antibodies and make antitoxins.
+=== 4.3.1.7 | vaccines
+Vaccination involves introducing small quantities of dead or inactive forms of a pathogen into the body to stimulate the white blood cells to produce antibodies. If the same pathogen re-enters the body the white blood cells respond quickly. If a large proportion of the population is immune, the spread is very much reduced (herd immunity). Example: MMR vaccine.
+=== 4.3.1.8 | antibiotics vs painkillers
+Antibiotics such as penicillin kill infective bacteria inside the body. It is important that specific bacteria are treated by specific antibiotics. The emergence of strains resistant to antibiotics is of great concern. Antibiotics cannot kill viruses. Painkillers and other medicines treat the symptoms of disease but do not kill pathogens.
+=== 4.3.1.9 | drug trials
+Traditionally drugs were extracted from plants and microorganisms: digitalis from foxgloves, aspirin from willow, penicillin was discovered by Alexander Fleming from the Penicillium mould. New drugs are tested for toxicity, efficacy and dose: preclinical testing in cells, tissues and live animals, then clinical trials with healthy volunteers and patients. Double blind trials and placebos.
+=== 4.3.2 | monoclonal antibodies
+Monoclonal antibodies are produced from a single clone of cells and are specific to one binding site on one protein antigen. Mouse lymphocytes are combined with a tumour cell to make a hybridoma cell which divides and makes the antibody. Uses: pregnancy tests, measuring hormones in the blood, locating clots, and treating cancer by carrying a drug to the cancer cells. They have more side effects than expected.
+=== 4.4.1.1 | photosynthesis word equation
+Photosynthesis is an endothermic reaction: energy is transferred from the environment to the chloroplast by light.
+carbon dioxide + water -> glucose + oxygen
+6CO2 + 6H2O -> C6H12O6 + 6O2
+=== 4.4.1.2 | limiting factors practical
+The rate of photosynthesis may be affected by temperature, light intensity, carbon dioxide concentration and the amount of chlorophyll. Limiting factors: graph levels off when another factor limits the rate. Inverse square law: light intensity is proportional to 1/distance squared. Required practical: count bubbles of oxygen from pondweed with the lamp at different distances. Greenhouses control conditions to get the most profit.
+=== 4.4.1.3 | what plants do with glucose
+The glucose produced in photosynthesis may be used for respiration, converted into insoluble starch for storage, used to produce fat or oil for storage, used to produce cellulose to strengthen the cell wall, or used to produce amino acids for protein synthesis (plants also absorb nitrate ions from the soil for this).
+=== 4.4.2.1 | respiration equations
+Aerobic: glucose + oxygen -> carbon dioxide + water. Anaerobic in muscles: glucose -> lactic acid. Anaerobic in plant and yeast cells: glucose -> ethanol + carbon dioxide (fermentation, used to make bread and alcoholic drinks). Respiration is exothermic and supplies all the energy needed for living processes. Aerobic transfers much more energy.
+=== 4.4.2.2 | exercise and oxygen debt
+During exercise the heart rate, breathing rate and breath volume increase to supply the muscles with more oxygenated blood. If insufficient oxygen is supplied, anaerobic respiration takes place, lactic acid builds up and there is an oxygen debt. Muscles get fatigued. Blood flowing through the muscles transports the lactic acid to the liver where it is converted back into glucose.
+=== 4.5.2.1 | reflex arc
+Stimulus -> receptor -> sensory neurone -> relay neurone -> motor neurone -> effector -> response. Reflex actions are automatic and rapid; they do not involve the conscious part of the brain. Synapse: a chemical diffuses across the gap. Required practical: reaction time using the ruler drop test.
+=== 4.5.2.3 | the eye
+The eye is a sense organ containing receptors sensitive to light intensity and colour. Retina, optic nerve, sclera, cornea, iris, ciliary muscles, suspensory ligaments. Accommodation: to focus on a near object the ciliary muscles contract, the suspensory ligaments loosen and the lens becomes thicker. Myopia and hyperopia are treated with spectacle lenses.
+=== 4.5.3.2 | diabetes and insulin
+Blood glucose concentration is monitored and controlled by the pancreas. If it is too high the pancreas produces insulin, which makes glucose move from the blood into cells; in liver and muscle cells excess glucose is converted to glycogen for storage. Type 1 diabetes: the pancreas produces insufficient insulin, treated with insulin injections. Type 2: body cells no longer respond to insulin; treated with a carbohydrate controlled diet and exercise. Glucagon converts glycogen back to glucose.
+=== 4.5.3.4 | menstrual cycle hormones
+FSH causes maturation of an egg in the ovary. LH stimulates the release of the egg (ovulation). Oestrogen and progesterone maintain the uterus lining. In puberty, oestrogen is the main female reproductive hormone and testosterone is the main male hormone produced by the testes.
+=== 4.5.3.5 | contraception methods
+Hormonal: oral contraceptives contain hormones to inhibit FSH production so no eggs mature; injection, implant or skin patch of slow release progesterone. Barrier methods such as condoms and diaphragms stop the sperm reaching an egg. Intrauterine devices, spermicidal agents, abstaining on certain days, surgical sterilisation.
+=== 4.6.1.2 | meiosis
+Cells in reproductive organs divide by meiosis to form gametes. Copies of the genetic information are made, then the cell divides twice to form four gametes, each with a single set of chromosomes. All gametes are genetically different from each other. Gametes join at fertilisation to restore the normal number of chromosomes.
+=== 4.6.1.6 | punnett squares
+Some characteristics are controlled by a single gene, e.g. fur colour in mice and red-green colour blindness. Each gene may have different forms called alleles. Dominant allele is always expressed; recessive only if two copies are present. Homozygous, heterozygous, genotype, phenotype. Use a Punnett square diagram to predict the outcome of a monohybrid cross and express it as a ratio or probability.
+=== 4.6.1.7 | cystic fibrosis
+Polydactyly (extra fingers or toes) is caused by a dominant allele. Cystic fibrosis, a disorder of cell membranes, is caused by a recessive allele. Embryo screening can find inherited disorders, but there are economic, social and ethical issues.
+=== 4.6.2.2 | evolution by natural selection
+Evolution is a change in the inherited characteristics of a population over time through natural selection, which may result in the formation of a new species. Variation exists; individuals with characteristics most suited to the environment are more likely to survive and breed successfully; the alleles that enabled them to survive are passed on. Two populations may become so different that they can no longer interbreed.
+=== 4.6.2.3 | selective breeding
+Humans breed plants and animals for particular characteristics: choose parents with the desired characteristic, breed them together, choose the best offspring and repeat over many generations. Examples: disease resistance in crops, large or unusual flowers, gentle dogs, cows that produce lots of milk. Inbreeding makes some breeds prone to disease.
+=== 4.6.2.4 | GM crops
+Genetic engineering modifies the genome of an organism by introducing a gene from another organism. Plant crops have been genetically engineered to be resistant to diseases or to produce bigger fruits. Bacteria have been engineered to produce human insulin. Enzymes cut out the gene, which is inserted into a vector such as a bacterial plasmid or a virus. Concerns about GM crops and the effect on wild flowers and insects.
+=== 4.6.4 | classification
+Carl Linnaeus classified living things into kingdom, phylum, class, order, family, genus and species. Organisms are named by the binomial system of genus and species. Microscopes and biochemical processes improved our understanding and led to the three-domain system by Carl Woese: archaea, bacteria and eukaryota. Evolutionary trees show how closely related organisms are.
+=== 4.7.1.2 | abiotic factors
+Abiotic (non-living) factors which can affect a community: light intensity, temperature, moisture levels, soil pH and mineral content, wind intensity and direction, carbon dioxide levels for plants, oxygen levels for aquatic animals.
+=== 4.7.1.3 | biotic factors
+Biotic (living) factors: availability of food, new predators arriving, new pathogens, and one species outcompeting another so the numbers are no longer sufficient to breed. Predator-prey cycles: the numbers of predators and prey rise and fall in cycles.
+=== 4.7.2.2 | carbon and water cycles
+Materials cycle through the biotic and abiotic components of an ecosystem. The carbon cycle returns carbon from organisms to the atmosphere as carbon dioxide, to be used by plants in photosynthesis; respiration, combustion and decay release it. The water cycle: evaporation, condensation, precipitation, and transpiration from plants provides fresh water for plants and animals on land.
+=== 4.7.3.5 | global warming
+Levels of carbon dioxide and methane in the atmosphere are increasing and contribute to global warming. Biological consequences: loss of habitat when low-lying areas flood, changes in the distribution of species where temperature or rainfall change, and changes to the migration patterns of animals.
+=== 4.7.3.4 | deforestation
+Large-scale deforestation in tropical areas has occurred to provide land for cattle and rice fields and to grow crops for biofuels. It increases the release of carbon dioxide into the atmosphere because of burning and the activity of microorganisms, reduces the rate at which carbon dioxide is removed by photosynthesis, and reduces biodiversity.

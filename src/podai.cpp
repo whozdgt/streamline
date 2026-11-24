@@ -141,6 +141,17 @@ std::vector<float> Meaning::embed(const std::string &text)
 
 std::vector<float> Meaning::read(const std::string &title, const std::string &headings, const std::string &body, int pieces)
 {
+    std::vector<float> sum;
+    for (const auto &e : readPieces(title, headings, body, pieces)) {
+        if (sum.empty()) sum.assign(e.size(), 0.f);
+        for (size_t i = 0; i < e.size(); ++i) sum[i] += e[i];
+    }
+    normalize(sum);
+    return sum;
+}
+
+std::vector<std::vector<float>> Meaning::readPieces(const std::string &title, const std::string &headings, const std::string &body, int pieces)
+{
     // Every piece starts with the name and headings, so each one knows what document it is from.
     std::string head = clean(title);
     if (!headings.empty()) head += "\n" + cut(clean(headings), 0, 300);
@@ -154,15 +165,12 @@ std::vector<float> Meaning::read(const std::string &title, const std::string &he
         const size_t step = (text.size() - piece) / size_t(std::max(1, n - 1));
         for (int i = 0; i < n; ++i) parts.push_back(head + "\n" + cut(text, size_t(i) * step, piece));
     }
-    std::vector<float> sum;
+    std::vector<std::vector<float>> out;
     for (const std::string &p : parts) {
-        const std::vector<float> e = embed(p);
-        if (e.empty()) continue;
-        if (sum.empty()) sum.assign(e.size(), 0.f);
-        for (size_t i = 0; i < e.size(); ++i) sum[i] += e[i];
+        std::vector<float> e = embed(p);
+        if (!e.empty()) out.push_back(std::move(e));
     }
-    normalize(sum);
-    return sum;
+    return out;
 }
 
 // ---------------- Writer ----------------

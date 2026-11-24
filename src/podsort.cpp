@@ -641,18 +641,28 @@ std::vector<int> leafPoints(const std::vector<SpecPoint> &points)
     return out;
 }
 
-std::vector<int> matchPoints(const std::vector<Doc> &docs, const std::vector<std::string> &targets)
+std::vector<std::vector<double>> matchScores(const std::vector<Doc> &docs, const std::vector<std::string> &targets)
 {
-    std::vector<int> out(docs.size(), -1);
+    std::vector<std::vector<double>> out(docs.size(), std::vector<double>(targets.size(), 0.0));
     if (docs.empty() || targets.empty()) return out;
     // one model over documents and points together, so words are weighed the same in both
     std::vector<Doc> all = docs;
     for (const auto &t : targets) all.push_back({std::string(), std::string(), t, std::string()});
     const Model m = build(all);
+    for (size_t d = 0; d < docs.size(); ++d)
+        for (size_t p = 0; p < targets.size(); ++p) out[d][p] = dot(m.vec[d], m.vec[docs.size() + p]);
+    return out;
+}
+
+std::vector<int> matchPoints(const std::vector<Doc> &docs, const std::vector<std::string> &targets)
+{
+    std::vector<int> out(docs.size(), -1);
+    if (docs.empty() || targets.empty()) return out;
+    const auto scores = matchScores(docs, targets);
     std::vector<double> bestScore(docs.size(), 0.0);
     for (size_t d = 0; d < docs.size(); ++d)
         for (size_t p = 0; p < targets.size(); ++p) {
-            const double s = dot(m.vec[d], m.vec[docs.size() + p]);
+            const double s = scores[d][p];
             if (s > bestScore[d]) { bestScore[d] = s; out[d] = int(p); }
         }
     // How close counts as a match depends on how wordy the spec and the documents are, so it is set from this pod:

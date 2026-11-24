@@ -27,6 +27,8 @@ public:
     bool load(const std::string &path, std::string &error);
     // A document's meaning: its name, headings and text, read in up to `pieces` pieces spread through it.
     std::vector<float> read(const std::string &title, const std::string &headings, const std::string &body, int pieces = 4);
+    // The same pieces, each on its own (a long document's parts can be about different points of a spec)
+    std::vector<std::vector<float>> readPieces(const std::string &title, const std::string &headings, const std::string &body, int pieces = 4);
     std::vector<float> embed(const std::string &text);
 private:
     llama_model *m_model = nullptr;
