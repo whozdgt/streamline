@@ -28,4 +28,6 @@ jobs:
             echo "PAGE $page -> $code"
             if [ -z "$links" ]; then echo "  (no specification links)"; grep -oiE 'href="[^"]+\.pdf[^"]*"' page.html | head -4 | sed 's/^/  any: /'; fi
             echo "$links" | sed '/^$/d; s/^/  /'
+            # a bare file name: what the page says around it (where the file is kept)
+            echo "$links" | grep -v '/' | head -1 | while read -r f; do [ -n "$f" ] && grep -oE ".{0,160}$f" page.html | head -2 | sed 's/^/  around: /'; done
           done
