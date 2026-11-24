@@ -520,8 +520,9 @@ Item {
                 color: settings.inkSoft
                 onClicked: {      // move it there
                     const c = pods.topicChoices(root.podId)
-                    const n = (parent.parent.d.second || "").split(" ")[0]
-                    for (let i = 0; i < c.length; ++i) if (c[i].number === n) { pods.moveDoc(root.podId, root.docPath, c[i].id); root.docNote = "Moved to " + parent.parent.d.second + "."; return }
+                    const want = parent.parent.d.second || ""
+                    for (let i = 0; i < c.length; ++i)
+                        if ((c[i].number ? c[i].number + " " + c[i].title : c[i].title) === want) { pods.moveDoc(root.podId, root.docPath, c[i].id); root.docNote = "Moved to " + want + "."; return }
                 }
             }
         }

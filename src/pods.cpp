@@ -590,9 +590,18 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
     QSet<QString> parents;
     for (const Topic &t : p->topics) if (!t.parent.isEmpty()) parents.insert(t.parent);
     for (const Doc &d : p->docs) known.insert(d.path, d.topic);
-    // spec pods: the point each document is under now (by number), and the ones you put there yourself
+    // spec pods: the point each document is under now, and the ones you put there yourself, each by its place in the
+    // spec (its number, or its title, and those of the points above it: a spec can use a number twice)
     QHash<QString, QString> numberOf, knownNumber, keptNumber;
-    for (const Topic &t : p->topics) numberOf.insert(t.id, t.number);
+    {
+        QHash<QString, const Topic *> byId;
+        for (const Topic &t : p->topics) byId.insert(t.id, &t);
+        for (const Topic &t : p->topics) {
+            QStringList place;
+            for (const Topic *a = &t; a; a = byId.value(a->parent)) place.prepend(a->number.isEmpty() ? a->name : a->number);
+            numberOf.insert(t.id, place.join(QChar(0x203A)));
+        }
+    }
     for (const Doc &d : p->docs) {
         knownNumber.insert(d.path, numberOf.value(d.topic));
         if (d.kept) keptNumber.insert(d.path, numberOf.value(d.topic));
@@ -706,9 +715,13 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         const auto points = spec ? podsort::parseSpec(specText) : std::vector<podsort::SpecPoint>();
         const auto leaves = podsort::leafPoints(points);
         std::vector<int> docPoint;          // spec: the point each document matched
-        std::map<QString, int> pointByNumber;
-        for (size_t i = 0; i < points.size(); ++i)
-            if (!points[i].number.empty()) pointByNumber.emplace(QString::fromStdString(points[i].number), int(i));
+        std::map<QString, int> pointByNumber;      // each point by its place in the spec, as the pod's folders have it
+        for (size_t i = 0; i < points.size(); ++i) {
+            QStringList place;
+            for (int a = int(i); a >= 0; a = points[size_t(a)].parent)
+                place.prepend(QString::fromStdString(points[size_t(a)].number.empty() ? points[size_t(a)].title : points[size_t(a)].number));
+            pointByNumber.emplace(place.join(QChar(0x203A)), int(i));
+        }
         auto pointOf = [&](const QHash<QString, QString> &h, const QString &path) {
             const auto it = h.constFind(path);
             if (it == h.constEnd() || it->isEmpty()) return -1;
