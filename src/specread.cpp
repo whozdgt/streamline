@@ -398,6 +398,24 @@ Info identify(const std::string &text)
             if (std::regex_search(head, cm, anyCode)) code = cm[2].matched ? cm[2].str() : cm[1].str();
             else if (std::regex_search(text.cbegin(), text.cbegin() + long(std::min<size_t>(text.size(), 40000)), cm, link)) code = cm[1].str();
         }
+        if (subject.empty()) {
+            // a cover set in ordinary capitals: "A-level Mathematics (7357)", "GCSE Psychology 8182", the course whose
+            // code the document uses most
+            static const std::regex re("(GCSE|AS and A-level|A-level|AS)\\s+([A-Z][A-Za-z,&:' -]{2,40}?)\\s+\\(?([0-9]{4})\\)?");
+            size_t best = 0;
+            for (auto it = std::sregex_iterator(head.begin(), head.end(), re); it != std::sregex_iterator(); ++it) {
+                size_t uses = 0;
+                const std::string c = (*it)[3].str();
+                for (size_t at = text.find(c); at != std::string::npos; at = text.find(c, at + 1)) ++uses;
+                const std::string subj = trim((*it)[2].str());
+                if (uses > best && lower(subj) != "specification" && subj.find("Specification") == std::string::npos) {
+                    best = uses;
+                    level = (*it)[1].str() == "GCSE" ? "GCSE" : (*it)[1].str() == "AS" ? "AS" : "A-level";
+                    subject = subj;
+                    code = c;
+                }
+            }
+        }
         if (!subject.empty() && !code.empty()) {
             std::string subj = lower(subject);
             bool cap = true;
@@ -500,7 +518,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 const std::string title = lower(cleanTitle(m[3].str()));
                 const bool qualification = title.find("gcse") != std::string::npos || title.find("a level") != std::string::npos ||
                                            title.find("as level") != std::string::npos;
-                parts.push_back({i, here, contentTitle(title), qualification});
+                // (a part's title can be long: "Content of Computational thinking, algorithms and programming (J277/02)")
+                const bool content = title.find("content") != std::string::npos && title.find("contents") == std::string::npos && title.size() < 110;
+                parts.push_back({i, here, content, qualification});
             }
             if (std::getenv("SPECREAD_DEBUG"))
                 for (const Part &pt : parts) std::fprintf(stderr, "part %s%s: %s\n", pt.label.c_str(), pt.content ? " (content)" : "", shape(all[pt.line]).c_str());
@@ -530,18 +550,24 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 const std::string t = lower(all[i]);
                 // ("Subject content and assessment information" is content mixed with assessment, paper by paper:
                 // the whole document is read then, as before)
-                if (t.size() > 60 || t.rfind("subject content", 0) != 0 || t.find("assessment") != std::string::npos || tocLine(all[i])) continue;
-                section = 0;
-                from = i + 1;
-                to = all.size();
+                if (t.size() > 60 || all[i][0] != 'S' || t.rfind("subject content", 0) != 0 || t.find("assessment") != std::string::npos ||
+                    tocLine(all[i]))
+                    continue;
+                size_t end = all.size();
                 for (size_t j = i + 1; j < all.size(); ++j) {
                     const std::string u = lower(all[j]);
                     Num n;
                     const bool top = parseNum(all[j], n) && n.parts.size() == 1 && n.prefix.empty();
                     if (u.size() <= 50 && std::isupper(uint8_t(all[j][top ? all[j].find(' ') + 1 : 0])) &&
                         (u.rfind("assessment information", 0) == 0 || u.rfind("administration", 0) == 0 || u.rfind("appendi", 0) == 0 ||
-                         (top && adminTitle(cleanTitle(n.title)) && !contentTitle(cleanTitle(n.title))))) { to = j; break; }
+                         (top && adminTitle(cleanTitle(n.title)) && !contentTitle(cleanTitle(n.title))))) { end = j; break; }
                 }
+                // the content is most of a specification: a short stretch is an overview of it ("Subject content
+                // overview" in the summary at the front), not the content itself
+                if ((end - i) * 4 < all.size()) continue;
+                section = 0;
+                from = i + 1;
+                to = end;
             }
         }
         if (section < 0) { from = 0; to = all.size(); }
@@ -670,7 +696,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         if (partHeadings && l.size() > 4 && std::isdigit(uint8_t(l[0])) && std::islower(uint8_t(l[1]))) {
             static const std::regex part("^[0-9][a-z]\\.?\\s+(?:Content of\\s+)?([A-Z].*?)(?:\\s*\\([A-Z][0-9]{3}[^)]*\\))?$");
             std::smatch pm;
-            if (std::regex_match(l, pm, part) && contentTitle(l)) {
+            const std::string low = lower(l);
+            if (std::regex_match(l, pm, part) && low.find("content") != std::string::npos && low.find("contents") == std::string::npos) {
                 const int made = open(14, "", cleanTitle(pm[1].str()), false);
                 justOpened = made;
                 justMerged = merged;
