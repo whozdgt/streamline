@@ -103,10 +103,13 @@ bool parseKey(const std::string &line, Key &k)
         if (i >= line.size() || line[i] != ' ') return false;
         ++i;
         const size_t s = i;
-        while (i < line.size() && (std::isalnum(uint8_t(line[i])))) ++i;
+        while (i < line.size() && (std::isalnum(uint8_t(line[i])) ||
+                                   (line[i] == '.' && i > s && std::isdigit(uint8_t(line[i - 1])) && i + 1 < line.size() && std::isdigit(uint8_t(line[i + 1])))))
+            ++i;
         std::string id = line.substr(s, i - s);
         static const std::set<std::string> spelled = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
-        const bool ok = !id.empty() && (id.size() <= 3 || spelled.count(lower(id)));
+        const bool dottedId = id.find('.') != std::string::npos && id.size() <= 8;      // "1.1"
+        const bool ok = !id.empty() && (id.size() <= 3 || dottedId || spelled.count(lower(id)));
         if (!ok) return false;
         if (id.size() > 1 && std::all_of(id.begin(), id.end(), [](char c) { return std::isalpha(uint8_t(c)); }) && !spelled.count(lower(id)))
             return false;      // "Section Assessment…" is a sentence, not a heading
@@ -320,8 +323,17 @@ Info identify(const std::string &text)
         static const std::regex re("Cambridge (International AS (?:&|and) A Level|IGCSE|O Level|International A Level|International AS Level)\\S* ([A-Z][A-Za-z ,&()-]{2,40}?) ([0-9]{4})");
         if (std::regex_search(head, m, re)) info.name = "Cambridge " + clean(m[1].str()) + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
     } else if (info.board == "Edexcel") {
+        // the course the document names whose code it uses most (a draft notice on the cover can name another course)
         static const std::regex re("(GCSE|International GCSE|Advanced Subsidiary GCE|Advanced GCE|GCE A level|International Advanced Level)(?: \\(9.{1,3}1\\))?(?: in)? ([A-Z][A-Za-z ,&()-]{2,50}?) \\(([0-9A-Z]{4,5})\\)");
-        if (std::regex_search(head, m, re)) {
+        size_t best = 0;
+        bool found = false;
+        for (auto it = std::sregex_iterator(head.begin(), head.end(), re); it != std::sregex_iterator(); ++it) {
+            size_t uses = 0;
+            const std::string code = (*it)[3].str();
+            for (size_t at = text.find(code); at != std::string::npos; at = text.find(code, at + 1)) ++uses;
+            if (!found || uses > best) { m = *it; best = uses; found = true; }
+        }
+        if (found) {
             std::string level = m[1].str();
             if (level == "Advanced GCE" || level == "GCE A level") level = "A level";
             else if (level == "Advanced GCE" || level == "GCE A level") level = "A level";
@@ -475,6 +487,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (!parts.empty() && parts.back().label == here) continue;      // the same part again ("2c. Topic B7…")
                 parts.push_back({i, here, contentTitle(m[3].str())});
             }
+            if (std::getenv("SPECREAD_DEBUG"))
+                for (const Part &pt : parts) std::fprintf(stderr, "part %s%s: %s\n", pt.label.c_str(), pt.content ? " (content)" : "", shape(all[pt.line]).c_str());
             for (size_t k = 0; k < parts.size(); ++k) {
                 if (!parts[k].content) continue;
                 size_t last = k;
@@ -615,10 +629,17 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             keywordLine = true;
             int rank = k.rank;
             if (numbered) {
+                // does it head the numbers that follow ("Topic B1" before "B1.1", "Topic 1.1" before "1.1.1")?
                 bool heads = false;
+                const size_t depth = size_t(std::count(k.id.begin(), k.id.end(), '.')) + 1;
                 for (size_t j = i + 1; j < lines.size() && j < i + 60; ++j) {
                     Num nn;
-                    if (parseNum(lines[j], nn) && nn.parts.size() >= 2) { heads = nn.prefix + std::to_string(nn.parts[0]) == k.id; break; }
+                    if (parseNum(lines[j], nn) && nn.parts.size() > depth) {
+                        std::string lead = nn.prefix;
+                        for (size_t d = 0; d < depth; ++d) lead += (d ? "." : "") + std::to_string(nn.parts[d]);
+                        heads = lead == k.id;
+                        break;
+                    }
                 }
                 if (!heads) rank += 50;
             }
@@ -724,7 +745,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 static const std::set<std::string> joiners = {"the", "of", "and", "to", "in", "for", "with", "on", "a", "an", "at",
                                                               "by", "from", "into", "its", "their", "his", "her", "&", "–", "-"};
                 const bool open = bt.find("\xE2\x80\xA6") == std::string::npos && !bt.empty() && bt.back() != '.' && bt.back() != ':';
-                const bool carries = (c0 < 0x80 && std::islower(c0) && !justKeyword) || joiners.count(lower(lastWord)) || rawEndsComma;
+                // a line of its own that starts with a command ("use standard units…") is a statement, not more title
+                const bool command = c0 < 0x80 && std::islower(c0) && statementLike(l) && firstWord(l) != "and" && firstWord(l) != "of";
+                const bool carries = ((c0 < 0x80 && std::islower(c0) && !justKeyword) || joiners.count(lower(lastWord)) || rawEndsComma) &&
+                                     !(command && !joiners.count(lower(lastWord)) && !rawEndsComma);
                 if (open && carries && bt.size() < 90 && l[0] != '\xE2' && l[0] != '-' && l[0] != '(') {
                     bt += " " + cleanTitle(l);
                     if (!pts[size_t(justOpened)].body.empty()) body(l);

@@ -70,8 +70,13 @@ Item {
         mode = "pod"
         flick.contentY = 0
     }
-    function openFinder(query) {      // the spec finder, open at a search (CI screenshots)
-        layout = "spec"; finding = true; specQuery.text = query
+    function openFinder(query) {      // the spec finder, open (at a search), scrolled into view
+        layout = "spec"; finding = true; pasting = false; specNote = ""; specQuery.text = query
+        specs.update()
+        Qt.callLater(function() {
+            const y = specSection.mapToItem(col, 0, 0).y
+            flick.contentY = Math.max(0, Math.min(y - 70, flick.contentHeight - flick.height))
+        })
     }
     function openDoc(path) {
         docPath = path
@@ -233,6 +238,12 @@ Item {
                     text: root.info.busy ? root.info.status : root.info.error ? root.info.error
                         : (root.plural(root.info.docCount || 0, "document") + (root.info.sortedLabel ? " · " + root.info.sortedLabel : ""))
                 }
+                Link {      // the spec finder is at the bottom, with the other ways to sort: a way there from the top
+                    visible: !root.info.busy && root.info.layout !== "spec"
+                    text: "Match these to your course’s spec…"
+                    font.underline: true
+                    onClicked: root.openFinder("")
+                }
 
                 Field { width: root.narrow ? parent.width : 360; placeholder: "Search this pod"; onTextChanged: root.query = text }
 
@@ -363,6 +374,7 @@ Item {
 
                     // the spec
                     Column {
+                        id: specSection
                         visible: root.layout === "spec"
                         width: parent.width
                         spacing: 10
@@ -389,7 +401,7 @@ Item {
                                 label: root.info.specName ? "Find another spec" : "Find your spec"
                                 primary: !root.info.specName
                                 visible: !root.finding
-                                onClicked: { root.finding = true; root.pasting = false; root.specNote = ""; specs.update(); specQuery.focusInput() }
+                                onClicked: { root.openFinder(""); specQuery.focusInput() }
                             }
                             Btn { label: root.info.specName ? "Choose another file" : "Choose a file"; primary: false; onClicked: specDialog.open() }
                             Btn { label: "Paste text"; primary: false; visible: !root.pasting; onClicked: { root.pasting = true; root.finding = false; specBox.focusInput() } }

@@ -88,6 +88,9 @@ jobs:
               edexcel-alevel-maths-*) ./pdftext_test "specs/$name.pdf" --shape "What students need to learn" 1 60 4
                                       ./pdftext_test "specs/$name.pdf" --shape "What students need to learn" 9 40 4 ;;
               edexcel-igcse-*) ./pdftext_test "specs/$name.pdf" --shape "(h)" 2 25 6 ;;
+              ocr-alevel-maths-*) ./pdftext_test "specs/$name.pdf" --shape "1.01" 2 45 12 ;;
+              ocr-alevel-economics-*) ./pdftext_test "specs/$name.pdf" --shape "1.1" 2 40 12 ;;
+              edexcel-gcse-maths-*) ./pdftext_test "specs/$name.pdf" --shape "Structure and calculation" 2 40 10 ;;
             esac
             echo "::endgroup::"
           done

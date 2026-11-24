@@ -22,6 +22,8 @@ jobs:
             [ -n "$ONLY" ] && [ "$(echo "$board" | xargs)" != "$ONLY" ] && continue
             code=$(curl -sL -A "$UA" -o page.html -w '%{http_code} %{url_effective}' --retry 2 --max-time 40 "$page" || true)
             links=$(grep -oiE '(href|data-href|data-url)="[^"]+\.pdf[^"]*"' page.html | sed -E 's/^[a-z-]+="//; s/"$//' | grep -iE 'spec|syllabus' | sort -u | head -8)
+            # pages built by script keep their links in data (AQA): any address of a PDF anywhere in the page
+            [ -z "$links" ] && links=$(grep -oiE '[^"'"'"' <>()\\]+\.pdf' page.html | grep -iE 'spec|syllabus|-SP-' | sort -u | head -8)
             echo "PAGE $page -> $code"
             if [ -z "$links" ]; then echo "  (no specification links)"; grep -oiE 'href="[^"]+\.pdf[^"]*"' page.html | head -4 | sed 's/^/  any: /'; fi
             echo "$links" | sed '/^$/d; s/^/  /'

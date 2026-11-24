@@ -178,7 +178,7 @@ Window {
             const id = pods.create(settings.startPod)
             if (id !== "") podsPage.openPod(id)
             if (id !== "" && settings.startSpec) specTimer.podId = id      // --set startSpec=<file>: then match it to that spec
-            if (id !== "" && settings.startFinder) podsPage.openFinder(settings.startFinder)      // --set startFinder=<search>: the spec finder
+            if (id !== "" && settings.startFinder) finderTimer.podId = id      // --set startFinder=<search>: the spec finder
             if (id !== "" && settings.startCatalog) catalogTimer.podId = id      // --set startCatalog=<id>: download that spec from its board
         }
     }
@@ -191,6 +191,17 @@ Window {
             if (pods.pod(podId).busy) return
             const r = pods.readSpecFile("file://" + settings.startSpec)
             if (!r.error) { pods.setSpec(podId, r.name, r.text); pods.resort(podId, 1); podsPage.openPod(podId) }
+            podId = ""
+        }
+    }
+    Timer {      // --set startFinder=<search>: once the pod's first sort is done, open the spec finder at that search
+        id: finderTimer
+        property string podId: ""
+        interval: 300; repeat: true
+        running: podId !== ""
+        onTriggered: {
+            if (pods.pod(podId).busy) return
+            podsPage.openFinder(settings.startFinder)
             podId = ""
         }
     }
