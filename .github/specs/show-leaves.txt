@@ -1,0 +1,1 @@
+# Courses whose points courses.yml lists in full (to write test notes against): ids from specs/catalog.json

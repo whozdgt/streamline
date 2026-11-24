@@ -13,6 +13,11 @@
 #include <unordered_map>
 
 namespace specread {
+
+namespace {
+thread_local Diagnostics g_diag;
+}
+Diagnostics lastDiagnostics() { return g_diag; }
 namespace {
 
 std::string trim(const std::string &s)
@@ -579,6 +584,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         }
         if (section < 0) { from = 0; to = all.size(); }
         foundSection = section >= 0;
+        g_diag = {foundSection, from, to, all.size()};
         if (std::getenv("SPECREAD_DEBUG"))
             std::fprintf(stderr, "content: lines %zu to %zu of %zu; from \"%s\" to \"%s\"\n", from, to, all.size(),
                          from > 0 ? shape(all[from - 1]).c_str() : "", to < all.size() ? shape(all[to]).c_str() : "");

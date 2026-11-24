@@ -27,4 +27,11 @@ Info identify(const std::string &text);
 
 std::vector<podsort::SpecPoint> parse(const std::string &text);
 
+// How the last parse() on this thread went, for checking the reader on many specifications (tests/course_check.cpp)
+struct Diagnostics {
+    bool contentFound = false;      // it found where the subject content starts (otherwise it read the whole text)
+    size_t from = 0, to = 0, lines = 0;
+};
+Diagnostics lastDiagnostics();
+
 } // namespace specread

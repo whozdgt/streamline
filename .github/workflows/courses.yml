@@ -1,0 +1,70 @@
+name: courses
+# Every course in the spec finder (specs/catalog.json), checked: each specification is downloaded as the app downloads
+# it, read with Streamline's reader, and checked for signs it was misread (tests/course_check.cpp says which), then
+# read by the meaning model to see whether its points can be told apart. Prints only structure and counts.
+# Runs when the reader, the matching or the list changes, and by hand.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['src/specread*', 'src/podsort*', 'src/podai*', 'src/pdftext*', 'src/pdfcrypto*', 'specs/catalog.json',
+            'tests/course_check.cpp', '.github/specs/show-leaves.txt', '.github/workflows/courses.yml']
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    name: courses ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache/restore@v4
+        with:
+          path: build-tests
+          key: match-build-${{ hashFiles('cmake/llama.cmake') }}-${{ github.sha }}
+          restore-keys: match-build-${{ hashFiles('cmake/llama.cmake') }}-
+      - uses: actions/cache@v4
+        with:
+          path: pdf
+          key: courses-pdfs-${{ matrix.shard }}-${{ hashFiles('specs/catalog.json') }}
+          restore-keys: |
+            courses-pdfs-${{ matrix.shard }}-
+            catalog-pdfs-
+      - name: Build
+        run: |
+          cmake -S tests -B build-tests -DCMAKE_BUILD_TYPE=Release > /dev/null
+          cmake --build build-tests -j4 --target course_check 2>&1 | grep -E "error|Built target course_check" || true
+      - name: The meaning model
+        run: |
+          mkdir -p models
+          curl -fsSL --retry 3 -o models/meaning.gguf "https://github.com/$GITHUB_REPOSITORY/releases/download/ai-models/meaning-bge-small-en-v1.5-q8_0.gguf"
+      - name: Check the courses
+        env:
+          SHARD: ${{ matrix.shard }}
+          SHARDS: 6
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, subprocess, urllib.request
+          UA = "Streamline/0.8 (+https://github.com/whozdgt/streamline)"
+          shard, shards = int(os.environ["SHARD"]), int(os.environ["SHARDS"])
+          specs = [s for i, s in enumerate(json.load(open("specs/catalog.json"))["specs"]) if i % shards == shard]
+          leaves = [l.strip() for l in open(".github/specs/show-leaves.txt") if l.strip() and not l.startswith("#")]
+          os.makedirs("pdf", exist_ok=True)
+          args = []
+          for s in specs:
+              path = f"pdf/{s['id']}-{hashlib.sha1(s['url'].encode()).hexdigest()[:8]}.pdf"
+              if not (os.path.exists(path) and open(path, "rb").read(5) == b"%PDF-"):
+                  try:
+                      with urllib.request.urlopen(urllib.request.Request(s["url"], headers={"User-Agent": UA}), timeout=90) as r:
+                          data = r.read(80 * 1024 * 1024)
+                      if data.startswith(b"%PDF"): open(path, "wb").write(data)
+                  except Exception as e:
+                      print(f"\n== {s['id']} | NOT DOWNLOADED: {str(e)[:60]}")
+                      continue
+              if os.path.exists(path): args.append(f"{s['id']}={path}")
+          cmd = ["./build-tests/course_check", "--model", "models/meaning.gguf"]
+          if leaves: cmd += ["--leaves", ",".join(leaves)]
+          subprocess.run(cmd + args, check=False)
+          PY
