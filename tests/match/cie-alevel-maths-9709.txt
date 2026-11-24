@@ -1,0 +1,39 @@
+# spec: https://www.cambridgeinternational.org/Images/697427-2026-2027-syllabus.pdf
+# A Level Maths notes and worked examples written for this test, the way a student's folder looks. Each is under the
+# point it is about; Pure Mathematics 2 and 3 share topics, so a note on one of those accepts either.
+=== 1.1 | quadratics
+Completing the square: x^2 + 6x + 5 = (x + 3)^2 - 4, vertex at (-3, -4). Discriminant b^2 - 4ac: two real roots if > 0, equal roots if = 0, no real roots if < 0. Find k so that the line y = kx - 2 is a tangent to y = x^2 + 2: substitute and set discriminant = 0. Solving quadratic inequalities by sketching.
+=== 1.2 | functions ex 2B
+Domain and range, one-one functions, composite functions fg(x) = f(g(x)), inverse function f^-1 by swapping x and y, graph of inverse is reflection in y = x. Transformations: y = f(x) + a, y = f(x + a), y = af(x), y = f(ax), reflections.
+=== 1.4 | radians
+Arc length s = r theta, sector area = 1/2 r^2 theta, with theta in radians. pi radians = 180 degrees. Problems with segments: area of segment = sector - triangle = 1/2 r^2 (theta - sin theta).
+=== 1.6 | binomial + AP GP
+Binomial expansion of (a + b)^n for positive integer n using nCr. Arithmetic progressions: nth term a + (n-1)d, sum n/2(2a + (n-1)d). Geometric progressions: ar^(n-1), sum to infinity a/(1 - r) when |r| < 1.
+=== 1.8 | integration P1
+Integration as reverse of differentiation, integral of x^n = x^(n+1)/(n+1) + c. Definite integrals, area under a curve, area between curve and line, volume of revolution about the x-axis pi integral y^2 dx. Improper integrals.
+=== 2.2;3.2 | logs
+Laws of logarithms: log(ab) = log a + log b, log a^n = n log a. Solve 3^x = 20, x = ln 20 / ln 3. ln x and e^x are inverses. Transforming y = kx^n to log y = log k + n log x to get a straight line graph and find k and n from gradient and intercept.
+=== 3.7 | vectors P3
+Vector equation of a line r = a + t b. Intersection of two lines or show they are skew. Angle between lines using the scalar product a.b = |a||b|cos theta. Perpendicular distance from a point to a line.
+=== 3.9 | complex
+i^2 = -1, complex conjugate, Argand diagram, modulus and argument, polar form r(cos theta + i sin theta), exponential form re^(i theta). Loci: |z - a| = r is a circle, arg(z - a) = theta is a half line. Square roots of a complex number.
+=== 3.8 | diff eqns
+Separable differential equations: dy/dx = ky gives y = Ae^(kx). Forming differential equations from a context like rate of cooling or population growth, using initial conditions to find the constant.
+=== 4.1 | forces
+Resolving forces in two perpendicular directions, resultant force, equilibrium of a particle on a rough plane, coefficient of friction F <= mu R, limiting friction. Lami? no - triangle of forces.
+=== 4.2;4.4 | suvat + F=ma
+Kinematics: displacement, velocity, acceleration, v = u + at, s = ut + 1/2 at^2, v^2 = u^2 + 2as. Velocity-time graphs, area = displacement. Newton's second law F = ma for connected particles, pulleys, lifts.
+=== 5.2 | perms and combs
+Arrangements of the letters of BANANA = 6!/(3!2!) = 60. Selections nCr. Arrangements with restrictions: letters together, not together, at the ends. Committee problems.
+=== 5.5 | normal dist
+Normal distribution N(mu, sigma^2), standardising Z = (X - mu)/sigma, using tables. Finding mu or sigma from given probabilities. Normal approximation to the binomial with continuity correction when np > 5 and nq > 5.
+=== 6.1 | poisson
+Poisson distribution Po(lambda) for random events at a constant rate, P(X = x) = e^-lambda lambda^x / x!, mean = variance = lambda. Poisson approximation to binomial when n large and p small. Normal approximation to Poisson.
+=== 6.5 | hyp tests
+Hypothesis testing: null and alternative hypotheses, one-tail and two-tail tests, significance level, critical region, Type I error (rejecting H0 when it is true) and Type II error. Test for the mean of a normal distribution using the sample mean.
+=== - | chem titration
+25.0 cm3 of NaOH neutralised by 22.5 cm3 of 0.1 mol dm-3 HCl. Moles HCl = 0.00225.
+=== - | history essay
+Why did the Weimar Republic survive 1919-1923? Freikorps, Kapp Putsch, Munich Putsch.
+=== - | to do list
+pay phone bill, renew bus pass, return library books

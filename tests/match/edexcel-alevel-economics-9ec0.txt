@@ -1,0 +1,35 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/A%20Level/Economics/2015/specification-and-sample-assessment-materials/A_Level_Econ_A_Spec.pdf
+# A level Economics notes written for this test: diagrams described in words, essay plans and 25-markers. Each is under
+# the topic it is about.
+=== 1.1 | intro econ
+Economics as a social science, ceteris paribus, positive and normative statements, value judgements. The economic problem: scarcity, choices and opportunity cost. Production possibility frontiers, specialisation and the division of labour, functions of money. Free market vs command economy (Adam Smith, Hayek, Marx).
+=== 1.2 | PED YED XED
+Price elasticity of demand: PED = %change in Qd / %change in P, elastic vs inelastic, relationship with total revenue. Income elasticity (normal, inferior, luxury goods) and cross elasticity (substitutes, complements). Price elasticity of supply. Consumer and producer surplus, indirect taxes and subsidies incidence. Alternative views of consumer behaviour: behavioural economics, bounded rationality, rules of thumb, anchoring, social norms.
+=== 1.3 | market failure
+Types of market failure: externalities (negative production externality diagram, MSC > MPC), under-provision of public goods (non-rival, non-excludable, free rider problem), information gaps, asymmetric information. Merit and demerit goods.
+=== 1.4 | govt intervention
+Government intervention: indirect taxation, subsidies, maximum and minimum prices, trade pollution permits, state provision, provision of information, regulation. Government failure: distortion of price signals, unintended consequences, excessive administrative costs, information gaps.
+=== 2.1;2.6 | macro indicators
+Measures of economic performance: real and nominal GDP, GDP per capita, PPP, national happiness. Inflation: CPI and RPI, demand-pull and cost-push, deflation. Employment and unemployment: claimant count vs ILO labour force survey, frictional, structural, cyclical. Balance of payments current account.
+=== 2.2;2.3 | AD AS
+Aggregate demand = C + I + G + (X - M). Factors affecting consumption and investment, the accelerator. Aggregate supply: short run (costs) and long run (classical vertical LRAS vs Keynesian). Shifts in AD and AS diagrams.
+=== 2.4;2.5 | multiplier and growth
+Circular flow of income, injections and withdrawals, the multiplier = 1/(1-MPC) = 1/MPW. Economic growth: actual vs potential, output gaps, trade cycle, impact of growth on living standards and the environment.
+=== 2.6 | policies
+Macroeconomic objectives: growth, low unemployment, low and stable inflation 2% target, balance of payments equilibrium, balanced budget, protection of the environment. Demand-side policies: monetary policy (Bank of England, interest rates, quantitative easing), fiscal policy (government spending and taxation). Supply-side policies: market-based and interventionist. Conflicts between objectives, Phillips curve.
+=== 3.3;3.4 | market structures
+Revenues, costs and profits: total, average, marginal revenue; economies and diseconomies of scale; normal, supernormal and losses; profit maximisation MC = MR. Market structures: perfect competition, monopolistic competition, oligopoly (kinked demand curve, game theory, collusion, cartels), monopoly, monopsony, contestable markets.
+=== 3.5 | labour market
+Demand for labour as a derived demand, marginal revenue product, elasticity of demand for labour, supply of labour, wage determination in competitive and non-competitive markets, national minimum wage, trade unions, immobility of labour.
+=== 4.1 | trade
+International economics: globalisation, specialisation and trade, comparative advantage (Ricardo) vs absolute advantage, terms of trade, trading blocs and the WTO, restrictions on free trade (tariffs, quotas), balance of payments, exchange rate systems (floating, fixed, managed), Marshall-Lerner condition and J curve, international competitiveness.
+=== 4.2;4.3 | development
+Poverty (absolute and relative) and inequality (Lorenz curve, Gini coefficient). Measures of development: HDI. Factors influencing growth and development in emerging and developing economies: primary product dependency, savings gap (Harrod-Domar), foreign currency gap, capital flight, corruption. Strategies: market-orientated vs interventionist, microfinance, fair trade, aid and debt relief.
+=== 4.4 | banks
+The financial sector: role of financial markets, market failure in the financial sector (asymmetric information, speculation and market bubbles, moral hazard), central banks: lender of last resort, regulation.
+=== - | psych
+Zimbardo's Stanford prison experiment, deindividuation, conformity to social roles.
+=== - | english
+Othello, Iago's soliloquies, the handkerchief as a symbol.
+=== - | job shift
+work sat 9-5

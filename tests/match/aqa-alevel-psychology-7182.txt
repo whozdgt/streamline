@@ -1,0 +1,39 @@
+# spec: https://filestore.aqa.org.uk/resources/psychology/specifications/AQA-7181-7182-SP-2015.PDF
+# A-level Psychology notes written for this test, the way a sixth former's folder looks: essay plans, study
+# summaries, AO3 points and unhelpful file names. Each is under the point it is about.
+=== 4.1.1 | conformity + obedience
+Asch (1951) line study: 123 male students, 1 naive participant, 36.8% conformed on critical trials, 75% conformed at least once. Variables: group size (up to 3), unanimity, task difficulty. Types of conformity: compliance, identification, internalisation (Kelman). Milgram 1963 obedience 65% to 450V; agentic state, legitimacy of authority. Situational variables: proximity, location, uniform.
+=== 4.1.1 | minority influence 16 marker
+Moscovici blue/green slides: consistent minority 8.42% green vs inconsistent 1.25%. Consistency, commitment, flexibility. Snowball effect and social change, e.g. suffragettes. Resistance to social influence: social support, locus of control (Rotter). AO3 - artificial tasks, lack of mundane realism.
+=== 4.1.2 | MSM + WMM
+Multi-store model (Atkinson and Shiffrin 1968): sensory register, STM (capacity 7+/-2, duration 18-30s, acoustic coding), LTM (unlimited, semantic). Peterson and Peterson trigrams. Working memory model (Baddeley and Hitch 1974): central executive, phonological loop, visuospatial sketchpad, episodic buffer. KF case study supports separate STM stores.
+=== 4.1.2 | EWT revision
+Eyewitness testimony: Loftus and Palmer (1974) leading questions - smashed vs contacted, estimated speed and broken glass. Post-event discussion. Anxiety: Yuille and Cutshall real shooting, weapon focus. Cognitive interview: report everything, reinstate context, reverse order, change perspective.
+=== 4.1.3 | attachment
+Caregiver-infant interactions: reciprocity, interactional synchrony (Meltzoff and Moore). Schaffer and Emerson (1964) stages of attachment, Glasgow babies. Lorenz geese imprinting, Harlow's monkeys - contact comfort over food. Bowlby's monotropic theory, critical period, internal working model. Ainsworth strange situation: secure 66%, insecure-avoidant 22%, insecure-resistant 12%. Van Ijzendoorn cross-cultural.
+=== 4.1.4 | OCD and depression
+Definitions of abnormality: statistical infrequency, deviation from social norms, failure to function adequately, deviation from ideal mental health. Phobias - two-process model (Mowrer), systematic desensitisation and flooding. Depression - Beck's negative triad, Ellis ABC model, CBT. OCD - genetic (COMT, SERT) and neural explanations, SSRIs.
+=== 4.2.1 | approaches
+Origins of psychology: Wundt and introspection. Learning approaches: classical conditioning (Pavlov), operant conditioning (Skinner, reinforcement), social learning theory (Bandura's Bobo doll, vicarious reinforcement, mediational processes). Cognitive approach - schema, inference, computer models. Biological approach - genotype/phenotype. Psychodynamic - Freud id ego superego, defence mechanisms. Humanistic - Maslow, Rogers.
+=== 4.2.2 | bio psych
+Nervous system: CNS and PNS, somatic and autonomic. Neurons - sensory, relay, motor; synaptic transmission, excitatory and inhibitory neurotransmitters. Endocrine system, fight or flight, adrenaline. Localisation of function: Broca's and Wernicke's areas, motor cortex. Hemispheric lateralisation and split-brain research (Sperry). Plasticity. fMRI, EEG, ERPs, post-mortem. Circadian, infradian and ultradian rhythms, endogenous pacemakers (SCN).
+=== 4.2.3.1 | research methods
+Experimental methods: lab, field, natural, quasi. Observational techniques, self-report (questionnaires and interviews), correlations. Aims and hypotheses (directional/non-directional), sampling: random, systematic, stratified, opportunity, volunteer. Pilot studies, experimental designs (independent groups, repeated measures, matched pairs), BPS ethics, peer review.
+=== 4.2.3.3 | stats test flowchart
+Inferential testing: sign test, probability and significance, p <= 0.05, Type I and Type II errors. Choosing a statistical test: Mann-Whitney, Wilcoxon, chi-squared, Spearman's rho, Pearson's r, related/unrelated t-test, depending on design, level of data (nominal, ordinal, interval) and difference vs correlation.
+=== 4.3.1 | nature nurture etc
+Issues and debates: gender bias (alpha and beta bias, androcentrism) and culture bias (ethnocentrism, cultural relativism), free will vs determinism (hard and soft, biological, environmental, psychic), nature-nurture, holism and reductionism, idiographic vs nomothetic, ethical implications and social sensitivity (Sieber and Stanley).
+=== 4.3.2 | relationships essay plan
+Evolutionary explanations for partner preferences: sexual selection, intrasexual and intersexual (Buss 1989 37 cultures). Self-disclosure (Altman and Taylor social penetration), physical attractiveness, matching hypothesis (Walster). Filter theory (Kerckhoff and Davis). Social exchange theory, equity theory, Rusbult's investment model, Duck's phase model of breakdown. Virtual relationships, parasocial relationships.
+=== 4.3.5 | szchizo
+Schizophrenia: classification, positive symptoms (hallucinations, delusions) and negative symptoms (speech poverty, avolition). Reliability and validity of diagnosis, co-morbidity, symptom overlap. Biological explanations - genetics, dopamine hypothesis, neural correlates. Psychological - family dysfunction (double bind, expressed emotion), cognitive. Drug therapy: typical and atypical antipsychotics. CBT, family therapy, token economies. Diathesis-stress model.
+=== 4.3.8 | aggression
+Neural and hormonal mechanisms in aggression: limbic system, amygdala, serotonin, testosterone. Genetic factors, MAOA gene. Ethological explanation (innate releasing mechanisms, fixed action patterns). Evolutionary explanations. Frustration-aggression hypothesis, social learning theory, deindividuation (Zimbardo). Institutional aggression in prisons: dispositional (importation) and situational (deprivation). Media influences, computer games, desensitisation.
+=== 4.3.9 | forensic
+Offender profiling: top-down (FBI, organised vs disorganised) and bottom-up (investigative psychology, geographical profiling, Canter). Biological explanations of offending: historical (Lombroso atavistic form), genetic and neural. Eysenck's theory of the criminal personality. Cognitive - level of moral reasoning (Kohlberg), cognitive distortions. Dealing with offending: custodial sentencing, recidivism, behaviour modification, anger management, restorative justice.
+=== - | biology enzymes
+Enzymes are biological catalysts. Lock and key model, active site, denatured at high temperatures. Rate of reaction graph.
+=== - | maths homework
+Differentiate y = 3x^2 + 2x - 5. dy/dx = 6x + 2. Find the stationary point.
+=== - | shopping
+oat milk, pasta, chopped tomatoes, bin bags

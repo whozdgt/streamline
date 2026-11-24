@@ -1,0 +1,31 @@
+# spec: https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-8552-SP-2017.PDF
+# GCSE Design and Technology notes written for this test: revision cards, NEA folder pages and exam answers. Each is
+# under the point (or section) it is about.
+=== 3.1.1 | new tech
+Industry 4.0 and automation, robotics, CAD/CAM. Sustainability: finite and non-finite resources, disposal of waste. Planned obsolescence, ethical considerations, fair trade, people and culture. Enterprise and crowdfunding, co-operatives.
+=== 3.1.2 | energy
+Fossil fuels (coal, gas, oil) vs renewable energy (wind, solar, tidal, hydro-electrical, biomass). Nuclear power. Energy storage systems including batteries: alkaline, rechargeable, kinetic pumped storage.
+=== 3.1.3 | smart materials
+Modern materials: graphene, metal foams, titanium, LCDs, nanomaterials. Smart materials: shape memory alloys (nitinol), thermochromic pigments, photochromic pigments. Composites: CFRP, GRP. Technical textiles: conductive fabrics, fire resistant fabrics, Kevlar, microfibres.
+=== 3.1.4;3.1.5 | systems and mechanisms
+Systems approach: input, process, output, sensors (light dependent resistor, thermistor), control devices (microcontrollers), output devices (buzzers, LEDs). Mechanical devices: levers (first, second, third order), linkages (bell crank, reverse motion), rotary systems: cams, gears, pulleys; types of motion - linear, rotary, reciprocating, oscillating.
+=== 3.1.6 | material properties
+Papers and boards (bleed proof paper, corrugated card, foam board), natural and manufactured timbers (oak, pine, MDF, plywood), ferrous and non-ferrous metals and alloys, thermoforming and thermosetting polymers, natural, synthetic and blended fibres. Properties: strength, hardness, toughness, malleability, ductility, elasticity.
+=== 3.2.2;3.2.6 | forces + stock forms
+Forces and stresses: tension, compression, bending, torsion, shear. Reinforcing materials: laminating, bending, folding, webbing. Stock forms of timber: planks, boards, mouldings; metal: sheet, bar, tube; standard components: screws, nuts and bolts, hinges.
+=== 3.2.7 | scales of production
+One-off/bespoke, batch production, mass production, continuous production. Jigs, templates, patterns, quality control and tolerances. CNC routers and laser cutters.
+=== 3.2.9 | finishes
+Surface treatments: painting and varnishing timber, dip coating and powder coating metal, galvanising, anodising aluminium, printing techniques for paper: offset lithography, screen printing.
+=== 3.3.1;3.3.2 | research for NEA
+Investigation using primary and secondary data: client profile, user interviews, questionnaires, product analysis (ACCESS FM), anthropometrics and ergonomics (5th and 95th percentile). Environmental, social and economic challenge: deforestation, carbon footprint, the 6 Rs (reduce, reuse, recycle, refuse, rethink, repair).
+=== 3.3.3 | designers
+The work of others: Alexander McQueen, Charles Rennie Mackintosh, Coco Chanel, Harry Beck (London Underground map), Marcel Breuer, Philippe Starck, Raymond Templier, Norman Foster, Sir Alec Issigonis, Aldo Rossi. Companies: Alessi, Apple, Braun, Dyson, Gap, Primark, Under Armour, Zara.
+=== 3.3.5;3.3.6 | sketching + modelling
+Communication of design ideas: freehand sketching, isometric and oblique drawing, orthographic projection, exploded diagrams, system and schematic diagrams, CAD, audio and visual recordings. Prototype development: modelling with card and foam, testing and evaluating, client feedback.
+=== - | history
+Elizabeth I's religious settlement: Act of Supremacy and Act of Uniformity 1559.
+=== - | physics
+Specific heat capacity: E = m c delta theta
+=== - | chores
+hoover, take bins out thursday

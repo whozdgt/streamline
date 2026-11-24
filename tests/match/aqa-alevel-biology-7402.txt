@@ -1,0 +1,31 @@
+# spec: https://filestore.aqa.org.uk/resources/biology/specifications/AQA-7401-7402-SP-2015.PDF
+# A-level Biology notes written for this test: lesson notes, required practical write-ups, exam answers. Each is under
+# the section it is about (a section accepts any point inside it).
+=== 3.1 | biological molecules
+Monomers and polymers joined by condensation reactions and broken by hydrolysis. Glucose (alpha and beta), maltose, sucrose, lactose; starch, glycogen and cellulose structure related to function. Triglycerides and phospholipids, ester bonds. Amino acids, peptide bonds, primary to quaternary structure. Biuret, Benedict's, iodine and emulsion tests.
+=== 3.1 | enzymes RP1
+Required practical 1: investigation into the effect of temperature on the rate of an enzyme-controlled reaction. Induced fit model, active site, enzyme-substrate complex, lowering activation energy. Competitive and non-competitive inhibitors. Effect of substrate concentration.
+=== 3.1 | DNA + ATP + water
+DNA nucleotide: deoxyribose, phosphate, base. Semi-conservative replication, DNA helicase and DNA polymerase, Meselson and Stahl. ATP hydrolysis by ATP hydrolase releases energy, phosphorylation. Water: polar, hydrogen bonds, high specific heat capacity, solvent. Inorganic ions: H+, Fe2+, Na+, PO4 3-.
+=== 3.2 | cell structure + microscopes
+Eukaryotic cell organelles: nucleus, mitochondria, chloroplasts, Golgi, lysosomes, ribosomes, RER, SER, cell wall, vacuole. Prokaryotes: no nucleus, plasmids, capsule, 70S ribosomes. Optical vs TEM vs SEM, magnification and resolution, cell fractionation and ultracentrifugation. Mitosis and the cell cycle, binary fission.
+=== 3.2 | immune response
+Phagocytosis, T lymphocytes (helper, cytotoxic), B lymphocytes and plasma cells, antibodies, antigen-antibody complex, primary and secondary responses, memory cells. Vaccines and herd immunity. HIV structure and replication, monoclonal antibodies and ELISA test.
+=== 3.3 | gas exchange + digestion
+Surface area to volume ratio. Gas exchange in single-celled organisms, insects (tracheae, spiracles), fish (gills, countercurrent), leaves. Human lungs: alveoli, ventilation, Fick's law. Digestion by amylases, proteases, lipases; absorption by co-transport in the ileum. Haemoglobin and the oxygen dissociation curve, Bohr effect. Heart, cardiac cycle, tissue fluid, xylem transpiration (cohesion-tension), phloem mass flow.
+=== 3.4 | genetic info + diversity
+Genes, alleles, introns and exons, genetic code is non-overlapping and degenerate. Transcription (mRNA, RNA polymerase, splicing) and translation (tRNA, ribosome). Gene mutations, meiosis: crossing over and independent segregation, non-disjunction. Natural selection, directional and stabilising selection. Classification - phylogeny, hierarchy, binomial naming. Biodiversity index.
+=== 3.5 | photosynthesis + respiration
+Light dependent reaction: photolysis, photoionisation of chlorophyll, chemiosmosis, ATP and reduced NADP. Light independent reaction (Calvin cycle): RuBP, rubisco, GP, TP. Limiting factors. Respiration: glycolysis, link reaction, Krebs cycle, oxidative phosphorylation; anaerobic respiration. Energy transfer in ecosystems, GPP and NPP, nitrogen and phosphorus cycles, mycorrhizae, eutrophication.
+=== 3.6 | nerves and muscles
+Taxes and kineses, IAA in tropisms. Pacinian corpuscle as a receptor, rods and cones. Myogenic heart, SAN, AVN, bundle of His. Resting potential and action potential, myelination and saltatory conduction, synapses and acetylcholine, summation. Sliding filament theory of muscle contraction, actin and myosin, ATP and phosphocreatine. Blood glucose control: insulin, glucagon, adrenaline, diabetes; osmoregulation and ADH, the nephron.
+=== 3.7 | genetics and evolution
+Monohybrid and dihybrid crosses, codominance, multiple alleles, sex linkage, autosomal linkage, epistasis, chi-squared test. Hardy-Weinberg principle p^2 + 2pq + q^2 = 1. Allopatric and sympatric speciation, genetic drift. Succession, quadrats and transects, mark-release-recapture.
+=== 3.8 | gene expression
+Gene mutations: addition, deletion, substitution, inversion, duplication, translocation. Totipotent, pluripotent, multipotent, unipotent stem cells, iPS cells. Transcription factors, oestrogen, epigenetics: DNA methylation and histone acetylation, siRNA. Cancer: tumour suppressor genes and oncogenes. Recombinant DNA technology, PCR, restriction enzymes, gene therapy, DNA probes, genetic fingerprinting.
+=== - | economics
+Price elasticity of demand = % change in quantity demanded / % change in price. Inelastic goods like petrol.
+=== - | spanish
+el medio ambiente, la contaminación, el reciclaje, el cambio climático
+=== - | dentist
+dentist mon 3.40

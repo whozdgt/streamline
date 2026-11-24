@@ -1,0 +1,37 @@
+# spec: https://www.ocr.org.uk/Images/171726-specification-accredited-a-level-gce-physics-a-h556.pdf
+# A Level Physics notes written for this test: worked examples, practical write-ups and revision sheets. Each is under
+# the topic it is about (a topic accepts any point inside it).
+=== 2.2 | uncertainties
+Systematic and random errors, precision and accuracy. Absolute and percentage uncertainties, combining uncertainties when adding (add absolute) and multiplying (add percentage). Error bars, worst-fit line to find the uncertainty in the gradient.
+=== 3.1 | projectiles
+SUVAT for constant acceleration, displacement-time and velocity-time graphs. Projectile motion: horizontal and vertical components are independent, horizontal velocity constant, vertical acceleration g = 9.81 m s-2. Determining g by free fall with light gates. Stopping distance = thinking distance + braking distance.
+=== 3.2;3.3 | forces moments energy
+Free-body diagrams, drag and terminal velocity, moments and couples, principle of moments, centre of mass, density and pressure, upthrust (Archimedes' principle). Work done W = Fx cos theta, conservation of energy, kinetic and gravitational potential energy, power P = Fv, efficiency.
+=== 3.4 | Hookes law + Young modulus
+Hooke's law F = kx, springs in series and parallel, elastic potential energy 1/2 kx^2. Stress, strain and Young modulus E = stress/strain, determining the Young modulus of a metal wire with a micrometer and a long wire, stress-strain graphs for ductile, brittle and polymeric materials.
+=== 3.5 | momentum
+Newton's three laws, linear momentum p = mv, impulse = area under a force-time graph, conservation of momentum in elastic and inelastic collisions in one and two dimensions.
+=== 4.1;4.2;4.3 | circuits
+Electric current as the rate of flow of charge, Kirchhoff's first and second laws, mean drift velocity I = Anev. Resistance, resistivity R = rho L / A, I-V characteristics of a filament lamp, diode and LED, thermistors and LDRs. Potential dividers, internal resistance and e.m.f. E = I(R + r).
+=== 4.4 | waves
+Progressive waves, wave equation v = f lambda, reflection, refraction, diffraction, polarisation, intensity proportional to amplitude squared. Electromagnetic spectrum. Superposition, interference, Young's double slit lambda = ax/D, stationary waves and nodes, harmonics on a string and in pipes.
+=== 4.5 | photoelectric
+Photons E = hf, the photoelectric effect, work function, threshold frequency, hf = phi + KEmax, electronvolt, LEDs to find Planck's constant, wave-particle duality, electron diffraction and the de Broglie wavelength.
+=== 5.1 | thermal
+Kinetic model, internal energy, specific heat capacity and specific latent heat practicals, ideal gas equation pV = nRT, Boltzmann constant, root mean square speed, absolute zero.
+=== 5.2;5.3 | circular + SHM
+Circular motion: radian, angular velocity, centripetal acceleration v^2/r. Simple harmonic motion a = -omega^2 x, x = A cos(omega t), energy in SHM, damping and resonance, forced oscillations.
+=== 5.4;5.5 | grav + astro
+Gravitational fields, Newton's law of gravitation, field strength g = GM/r^2, Kepler's laws, geostationary orbits, gravitational potential. Astrophysics: life cycle of stars, Hertzsprung-Russell diagram, Wien's law, Stefan's law, Hubble's law, the Big Bang, cosmic microwave background radiation, dark matter.
+=== 6.1 | capacitors
+Capacitance C = Q/V, capacitors in series and parallel, energy stored 1/2 QV, charging and discharging through a resistor, time constant CR, exponential decay.
+=== 6.3 | em induction
+Magnetic fields, Fleming's left-hand rule F = BIL, force on a charged particle F = BQv, Faraday's and Lenz's laws, magnetic flux linkage, transformers, ac generators.
+=== 6.4;6.5 | nuclear + medical
+Alpha scattering and the nucleus, quarks and leptons, radioactive decay, half-life, binding energy and fission/fusion. Medical imaging: X-rays, CAT scans, PET scans, ultrasound and the acoustic impedance, Doppler imaging.
+=== - | econ
+Supply-side policies: privatisation, deregulation, cutting income tax, education and training.
+=== - | sociology
+Durkheim on religion: the sacred and the profane, collective conscience.
+=== - | holiday
+flight 6am Gatwick, passport, euros

@@ -56,6 +56,12 @@ std::vector<Note> readNotes(const std::string &path)
     return out;
 }
 
+std::string lowerOf(std::string s)
+{
+    for (char &c : s) c = char(std::tolower(static_cast<unsigned char>(c)));
+    return s;
+}
+
 double cosv(const std::vector<float> &a, const std::vector<float> &b)
 {
     if (a.empty() || b.empty()) return 0;
@@ -132,11 +138,22 @@ int main(int argc, char **argv)
         offTopic.push_back(n.label == "-");
         if (n.label == "-") { label.push_back(-1); also.push_back({}); continue; }
         std::vector<int> ok;
+        // several right points: "4.6.2.2,4.6.3.1"; titles (which have commas of their own) are put apart with ";"
+        const bool titled = std::any_of(n.label.begin(), n.label.end(), [](char c) { return std::isalpha(static_cast<unsigned char>(c)); }) &&
+                            !std::isdigit(static_cast<unsigned char>(n.label[0]));
+        const char sep = n.label.find(';') != std::string::npos ? ';' : titled ? '\n' : ',';
         std::stringstream ls(n.label);
-        for (std::string one; std::getline(ls, one, ',');) {
+        for (std::string one; std::getline(ls, one, sep);) {
+            one.erase(0, one.find_first_not_of(' '));
+            one.erase(one.find_last_not_of(' ') + 1);
             const auto it = byNumber.find(one);
-            if (it == byNumber.end()) std::printf("  no point %s in the spec (note \"%s\")\n", one.c_str(), n.title.c_str());
-            else ok.push_back(it->second);
+            if (it != byNumber.end()) { ok.push_back(it->second); continue; }
+            // a point with no number is named by its title ("Climate change, energy and resources")
+            int found = -1;
+            for (size_t i = 0; i < points.size() && found < 0; ++i)
+                if (points[i].number.empty() && lowerOf(points[i].title) == lowerOf(one)) found = int(i);
+            if (found >= 0) ok.push_back(found);
+            else std::printf("  no point %s in the spec (note \"%s\")\n", one.c_str(), n.title.c_str());
         }
         label.push_back(ok.empty() ? -1 : ok[0]);
         also.push_back(ok);

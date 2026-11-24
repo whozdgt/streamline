@@ -1,0 +1,21 @@
+# spec: https://filestore.aqa.org.uk/resources/philosophy/specifications/AQA-7172-SP-2017.PDF
+# A-level Philosophy notes written for this test: argument maps, essay plans and lesson notes. Each is under the
+# section it is about (a section accepts any point inside it).
+=== 3.1 | epistemology
+What is knowledge? Tripartite view: justified true belief, Gettier cases, responses: infallibilism, no false lemmas, reliabilism, virtue epistemology. Perception: direct realism, indirect realism (Locke), Berkeley's idealism. Rationalism vs empiricism, innatism (Plato's meno slave boy, Leibniz) vs tabula rasa (Locke), Descartes' cogito and intuition and deduction. Scepticism - local and global, philosophical scepticism, brain in a vat.
+=== 3.2 | moral philosophy
+Normative ethical theories: utilitarianism (Bentham's hedonic calculus, Mill's higher and lower pleasures, act and rule utilitarianism), Kantian deontological ethics (categorical imperative, universalisability, humanity formula), Aristotle's virtue ethics (eudaimonia, the doctrine of the mean). Applied ethics: stealing, simulated killing, eating animals, telling lies. Metaethics: moral realism and anti-realism, emotivism (Ayer), prescriptivism (Hare), error theory (Mackie).
+=== 3.3 | god
+The concept of God: omnipotence, omniscience, omnibenevolence, the paradox of the stone, Euthyphro dilemma. Ontological arguments: Anselm, Descartes, Malcolm; Gaunilo's island and Kant's existence is not a predicate. Teleological arguments: Paley's watch, Swinburne, Hume's criticisms. Cosmological arguments: Kalam, Aquinas' Five Ways, Descartes, Leibniz's principle of sufficient reason. Problem of evil: logical and evidential, free will defence, soul-making theodicy (Hick). Religious language: verificationism (Ayer), falsification debate (Flew, Hare's bliks, Mitchell).
+=== 3.4 | mind
+Substance dualism (Descartes' indivisibility and conceivability arguments), property dualism (Chalmers' zombies, Jackson's knowledge argument - Mary the colour scientist), issues: problem of other minds, causal interaction. Physicalism: philosophical behaviourism (Hempel, Ryle's category mistake), mind-brain type identity theory (Smart, Place), eliminative materialism (Churchlands), functionalism (Putnam), multiple realisability, inverted qualia.
+=== 3.2 | lying essay plan
+Is it ever right to tell a lie? Kant's murderer at the door - perfect duty not to lie. Utilitarian view - depends on consequences. Virtue ethics - honesty as a virtue, the mean between boastfulness and false modesty.
+=== 3.1 | knowledge argument plan
+Can we have a priori knowledge of the external world? Descartes' trademark argument for God and the existence of the external world, Locke's primary and secondary qualities, Hume's fork (relations of ideas vs matters of fact).
+=== - | geography
+Rostow's model of development: traditional society, preconditions for take-off, take-off.
+=== - | computer science
+binary 10110 = 22 denary
+=== - | party
+Sophie's 18th, Saturday 8pm, bring a bottle

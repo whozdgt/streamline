@@ -1,0 +1,33 @@
+# spec: https://www.cambridgeinternational.org/Images/697139-2026-2028-syllabus.pdf
+# IGCSE ICT notes written for this test: theory notes and practical how-tos. Each is under the topic it is about (a
+# topic accepts any point inside it).
+=== 1 | hardware software
+Hardware vs software, application software vs system software. Internal components: CPU, motherboard, RAM, ROM, graphics card, sound card, NIC. Operating systems: CLI vs GUI, dialogue-based interfaces, gesture-based. Types of computer: desktop, laptop, smartphone, tablet. Emerging technologies: AI, extended reality.
+=== 2 | input output devices
+Input devices: keyboard, mouse, touch screen, scanner, microphone, sensors. Direct data entry: magnetic stripe reader, chip and PIN, RFID, OMR, OCR, barcode readers, QR codes. Output devices: monitors, printers (laser, inkjet, 3D), speakers, actuators.
+=== 3 | storage
+Magnetic storage (hard disk drives, magnetic tape), optical (CD, DVD, Blu-ray), solid state (SSD, flash memory, memory cards). Backing storage vs primary memory, access speeds and capacities.
+=== 4 | networks
+Routers, NICs, hubs, switches, Wi-Fi vs Bluetooth, cloud computing, intranets vs internet, LAN WLAN WAN. Network issues: passwords, biometrics, two-factor authentication, anti-malware. Video conferencing, audio conferencing, web conferencing.
+=== 5 | health and IT
+Microprocessor-controlled devices in the home: positive and negative effects on lifestyle, leisure, security. Health problems from prolonged computer use: back and neck strain, RSI, eye strain, headaches; how to prevent them.
+=== 6 | ICT applications
+Communication media, computer modelling, robotics in manufacturing, school management systems, online booking systems, banking applications: ATMs and EFT, expert systems for medical diagnosis, retail point of sale, recognition systems (number plate recognition), satellite systems: GPS, GIS.
+=== 7 | systems life cycle
+Analysis: observation, interviews, questionnaires, examination of documents. Design: file structures, input forms, output screens, validation routines (range, type, length, presence, format check). Testing with normal, abnormal and extreme data. Implementation: direct changeover, parallel running, pilot running, phased. Technical and user documentation. Evaluation.
+=== 8 | e-safety + security
+Physical safety (electrocution, fire, tripping over cables). eSafety: protecting personal data, safe use of social media and online gaming. Security of data: hacking, phishing, pharming, smishing, vishing, viruses, malware, card fraud; SSL, encryption, firewalls, digital certificates.
+=== 10 | email + internet
+Email: netiquette, spam, cc and bcc, attachments, groups. Effective use of the internet: WWW vs internet, HTTP and HTTPS, URL structure, web browsers, ISPs, search engines, evaluating information found on the internet.
+=== 18 | databases practical
+Access database practical: field types (text, number, date/time, Boolean), primary key, relationships between tables, forms, queries with criteria (AND, OR, wildcards), sorting, reports with calculated fields.
+=== 20 | spreadsheets practical
+Spreadsheet practical: absolute and relative cell references, named ranges, functions SUM, AVERAGE, IF, VLOOKUP, XLOOKUP, COUNTIF, nested IF; sorting and filtering data, conditional formatting, printing with gridlines and row and column headings.
+=== 21 | website authoring
+Web development layers: content (HTML), presentation (CSS), behaviour. Creating a web page: head section, title, meta tags, tables, hyperlinks, images; external stylesheet vs inline styles, classes, font-family, background colour.
+=== - | biology
+Osmosis: movement of water molecules from a dilute solution to a concentrated solution through a partially permeable membrane.
+=== - | maths
+Area of a circle = pi r^2. Circumference = 2 pi r.
+=== - | football
+training tuesday 6pm, bring shin pads

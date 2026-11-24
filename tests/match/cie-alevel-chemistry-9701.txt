@@ -1,0 +1,33 @@
+# spec: https://www.cambridgeinternational.org/Images/664563-2025-2027-syllabus.pdf
+# AS & A Level Chemistry notes written for this test: lesson notes, data-booklet scribbles and exam answers. Each is
+# under the topic it is about (a topic accepts any point inside it); AS and A Level revisit some topics.
+=== 1 | atomic structure + IE
+Protons, neutrons, electrons; isotopes have the same number of protons. Electron configuration 1s2 2s2 2p6, subshells and orbital shapes (s and p). First ionisation energy trends across a period and down a group, the drop from Mg to Al and from P to S.
+=== 2 | moles and stoich
+Relative atomic mass from isotopic abundances, mole calculations, empirical and molecular formulae, reacting masses, gas volumes at r.t.p 24.0 dm3, concentration in mol dm-3, titration calculations, percentage yield.
+=== 3 | bonding
+Ionic, covalent and dative bonds, metallic bonding. Shapes of molecules by VSEPR: linear, trigonal planar, tetrahedral, pyramidal, non-linear. Electronegativity and polar bonds, hydrogen bonding in water, van der Waals forces (instantaneous and permanent dipoles), sigma and pi bonds, hybridisation.
+=== 4 | gases
+Ideal gas equation pV = nRT, assumptions of the kinetic theory, real gases deviate at high pressure and low temperature. Giant lattice structures vs simple molecular.
+=== 5;23 | enthalpy
+Enthalpy changes: formation, combustion, neutralisation, atomisation, hydration. Hess's law cycles, bond energies. Calorimetry q = mc delta T. Born-Haber cycles and lattice energy, entropy and Gibbs free energy delta G = delta H - T delta S.
+=== 7;25 | equilibria
+Dynamic equilibrium, Le Chatelier's principle, Kc and Kp expressions, Haber process and Contact process conditions. Bronsted-Lowry acids and bases, pH of strong acids, Ka and pKa, buffer solutions, Ksp and the common ion effect.
+=== 8;26 | kinetics
+Collision theory, Boltzmann distribution, activation energy, catalysts. Rate equations, orders of reaction, half-life of first order reactions, rate-determining step, homogeneous and heterogeneous catalysis.
+=== 10 | group 2
+Group 2 elements react with oxygen, water and dilute acids; reactivity increases down the group; thermal decomposition of nitrates and carbonates; solubility of hydroxides and sulfates. Uses of calcium carbonate and calcium hydroxide.
+=== 11 | halogens
+Group 17: volatility of the halogens, oxidising power Cl2 > Br2 > I2, displacement reactions, halide ions with silver nitrate and ammonia, concentrated sulfuric acid with halides, disproportionation of chlorine in NaOH.
+=== 14;15;16 | organic AS
+Alkanes: free-radical substitution. Alkenes: electrophilic addition with bromine, HBr, Markovnikov. Halogenoalkanes: SN1 and SN2 nucleophilic substitution, elimination. Alcohols: oxidation with acidified dichromate to aldehydes, ketones and carboxylic acids.
+=== 28 | transition metals
+Transition elements: variable oxidation states, complex ions and ligands (monodentate, bidentate), coordination number, octahedral and square planar shapes, d-orbital splitting and colour, ligand exchange, stereoisomerism in complexes.
+=== 22;37 | analysis
+Infrared spectroscopy (O-H broad, C=O at 1700 cm-1), mass spectrometry and the M+1 peak, carbon-13 NMR and proton NMR: chemical shift, splitting (n+1 rule), D2O exchange. Thin layer and gas chromatography.
+=== - | psychology
+Bowlby's theory of maternal deprivation, 44 thieves study.
+=== - | french
+je voudrais aller en vacances en France avec ma famille
+=== - | bus times
+bus 7.42 or 8.05
