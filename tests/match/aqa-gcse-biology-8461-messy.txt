@@ -1,0 +1,53 @@
+# spec: https://filestore.aqa.org.uk/resources/biology/specifications/AQA-8461-SP-2016.PDF
+# Messier notes for the same spec: shorthand, own words, exam answers, unhelpful file names, a bit of other topics.
+=== 4.1.3.2 | bio hw 3
+Q3 (4 marks) explain why the potato chips in the 1.0 M solution got lighter.
+water moved out of the potato cells cos the solution outside was more concentrated, so less water outside... water goes from dilute to concentrated across the membrane. Lost mass. The 0.2M ones gained mass. Did percentage change because they started at different masses.
+=== 4.1.2.2 | Untitled document
+Cell cycle - 3 stages. 1) cell grows, copies DNA, more organelles 2) chromosomes pulled apart to each end, nucleus splits 3) cytoplasm + membrane split -> 2 identical daughter cells. Used for growing + repairing (eg skin cut heals)
+=== 4.1.1.5 | practical 1 write up
+Aim: look at onion skin. Peeled thin layer, put on slide with drop of iodine, coverslip at angle so no bubbles. Started on x4 objective then x10 then x40. Drew 5 cells. Eyepiece x10 so total mag x400. Image was 20mm so real size = 20 / 400 = 0.05mm = 50um.
+=== 4.2.2.2 | notes 12-10
+double circulation!! R side -> lungs, L side -> body. L ventricle wall thicker bc it pumps further. valves stop backflow. pacemaker cells in right atrium set the rhythm, artificial one if they stop working. aorta, vena cava, pulmonary artery/vein - pulmonary artery is the only artery w/ deoxygenated blood
+=== 4.3.1.7 | why we have jabs
+Got the flu jab today. It's a dead/weakened version of the virus. White cells make antibodies against it and memory cells stay so next time you're infected they make loads really fast and you don't get ill. If most people are vaccinated it can't spread much (herd immunity) which protects babies etc
+=== 4.3.1.8 | mum asked about antibiotics
+Antibiotics don't work on colds because colds are viruses, they only kill bacteria. Doctors don't want to give them out too much because bacteria become resistant (MRSA). Paracetamol just stops it hurting, doesn't get rid of the infection.
+=== 4.4.1.2 | graph analysis Q
+The graph levels off at high light intensity because something else is limiting - probably CO2 or temperature. Farmers use greenhouses with paraffin heaters to add CO2 and warmth, and lamps at night, but it costs money so they need to work out if it's worth it.
+=== 4.4.2.1 | yeast bread
+Made bread in food tech, the yeast respires without oxygen (anaerobic) making CO2 which makes the dough rise and alcohol which evaporates when baked. In our muscles anaerobic makes lactic acid instead. With oxygen you get way more energy out.
+=== 4.4.2.2 | PE lesson stuff
+After the 800m: heart rate up to 180, breathing fast and deep. Muscles ached after - lactic acid. Kept panting after stopping = paying back the oxygen debt, the lactic acid gets taken to the liver and turned back into glucose.
+=== 4.5.3.2 | my nan has diabetes
+Nan has type 2, she doesn't inject, she watches what she eats (less sugar/carbs) and walks every day. Type 1 is when your pancreas doesn't make insulin so you have to inject. Insulin makes the liver store glucose as glycogen when blood sugar is high after a meal.
+=== 4.5.2.1 | reaction time investigation
+Partner drops ruler between my fingers, catch it, read cm. Did it 5 times with each hand and after a can of coke (caffeine). Results: caffeine reaction time went down. The pathway: eyes (receptor) -> sensory -> brain/spinal cord -> motor -> hand muscles.
+=== 4.6.2.2 | darwin
+Darwin went on HMS Beagle, saw finches with different beaks on each Galapagos island. Idea: the ones best suited to their environment survive and have babies and pass on their genes. Over loads of generations the species changes. Antibiotic resistant bacteria are evidence it's happening now.
+=== 4.6.1.6 | genetics homework
+cross Bb x bb: half brown half blue. B is dominant. Bb = heterozygous, bb = homozygous recessive. genotype is the letters, phenotype is what it looks like. ratio 1:1
+=== 4.7.1.3 | ecology fieldtrip
+Rabbits and foxes data - when rabbits go up the foxes go up a bit later then the rabbits drop because they get eaten, then foxes drop because there's no food. Also grey squirrels outcompete red squirrels for food and space.
+=== 4.7.2.2 | rotting leaves exp
+Leaves left in the woods get broken down by microorganisms (decomposers) and the carbon goes back into the air as CO2 when they respire, then trees take it in for photosynthesis. Burning fossil fuels adds more CO2.
+=== 4.2.2.1 | food tests practical
+Benedict's turned brick red with the glucose solution (had to heat in a water bath). Iodine went blue-black with the starch. Biuret went purple with egg white = protein. Ethanol test for lipids gave a cloudy white layer.
+=== 4.2.2.6 | smoking poster
+SMOKING: tar coats the lungs -> lung cancer, emphysema. Pregnant mums who smoke have smaller babies. Also obesity -> type 2 diabetes, drinking -> liver damage. Costs the NHS billions. These are non communicable - you can't catch them.
+=== 4.1.2.3 | ethics debate
+Should we use embryos for stem cell research? For: could cure paralysis and diabetes, embryos are left over from IVF anyway. Against: an embryo could become a person, religious reasons, risk of viruses in the cells. My opinion: yes if strictly controlled.
+=== 4.3.1.3 | food poisoning
+Ate dodgy chicken at a barbecue - salmonella bacteria, gave off toxins, vomiting and stomach cramps for 2 days. Chickens in the UK are vaccinated against it now. Cook meat properly and wash hands.
+=== 4.6.2.4 | golden rice
+Golden rice has a gene from a daffodil (and bacteria) so it makes beta carotene - stops vitamin A deficiency and blindness. Genes cut out with enzymes and put into a plasmid. Some people worry GM crops will spread genes to wild plants.
+=== 4.1.1.3 | adaptations of cells
+root hair cell - long thin bit = more surface area for absorbing water. sperm - tail + loads of mitochondria. red blood cell - no nucleus = more room for haemoglobin, biconcave. nerve - long. muscle - lots of mitochondria for contraction
+=== 4.5.3.4 | PSHE period lesson
+Period cycle is 28 days. Day 1-4 bleeding. FSH from the pituitary makes an egg mature, oestrogen builds the lining back up, LH spike at day 14 = egg released, progesterone keeps the lining. If no fertilisation progesterone drops and the lining breaks down.
+=== 4.7.3.4 | geography crossover - rainforest
+Amazon is being cut down for cattle ranching, soya and palm oil for biofuels. This means less photosynthesis so more CO2 stays in the air, burning trees releases even more, and loads of species lose their habitat so biodiversity goes down.
+=== 4.2.3.2 | why plants wilt
+On a hot dry windy day the plant loses water from its leaves faster than the roots can take it up so it wilts. Stomata close to save water. Water travels up through the xylem from the roots. Sugars go down through the phloem.
+=== 4.1.3.1 | gas exchange in lungs
+Alveoli: tiny air sacs, loads of them = huge surface area, walls one cell thick, surrounded by capillaries. Oxygen moves from the air in the alveoli into the blood because there's more of it in the air, CO2 goes the other way.
