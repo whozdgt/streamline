@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "podsort.h"
+
 struct llama_model;
 struct llama_context;
 
@@ -58,6 +60,30 @@ struct DocText {
 std::vector<std::vector<int>> group(const std::vector<std::vector<float>> &vecs, int detail);
 // The same, for some of the documents (one subject's, say), with the cut-off still set by the whole pod.
 std::vector<std::vector<int>> groupWithin(const std::vector<std::vector<float>> &vecs, const std::vector<int> &subset, int detail);
+
+// ---- Matching to a specification ----
+// A spec read by the meaning model: for every point, the titles above it and its own; for every point documents are
+// matched to (a leaf), the whole point and its text in pieces. Kept in a file, so a pod's next sort needn't read it.
+struct SpecIndex {
+    std::vector<std::vector<float>> title;                     // per point
+    std::vector<std::vector<float>> whole;                     // per point (leaves only; others empty)
+    std::vector<std::vector<std::vector<float>>> pieces;       // per point (leaves only)
+    bool save(const std::string &path) const;
+    bool load(const std::string &path, size_t points);
+};
+SpecIndex readSpec(Meaning &m, const std::vector<podsort::SpecPoint> &points, const Progress &progress = {});
+// Where each document goes: the best point (a leaf), the next best, and how far the best stands out from the rest
+// of the spec. A document that stands out for nothing is in no point (-1): a shopping list, another subject's notes.
+struct Placement {
+    int point = -1, second = -1;
+    double standout = 0;
+    bool sure = false;          // well clear of the rest, and of the next best
+};
+// docPieces: each document read in pieces (Meaning::readPieces); words: key-word scores [document][leaf]
+// (podsort::matchScores over the leaves' pointText), or empty.
+std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float>>> &docPieces,
+                                 const std::vector<podsort::SpecPoint> &points, const SpecIndex &spec,
+                                 const std::vector<std::vector<double>> &words);
 
 // Matching to a specification: the spec point each document is closest to in meaning, or -1 when none is close.
 std::vector<int> match(const std::vector<std::vector<float>> &docs, const std::vector<std::vector<float>> &points);

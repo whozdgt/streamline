@@ -122,13 +122,20 @@ int main(int argc, char **argv)
     // the notes, and the point each is about
     const auto notes = readNotes(argv[3]);
     std::vector<int> label;
+    std::vector<std::vector<int>> also;     // every point a note may rightly go to ("4.6.2.2,4.6.3.1")
     std::vector<bool> offTopic;      // "-": in no point of the spec (a shopping list, another subject's notes)
     for (const auto &n : notes) {
         offTopic.push_back(n.label == "-");
-        if (n.label == "-") { label.push_back(-1); continue; }
-        const auto it = byNumber.find(n.label);
-        if (it == byNumber.end()) std::printf("  no point %s in the spec (note \"%s\")\n", n.label.c_str(), n.title.c_str());
-        label.push_back(it == byNumber.end() ? -1 : it->second);
+        if (n.label == "-") { label.push_back(-1); also.push_back({}); continue; }
+        std::vector<int> ok;
+        std::stringstream ls(n.label);
+        for (std::string one; std::getline(ls, one, ',');) {
+            const auto it = byNumber.find(one);
+            if (it == byNumber.end()) std::printf("  no point %s in the spec (note \"%s\")\n", one.c_str(), n.title.c_str());
+            else ok.push_back(it->second);
+        }
+        label.push_back(ok.empty() ? -1 : ok[0]);
+        also.push_back(ok);
     }
     std::printf("notes: %zu\n", notes.size());
 
@@ -244,6 +251,11 @@ int main(int argc, char **argv)
     const Grid semantic = mix({{&pieceChunks, 1.0}, {&pieceFull, 0.5}, {&pieceTitleQ, 0.5}});
     ways.push_back({"meaning mix", semantic});
     ways.push_back({"meaning mix + topics", withContext(semantic, 0.5)});
+    ways.push_back({"whole point 1, pieces .5, words .5", mix({{&pieceFull, 1.0}, {&pieceChunks, 0.5}, {&L, 0.5}})});
+    ways.push_back({"whole point 1, words .5", mix({{&pieceFull, 1.0}, {&L, 0.5}})});
+    ways.push_back({"whole point 1, words .3", mix({{&pieceFull, 1.0}, {&L, 0.3}})});
+    ways.push_back({"whole doc+point 1, words .4", mix({{&wholeFull, 1.0}, {&L, 0.4}})});
+    ways.push_back({"whole point 1, pieces .3, title .2, words .4", mix({{&pieceFull, 1.0}, {&pieceChunks, 0.3}, {&pieceTitleQ, 0.2}, {&L, 0.4}})});
     const Grid hybrid = mix({{&pieceChunks, 1.0}, {&pieceFull, 0.5}, {&pieceTitleQ, 0.5}, {&L, 0.6}});
     ways.push_back({"meaning mix + key words", hybrid});
     ways.push_back({"meaning mix + key words + topics", withContext(hybrid, 0.5)});
@@ -279,7 +291,8 @@ int main(int argc, char **argv)
             for (size_t k = 1; k < nl; ++k) if (w.g[d][k] > w.g[d][best]) best = k;
             const int pred = leaves[best];
             const int parent = points[size_t(label[d])].parent;
-            const bool e = under_(pred, label[d]);
+            bool e = false;
+            for (int a : also[d]) e = e || under_(pred, a);
             if (e) rightOut.push_back(standout(w.g[d], best));
             exact += e;
             topic += e || (parent >= 0 && under_(pred, parent));
@@ -293,6 +306,33 @@ int main(int argc, char **argv)
         const double offMax = offOut.empty() ? 0 : *std::max_element(offOut.begin(), offOut.end());
         std::printf("%-42s %7.0f%% %7.0f%% %7.0f%%   %.2f / %.2f\n", w.name.c_str(), pc(exact), pc(topic), pc(section), low, offMax);
         if (showMisses) for (const auto &s : misses) std::printf("%s\n", s.c_str());
+    }
+    // what the app does (podai::readSpec + matchSpec): the point, or none; and whether it is sure
+    {
+        const auto spec = podai::readSpec(m, points);
+        const auto placed = podai::matchSpec(P, points, spec, L);
+        int right = 0, wrong = 0, missed = 0, counted = 0, offIn = 0, offs = 0, sureRight = 0, sureWrong = 0;
+        std::vector<std::string> lines;
+        for (size_t d = 0; d < nd; ++d) {
+            const auto &pl = placed[d];
+            if (offTopic[d]) {
+                ++offs;
+                if (pl.point >= 0) { ++offIn; lines.push_back("    - " + notes[d].title + "  ->  " + points[size_t(pl.point)].number + " (should be in no point)"); }
+                continue;
+            }
+            if (label[d] < 0) continue;
+            ++counted;
+            if (pl.point < 0) { ++missed; lines.push_back("    " + notes[d].label + " " + notes[d].title + "  ->  none"); continue; }
+            bool e = false;
+            for (int a : also[d]) e = e || under_(pl.point, a);
+            (e ? right : wrong)++;
+            if (pl.sure) (e ? sureRight : sureWrong)++;
+            if (!e) lines.push_back("    " + notes[d].label + " " + notes[d].title + "  ->  " + points[size_t(pl.point)].number + " " +
+                                    points[size_t(pl.point)].title.substr(0, 50) + (pl.sure ? " (sure)" : " (check)"));
+        }
+        std::printf("\nthe app: %d of %d right, %d wrong, %d left out; sure about %d right and %d wrong; %d of %d others put in a point\n",
+                    right, counted, wrong, missed, sureRight, sureWrong, offIn, offs);
+        if (showMisses) for (const auto &l : lines) std::printf("%s\n", l.c_str());
     }
     std::printf("\n(%.1fs)\n", secs());
     return 0;

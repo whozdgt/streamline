@@ -20,6 +20,7 @@
 #include <QJsonObject>
 #include <QRegularExpression>
 #include <QBuffer>
+#include <QCryptographicHash>
 #include <QSaveFile>
 #include <QSet>
 #include <QSettings>
@@ -35,6 +36,7 @@
 #include <QtGui/private/qzipreader_p.h>
 #endif
 #include <algorithm>
+#include <cmath>
 #include <functional>
 
 namespace {
@@ -260,6 +262,7 @@ struct Result {
     QString note;                         // something went wrong with the AI and key words were used instead
     std::vector<int> placed;              // refreshing: the topic each new document joins, -1 for none
     std::vector<int> fresh;               // refreshing: which documents are new
+    std::vector<bool> check;              // spec: documents whose point Streamline isn't sure of
 };
 
 std::vector<podai::DocText> docTexts(const QVector<Pods::Scanned> &docs, const std::vector<int> &which)
@@ -571,6 +574,16 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
     const std::string specText = p->specText.toStdString();
     const QString meaningPath = m_models ? m_models->path(QStringLiteral("meaning")) : QString();
     const QString writerPath = m_models ? m_models->path(QStringLiteral("writer")) : QString();
+    // the spec as the meaning model reads it, kept after the first sort (it takes a while on a phone)
+    QString specCache;
+    if (layout == QLatin1String("spec") && !meaningPath.isEmpty()) {
+        const QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/spec-index");
+        QDir().mkpath(dir);
+        QCryptographicHash h(QCryptographicHash::Sha1);
+        h.addData(p->specText.toUtf8());
+        h.addData(QFileInfo(meaningPath).fileName().toUtf8());
+        specCache = dir + QLatin1Char('/') + QString::fromLatin1(h.result().toHex().left(24)) + QStringLiteral(".bin");
+    }
 
     // the worker says how far it has got; the pod's status line shows it
     auto say = [this, id](const QString &text) {
@@ -632,7 +645,7 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         }
         finish(p, r.note);
     });
-    w->setFuture(QtConcurrent::run([folder, kind, detail, layout, specText, known, leafIds, meaningPath, writerPath, say]() {
+    w->setFuture(QtConcurrent::run([folder, kind, detail, layout, specText, specCache, known, leafIds, meaningPath, writerPath, say]() {
         Result r;
         r.docs = scanFolder(folder);
         const int n = int(r.docs.size());
@@ -649,17 +662,40 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
             podai::Meaning m;
             std::string err;
             if (m.load(meaningPath.toStdString(), err)) {
+                std::vector<std::vector<std::vector<float>>> pieces;      // each document's pieces, for a spec
                 for (int i = 0; i < n; ++i) {
                     if (i % 4 == 0) say(QStringLiteral("Reading documents with on-device AI… %1 of %2").arg(i + 1).arg(n));
                     const auto &d = r.docs[i];
-                    vecs.push_back(m.read((d.title.isEmpty() ? d.name : d.name + QStringLiteral(": ") + d.title).toStdString(),
-                                          d.headings.toStdString(), d.body.toStdString()));
+                    auto ps = m.readPieces((d.title.isEmpty() ? d.name : d.name + QStringLiteral(": ") + d.title).toStdString(),
+                                           d.headings.toStdString(), d.body.toStdString());
+                    std::vector<float> mean;
+                    for (const auto &v : ps) {
+                        if (mean.empty()) mean.assign(v.size(), 0.f);
+                        for (size_t k = 0; k < v.size(); ++k) mean[k] += v[k];
+                    }
+                    double len = 0;
+                    for (float x : mean) len += double(x) * x;
+                    len = std::sqrt(len);
+                    if (len > 0) for (float &x : mean) x = float(x / len);
+                    vecs.push_back(mean);
+                    if (spec) pieces.push_back(std::move(ps));
                 }
-                if (spec && !leaves.empty()) {      // and every point of the spec
-                    say(QStringLiteral("Reading the spec…"));
-                    std::vector<std::vector<float>> pv;
-                    for (int l : leaves) pv.push_back(m.embed(podsort::pointText(points, l)));
-                    for (int x : podai::match(vecs, pv)) docPoint.push_back(x < 0 ? -1 : leaves[size_t(x)]);
+                if (spec && !leaves.empty()) {      // and every point of the spec (read once, then kept)
+                    podai::SpecIndex index;
+                    if (specCache.isEmpty() || !index.load(specCache.toStdString(), points.size())) {
+                        index = podai::readSpec(m, points, [&](int done, int total) {
+                            if (done % 10 == 0) say(QStringLiteral("Reading the spec with on-device AI… %1 of %2 points").arg(done + 1).arg(total));
+                            return true;
+                        });
+                        if (!specCache.isEmpty()) index.save(specCache.toStdString());
+                    }
+                    say(QStringLiteral("Matching to the spec…"));
+                    std::vector<std::string> targets;
+                    for (int l : leaves) targets.push_back(podsort::pointText(points, l));
+                    for (const auto &pl : podai::matchSpec(pieces, points, index, podsort::matchScores(words, targets))) {
+                        docPoint.push_back(pl.point);
+                        r.check.push_back(pl.point >= 0 && !pl.sure);
+                    }
                 }
             } else {
                 r.note = QStringLiteral("The meaning model couldn't start, so key words were used. Try removing and downloading it again.");

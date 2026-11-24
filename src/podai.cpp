@@ -5,8 +5,10 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 #include <mutex>
 #include <numeric>
 #include <thread>
@@ -254,6 +256,9 @@ double dotv(const std::vector<float> &a, const std::vector<float> &b)
 }
 // Meaning models never score two texts near zero: even unrelated ones come out fairly similar. So cut-offs are set
 // from the pod's own scores: a typical pair (the median) and the closest pairs (the top 2%).
+// Spec matching: how far (in standard deviations of the spec's points) a document's best point must stand out to be
+// matched, and to be sure (and well clear of the next best). Set on tests/match (CI's "match" run).
+const double kStandoutMatch = 3.6, kStandoutSure = 4.6, kMarginSure = 0.8;
 struct Spread { double median = 0, high = 1; double at(double reach) const { return median + (high - median) * reach; } };
 Spread spread(std::vector<double> all)
 {
@@ -333,6 +338,155 @@ std::vector<int> match(const std::vector<std::vector<float>> &docs, const std::v
         double best = cutoff;
         for (size_t p = 0; p < points.size(); ++p)
             if (sim[d][p] > best) { best = sim[d][p]; out[d] = int(p); }
+    }
+    return out;
+}
+
+// ---- A spec, read for matching ----
+
+namespace {
+std::string titlePath(const std::vector<podsort::SpecPoint> &points, int i)
+{
+    std::string t = points[size_t(i)].title;
+    for (int p = points[size_t(i)].parent; p >= 0; p = points[size_t(p)].parent) t = points[size_t(p)].title + " \xE2\x80\xBA " + t;
+    return t;
+}
+// z-scores of one document's scores across the points
+std::vector<double> zscores(const std::vector<double> &v)
+{
+    double mean = 0, sd = 0;
+    for (double x : v) mean += x;
+    mean /= double(std::max<size_t>(1, v.size()));
+    for (double x : v) sd += (x - mean) * (x - mean);
+    sd = std::sqrt(sd / double(std::max<size_t>(1, v.size())));
+    std::vector<double> out;
+    out.reserve(v.size());
+    for (double x : v) out.push_back(sd > 0 ? (x - mean) / sd : 0.0);
+    return out;
+}
+const char kIndexMagic[8] = {'S', 'P', 'E', 'C', 'I', 'X', '0', '1'};
+} // namespace
+
+SpecIndex readSpec(Meaning &m, const std::vector<podsort::SpecPoint> &points, const Progress &progress)
+{
+    // BGE's instruction for a short query searching for passages: a point's titles are the query, a document the passage
+    static const std::string query = "Represent this sentence for searching relevant passages: ";
+    SpecIndex x;
+    const auto leaves = podsort::leafPoints(points);
+    std::vector<bool> leaf(points.size(), false);
+    for (int l : leaves) leaf[size_t(l)] = true;
+    x.title.resize(points.size());
+    x.whole.resize(points.size());
+    x.pieces.resize(points.size());
+    for (size_t i = 0; i < points.size(); ++i) {
+        if (progress && !progress(int(i), int(points.size()))) return {};
+        x.title[i] = m.embed(query + titlePath(points, int(i)));
+        if (!leaf[i]) continue;
+        x.whole[i] = m.embed(podsort::pointText(points, int(i)));
+        const std::string &body = points[i].body;
+        const size_t chunk = 700;
+        for (size_t at = 0; at < body.size() && x.pieces[i].size() < 6; at += chunk) {
+            size_t end = std::min(body.size(), at + chunk);
+            while (end < body.size() && (static_cast<unsigned char>(body[end]) & 0xC0) == 0x80) ++end;
+            x.pieces[i].push_back(m.embed(titlePath(points, int(i)) + ": " + body.substr(at, end - at)));
+        }
+    }
+    return x;
+}
+
+bool SpecIndex::save(const std::string &path) const
+{
+    std::ofstream f(path, std::ios::binary | std::ios::trunc);
+    if (!f) return false;
+    auto u32 = [&](uint32_t v) { f.write(reinterpret_cast<const char *>(&v), 4); };
+    auto vec = [&](const std::vector<float> &v) { u32(uint32_t(v.size())); f.write(reinterpret_cast<const char *>(v.data()), std::streamsize(v.size() * 4)); };
+    f.write(kIndexMagic, 8);
+    u32(uint32_t(title.size()));
+    for (size_t i = 0; i < title.size(); ++i) {
+        vec(title[i]);
+        vec(whole[i]);
+        u32(uint32_t(pieces[i].size()));
+        for (const auto &p : pieces[i]) vec(p);
+    }
+    return bool(f);
+}
+
+bool SpecIndex::load(const std::string &path, size_t points)
+{
+    std::ifstream f(path, std::ios::binary);
+    if (!f) return false;
+    char magic[8];
+    if (!f.read(magic, 8) || std::memcmp(magic, kIndexMagic, 8) != 0) return false;
+    auto u32 = [&](uint32_t &v) { return bool(f.read(reinterpret_cast<char *>(&v), 4)); };
+    auto vec = [&](std::vector<float> &v) {
+        uint32_t n = 0;
+        if (!u32(n) || n > 8192) return false;
+        v.resize(n);
+        return bool(f.read(reinterpret_cast<char *>(v.data()), std::streamsize(n) * 4));
+    };
+    uint32_t n = 0;
+    if (!u32(n) || n != points) return false;
+    SpecIndex x;
+    x.title.resize(n);
+    x.whole.resize(n);
+    x.pieces.resize(n);
+    for (size_t i = 0; i < n; ++i) {
+        uint32_t k = 0;
+        if (!vec(x.title[i]) || !vec(x.whole[i]) || !u32(k) || k > 64) return false;
+        x.pieces[i].resize(k);
+        for (auto &p : x.pieces[i]) if (!vec(p)) return false;
+    }
+    *this = std::move(x);
+    return true;
+}
+
+std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float>>> &docPieces,
+                                 const std::vector<podsort::SpecPoint> &points, const SpecIndex &spec,
+                                 const std::vector<std::vector<double>> &words)
+{
+    const auto leaves = podsort::leafPoints(points);
+    std::vector<Placement> out(docPieces.size());
+    if (leaves.empty() || spec.title.size() != points.size()) return out;
+    const size_t nl = leaves.size();
+    for (size_t d = 0; d < docPieces.size(); ++d) {
+        const auto &P = docPieces[d];
+        if (P.empty()) continue;
+        auto best = [&](const std::vector<float> &v) {
+            double b = -1;
+            for (const auto &p : P) b = std::max(b, dotv(p, v));
+            return b;
+        };
+        // Each part on its own scale, then added up: the document's best piece against the point's titles (as a
+        // query), against the whole point, and against the point's own pieces of text; and the words they share.
+        std::vector<double> byTitle(nl), byWhole(nl), byPieces(nl);
+        for (size_t k = 0; k < nl; ++k) {
+            const size_t l = size_t(leaves[k]);
+            byTitle[k] = best(spec.title[l]);
+            byWhole[k] = best(spec.whole[l]);
+            double b = byTitle[k];
+            for (const auto &c : spec.pieces[l]) b = std::max(b, best(c));
+            byPieces[k] = b;
+        }
+        std::vector<double> total(nl, 0.0);
+        auto add = [&](const std::vector<double> &v, double w) {
+            const auto z = zscores(v);
+            for (size_t k = 0; k < nl; ++k) total[k] += w * z[k];
+        };
+        add(byPieces, 1.0);
+        add(byWhole, 0.5);
+        add(byTitle, 0.5);
+        if (d < words.size() && words[d].size() == nl) add(words[d], 0.6);
+        size_t b1 = 0, b2 = nl > 1 ? 1 : 0;
+        for (size_t k = 0; k < nl; ++k) {
+            if (total[k] > total[b1]) { b2 = b1; b1 = k; }
+            else if (k != b1 && (b2 == b1 || total[k] > total[b2])) b2 = k;
+        }
+        const auto z = zscores(total);
+        Placement &pl = out[d];
+        pl.standout = z[b1];
+        pl.point = pl.standout >= kStandoutMatch ? leaves[b1] : -1;
+        pl.second = nl > 1 ? leaves[b2] : -1;
+        pl.sure = pl.point >= 0 && pl.standout >= kStandoutSure && z[b1] - z[b2] >= kMarginSure;
     }
     return out;
 }
