@@ -10,7 +10,7 @@ on:
   push:
     branches: [main]
     paths: ['src/pdftext*', 'src/pdfcrypto*', 'src/pdfglyphs.inc', 'src/specread*', 'src/podsort*',
-            'tests/spec_test.cpp', 'tests/pdftext_test.cpp', '.github/specs/**', '.github/workflows/specs.yml']
+            'tests/spec_test.cpp', 'tests/pdftext_test.cpp', 'tests/layouts/**', '.github/specs/**', '.github/workflows/specs.yml']
 
 jobs:
   read:
@@ -28,6 +28,13 @@ jobs:
           sudo apt-get install -y -qq poppler-utils > /dev/null
           g++ -std=c++17 -O2 -Wall -Isrc src/pdftext.cpp src/pdfcrypto.cpp src/specread.cpp src/podsort.cpp tests/spec_test.cpp -o spec_test
           g++ -std=c++17 -O2 -Wall -Isrc src/pdftext.cpp src/pdfcrypto.cpp tests/pdftext_test.cpp -o pdftext_test
+      - name: Layouts the reader knows (tests/layouts)
+        run: |
+          fail=0
+          for f in tests/layouts/*.txt; do
+            if ! diff -u "${f%.txt}.expected" <(./spec_test "$f") > layout.diff; then echo "::error title=$(basename "$f")::reads differently"; cat layout.diff; fail=1; fi
+          done
+          exit $fail
       - name: Read the specifications
         run: |
           UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"

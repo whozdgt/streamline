@@ -1,0 +1,10 @@
+Oxford Cambridge and RSA
+GCSE (9-1) in Computer Science J277
+2a. OCR's GCSE (9–1) in Computer Science (J277)
+2b. Content of Computer systems (J277/01)
+1.1 Systems architecture
+1.2 Memory and storage
+2c. Content of Computational thinking, algorithms and programming (J277/02)
+2.1 Algorithms
+2.2 Programming fundamentals
+2d. Prior knowledge, learning and progression

@@ -1,0 +1,89 @@
+Pearson Edexcel Level 3 Advanced GCE in Mathematics (9MA0)
+Contents
+1 Introduction 2
+2 Subject content and assessment information 8
+3 Administration and general information 50
+1 Introduction
+Why choose this qualification
+2 Subject content and assessment information
+Overarching themes
+OT1 Mathematical argument, language and proof
+OT1.1 Construct and present mathematical arguments through appropriate use of diagrams
+OT1.2 Understand and use mathematical language and syntax as set out in the content
+OT2 Mathematical problem solving
+OT2.1 Recognise the underlying mathematical structure in a situation
+Paper 1 and Paper 2: Pure Mathematics
+To support the co-teaching of this qualification with the AS Mathematics qualification, common content is in bold.
+1
+Proof
+1.1 Understand and use the
+structure of mathematical
+proof, proceeding from
+given assumptions
+Examples of proofs: Proof by deduction
+2
+Algebra and
+functions
+2.1 Understand and use the
+laws of indices for all
+rational exponents.
+2.2 Use and manipulate surds,
+including rationalising the
+denominator.
+2.3 Work with quadratic functions and their graphs.
+3
+Coordinate
+geometry in the
+(x, y) plane
+3.1 Understand and use the
+equation of a straight line
+4
+Sequences and
+series
+4.1 Understand and use the
+binomial expansion
+5
+Trigonometry
+5.1 Understand and use the
+definitions of sine, cosine
+6
+Exponentials and
+logarithms
+6.1 Know and use the function
+7
+Differentiation
+7.1 Understand and use the
+derivative of f(x)
+8
+Integration
+8.1 Know and use the
+Fundamental Theorem
+9
+Numerical methods
+9.1 Locate roots of f(x) = 0
+10
+Vectors
+10.1 Use vectors in two dimensions
+Paper 3: Statistics and Mechanics
+Section A: Statistics
+1
+Statistical sampling
+1.1 Understand and use the
+terms ‘population’ and ‘sample’
+2
+Data presentation and
+interpretation
+2.1 Interpret diagrams for
+single-variable data
+Section B: Mechanics
+6
+Quantities and units in
+mechanics
+6.1 Understand and use
+fundamental quantities
+7
+Kinematics
+7.1 Understand and use the
+language of kinematics
+3 Administration and general information
+Entries

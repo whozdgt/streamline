@@ -1,0 +1,22 @@
+Oxford Cambridge and RSA
+A Level in Mathematics A H240
+2a. Content of A Level in Mathematics A (H240)
+Pure mathematics 1.01 Proof 1.02 Algebra
+2b. Overarching themes
+OT1 Mathematical argument, language and proof
+OT1.1 Construct and present mathematical arguments
+2f. Detailed Content of A Level Mathematics A (H240)
+1 Pure Mathematics
+Content
+1.01 Proof
+1.01a
+1.01b
+Understand and be able to use the structure of mathematical proof
+1.02 Algebra and functions
+1.02a Understand and be able to use the laws of indices
+1.10 Vectors
+1.10a Use vectors in two dimensions
+2 Statistics
+2.01 Statistical sampling
+2.01a Understand and be able to use the terms population and sample
+2g. Prior knowledge, learning and progression

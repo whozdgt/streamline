@@ -740,6 +740,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (rank < 30) lastTop = 0;
         } else if (useCode2 && parseCode2(l, code, title)) {
             made = open(50, code, cleanTitle(title), false);
+        } else if (board == "OCR" && l.size() > 8 && std::isupper(uint8_t(l[0])) && std::isdigit(uint8_t(l[1])) && std::isdigit(uint8_t(l[2])) &&
+                   std::isdigit(uint8_t(l[3])) && l[4] == ' ' && std::isupper(uint8_t(l[5])) && !tocLine(l)) {
+            made = open(40, l.substr(0, 4), cleanTitle(l.substr(5)), false);      // OCR's units: "Y101 Alfred and the Making of England 871–1066"
         } else if (parseNum(l, n)) {
             const std::string t = cleanTitle(n.title);
             std::string number;
