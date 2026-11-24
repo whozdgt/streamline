@@ -166,10 +166,12 @@ int main(int argc, char **argv)
             if (bad) r.flags.push_back("numbering (" + std::to_string(bad) + ")");
         }
         {
-            std::map<std::string, int> seen;
+            // the same number twice in one place (the app tells points apart by where they are, so "1" in each of
+            // a history spec's key topics is fine; twice under one heading is two points it can't tell apart)
+            std::map<std::pair<int, std::string>, int> seen;
             int rep = 0;
             for (const auto &p : pts)
-                if (!p.number.empty() && ++seen[p.number] == 2 && ++rep <= 4) r.details.push_back("  repeated: " + p.number + " " + cut(p.title, 50));
+                if (!p.number.empty() && ++seen[{p.parent, p.number}] == 2 && ++rep <= 4) r.details.push_back("  repeated: " + p.number + " " + cut(p.title, 50));
             if (rep) r.flags.push_back("repeated (" + std::to_string(rep) + ")");
         }
         {
