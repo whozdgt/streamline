@@ -689,7 +689,7 @@ Item {
                         }
                     }
                     Flow {      // Pods / the pod / its folders
-                        width: root.narrow ? parent.width : Math.max(200, parent.width - 82 - 10 - (root.narrow ? 0 : 230 + 10) - 2 * (110 + 10))
+                        width: root.narrow ? parent.width - 92 : Math.max(200, parent.width - 82 - 10 - 230 - 10 - sortPill.width - setPill.width - 20)
                         spacing: 6
                         Link { height: 36; verticalAlignment: Text.AlignVCenter; text: "Pods"; font.pixelSize: 14; color: settings.inkSoft; onClicked: { root.mode = "list"; root.podId = "" } }
                         Text { height: 36; verticalAlignment: Text.AlignVCenter; text: "/"; font.pixelSize: 14; color: settings.inkSoft }
@@ -717,9 +717,9 @@ Item {
                             }
                         }
                     }
-                    Field { width: root.narrow ? parent.width : 230; height: 36; placeholder: "Search this pod"; onTextChanged: root.query = text }
-                    Pill { label: "Sort"; selected: root.panel === "sort"; height: 36; onClicked: root.panel = root.panel === "sort" ? "" : "sort" }
-                    Pill { label: "Pod settings"; selected: root.panel === "more"; height: 36; onClicked: root.panel = root.panel === "more" ? "" : "more" }
+                    Field { width: root.narrow ? parent.width - sortPill.width - setPill.width - 20 : 230; height: 36; placeholder: "Search this pod"; onTextChanged: root.query = text }
+                    Pill { id: sortPill; label: "Sort"; selected: root.panel === "sort"; height: 36; onClicked: root.panel = root.panel === "sort" ? "" : "sort" }
+                    Pill { id: setPill; label: root.narrow ? "Settings" : "Pod settings"; selected: root.panel === "more"; height: 36; onClicked: root.panel = root.panel === "more" ? "" : "more" }
                 }
 
                 // what it is following, and how it was sorted
