@@ -45,7 +45,11 @@ public:
     void loadSpecData(const QString &id, const QByteArray &data, const QString &name, const QString &source = QString());
     Q_INVOKABLE void refresh(const QString &id);             // picks up new and deleted files, keeps your topics
     Q_INVOKABLE void renameTopic(const QString &podId, const QString &topicId, const QString &name);
-    Q_INVOKABLE void moveDoc(const QString &podId, const QString &path, const QString &topicId);   // topicId "new" makes a topic
+    // topicId "new" makes a topic; "pt:<n>" (a spec pod) is the spec's point n, made into a folder if it isn't one yet.
+    // Either way you have put the document there yourself: it stays there, and similar documents lean towards it.
+    Q_INVOKABLE void moveDoc(const QString &podId, const QString &path, const QString &topicId);
+    Q_INVOKABLE void keepDoc(const QString &podId, const QString &path);      // "Keep here": it is in the right place
+    Q_INVOKABLE void setColour(const QString &podId, const QString &colour);  // the pod's binder and folders ("#rrggbb")
     Q_INVOKABLE QVariantMap moveFiles(const QString &id);    // { moved, failed, folders }
     Q_INVOKABLE QVariantMap undoMove(const QString &id);     // { moved, failed }
     Q_INVOKABLE QVariantMap movePlan(const QString &id) const;   // { files, folders, names } what moveFiles would do
@@ -75,6 +79,9 @@ private:
         QString path, name, ext, folder, topic, snippet;
         int words = 0;
         bool readable = false;
+        bool check = false;      // spec: matched, but Streamline isn't sure: worth a look
+        bool kept = false;       // you put it here yourself (Keep here, Move to…)
+        QString second;          // spec: the next closest point ("4.4.1.1 Photosynthetic reaction")
     };
     struct Topic {
         QString id, name, summary, number;      // number: a spec point's ("3.2.1")
@@ -85,6 +92,7 @@ private:
     struct Move { QString from, to; };
     struct Pod {
         QString id, name, folder, method = QStringLiteral("words");
+        QString colour;                                // the binder's colour; "" for the app's ink
         QString layout = QStringLiteral("nested");     // topics | nested (Subjects › Topics › Subtopics) | spec
         QString specName, specText;                    // layout "spec": the specification documents are matched to
         QString specSource;                            // where it was downloaded from ("" for a file or pasted text)
@@ -107,6 +115,7 @@ private:
     void run(const QString &id, const QString &status, int detail, int kind);   // kind: 0 sort, 1 refresh, 2 AI
     void finish(Pod *p, const QString &error = QString());
     Topic &otherTopic(Pod &p);
+    QString pointTopic(Pod &p, int point);     // spec pods: the folder for the spec's point (made, with those above it)
     void dropEmptyTopics(Pod &p);
     QString topicDir(const Pod &p, const Topic &t) const;    // the folder a topic's files go in, with the topics above it
     QVector<const Topic *> ordered(const Pod &p) const;    // parents before children, in order

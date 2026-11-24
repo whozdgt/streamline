@@ -90,6 +90,7 @@ jobs:
           shot phone-pods 390x844 --mobile --set startPod=/tmp/docs
           shot phone-pods-classic 390x844 --mobile --set theme=classic --set startPod=/tmp/docs
           shot phone-pods-list 390x844 --mobile --set startView=pods
+          shot desktop-pods-list 1280x800 --set startView=pods
           # the welcome screen, then a pod sorted by the on-device AI (the models from the AI test above)
           shot phone-start 390x844 --mobile --set startScreen=true
           shot phone-start-classic 390x844 --mobile --set theme=classic --set startScreen=true
@@ -104,6 +105,8 @@ jobs:
             cp -r /tmp/docs /tmp/gcse && cp tests/spec_sample.txt "/tmp/Combined Studies spec.txt"
             SHOT_TIMEOUT=200 shot phone-pods-spec 390x844 --mobile --set startPod=/tmp/gcse --set "startSpec=/tmp/Combined Studies spec.txt" --set shotDelay=150000
             SHOT_TIMEOUT=60 shot desktop-pods-spec 1280x800 --set startPod=/tmp/gcse --set shotDelay=4000
+            SHOT_TIMEOUT=60 shot desktop-pods-spec-doc 1280x800 --set startPod=/tmp/gcse --set startPick=true --set shotDelay=5000
+            SHOT_TIMEOUT=60 shot phone-pods-spec-doc 390x844 --mobile --set startPod=/tmp/gcse --set startPick=true --set shotDelay=5000
             # the spec finder, and a spec downloaded from its board's website (AQA's is an encrypted PDF)
             shot phone-spec-finder 390x844 --mobile --set startPod=/tmp/docs --set startFinder=biology --set shotDelay=6000
             shot desktop-spec-finder 1280x800 --set startPod=/tmp/docs --set "startFinder=aqa" --set shotDelay=6000

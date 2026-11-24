@@ -37,6 +37,7 @@
 #endif
 #include <algorithm>
 #include <cmath>
+#include <map>
 #include <functional>
 
 namespace {
@@ -263,6 +264,8 @@ struct Result {
     std::vector<int> placed;              // refreshing: the topic each new document joins, -1 for none
     std::vector<int> fresh;               // refreshing: which documents are new
     std::vector<bool> check;              // spec: documents whose point Streamline isn't sure of
+    bool spec = false;                    // matched to a spec: docPoint says where each document goes
+    std::vector<int> docPoint, second;    // spec: each document's point and the next closest (-1 for none)
 };
 
 std::vector<podai::DocText> docTexts(const QVector<Pods::Scanned> &docs, const std::vector<int> &which)
@@ -299,11 +302,13 @@ QVariantList Pods::pods() const
 {
     QVariantList out;
     for (const Pod &p : m_pods) {
-        int topics = 0;
+        int topics = 0, check = 0;
         for (const Topic &t : p.topics) if (!t.other) ++topics;
+        for (const Doc &d : p.docs) if (d.check) ++check;
         out << QVariantMap{{"id", p.id}, {"name", p.name}, {"folder", QDir::toNativeSeparators(p.folder)},
                            {"docs", int(p.docs.size())}, {"topics", topics}, {"busy", p.busy}, {"status", p.status},
-                           {"error", p.error}};
+                           {"error", p.error}, {"colour", p.colour}, {"check", check}, {"layout", p.layout},
+                           {"specName", p.specName}};
     }
     return out;
 }
@@ -341,7 +346,8 @@ QVariantMap Pods::pod(const QString &id, const QString &query) const
     for (const Doc &d : p->docs) {
         if (!q.isEmpty() && !underHit(d.topic) && !d.name.contains(q, Qt::CaseInsensitive) && !d.snippet.contains(q, Qt::CaseInsensitive)) continue;
         direct[d.topic] << QVariantMap{{"path", d.path}, {"name", d.name}, {"ext", d.ext}, {"snippet", d.snippet},
-                                       {"words", d.words}, {"readable", d.readable}, {"folder", d.folder}};
+                                       {"words", d.words}, {"readable", d.readable}, {"folder", d.folder},
+                                       {"check", d.check}, {"kept", d.kept}, {"second", d.second}};
         for (QString tid = d.topic; !tid.isEmpty(); tid = parentOf.value(tid)) ++matches[tid];
     }
     QSet<QString> parents;
@@ -372,7 +378,8 @@ QVariantMap Pods::pod(const QString &id, const QString &query) const
     if (p->specPoints < 0) p->specPoints = p->specText.isEmpty() ? 0 : int(podsort::parseSpec(p->specText.toStdString()).size());
     return {{"id", p->id}, {"name", p->name}, {"folder", QDir::toNativeSeparators(p->folder)}, {"detail", p->detail},
             {"layout", p->layout}, {"specName", p->specName}, {"specPoints", p->specPoints}, {"specSource", p->specSource},
-            {"specBusy", p->specBusy},
+            {"specBusy", p->specBusy}, {"colour", p->colour},
+            {"checkCount", int(std::count_if(p->docs.begin(), p->docs.end(), [](const Doc &d) { return d.check; }))},
             {"method", p->method}, {"sortedLabel", sortedLabel}, {"busy", p->busy}, {"status", p->status},
             {"error", p->error}, {"moved", !p->moves.isEmpty()}, {"docCount", int(p->docs.size())},
             {"shown", shown}, {"topics", topics}};
@@ -383,6 +390,21 @@ QVariantList Pods::topicChoices(const QString &podId) const
     QVariantList out;
     const Pod *p = find(podId);
     if (!p) return out;
+    if (p->layout == QLatin1String("spec") && !p->specText.isEmpty()) {      // every point of the spec, filed under or not
+        const auto points = podsort::parseSpec(p->specText.toStdString());
+        for (int l : podsort::leafPoints(points)) {
+            QStringList path;
+            for (int a = l; a >= 0; a = points[size_t(a)].parent) {
+                const auto &pt = points[size_t(a)];
+                path.prepend(QString::fromStdString(pt.number.empty() ? pt.title : pt.number + " " + pt.title));
+            }
+            out << QVariantMap{{"id", QStringLiteral("pt:%1").arg(l)}, {"name", path.join(QStringLiteral(" › "))},
+                               {"number", QString::fromStdString(points[size_t(l)].number)},
+                               {"title", QString::fromStdString(points[size_t(l)].title)}};
+        }
+        for (const Topic &t : p->topics) if (t.other) out << QVariantMap{{"id", t.id}, {"name", t.name}, {"number", ""}, {"title", t.name}};
+        return out;
+    }
     QHash<QString, const Topic *> byId;
     for (const Topic &t : p->topics) byId.insert(t.id, &t);
     for (const Topic *t : ordered(*p)) {
@@ -568,6 +590,13 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
     QSet<QString> parents;
     for (const Topic &t : p->topics) if (!t.parent.isEmpty()) parents.insert(t.parent);
     for (const Doc &d : p->docs) known.insert(d.path, d.topic);
+    // spec pods: the point each document is under now (by number), and the ones you put there yourself
+    QHash<QString, QString> numberOf, knownNumber, keptNumber;
+    for (const Topic &t : p->topics) numberOf.insert(t.id, t.number);
+    for (const Doc &d : p->docs) {
+        knownNumber.insert(d.path, numberOf.value(d.topic));
+        if (d.kept) keptNumber.insert(d.path, numberOf.value(d.topic));
+    }
     for (const Topic &t : p->topics) if (!t.other && !parents.contains(t.id)) leafIds << t.id;
     const QString folder = p->folder;
     const QString layout = p->layout;
@@ -599,7 +628,15 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         Pod *p = find(id);
         if (!p) return;
         if (r.docs.isEmpty()) { finish(p, QStringLiteral("No documents found in this folder (Word, OpenDocument, text or PDF).")); return; }
-        if (kind == 0) {
+        if (kind == 0 || r.spec) {
+            QHash<QString, Doc> before;      // what each document was: kept by you, and its note to check
+            for (const Doc &d : p->docs) before.insert(d.path, d);
+            const auto points = r.spec ? podsort::parseSpec(p->specText.toStdString()) : std::vector<podsort::SpecPoint>();
+            auto label = [&](int pt) {
+                if (pt < 0 || size_t(pt) >= points.size()) return QString();
+                const auto &x = points[size_t(pt)];
+                return QString::fromStdString(x.number.empty() ? x.title : x.number + " " + x.title);
+            };
             p->topics.clear();
             p->docs.clear();
             QVector<QString> ids;
@@ -616,12 +653,22 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
                 p->topics.push_back(tp);
                 for (int i : n.docs) {
                     const Scanned &s = r.docs[i];
-                    p->docs.push_back({s.path, s.name, s.ext, s.rel, tp.id, snippetOf(s.body), s.words, s.readable});
+                    Doc d{s.path, s.name, s.ext, s.rel, tp.id, snippetOf(s.body), s.words, s.readable};
+                    const auto was = before.constFind(s.path);
+                    d.kept = was != before.constEnd() && was->kept;
+                    if (r.spec && size_t(i) < r.check.size()) {
+                        const bool fresh = was == before.constEnd();
+                        d.check = !d.kept && (kind == 0 || fresh ? r.check[size_t(i)] : was->check);
+                        d.second = kind == 0 || fresh ? label(r.second[size_t(i)]) : was->second;
+                    }
+                    p->docs.push_back(d);
                 }
             }
-            p->detail = detail;
-            p->method = r.method;
-            p->sorted = now();
+            if (kind == 0) {
+                p->detail = detail;
+                p->method = r.method;
+                p->sorted = now();
+            }
         } else {
             QHash<QString, QString> before;
             for (const Doc &d : p->docs) before.insert(d.path, d.topic);
@@ -645,16 +692,30 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         }
         finish(p, r.note);
     });
-    w->setFuture(QtConcurrent::run([folder, kind, detail, layout, specText, specCache, known, leafIds, meaningPath, writerPath, say]() {
+    w->setFuture(QtConcurrent::run([folder, kind, detail, layout, specText, specCache, known, leafIds, meaningPath, writerPath, say,
+                                    knownNumber, keptNumber]() {
         Result r;
         r.docs = scanFolder(folder);
         const int n = int(r.docs.size());
         if (n == 0) return r;
         const auto words = toSortDocs(r.docs);
-        const bool spec = layout == QLatin1String("spec") && kind == 0;
+        // a spec pod is matched to its spec when sorted, and when checking for new files (new documents are matched;
+        // the others stay where they are)
+        const bool spec = layout == QLatin1String("spec") && !specText.empty();
         const auto points = spec ? podsort::parseSpec(specText) : std::vector<podsort::SpecPoint>();
         const auto leaves = podsort::leafPoints(points);
         std::vector<int> docPoint;          // spec: the point each document matched
+        std::map<QString, int> pointByNumber;
+        for (size_t i = 0; i < points.size(); ++i)
+            if (!points[i].number.empty()) pointByNumber.emplace(QString::fromStdString(points[i].number), int(i));
+        auto pointOf = [&](const QHash<QString, QString> &h, const QString &path) {
+            const auto it = h.constFind(path);
+            if (it == h.constEnd() || it->isEmpty()) return -1;
+            const auto f = pointByNumber.find(*it);
+            return f == pointByNumber.end() ? -1 : f->second;
+        };
+        std::vector<int> examples;          // spec: the point you put each document under yourself, or -1
+        for (int i = 0; i < n; ++i) examples.push_back(pointOf(keptNumber, r.docs[i].path));
 
         // The meaning model reads every document (its name, headings and text, in a few pieces when it is long)
         std::vector<std::vector<float>> vecs;
@@ -692,8 +753,9 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
                     say(QStringLiteral("Matching to the spec…"));
                     std::vector<std::string> targets;
                     for (int l : leaves) targets.push_back(podsort::pointText(points, l));
-                    for (const auto &pl : podai::matchSpec(pieces, points, index, podsort::matchScores(words, targets))) {
+                    for (const auto &pl : podai::matchSpec(pieces, points, index, podsort::matchScores(words, targets), examples)) {
                         docPoint.push_back(pl.point);
+                        r.second.push_back(pl.point >= 0 ? pl.second : pl.best);
                         r.check.push_back(pl.point >= 0 && !pl.sure);
                     }
                 }
@@ -704,7 +766,7 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
         }
         const bool byMeaning = vecs.size() == size_t(n);
 
-        if (kind == 1) {      // refresh: new documents join the topic (with nothing inside it) they fit best
+        if (kind == 1 && !spec) {      // refresh: new documents join the topic (with nothing inside it) they fit best
             std::vector<std::vector<int>> groups(size_t(leafIds.size()));
             for (int i = 0; i < n; ++i) {
                 const auto it = known.constFind(r.docs[i].path);
@@ -722,10 +784,20 @@ void Pods::run(const QString &id, const QString &status, int detail, int kind)
                 say(QStringLiteral("Matching to the spec…"));
                 std::vector<std::string> targets;
                 for (int l : leaves) targets.push_back(podsort::pointText(points, l));
-                for (int x : podsort::matchPoints(words, targets)) docPoint.push_back(x < 0 ? -1 : leaves[size_t(x)]);
+                for (int x : podsort::matchPoints(words, targets)) {
+                    docPoint.push_back(x < 0 ? -1 : leaves[size_t(x)]);
+                    r.second.push_back(-1);
+                    r.check.push_back(x >= 0);      // by key words alone: always worth a look
+                }
+            }
+            for (int i = 0; i < n; ++i) {
+                if (examples[size_t(i)] >= 0) { docPoint[size_t(i)] = examples[size_t(i)]; r.check[size_t(i)] = false; }
+                else if (kind == 1 && known.contains(r.docs[i].path)) docPoint[size_t(i)] = pointOf(knownNumber, r.docs[i].path);
             }
             r.nodes = podsort::specTree(points, docPoint);
             r.method = byMeaning ? QStringLiteral("ai") : QStringLiteral("words");
+            r.spec = true;
+            r.docPoint = docPoint;
             return r;      // the spec names its own points
         }
 
@@ -837,12 +909,59 @@ void Pods::renameTopic(const QString &podId, const QString &topicId, const QStri
         if (t.id == topicId) { t.name = n; t.other = false; changed(); return; }
 }
 
+void Pods::keepDoc(const QString &podId, const QString &path)
+{
+    Pod *p = find(podId);
+    if (!p) return;
+    for (Doc &d : p->docs)
+        if (d.path == path) { d.kept = true; d.check = false; changed(); return; }
+}
+
+void Pods::setColour(const QString &podId, const QString &colour)
+{
+    Pod *p = find(podId);
+    if (!p || p->colour == colour) return;
+    p->colour = colour;
+    changed();
+}
+
+QString Pods::pointTopic(Pod &p, int point)
+{
+    const auto points = podsort::parseSpec(p.specText.toStdString());
+    if (point < 0 || size_t(point) >= points.size()) return {};
+    QString parent;
+    std::vector<int> chain;
+    for (int a = point; a >= 0; a = points[size_t(a)].parent) chain.insert(chain.begin(), a);
+    for (int a : chain) {
+        const QString number = QString::fromStdString(points[size_t(a)].number);
+        const QString title = QString::fromStdString(points[size_t(a)].title);
+        QString id;
+        for (const Topic &t : p.topics)
+            if (!t.other && t.parent == parent && t.number == number && (number.isEmpty() ? t.name == title : true)) { id = t.id; break; }
+        if (id.isEmpty()) {
+            Topic t;
+            t.id = newId();
+            t.number = number;
+            t.name = title;
+            t.parent = parent;
+            auto at = std::find_if(p.topics.begin(), p.topics.end(), [](const Topic &x) { return x.other; });
+            p.topics.insert(at, t);
+            id = t.id;
+        }
+        parent = id;
+    }
+    return parent;
+}
+
 void Pods::moveDoc(const QString &podId, const QString &path, const QString &topicId)
 {
     Pod *p = find(podId);
     if (!p) return;
     QString target = topicId;
-    if (topicId == QLatin1String("new")) {
+    if (topicId.startsWith(QLatin1String("pt:"))) {
+        target = pointTopic(*p, topicId.mid(3).toInt());
+        if (target.isEmpty()) return;
+    } else if (topicId == QLatin1String("new")) {
         Topic t;
         t.id = newId();
         t.name = QStringLiteral("New topic");
@@ -851,7 +970,7 @@ void Pods::moveDoc(const QString &podId, const QString &path, const QString &top
         target = t.id;
     }
     for (Doc &d : p->docs)
-        if (d.path == path) { d.topic = target; break; }
+        if (d.path == path) { d.topic = target; d.kept = true; d.check = false; d.second.clear(); break; }
     dropEmptyTopics(*p);
     changed();
 }
@@ -1011,6 +1130,7 @@ void Pods::load()
         p.specName = o.value(QLatin1String("specName")).toString();
         p.specText = o.value(QLatin1String("specText")).toString();
         p.specSource = o.value(QLatin1String("specSource")).toString();
+        p.colour = o.value(QLatin1String("colour")).toString();
         p.detail = o.value(QLatin1String("detail")).toInt(1);
         p.created = qint64(o.value(QLatin1String("created")).toDouble());
         p.sorted = qint64(o.value(QLatin1String("sorted")).toDouble());
@@ -1029,10 +1149,14 @@ void Pods::load()
         }
         for (const QJsonValue &dv : o.value(QLatin1String("docs")).toArray()) {
             const QJsonObject d = dv.toObject();
-            p.docs.push_back({d.value(QLatin1String("path")).toString(), d.value(QLatin1String("name")).toString(),
-                              d.value(QLatin1String("ext")).toString(), d.value(QLatin1String("folder")).toString(),
-                              d.value(QLatin1String("topic")).toString(), d.value(QLatin1String("snippet")).toString(),
-                              d.value(QLatin1String("words")).toInt(), d.value(QLatin1String("readable")).toBool()});
+            Doc doc{d.value(QLatin1String("path")).toString(), d.value(QLatin1String("name")).toString(),
+                    d.value(QLatin1String("ext")).toString(), d.value(QLatin1String("folder")).toString(),
+                    d.value(QLatin1String("topic")).toString(), d.value(QLatin1String("snippet")).toString(),
+                    d.value(QLatin1String("words")).toInt(), d.value(QLatin1String("readable")).toBool()};
+            doc.check = d.value(QLatin1String("check")).toBool();
+            doc.kept = d.value(QLatin1String("kept")).toBool();
+            doc.second = d.value(QLatin1String("second")).toString();
+            p.docs.push_back(doc);
         }
         for (const QJsonValue &mv : o.value(QLatin1String("moves")).toArray()) {
             const QJsonObject m = mv.toObject();
@@ -1053,10 +1177,12 @@ void Pods::save() const
                                   {"parent", t.parent}, {"keywords", QJsonArray::fromStringList(t.keywords)}, {"other", t.other}};
         for (const Doc &d : p.docs)
             docs << QJsonObject{{"path", d.path}, {"name", d.name}, {"ext", d.ext}, {"folder", d.folder}, {"topic", d.topic},
-                                {"snippet", d.snippet}, {"words", d.words}, {"readable", d.readable}};
+                                {"snippet", d.snippet}, {"words", d.words}, {"readable", d.readable},
+                                {"check", d.check}, {"kept", d.kept}, {"second", d.second}};
         for (const Move &m : p.moves) moves << QJsonObject{{"from", m.from}, {"to", m.to}};
         arr << QJsonObject{{"id", p.id}, {"name", p.name}, {"folder", p.folder}, {"method", p.method}, {"detail", p.detail},
                            {"layout", p.layout}, {"specName", p.specName}, {"specText", p.specText}, {"specSource", p.specSource},
+                           {"colour", p.colour},
                            {"created", double(p.created)}, {"sorted", double(p.sorted)}, {"topics", topics}, {"docs", docs},
                            {"moves", moves}, {"madeDirs", QJsonArray::fromStringList(p.madeDirs)}};
     }

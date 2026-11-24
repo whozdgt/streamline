@@ -1,9 +1,10 @@
 # spec: https://filestore.aqa.org.uk/resources/chemistry/specifications/AQA-8462-SP-2016.PDF
 # Messy notes written for this test, the way a student's folder really looks: shorthand, half-finished exam
-# answers, copied-out mark schemes, and file names that say little. Each is under the point it is about.
+# answers, copied-out mark schemes, and file names that say little. Each is under the point it is about, and any
+# other point it covers as much (crude oil notes that are about alkanes too).
 === 4.1.1.3 | atom models timeline
 plum pudding (thomson) -> ball of +ve charge w/ electrons stuck in. rutherford gold foil: most alphas went straight thru, some deflected => tiny dense +ve nucleus. bohr: electrons in shells at set distances. chadwick found neutron ~20 yrs later. 6 marker: describe how model changed + why (new evidence)
-=== 4.1.1.7 | Q3 homework
+=== 4.1.1.7,4.1.2.4 | Q3 homework
 2,8,1 = sodium. 2,8,7 = chlorine. draw the shells, max 2 in 1st then 8. q3c) why are noble gases unreactive - full outer shell, dont need to gain or lose electrons
 === 4.1.2.5 | alkali metals demo
 lithium sodium potassium in water. all float, fizz, H2 gas made + metal hydroxide (alkaline, purple w/ UI). K = lilac flame, goes fastest. reactivity incr down group bc outer electron further from nucleus so lost more easily
@@ -11,7 +12,7 @@ lithium sodium potassium in water. all float, fizz, H2 gas made + metal hydroxid
 F2 Cl2 Br2 I2. diatomic. down the group: higher m.p./b.p., less reactive. displacement: chlorine water + potassium bromide -> orange (bromine released). more reactive halogen displaces less reactive from its salt solution
 === 4.2.1.2 | dot and cross
 NaCl: Na gives 1 e- to Cl -> Na+ and Cl-. MgO: Mg gives 2 to O. ions have noble gas config. draw square brackets + charges. ionic bonding = transfer of electrons metal -> non metal
-=== 4.2.1.4 | covalent
+=== 4.2.1.4,4.2.2.4 | covalent
 shared pair of electrons between non-metals. H2, Cl2, O2 (double bond), H2O, NH3, CH4. small molecules low mp because weak intermolecular forces NOT the covalent bonds breaking!!
 === 4.2.3.1,4.2.3.2 | diamond graphite
 diamond: each C 4 bonds, v hard, high mp, no conduct. graphite: 3 bonds, layers, slide over each other, delocalised electron per atom so conducts. graphene = single layer. fullerenes C60 buckyballs, nanotubes
@@ -29,11 +30,11 @@ aq NaCl: at cathode H2 (hydrogen less reactive than sodium), at anode Cl2 (halid
 extract Al by electrolysis of molten aluminium oxide mixed w/ cryolite (lowers mp, saves energy). carbon anodes burn away -> CO2 so need replacing. expensive bc lots of electricity
 === 4.5.1.1,4.5.1.2 | exo endo graph
 exothermic gives out energy, temp of surroundings goes up eg combustion, hand warmers. endothermic takes in, temp goes down eg thermal decomp, sports injury packs. reaction profile: products lower = exo. activation energy is the hump
-=== 4.6.1.2 | rates rp
+=== 4.6.1.2,4.6.1.1 | rates rp
 marble chips + HCl measure gas syringe every 30s. OR thiosulfate + acid disappearing cross, time it. higher temp/conc/surface area -> faster. plot vol vs time, gradient = rate, tangent for rate at a time
-=== 4.6.2.3,4.6.2.4 | le chat
+=== 4.6.2.3,4.6.2.4,4.6.2.5,4.6.2.6,4.6.2.7 | le chat
 dynamic equilibrium: fwd and back reactions same rate in closed system. le chatelier: system shifts to counteract change. incr pressure -> side with fewer moles of gas. incr temp -> endothermic direction favoured
-=== 4.7.1.2 | crude oil
+=== 4.7.1.2,4.7.1.1 | crude oil
 fractional distillation: heat crude, vapour rises up column, cooler at top. small chains (LPG, petrol) collected at top, long chains (bitumen) bottom. alkanes CnH2n+2 methane ethane propane butane
 === 4.7.1.4 | cracking
 cracking = break long chain alkanes into shorter more useful ones + alkenes. catalytic (hot catalyst) or steam. alkenes decolourise bromine water orange -> colourless. used to make polymers

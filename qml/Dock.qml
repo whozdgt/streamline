@@ -19,7 +19,7 @@ Item {
         { k: "library", t: "Library", icon: "library", on: "library" },
         { k: "friends", t: "Friends", icon: "friends", on: "friends" },
         { k: "todos", t: "To-dos", icon: "checklist", on: "checklist" },
-        { k: "study", t: "Study", icon: "cards", on: "cards" },
+        { k: "study", t: "Study", icon: "study", on: "study" },
         { k: "search", t: "Search", icon: "search", on: "search" }
     ]
     readonly property var easing: [0.2, 0, 0, 1, 1, 1]
@@ -85,7 +85,7 @@ Item {
             anchors.centerIn: parent
             size: 26
             color: settings.ink
-            name: root.current === "home" ? "homefill" : root.current === "friends" ? "friends" : root.current === "study" ? "cards" : root.current === "todos" ? "checklist" : "library"
+            name: root.current === "home" ? "homefill" : root.current === "friends" ? "friends" : root.current === "study" ? "study" : root.current === "todos" ? "checklist" : "library"
         }
         MouseArea { anchors.fill: parent; onClicked: root.untuck() }
     }

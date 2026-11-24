@@ -466,7 +466,7 @@ bool SpecIndex::load(const std::string &path, size_t points)
     return true;
 }
 
-const double kExampleWeight = 0.8;
+const double kExampleWeight = 0.5;      // tests/match: more sure, no fewer right; heavier left more out
 
 std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float>>> &docPieces,
                                  const std::vector<podsort::SpecPoint> &points, const SpecIndex &spec,
@@ -482,7 +482,14 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
         if (fileable(points[size_t(allLeaves[k])])) { leaves.push_back(allLeaves[k]); column.push_back(k); }
     if (leaves.empty()) return out;
     const size_t nl = leaves.size();
-    const Tuning t = tuningFor(spec.title.empty() ? 0 : spec.title[0].size());
+    Tuning t = tuningFor(spec.title.empty() ? 0 : spec.title[0].size());
+    // How far one point can stand out depends on how many there are (at most sqrt(n - 1) standard deviations), so a
+    // short spec (AQA GCSE Geography: 27 points) asks less of it than the long one the settings were made on (98).
+    // Closeness to the point's own text (fitFloor) still keeps other subjects out.
+    {
+        const double s = std::clamp(std::sqrt(double(nl > 1 ? nl - 1 : 1) / 97.0), 0.55, 1.0);
+        t.match *= s; t.sure *= s; t.standoutClose *= s; t.margin *= s;
+    }
     // the documents you have put under a point yourself: each one's leaf (k), and the whole document's meaning
     std::map<int, size_t> leafPos;
     for (size_t k = 0; k < nl; ++k) leafPos[leaves[k]] = k;
