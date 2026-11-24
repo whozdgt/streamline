@@ -183,7 +183,8 @@ QVariantList SpecCatalog::find(const QString &query, const QString &board, const
                              QLatin1Char(' ') + e.subject + QLatin1Char(' ') + e.code).toLower();
         bool all = true;
         for (const QString &w : words) {
-            if (w == QLatin1String("a") || w == QLatin1String("as") || w == QLatin1String("and") || w == QLatin1String("level")) continue;
+            // "a level biology": "level" keeps the A levels ("AS & A Level", "A-level"); "a", "as" and "and" say nothing
+            if (w == QLatin1String("a") || w == QLatin1String("as") || w == QLatin1String("and")) continue;
             if (!hay.contains(w)) { all = false; break; }
         }
         if (all) hits.push_back(&e);
