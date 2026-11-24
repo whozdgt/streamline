@@ -1,5 +1,7 @@
 // How often Pods put a document under the right point of a specification.
-//   match_eval <meaning.gguf> <spec.pdf|spec.txt> <notes.txt> [--leaves] [--misses]
+//   match_eval <meaning.gguf> <spec.pdf|spec.txt> <notes.txt> [--leaves] [--misses] [--examples other-notes.txt]
+// --examples: notes that are already filed (as if you had pressed "Keep here" on each): the app's matching is tried
+// with them as examples, at a few weights, and only notes.txt is scored.
 // notes.txt: students' notes written for the test, each one under a line "=== <point> | <file name>", <point> being
 // the spec point it is about ("4.1.1.2"; a point with points inside it accepts any of them). Lines starting "#"
 // are comments ("# spec: <url>" says where the spec comes from, for CI).
@@ -95,7 +97,9 @@ int main(int argc, char **argv)
 {
     if (argc < 4) { std::fprintf(stderr, "usage: match_eval meaning.gguf spec.pdf notes.txt [--leaves] [--misses]\n"); return 2; }
     bool showLeaves = false, showMisses = false;
+    std::string examplesPath;
     for (int i = 4; i < argc; ++i) {
+        if (!std::strcmp(argv[i], "--examples") && i + 1 < argc) examplesPath = argv[++i];
         if (!std::strcmp(argv[i], "--leaves")) showLeaves = true;
         if (!std::strcmp(argv[i], "--misses")) showMisses = true;
     }
@@ -308,9 +312,30 @@ int main(int argc, char **argv)
         if (showMisses) for (const auto &s : misses) std::printf("%s\n", s.c_str());
     }
     // what the app does (podai::readSpec + matchSpec): the point, or none; and whether it is sure
-    {
-        const auto spec = podai::readSpec(m, points);
-        const auto placed = podai::matchSpec(P, points, spec, L);
+    const auto spec = podai::readSpec(m, points);
+    // filed notes, as examples: their pieces and key words go after the notes', with the point each is filed under
+    std::vector<std::vector<std::vector<float>>> PE = P;
+    std::vector<int> ex(nd, -1);
+    Grid LE = L;
+    if (!examplesPath.empty()) {
+        std::vector<podsort::Doc> we = wd;
+        int used = 0;
+        for (const auto &n : readNotes(examplesPath)) {
+            const std::string first = n.label.substr(0, n.label.find(','));
+            const auto it = byNumber.find(first);
+            if (it == byNumber.end()) continue;
+            PE.push_back(m.readPieces(n.title, "", n.body));
+            we.push_back({n.title, std::string(), n.body, std::string()});
+            ex.push_back(it->second);
+            ++used;
+        }
+        LE = podsort::matchScores(we, targets);
+        std::printf("\nexamples: %d filed notes from %s\n", used, examplesPath.c_str());
+    }
+    const std::vector<double> weights = examplesPath.empty() ? std::vector<double>{0.0} : std::vector<double>{0.0, 0.5, 0.8, 1.2, 2.0};
+    for (double weight : weights) {
+        const auto placed = podai::matchSpec(PE, points, spec, LE, ex, weight);
+        if (!examplesPath.empty()) std::printf("\nwith examples at weight %.1f:", weight);
         int right = 0, wrong = 0, missed = 0, counted = 0, offIn = 0, offs = 0, sureRight = 0, sureWrong = 0;
         std::vector<std::string> lines;
         std::vector<double> rightFit, offFit;

@@ -83,9 +83,13 @@ struct Placement {
 };
 // docPieces: each document read in pieces (Meaning::readPieces); words: key-word scores [document][leaf]
 // (podsort::matchScores over the leaves' pointText), or empty.
+// examples: for each document, the point you put it under ("Keep here", "Move to…"), or -1; or empty. Those stay
+// where you put them, and other documents like them lean towards the same point (by exampleWeight).
+extern const double kExampleWeight;
 std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float>>> &docPieces,
                                  const std::vector<podsort::SpecPoint> &points, const SpecIndex &spec,
-                                 const std::vector<std::vector<double>> &words);
+                                 const std::vector<std::vector<double>> &words,
+                                 const std::vector<int> &examples = {}, double exampleWeight = kExampleWeight);
 
 // Matching to a specification: the spec point each document is closest to in meaning, or -1 when none is close.
 std::vector<int> match(const std::vector<std::vector<float>> &docs, const std::vector<std::vector<float>> &points);

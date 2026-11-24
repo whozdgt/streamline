@@ -1,0 +1,45 @@
+# spec: https://filestore.aqa.org.uk/resources/geography/specifications/AQA-8035-SP-2016.PDF
+# Messy notes written for this test: case studies half written up, exam answers, shorthand and file names that say
+# little. Each is under the point (or the section) it is about; a section accepts any point inside it.
+=== 3.1.1 | plate margins
+destructive: oceanic goes under continental (subduction), volcanoes + earthquakes eg andes. constructive: plates move apart, magma rises, mid atlantic ridge, iceland. conservative: slide past, earthquakes only, san andreas
+=== 3.1.1 | nepal 2015 vs chile 2010 case study
+Nepal 7.8 magnitude, 9000 died, poor building, landslides blocked roads, aid slow. Chile 8.8 but only ~500 died, building regs, quick response. LIC vs HIC effects & responses. primary vs secondary effects table
+=== 3.1.1 | typhoon haiyan
+tropical storm philippines 2013. forms over warm ocean >27C, coriolis effect makes it spin, eye in middle. storm surge 5m, 6000 dead. climate change might make them stronger + more frequent
+=== 3.1.1 | uk weather
+UK extreme weather: somerset levels flooding 2014, beast from the east snow 2018. is the weather getting more extreme? evidence both ways
+=== 3.1.1 | climate change ev
+evidence: ice cores, tree rings, temperature records since 1850. natural causes = orbital changes (milankovitch), volcanic eruptions, solar output. human = burning fossil fuels, farming, deforestation. mitigation vs adaptation
+=== 3.1.2 | food web pond
+small scale ecosystem: pond. producers (reeds, algae) -> consumers (snails, frogs, heron). decomposers recycle nutrients. if you remove one species the whole web changes
+=== 3.1.2 | amazon notes
+tropical rainforest: hot wet all year, layers (emergent canopy undercanopy shrub), buttress roots, drip tips. deforestation for cattle ranching, logging, mining, roads. sustainable management: selective logging, ecotourism, debt reduction
+=== 3.1.2 | sahara or tundra?? q
+hot desert: camels, cacti store water, long roots. opportunities in thar desert: mining, farming w irrigation, tourism. challenges: extreme temps, water supply, inaccessibility. desertification causes overgrazing, climate change
+=== 3.1.3 | coasts
+erosion processes hydraulic action, abrasion, attrition, solution. landforms: headland + bay, cave arch stack stump (old harry). longshore drift moves sediment, spit forms eg spurn head. hard engineering sea walls groynes vs soft beach nourishment
+=== 3.1.3 | rivers exam answer
+upper course: v shaped valley, interlocking spurs, waterfall (high force) - hard rock over soft, plunge pool, undercut, collapse, gorge. lower course: meanders, ox-bow lakes, floodplain, levees. hydrograph: lag time, peak discharge
+=== 3.2.1 | lagos / rio
+urban growth in LIC/NEE city: rural-urban migration (push pull), natural increase. opportunities: jobs, services. challenges: slums/squatter settlements, waste, traffic. favela bairro project rio
+=== 3.2.1 | london regen
+UK city: london. migration made it multicultural. urban change: deindustrialisation, docklands regeneration, olympic park stratford. sustainable urban living: recycling, green space, public transport (boris bikes)
+=== 3.2.2 | development
+measuring development: GNI per head, HDI, birth rate, life expectancy. demographic transition model 5 stages. uneven development causes: physical (landlocked), economic (trade), historical (colonialism). closing the gap: aid, fair trade, microfinance, tourism (jamaica)
+=== 3.2.2 | nigeria NEE
+nigeria: oil exports, TNCs like shell (jobs but pollution in niger delta), manufacturing growth. changing industrial structure. aid and debt relief. quality of life improving but inequality
+=== 3.2.2 | uk economy
+UK post-industrial economy: service, IT, research (science parks, cambridge). rural changes. transport improvements HS2, ports. north south divide
+=== 3.2.3 | food water energy
+resource management: food, water, energy demand rising. UK water surplus in north west, deficit in south east, water transfer. energy mix changing - less coal, more renewables, fracking debate. food miles, organic, agribusiness
+=== 3.2.3 | water q
+water insecurity: causes climate, overabundance pollution, over-abstraction. lesotho highland water project. sustainable: water conservation, groundwater management, recycling grey water
+=== 3.3 | fieldwork write up
+issue evaluation + fieldwork paper 3. our enquiry: does the quality of the environment change from CBD outwards? method: environmental quality survey, pedestrian counts. presenting: bar charts, maps. conclusion + evaluation of reliability
+=== - | chem moles
+moles = mass / Mr. avogadro 6.02 x 10^23
+=== - | gym plan
+mon legs wed push fri pull. 3x10
+=== - | english lit
+an inspector calls: priestley uses inspector goole as a mouthpiece for socialism. sheila changes, mr birling doesnt

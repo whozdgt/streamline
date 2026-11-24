@@ -1,0 +1,57 @@
+# spec: https://filestore.aqa.org.uk/resources/chemistry/specifications/AQA-8462-SP-2016.PDF
+# Messy notes written for this test, the way a student's folder really looks: shorthand, half-finished exam
+# answers, copied-out mark schemes, and file names that say little. Each is under the point it is about.
+=== 4.1.1.3 | atom models timeline
+plum pudding (thomson) -> ball of +ve charge w/ electrons stuck in. rutherford gold foil: most alphas went straight thru, some deflected => tiny dense +ve nucleus. bohr: electrons in shells at set distances. chadwick found neutron ~20 yrs later. 6 marker: describe how model changed + why (new evidence)
+=== 4.1.1.7 | Q3 homework
+2,8,1 = sodium. 2,8,7 = chlorine. draw the shells, max 2 in 1st then 8. q3c) why are noble gases unreactive - full outer shell, dont need to gain or lose electrons
+=== 4.1.2.5 | alkali metals demo
+lithium sodium potassium in water. all float, fizz, H2 gas made + metal hydroxide (alkaline, purple w/ UI). K = lilac flame, goes fastest. reactivity incr down group bc outer electron further from nucleus so lost more easily
+=== 4.1.2.6 | halogens
+F2 Cl2 Br2 I2. diatomic. down the group: higher m.p./b.p., less reactive. displacement: chlorine water + potassium bromide -> orange (bromine released). more reactive halogen displaces less reactive from its salt solution
+=== 4.2.1.2 | dot and cross
+NaCl: Na gives 1 e- to Cl -> Na+ and Cl-. MgO: Mg gives 2 to O. ions have noble gas config. draw square brackets + charges. ionic bonding = transfer of electrons metal -> non metal
+=== 4.2.1.4 | covalent
+shared pair of electrons between non-metals. H2, Cl2, O2 (double bond), H2O, NH3, CH4. small molecules low mp because weak intermolecular forces NOT the covalent bonds breaking!!
+=== 4.2.3.1,4.2.3.2 | diamond graphite
+diamond: each C 4 bonds, v hard, high mp, no conduct. graphite: 3 bonds, layers, slide over each other, delocalised electron per atom so conducts. graphene = single layer. fullerenes C60 buckyballs, nanotubes
+=== 4.3.2.1 | mole calcs
+n = m / Mr. 1 mol = 6.02 x 10^23 (avogadro). eg how many moles in 22g CO2: Mr 44, 0.5 mol. balancing eqns using moles: divide masses by Mr then simplest ratio
+=== 4.3.4 | conc
+concentration g/dm3 = mass / volume. remember convert cm3 to dm3 divide by 1000!! 25cm3 = 0.025 dm3
+=== 4.4.1.2 | reactivity series
+pot sod cal mag alu (carbon) zinc iron (hydrogen) copper silver gold. "please send charlie's monkeys and zebras in cages securely guarded". more reactive metal displaces less reactive from compound. metals that react with water/acid form positive ions
+=== 4.4.2.2,4.4.2.3 | rp salts
+required practical: copper oxide + sulfuric acid, warm, add excess oxide til no more dissolves, filter, evaporate some water, leave to crystallise -> copper sulfate crystals. acid + base -> salt + water
+=== 4.4.3.4 | electrolysis brine
+aq NaCl: at cathode H2 (hydrogen less reactive than sodium), at anode Cl2 (halide present). solution left = sodium hydroxide. test chlorine: damp litmus bleached. half eqns HT 2H+ + 2e- -> H2
+=== 4.4.3.3 | aluminium
+extract Al by electrolysis of molten aluminium oxide mixed w/ cryolite (lowers mp, saves energy). carbon anodes burn away -> CO2 so need replacing. expensive bc lots of electricity
+=== 4.5.1.1,4.5.1.2 | exo endo graph
+exothermic gives out energy, temp of surroundings goes up eg combustion, hand warmers. endothermic takes in, temp goes down eg thermal decomp, sports injury packs. reaction profile: products lower = exo. activation energy is the hump
+=== 4.6.1.2 | rates rp
+marble chips + HCl measure gas syringe every 30s. OR thiosulfate + acid disappearing cross, time it. higher temp/conc/surface area -> faster. plot vol vs time, gradient = rate, tangent for rate at a time
+=== 4.6.2.3,4.6.2.4 | le chat
+dynamic equilibrium: fwd and back reactions same rate in closed system. le chatelier: system shifts to counteract change. incr pressure -> side with fewer moles of gas. incr temp -> endothermic direction favoured
+=== 4.7.1.2 | crude oil
+fractional distillation: heat crude, vapour rises up column, cooler at top. small chains (LPG, petrol) collected at top, long chains (bitumen) bottom. alkanes CnH2n+2 methane ethane propane butane
+=== 4.7.1.4 | cracking
+cracking = break long chain alkanes into shorter more useful ones + alkenes. catalytic (hot catalyst) or steam. alkenes decolourise bromine water orange -> colourless. used to make polymers
+=== 4.8.1.3 | chromatography sheet
+pencil start line, solvent below line, Rf = distance moved by spot / distance moved by solvent. pure substance = one spot. compare w/ reference spots to identify
+=== 4.8.2.1,4.8.2.2,4.8.2.3,4.8.2.4 | gas tests flashcards
+H2 squeaky pop w lighted splint. O2 relights glowing splint. CO2 limewater cloudy/milky. Cl2 bleaches damp litmus paper
+=== 4.9.2.1,4.9.2.2,4.9.2.3 | climate change essay
+greenhouse gases: CO2, methane, water vapour. absorb IR radiated from earth, keeps it warm. humans: burning fossil fuels, deforestation, cattle farming (methane), landfill. effects: sea levels rise, extreme weather, habitats change. peer review of evidence
+=== 4.9.3.1,4.9.3.2 | pollutants
+incomplete combustion -> carbon monoxide (toxic, colourless) + soot particulates (global dimming, lung damage). sulfur dioxide + nitrogen oxides -> acid rain, breathing problems
+=== 4.10.1.2 | water treatment
+potable water = safe to drink, not pure. UK: rain water, filter (sand beds), sterilise (chlorine, ozone, UV). salty water -> desalination by distillation or reverse osmosis, needs loads of energy
+=== 4.10.2.1 | LCA plastic vs paper bags
+life cycle assessment stages: extracting raw materials, manufacturing + packaging, use, disposal. plastic bag: from crude oil, reused, doesnt biodegrade. paper bag: trees, more energy to make, rots. LCAs can be biased (selective)
+=== - | geog fieldwork
+river study: measure width and depth at 5 sites going downstream, velocity with a float and stopwatch. bradshaw model
+=== - | spanish oral
+me llamo Sam. tengo dieciséis años. en mi tiempo libre me gusta jugar al fútbol y escuchar música
+=== - | dentist
+dentist tues 4.15. bring the form

@@ -1,0 +1,37 @@
+# spec: https://filestore.aqa.org.uk/resources/computing/specifications/AQA-8525-SP-2020.PDF
+# Messy notes written for this test: pseudo-code, past-paper answers, shorthand and unhelpful file names. Each is
+# under the point (or the section) it is about; a section accepts any point inside it.
+=== 3.1.3,3.1.4 | search sort
+linear search: check each item in turn, works on unsorted. binary search: list must be sorted, look at middle, discard half, repeat. much faster on big lists. bubble sort: compare pairs, swap, passes til no swaps. merge sort: split into single items then merge in order, faster but more memory
+=== 3.1.1 | trace table q2
+trace table for the algorithm: x = 3, while x < 20, x = x * 2. columns x, output. flowchart symbols: oval start/end, parallelogram input/output, diamond decision. decomposition + abstraction
+=== 3.2 | python stuff
+for i in range(5): print(i). while loop, if elif else. string handling len(), .upper(), substring s[0:3]. random.randint(1,6). subroutines: def, parameters, return values, local vs global variables
+=== 3.2 | arrays records
+2D array scores[row][col]. records with fields. string to int casting int("5"). file handling open read write. input validation: range check, length check, presence check. authentication: username + password
+=== 3.3 | binary hex
+denary 156 = 10011100 binary. hex 9C. nibble = 4 bits so 1 hex digit. binary addition with carry, overflow if result needs 9 bits. left shift = multiply by 2
+=== 3.3 | units + images
+bit nibble byte kilobyte (1000 bytes) megabyte. image size = width x height x colour depth (bits). sound: sample rate x bit depth x seconds. ASCII 7 bit, unicode lots more characters
+=== 3.3 | compression huffman
+huffman coding: tree built from frequencies, common characters get shorter codes. run length encoding: AAAABB -> 4A2B. lossless vs lossy
+=== 3.4 | logic gates
+AND OR NOT XOR truth tables. draw circuit for Q = (A AND B) OR NOT C. boolean expressions
+=== 3.4 | cpu
+von neumann architecture: CPU (ALU, control unit, registers), main memory, buses. fetch execute cycle. clock speed, number of cores, cache size affect performance. RAM volatile, ROM not. secondary storage: magnetic, optical, solid state (no moving parts)
+=== 3.4 | translators
+high level vs low level. machine code, assembly language. compiler translates whole program at once, makes executable. interpreter line by line, stops at error. assembler for assembly. system software: OS manages memory, processor, devices, users
+=== 3.5 | networks rev mat
+LAN vs WAN vs PAN. star and bus topology. wired vs wireless. protocols: TCP/IP, HTTP, HTTPS, FTP, SMTP, IMAP. 4 layer TCP/IP model: application transport internet link. ethernet, wifi
+=== 3.6 | cyber q
+social engineering: phishing, pharming, shouldering, blagging. malware: viruses, trojans, spyware. penetration testing white box/black box. prevent: firewalls, anti-malware, strong passwords, biometrics, CAPTCHA, auto updates
+=== 3.7 | sql
+SELECT name, age FROM Students WHERE age > 15 ORDER BY name. INSERT INTO, UPDATE SET, DELETE FROM. primary key, foreign key, relational database avoids data redundancy and inconsistency
+=== 3.8 | ethics essay
+impacts of digital tech: ethical (privacy, surveillance, cctv), legal (data protection act, computer misuse act, copyright), environmental (e-waste, energy use of data centres). discuss self driving cars, wearables, mobile phones
+=== - | biology cells
+mitochondria = respiration. ribosomes protein synthesis. plant cells have cell wall chloroplast vacuole
+=== - | history paper 2
+elizabeth I: religious settlement 1559, mary queen of scots, spanish armada 1588
+=== - | holiday packing
+passport, charger, sun cream, euro cash

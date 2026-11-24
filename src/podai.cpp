@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
+#include <map>
 #include <mutex>
 #include <numeric>
 #include <thread>
@@ -465,9 +466,12 @@ bool SpecIndex::load(const std::string &path, size_t points)
     return true;
 }
 
+const double kExampleWeight = 0.8;
+
 std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float>>> &docPieces,
                                  const std::vector<podsort::SpecPoint> &points, const SpecIndex &spec,
-                                 const std::vector<std::vector<double>> &words)
+                                 const std::vector<std::vector<double>> &words,
+                                 const std::vector<int> &examples, double exampleWeight)
 {
     const auto allLeaves = podsort::leafPoints(points);
     std::vector<Placement> out(docPieces.size());
@@ -479,6 +483,33 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
     if (leaves.empty()) return out;
     const size_t nl = leaves.size();
     const Tuning t = tuningFor(spec.title.empty() ? 0 : spec.title[0].size());
+    // the documents you have put under a point yourself: each one's leaf (k), and the whole document's meaning
+    std::map<int, size_t> leafPos;
+    for (size_t k = 0; k < nl; ++k) leafPos[leaves[k]] = k;
+    std::vector<int> exampleLeaf(docPieces.size(), -1);
+    std::vector<std::vector<float>> whole(docPieces.size());
+    size_t exampleLeaves = 0;
+    {
+        std::vector<bool> seen(nl, false);
+        for (size_t d = 0; d < docPieces.size() && d < examples.size(); ++d) {
+            const auto it = leafPos.find(examples[d]);
+            if (it == leafPos.end()) continue;
+            exampleLeaf[d] = int(it->second);
+            if (!seen[it->second]) { seen[it->second] = true; ++exampleLeaves; }
+        }
+        if (exampleLeaves > 0)
+            for (size_t d = 0; d < docPieces.size(); ++d) {
+                auto &m = whole[d];
+                for (const auto &v : docPieces[d]) {
+                    if (m.empty()) m.assign(v.size(), 0.f);
+                    for (size_t i = 0; i < v.size() && i < m.size(); ++i) m[i] += v[i];
+                }
+                double len = 0;
+                for (float x : m) len += double(x) * x;
+                len = std::sqrt(len);
+                if (len > 0) for (float &x : m) x = float(x / len);
+            }
+    }
     for (size_t d = 0; d < docPieces.size(); ++d) {
         const auto &P = docPieces[d];
         if (P.empty()) continue;
@@ -511,6 +542,18 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
             for (size_t k = 0; k < nl; ++k) w[k] = words[d][column[k]];
             add(w, 0.6);
         }
+        // Documents you have filed: how like them this one is, at each point that has some (on its own scale among
+        // those points, so a point you have filed nothing under is neither helped nor held back)
+        if (exampleLeaves >= 3 && exampleWeight > 0 && exampleLeaf[d] < 0) {
+            std::vector<double> like(nl, -2.0);
+            for (size_t e = 0; e < docPieces.size(); ++e)
+                if (e != d && exampleLeaf[e] >= 0)
+                    like[size_t(exampleLeaf[e])] = std::max(like[size_t(exampleLeaf[e])], dotv(whole[d], whole[e]));
+            std::vector<double> have;
+            for (double x : like) if (x > -2.0) have.push_back(x);
+            const auto z = zscores(have);
+            for (size_t k = 0, i = 0; k < nl; ++k) if (like[k] > -2.0) total[k] += exampleWeight * z[i++];
+        }
         size_t b1 = 0, b2 = nl > 1 ? 1 : 0;
         for (size_t k = 0; k < nl; ++k) {
             if (total[k] > total[b1]) { b2 = b1; b1 = k; }
@@ -526,6 +569,10 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
         pl.point = fits ? leaves[b1] : -1;
         pl.second = nl > 1 ? leaves[b2] : -1;
         pl.sure = pl.point >= 0 && pl.standout >= t.sure && z[b1] - z[b2] >= t.margin;
+        if (exampleLeaf[d] >= 0) {      // you put it here: it stays
+            pl.point = leaves[size_t(exampleLeaf[d])];
+            pl.sure = true;
+        }
     }
     return out;
 }

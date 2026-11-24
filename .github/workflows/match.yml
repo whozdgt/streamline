@@ -61,6 +61,14 @@ jobs:
             url=$(grep -m1 '^# spec: ' "$notes" | cut -c9-)
             echo "::group::$name"
             head -c 5 "specs/$name.pdf" 2>/dev/null | grep -q '%PDF' || curl -fsSL -A "$UA" --retry 2 -o "specs/$name.pdf" "$url"
-            ./build-tests/match_eval models/meaning.gguf "specs/$name.pdf" "$notes" --misses
+            ./build-tests/match_eval models/meaning.gguf "specs/$name.pdf" "$notes" --misses --leaves
             echo "::endgroup::"
+            # the same notes again, with the other set of notes for the same spec already filed (as if each had been
+            # kept where it was): how much what you have filed helps
+            other="tests/match/${name%-messy}.txt"; [ "$other" = "$notes" ] && other="tests/match/$name-messy.txt"
+            if [ -f "$other" ]; then
+              echo "::group::$name, with $(basename "$other") filed"
+              ./build-tests/match_eval models/meaning.gguf "specs/$name.pdf" "$notes" --misses --examples "$other"
+              echo "::endgroup::"
+            fi
           done
