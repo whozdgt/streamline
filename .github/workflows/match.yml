@@ -11,7 +11,8 @@ on:
 jobs:
   eval:
     runs-on: ubuntu-latest
-    # The meaning model the app uses, and bigger ones it could use instead: each is tried on the same notes.
+    # The meaning model the app uses, and a bigger one it could use instead, tried on the same notes. (Arctic Embed M
+    # was tried too, on 24 Nov 2026: it left most of the messy notes out.)
     # They all read with BGE's query instruction ("Represent this sentence for searching relevant passages: ").
     strategy:
       fail-fast: false
@@ -23,11 +24,6 @@ jobs:
             urls: >-
               https://huggingface.co/CompendiumLabs/bge-base-en-v1.5-gguf/resolve/main/bge-base-en-v1.5-q8_0.gguf
               https://huggingface.co/ggml-org/bge-base-en-v1.5-Q8_0-GGUF/resolve/main/bge-base-en-v1.5-q8_0.gguf
-          - model: arctic-embed-m-v1.5 (110 MB)
-            urls: >-
-              https://huggingface.co/ChristianAzinn/snowflake-arctic-embed-m-v1.5-gguf/resolve/main/snowflake-arctic-embed-m-v1.5--Q8_0.GGUF
-              https://huggingface.co/Casual-Autopsy/snowflake-arctic-embed-m-v1.5-Q8_0-GGUF/resolve/main/snowflake-arctic-embed-m-v1.5-q8_0.gguf
-              https://huggingface.co/mradermacher/snowflake-arctic-embed-m-v1.5-GGUF/resolve/main/snowflake-arctic-embed-m-v1.5.Q8_0.gguf
     name: ${{ matrix.model }}
     steps:
       - uses: actions/checkout@v4

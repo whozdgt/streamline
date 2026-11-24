@@ -271,7 +271,7 @@ struct Tuning {
 };
 static Tuning tuningFor(size_t dims)
 {
-    if (dims >= 768) return {3.0, 4.6, 0.8, 0.57, 0.57, 3.0};   // BGE base
+    if (dims >= 768) return {3.2, 4.6, 0.8, 0.57, 0.57, 3.2};   // BGE base (tried, not used: no better than small)
     return {3.6, 4.6, 0.8, 0.63, 0.70, 3.3};                     // BGE small
 }
 
