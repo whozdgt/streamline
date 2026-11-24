@@ -461,6 +461,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     //    document that isn't content ("4 Details of the assessment"). Several content parts in a row count as one.
     size_t from = 0, to = all.size();
     bool foundSection = false;
+    bool partHeadings = false;      // OCR: the content's lettered parts are headings ("2c. Content of Component 1: …")
     std::vector<size_t> sectionStarts;      // further content sections (AS, then A-level), by line
     {
         int section = -1;
@@ -486,7 +487,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             // When content parts follow one another, the first is an overview of the next ("2b. Content of GCSE (9–1)
             // in Biology A", a table of its topics): the content starts at the second.
             static const std::regex part("^([0-9])([a-z])\\.?\\s+([A-Z].+)$");
-            struct Part { size_t line; std::string label; bool content; bool end; };
+            struct Part { size_t line; std::string label; bool content; bool qualification; };
             std::vector<Part> parts;
             for (size_t i = 0; i < all.size(); ++i) {
                 std::smatch m;
@@ -496,22 +497,49 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (i + 1 < all.size() && std::regex_match(all[i + 1], next, part)) continue;
                 const std::string here = m[1].str() + m[2].str();
                 if (!parts.empty() && parts.back().label == here) continue;      // the same part again ("2c. Topic B7…")
-                const std::string title = cleanTitle(m[3].str());
-                parts.push_back({i, here, contentTitle(title), adminTitle(title) && !contentTitle(title)});
+                const std::string title = lower(cleanTitle(m[3].str()));
+                const bool qualification = title.find("gcse") != std::string::npos || title.find("a level") != std::string::npos ||
+                                           title.find("as level") != std::string::npos;
+                parts.push_back({i, here, contentTitle(title), qualification});
             }
             if (std::getenv("SPECREAD_DEBUG"))
                 for (const Part &pt : parts) std::fprintf(stderr, "part %s%s: %s\n", pt.label.c_str(), pt.content ? " (content)" : "", shape(all[pt.line]).c_str());
-            // The content runs on through the section's next parts (maths: "2c. Pure mathematics", "2d. Statistics")
-            // up to one about something else ("2g. Prior knowledge, learning and progression") or the next section.
-            for (size_t k = 0; k < parts.size(); ++k) {
+            // A content part that names the qualification ("2b. Content of GCSE (9–1) in Biology A") is an overview when
+            // more content parts follow in its section; the content is the parts after it, up to the last content part
+            // of the section ("2c. Content of Component 1 …" to "2e. Content of Component 3 …", or maths' "2f. Detailed
+            // Content of A Level Mathematics A").
+            for (size_t k = 0; k < parts.size() && section < 0; ++k) {
                 if (!parts[k].content) continue;
-                const size_t start = k + 1 < parts.size() && parts[k + 1].content && parts[k + 1].label[0] == parts[k].label[0] ? k + 1 : k;
-                size_t end = start + 1;
-                while (end < parts.size() && parts[end].label[0] == parts[start].label[0] && !parts[end].end) ++end;
+                size_t last = k;
+                for (size_t j = k + 1; j < parts.size() && parts[j].label[0] == parts[k].label[0]; ++j)
+                    if (parts[j].content) last = j;
+                size_t start = k;
+                while (start < last && (!parts[start].content || parts[start].qualification)) ++start;
                 section = 0;
-                from = parts[start].line + 1;
-                to = end < parts.size() ? parts[end].line : all.size();
-                break;
+                // several content parts ("Component 1: Microeconomics", "Component 2: Macroeconomics"): each is a
+                // heading, since their topics are numbered afresh
+                partHeadings = start < last;
+                from = parts[start].line + (partHeadings ? 0 : 1);
+                to = last + 1 < parts.size() ? parts[last + 1].line : all.size();
+            }
+        }
+        if (section < 0) {
+            // A content heading without a number ("Subject content knowledge, skills and understanding", Edexcel's
+            // GCSE maths), up to the next part about the assessment or administration
+            for (size_t i = 0; i < all.size() && section < 0; ++i) {
+                const std::string t = lower(all[i]);
+                if (t.size() > 60 || t.rfind("subject content", 0) != 0 || tocLine(all[i])) continue;
+                section = 0;
+                from = i + 1;
+                to = all.size();
+                for (size_t j = i + 1; j < all.size(); ++j) {
+                    const std::string u = lower(all[j]);
+                    Num n;
+                    const bool top = parseNum(all[j], n) && n.parts.size() == 1 && n.prefix.empty();
+                    if (u.size() <= 50 && std::isupper(uint8_t(all[j][top ? all[j].find(' ') + 1 : 0])) &&
+                        (u.rfind("assessment", 0) == 0 || u.rfind("administration", 0) == 0 || u.rfind("appendi", 0) == 0 ||
+                         (top && adminTitle(cleanTitle(n.title)) && !contentTitle(cleanTitle(n.title))))) { to = j; break; }
+                }
             }
         }
         if (section < 0) { from = 0; to = all.size(); }
@@ -637,6 +665,19 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         std::string periodId;
 
         if ((parseNum(l, n) && columnHeading(n.title)) || (parseKey(l, k) && columnHeading(k.title))) continue;
+        if (partHeadings && l.size() > 4 && std::isdigit(uint8_t(l[0])) && std::islower(uint8_t(l[1]))) {
+            static const std::regex part("^[0-9][a-z]\\.?\\s+(?:Content of\\s+)?([A-Z].*?)(?:\\s*\\([A-Z][0-9]{3}[^)]*\\))?$");
+            std::smatch pm;
+            if (std::regex_match(l, pm, part) && contentTitle(l)) {
+                const int made = open(14, "", cleanTitle(pm[1].str()), false);
+                justOpened = made;
+                justMerged = merged;
+                justKeyword = true;
+                rawEndsComma = false;
+                lastTop = 0;
+                continue;
+            }
+        }
         if (parsePeriod(l, periodId, title)) {
             made = open(numbered ? 72 : 22, periodId, cleanTitle(title), false);
             keywordLine = true;
@@ -751,6 +792,22 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 lastLetter = letter;
             } else body(l);
         } else {
+            // a subtopic named above its coded statements: "Structure and calculation", then "N1 order positive and
+            // negative integers…" (the statements' codes, N1, A1, G1, aren't numbers of the document's own)
+            if (i + 1 < lines.size() && !stack.empty() && l.size() >= 3 && l.size() <= 60 && std::isupper(uint8_t(l[0])) &&
+                l.back() != '.' && l.back() != ':' && !statementLike(l) &&
+                std::none_of(l.begin(), l.end(), [](char c) { return std::isdigit(uint8_t(c)); }) &&
+                lines[i + 1].size() > 4 && std::isupper(uint8_t(lines[i + 1][0]))) {
+                static const std::regex coded("^[A-Z]{1,2}[0-9]{1,2}[a-z]?\\s+[a-z].*");
+                if (std::regex_match(lines[i + 1], coded)) {
+                    made = open(33, "", cleanTitle(l), false);
+                    justOpened = made;
+                    justMerged = merged;
+                    justKeyword = false;
+                    rawEndsComma = false;
+                    continue;
+                }
+            }
             // a heading's title that wrapped onto this line: "1.1 The microscope in cell" + "studies",
             // "2 The last years of Edward the" + "Confessor", "2 Knowledge," + "selection and use of sources"
             if (justOpened >= 0 && !stack.empty() && stack.back().point == justOpened && l.size() < 40 && !justMerged) {
