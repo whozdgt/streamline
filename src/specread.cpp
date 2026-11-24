@@ -528,7 +528,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             // GCSE maths), up to the next part about the assessment or administration
             for (size_t i = 0; i < all.size() && section < 0; ++i) {
                 const std::string t = lower(all[i]);
-                if (t.size() > 60 || t.rfind("subject content", 0) != 0 || tocLine(all[i])) continue;
+                // ("Subject content and assessment information" is content mixed with assessment, paper by paper:
+                // the whole document is read then, as before)
+                if (t.size() > 60 || t.rfind("subject content", 0) != 0 || t.find("assessment") != std::string::npos || tocLine(all[i])) continue;
                 section = 0;
                 from = i + 1;
                 to = all.size();
@@ -537,7 +539,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     Num n;
                     const bool top = parseNum(all[j], n) && n.parts.size() == 1 && n.prefix.empty();
                     if (u.size() <= 50 && std::isupper(uint8_t(all[j][top ? all[j].find(' ') + 1 : 0])) &&
-                        (u.rfind("assessment", 0) == 0 || u.rfind("administration", 0) == 0 || u.rfind("appendi", 0) == 0 ||
+                        (u.rfind("assessment information", 0) == 0 || u.rfind("administration", 0) == 0 || u.rfind("appendi", 0) == 0 ||
                          (top && adminTitle(cleanTitle(n.title)) && !contentTitle(cleanTitle(n.title))))) { to = j; break; }
                 }
             }

@@ -19,3 +19,5 @@ ocr-alevel-maths-h240 | https://www.ocr.org.uk/Images/308723-specification-accre
 ocr-alevel-economics-h460 | https://www.ocr.org.uk/Images/536455-specification-accredited-a-level-gce-economics-h460.pdf
 aqa-gcse-maths-8300 | https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8300-SP-2015.PDF
 cie-igcse-history-0470 | https://www.cambridgeinternational.org/Images/721327-2027-2028-syllabus.pdf
+ocr-gcse-computer-science-j277 | https://www.ocr.org.uk/Images/558027-specification-gcse-computer-science-j277.pdf
+edexcel-alevel-chemistry-9ch0 | https://qualifications.pearson.com/content/dam/pdf/A%20Level/Chemistry/2015/Specification%20and%20sample%20assessments/a-level-chemistry-2015-specification.pdf
