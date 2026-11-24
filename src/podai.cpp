@@ -3,6 +3,7 @@
 #include "llama.h"
 
 #include <algorithm>
+#include <cctype>
 #include <cmath>
 #include <cstdio>
 #include <cstdint>
@@ -259,6 +260,20 @@ double dotv(const std::vector<float> &a, const std::vector<float> &b)
 // Spec matching: how far (in standard deviations of the spec's points) a document's best point must stand out to be
 // matched, and to be sure (and well clear of the next best). Set on tests/match (CI's "match" run).
 const double kStandoutMatch = 3.6, kStandoutSure = 4.6, kMarginSure = 0.8;
+// How close (cosine) a document's best piece has to come to the point's own text at all: notes on other subjects
+// can still stand out a little for some point, but never come this close (tests/match: right notes 0.66 and up,
+// others 0.66 at most, mostly far below). A document that comes very close may stand out a little less.
+const double kFitFloor = 0.63, kFitClose = 0.70, kStandoutClose = 3.3;
+
+// Points that are not content of their own, such as AQA's "Key ideas" (ideas that run through the whole subject):
+// anything at all can look a little like them, so nothing is filed there.
+static bool fileable(const podsort::SpecPoint &p)
+{
+    std::string t;
+    for (char c : p.title) t += char(std::tolower(static_cast<unsigned char>(c)));
+    while (!t.empty() && (t.back() == ' ' || t.back() == '.')) t.pop_back();
+    return t != "key ideas" && t != "key concepts";
+}
 struct Spread { double median = 0, high = 1; double at(double reach) const { return median + (high - median) * reach; } };
 Spread spread(std::vector<double> all)
 {
@@ -444,9 +459,14 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
                                  const std::vector<podsort::SpecPoint> &points, const SpecIndex &spec,
                                  const std::vector<std::vector<double>> &words)
 {
-    const auto leaves = podsort::leafPoints(points);
+    const auto allLeaves = podsort::leafPoints(points);
     std::vector<Placement> out(docPieces.size());
-    if (leaves.empty() || spec.title.size() != points.size()) return out;
+    if (allLeaves.empty() || spec.title.size() != points.size()) return out;
+    std::vector<int> leaves;      // the leaves documents can be filed under
+    std::vector<size_t> column;   // each one's column in words[d], which covers every leaf
+    for (size_t k = 0; k < allLeaves.size(); ++k)
+        if (fileable(points[size_t(allLeaves[k])])) { leaves.push_back(allLeaves[k]); column.push_back(k); }
+    if (leaves.empty()) return out;
     const size_t nl = leaves.size();
     for (size_t d = 0; d < docPieces.size(); ++d) {
         const auto &P = docPieces[d];
@@ -475,7 +495,11 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
         add(byPieces, 1.0);
         add(byWhole, 0.5);
         add(byTitle, 0.5);
-        if (d < words.size() && words[d].size() == nl) add(words[d], 0.6);
+        if (d < words.size() && words[d].size() == allLeaves.size()) {
+            std::vector<double> w(nl);
+            for (size_t k = 0; k < nl; ++k) w[k] = words[d][column[k]];
+            add(w, 0.6);
+        }
         size_t b1 = 0, b2 = nl > 1 ? 1 : 0;
         for (size_t k = 0; k < nl; ++k) {
             if (total[k] > total[b1]) { b2 = b1; b1 = k; }
@@ -486,7 +510,9 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
         pl.standout = z[b1];
         pl.best = leaves[b1];
         pl.fit = byPieces[b1];
-        pl.point = pl.standout >= kStandoutMatch ? leaves[b1] : -1;
+        const bool fits = pl.fit >= kFitFloor &&
+                          (pl.standout >= kStandoutMatch || (pl.standout >= kStandoutClose && pl.fit >= kFitClose));
+        pl.point = fits ? leaves[b1] : -1;
         pl.second = nl > 1 ? leaves[b2] : -1;
         pl.sure = pl.point >= 0 && pl.standout >= kStandoutSure && z[b1] - z[b2] >= kMarginSure;
     }
