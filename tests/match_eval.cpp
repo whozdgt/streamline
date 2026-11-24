@@ -122,7 +122,10 @@ int main(int argc, char **argv)
     // the notes, and the point each is about
     const auto notes = readNotes(argv[3]);
     std::vector<int> label;
+    std::vector<bool> offTopic;      // "-": in no point of the spec (a shopping list, another subject's notes)
     for (const auto &n : notes) {
+        offTopic.push_back(n.label == "-");
+        if (n.label == "-") { label.push_back(-1); continue; }
         const auto it = byNumber.find(n.label);
         if (it == byNumber.end()) std::printf("  no point %s in the spec (note \"%s\")\n", n.label.c_str(), n.title.c_str());
         label.push_back(it == byNumber.end() ? -1 : it->second);
@@ -251,11 +254,25 @@ int main(int argc, char **argv)
         return false;
     };
     auto top = [&](int p) { while (p >= 0 && points[size_t(p)].parent >= 0) p = points[size_t(p)].parent; return p; };
-    std::printf("\n%-42s %8s %8s %8s\n", "way of matching", "point", "topic", "section");
+    // how much a document's best point stands out from the rest (in standard deviations): low for a document that
+    // belongs to no point
+    auto standout = [&](const std::vector<double> &v, size_t best) {
+        double mean = 0, sd = 0;
+        for (double x : v) mean += x;
+        mean /= double(v.size());
+        for (double x : v) sd += (x - mean) * (x - mean);
+        sd = std::sqrt(sd / double(v.size()));
+        return sd > 0 ? (v[best] - mean) / sd : 0.0;
+    };
+    std::printf("\n%-42s %8s %8s %8s   %s\n", "way of matching", "point", "topic", "section", "stand-out: right notes (10th pct) / others (max)");
     for (const auto &w : ways) {
         int exact = 0, topic = 0, section = 0, counted = 0;
         std::vector<std::string> misses;
+        std::vector<double> rightOut, offOut;
         for (size_t d = 0; d < nd; ++d) {
+            size_t bestK = 0;
+            for (size_t k = 1; k < nl; ++k) if (w.g[d][k] > w.g[d][bestK]) bestK = k;
+            if (offTopic[d]) { offOut.push_back(standout(w.g[d], bestK)); continue; }
             if (label[d] < 0) continue;
             ++counted;
             size_t best = 0;
@@ -263,6 +280,7 @@ int main(int argc, char **argv)
             const int pred = leaves[best];
             const int parent = points[size_t(label[d])].parent;
             const bool e = under_(pred, label[d]);
+            if (e) rightOut.push_back(standout(w.g[d], best));
             exact += e;
             topic += e || (parent >= 0 && under_(pred, parent));
             section += top(pred) == top(label[d]);
@@ -270,7 +288,10 @@ int main(int argc, char **argv)
                                      points[size_t(pred)].title.substr(0, 50));
         }
         auto pc = [&](int x) { return counted ? 100.0 * x / counted : 0.0; };
-        std::printf("%-42s %7.0f%% %7.0f%% %7.0f%%\n", w.name.c_str(), pc(exact), pc(topic), pc(section));
+        std::sort(rightOut.begin(), rightOut.end());
+        const double low = rightOut.empty() ? 0 : rightOut[rightOut.size() / 10];
+        const double offMax = offOut.empty() ? 0 : *std::max_element(offOut.begin(), offOut.end());
+        std::printf("%-42s %7.0f%% %7.0f%% %7.0f%%   %.2f / %.2f\n", w.name.c_str(), pc(exact), pc(topic), pc(section), low, offMax);
         if (showMisses) for (const auto &s : misses) std::printf("%s\n", s.c_str());
     }
     std::printf("\n(%.1fs)\n", secs());

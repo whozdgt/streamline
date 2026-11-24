@@ -64,3 +64,11 @@ The half-life of a radioactive isotope is the time taken for half the nuclei in 
 The Solar System has one star, the Sun, eight planets, minor planets, moons and comets. The four inner planets are rocky and small; the four outer planets are gaseous and large. Planets formed from an accretion disc of dust and gas. Orbital speed v = 2 pi r / T. The strength of the Sun's gravitational field decreases further from the Sun.
 === 6.2.3 | big bang
 The Universe is expanding. Redshift: light from distant galaxies has a longer wavelength than expected, and the further away a galaxy is the faster it is moving away. Cosmic microwave background radiation is evidence for the Big Bang. Hubble constant H0 = v / d; the age of the Universe is about 1/H0.
+=== - | shopping list
+Milk, eggs, bread, stamps, phone charger. Pick up dry cleaning on Saturday. Birthday card for Gran.
+=== - | photosynthesis notes
+carbon dioxide + water -> glucose + oxygen, in chloroplasts using light energy absorbed by chlorophyll. Limiting factors: light intensity, carbon dioxide concentration and temperature.
+=== - | cold war essay plan
+Why did the Cold War begin? Yalta and Potsdam conferences, the Truman Doctrine and Marshall Plan, the Berlin Blockade and airlift in 1948-49, formation of NATO. Point, evidence, explain for each paragraph.
+=== - | french vocab
+le weekend, faire du shopping, aller au cinéma, mes passe-temps, je joue au foot, j'aime lire, il fait beau.
