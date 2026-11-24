@@ -168,10 +168,14 @@ bool parseLetter(const std::string &line, char &letter, std::string &title)
     return !title.empty();
 }
 
-// AQA History options: "AA America, 1840–1895: Expansion and consolidation"
+// AQA History options: "AA America, 1840–1895: Expansion and consolidation" (GCSE), "1C The Tudors: England,
+// 1485–1603" (A-level)
 bool parseCode2(const std::string &line, std::string &code, std::string &title)
 {
-    if (line.size() < 8 || line[0] < 'A' || line[0] > 'E' || line[1] < 'A' || line[1] > 'J' || line[2] != ' ') return false;
+    if (line.size() < 8 || line[2] != ' ') return false;
+    const bool gcse = line[0] >= 'A' && line[0] <= 'E' && line[1] >= 'A' && line[1] <= 'J';
+    const bool alevel = line[0] >= '1' && line[0] <= '3' && line[1] >= 'A' && line[1] <= 'T';
+    if (!gcse && !alevel) return false;
     if (!std::isupper(uint8_t(line[3]))) return false;
     code = line.substr(0, 2);
     title = trim(line.substr(3));
