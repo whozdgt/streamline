@@ -58,8 +58,16 @@ bool statementLike(const std::string &title)
 struct Num {
     std::string prefix, suffix;      // "C1.1" (Cambridge Core), "1.13B" (Edexcel: biology only)
     std::vector<int> parts;
+    std::vector<int> widths;         // digits written: OCR's maths numbers its topics "1.01"
     std::string title;
 };
+// a part of a number as the document writes it ("01"), so that "1.01 Proof" stays 1.01
+std::string partText(int v, int width)
+{
+    std::string t = std::to_string(v);
+    while (int(t.size()) < width) t.insert(t.begin(), '0');
+    return t;
+}
 bool parseNum(const std::string &line, Num &n)
 {
     size_t i = 0;
@@ -67,11 +75,13 @@ bool parseNum(const std::string &line, Num &n)
     if (i < line.size() && !std::isdigit(uint8_t(line[i]))) return false;
     n.prefix = line.substr(0, i);
     n.parts.clear();
+    n.widths.clear();
     for (;;) {
         const size_t d = i;
         while (i < line.size() && std::isdigit(uint8_t(line[i]))) ++i;
         if (i == d || i - d > 2) return false;
         n.parts.push_back(std::atoi(line.substr(d, i - d).c_str()));
+        n.widths.push_back(line[d] == '0' ? int(i - d) : 1);
         if (i + 1 < line.size() && line[i] == '.' && std::isdigit(uint8_t(line[i + 1])) && n.parts.size() < 5) { ++i; continue; }
         break;
     }
@@ -259,7 +269,8 @@ bool adminTitle(const std::string &title)
                                   "glossary", "command words", "mathematical requirements", "grade descriptions",
                                   "entries", "resits", "re-sits", "overlaps", "malpractice", "codes", "key features",
                                   "qualification at a glance", "specification at a glance", "syllabus overview",
-                                  "introduction", "why choose", "about this", "other information"};
+                                  "introduction", "why choose", "about this", "other information", "prior knowledge",
+                                  "progression"};
     const std::string t = lower(title);
     for (const char *w : words) if (t.find(w) != std::string::npos) return true;
     return false;
@@ -474,8 +485,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             // OCR: the content is a lettered part of a section ("2c. Content of topics B1 to B6") up to the next part.
             // When content parts follow one another, the first is an overview of the next ("2b. Content of GCSE (9–1)
             // in Biology A", a table of its topics): the content starts at the second.
-            static const std::regex part("^([0-9])([a-z])\\.?\\s+(.+)$");
-            struct Part { size_t line; std::string label; bool content; };
+            static const std::regex part("^([0-9])([a-z])\\.?\\s+([A-Z].+)$");
+            struct Part { size_t line; std::string label; bool content; bool end; };
             std::vector<Part> parts;
             for (size_t i = 0; i < all.size(); ++i) {
                 std::smatch m;
@@ -485,17 +496,21 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (i + 1 < all.size() && std::regex_match(all[i + 1], next, part)) continue;
                 const std::string here = m[1].str() + m[2].str();
                 if (!parts.empty() && parts.back().label == here) continue;      // the same part again ("2c. Topic B7…")
-                parts.push_back({i, here, contentTitle(m[3].str())});
+                const std::string title = cleanTitle(m[3].str());
+                parts.push_back({i, here, contentTitle(title), adminTitle(title) && !contentTitle(title)});
             }
             if (std::getenv("SPECREAD_DEBUG"))
                 for (const Part &pt : parts) std::fprintf(stderr, "part %s%s: %s\n", pt.label.c_str(), pt.content ? " (content)" : "", shape(all[pt.line]).c_str());
+            // The content runs on through the section's next parts (maths: "2c. Pure mathematics", "2d. Statistics")
+            // up to one about something else ("2g. Prior knowledge, learning and progression") or the next section.
             for (size_t k = 0; k < parts.size(); ++k) {
                 if (!parts[k].content) continue;
-                size_t last = k;
-                while (last + 1 < parts.size() && parts[last + 1].content) ++last;
+                const size_t start = k + 1 < parts.size() && parts[k + 1].content && parts[k + 1].label[0] == parts[k].label[0] ? k + 1 : k;
+                size_t end = start + 1;
+                while (end < parts.size() && parts[end].label[0] == parts[start].label[0] && !parts[end].end) ++end;
                 section = 0;
-                from = (last > k ? parts[k + 1].line : parts[k].line) + 1;
-                to = last + 1 < parts.size() ? parts[last + 1].line : all.size();
+                from = parts[start].line + 1;
+                to = end < parts.size() ? parts[end].line : all.size();
                 break;
             }
         }
@@ -656,7 +671,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             std::string number;
             const bool tier = board == "Cambridge" && (n.prefix == "C" || n.prefix == "E");      // Core and Extended: one point
             if (!tier) number = n.prefix;
-            for (size_t p = 0; p < n.parts.size(); ++p) number += (p ? "." : "") + std::to_string(n.parts[p]);
+            for (size_t p = 0; p < n.parts.size(); ++p) number += (p ? "." : "") + partText(n.parts[p], n.widths[p]);
             const std::string plain = number;      // without the letter after it, for following on from the point before
             number += n.suffix;
             const bool statement = statementLike(n.title);
@@ -712,7 +727,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 }
                 // a subtopic ("4.1.1 Cell structure"), or a statement ("2.4 know the similarities…")
                 std::string parentNum = plain.substr(0, plain.rfind('.'));
-                std::string prevNum = parentNum + "." + std::to_string(n.parts.back() - 1);
+                std::string prevNum = parentNum + "." + partText(n.parts.back() - 1, n.widths.back());
                 const bool fits = !statementLike(n.title) || numbersSeen.count(prevNum) ||
                                   (n.parts.back() <= 1 && (numbersSeen.count(parentNum) || n.parts.size() == 2));
                 numbersSeen.insert(plain);

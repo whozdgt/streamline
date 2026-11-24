@@ -90,6 +90,7 @@ private:
         QString specSource;                            // where it was downloaded from ("" for a file or pasted text)
         mutable int specPoints = -1;                   // how many points it has (worked out when first asked)
         bool specBusy = false;                         // reading a spec (not saved)
+        bool sortAgain = false;                        // a spec arrived while sorting: sort again after (not saved)
         int detail = 1;
         qint64 created = 0, sorted = 0;
         QVector<Topic> topics;

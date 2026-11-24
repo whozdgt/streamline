@@ -489,7 +489,8 @@ void Pods::loadSpecData(const QString &id, const QByteArray &data, const QString
             r.remove(QLatin1String("text"));
             r.insert(QStringLiteral("name"), p->specName);
             changed();
-            run(id, QStringLiteral("Matching your documents to the spec…"), p->detail, 0);
+            if (p->busy) p->sortAgain = true;      // still sorting: match once that's done
+            else run(id, QStringLiteral("Matching your documents to the spec…"), p->detail, 0);
         }
         emit specLoaded(id, r);
     });
@@ -747,6 +748,10 @@ void Pods::finish(Pod *p, const QString &error)
     p->status.clear();
     p->error = error;
     changed();
+    if (p->sortAgain) {      // a spec was chosen while this sort ran: match to it now
+        p->sortAgain = false;
+        run(p->id, QStringLiteral("Matching your documents to the spec…"), p->detail, 0);
+    }
 }
 
 Pods::Topic &Pods::otherTopic(Pod &p)
