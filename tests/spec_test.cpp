@@ -47,6 +47,19 @@ int main(int argc, char **argv)
             }
         return 0;
     }
+    if (argc > 2 && std::strcmp(argv[2], "--outline") == 0) {     // the heading-like lines, numbered, cut short: the shape
+        std::istringstream in(text);                                  // of a document, without its text
+        int i = 0;
+        for (std::string line; std::getline(in, line); ++i) {
+            const std::string l = line.substr(0, 60);
+            const bool head = (!l.empty() && std::isdigit(uint8_t(l[0]))) || l.rfind("Topic", 0) == 0 || l.rfind("Paper", 0) == 0 ||
+                              l.rfind("Component", 0) == 0 || l.find("option") != std::string::npos || l.find("Option") != std::string::npos ||
+                              l.find("AS Level") != std::string::npos || l.find("A Level") != std::string::npos ||
+                              l.rfind("Key question", 0) == 0 || l.rfind("Content", 0) == 0;
+            if (head) std::printf("%6d  %s\n", i, l.c_str());
+        }
+        return 0;
+    }
     const auto info = specread::identify(text);
     const auto pts = podsort::parseSpec(text);
     size_t leaves = podsort::leafPoints(pts).size();

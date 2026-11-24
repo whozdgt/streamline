@@ -1,0 +1,22 @@
+name: spec-outline
+# The shape of one specification as Streamline's PDF reader sees it: its heading-like lines (numbers, "Topic",
+# "Paper", options), numbered, and the points the spec reader makes of it. For working out a board's layout when a
+# spec is read wrongly. The spec is the URL in .github/specs/outline.txt.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/specs/outline.txt', '.github/workflows/spec-outline.yml']
+jobs:
+  outline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read it
+        run: |
+          g++ -std=c++17 -O2 -Isrc src/pdftext.cpp src/pdfcrypto.cpp src/specread.cpp src/podsort.cpp tests/spec_test.cpp -o spec_test
+          url="$(grep -v '^#' .github/specs/outline.txt | head -1)"
+          curl -fsSL -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --retry 2 -o spec.pdf "$url"
+          ./spec_test spec.pdf --outline
+          echo "----- points -----"
+          ./spec_test spec.pdf
