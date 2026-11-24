@@ -153,6 +153,7 @@ bool parseKey(const std::string &line, Key &k)
         if (id.size() > 1 && std::all_of(id.begin(), id.end(), [](char c) { return std::isalpha(uint8_t(c)); }) && !spelled.count(lower(id)))
             return false;      // "Section Assessment…" is a sentence, not a heading
         // separator, then the title
+        const bool fullStop = i < line.size() && line[i] == '.' && i + 1 < line.size() && line[i + 1] == ' ';
         while (i < line.size() && (line[i] == ' ' || line[i] == ':' || line[i] == '.' || line[i] == '-')) ++i;
         if (line.compare(i, 3, "\xE2\x80\x93") == 0 || line.compare(i, 3, "\xE2\x80\x94") == 0) i += 3;      // – —
         while (i < line.size() && line[i] == ' ') ++i;
@@ -161,6 +162,8 @@ bool parseKey(const std::string &line, Key &k)
         k.id = id;
         k.title = trim(line.substr(i));
         k.rank = rank;
+        // "Paper 3. Teaching approaches to content must reflect this.": a sentence that starts with a paper's name
+        if (fullStop && !k.title.empty() && k.title.back() == '.' && k.title.size() > 25) return false;
         // "Section 6 7). Use of…", "Paper 3 Statistics and Mechanics. Students are required…": a sentence, not a heading
         if (!k.title.empty() && (!std::isalpha(uint8_t(k.title[0])) || k.title.size() > 75)) return false;
         if (k.title.find(". ") != std::string::npos) return false;
@@ -644,12 +647,28 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             // followed by their points) up to "Assessment" or the appendices
             for (size_t i = 0; i < all.size() && section < 0; ++i) {
                 Key k;
-                if (!parseKey(all[i], k) || tocLine(all[i]) || k.title.empty() || k.id.empty() || !std::isdigit(uint8_t(k.id[0]))) continue;
+                Num top;
+                bool follows = false;
+                if (!parseKey(all[i], k)) {
+                    // GCSE maths: "1. Number", then its coded statements ("N1 order positive and negative integers…")
+                    if (!parseNum(all[i], top) || top.parts.size() != 1 || top.parts[0] != 1 || !top.prefix.empty() || tocLine(all[i]) ||
+                        statementLike(top.title) || adminTitle(cleanTitle(top.title)) || contentTitle(cleanTitle(top.title)))
+                        continue;
+                    bool coded = false;
+                    for (size_t j = i + 1; j < all.size() && j < i + 8 && !coded; ++j) {
+                        Num n;
+                        coded = parseNum(all[j], n) && !n.prefix.empty() && n.parts.size() == 1 && n.parts[0] == 1;
+                    }
+                    if (!coded) continue;
+                    follows = true;
+                    k.keyword = "topic";
+                    k.id = "1";
+                    k.title = top.title;
+                } else if (tocLine(all[i]) || k.title.empty() || k.id.empty()) continue;
                 const std::string kw = lower(k.keyword);
                 if (kw != "theme" && kw != "topic" && kw != "unit" && kw != "key topic") continue;
-                const int id = std::atoi(k.id.c_str());
-                bool follows = false;
-                for (size_t j = i + 1; j < all.size() && j < i + 70; ++j) {
+                const int id = std::isdigit(uint8_t(k.id[0])) ? std::atoi(k.id.c_str()) : 1;      // "Unit P1": its points start at 1
+                for (size_t j = i + 1; j < all.size() && j < i + 70 && !follows; ++j) {
                     Num n;
                     Key other;
                     if (parseKey(all[j], other) && lower(other.keyword) == kw) break;      // another theme first: an overview
@@ -1019,7 +1038,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (std::isalpha(c)) ++run;
                 else { if (run >= 3) ++words; run = 0; }
             }
-            if ((t.size() >= 3 && words == 0) || pts[i].number == "0") { gone[i] = true; continue; }
+            if ((!t.empty() && words == 0) || pts[i].number == "0") { gone[i] = true; continue; }
             if (pts[i].number.empty() || t.empty()) continue;
             const auto key = std::make_pair(pts[i].number, lower(t));
             auto it = first.find(key);
