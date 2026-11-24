@@ -11,6 +11,24 @@ on:
 jobs:
   eval:
     runs-on: ubuntu-latest
+    # The meaning model the app uses, and bigger ones it could use instead: each is tried on the same notes.
+    # They all read with BGE's query instruction ("Represent this sentence for searching relevant passages: ").
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - model: bge-small (the app, 34 MB)
+            urls: https://github.com/whozdgt/streamline/releases/download/ai-models/meaning-bge-small-en-v1.5-q8_0.gguf
+          - model: bge-base (110 MB)
+            urls: >-
+              https://huggingface.co/CompendiumLabs/bge-base-en-v1.5-gguf/resolve/main/bge-base-en-v1.5-q8_0.gguf
+              https://huggingface.co/ggml-org/bge-base-en-v1.5-Q8_0-GGUF/resolve/main/bge-base-en-v1.5-q8_0.gguf
+          - model: arctic-embed-m-v1.5 (110 MB)
+            urls: >-
+              https://huggingface.co/ChristianAzinn/snowflake-arctic-embed-m-v1.5-gguf/resolve/main/snowflake-arctic-embed-m-v1.5--Q8_0.GGUF
+              https://huggingface.co/Casual-Autopsy/snowflake-arctic-embed-m-v1.5-Q8_0-GGUF/resolve/main/snowflake-arctic-embed-m-v1.5-q8_0.gguf
+              https://huggingface.co/mradermacher/snowflake-arctic-embed-m-v1.5-GGUF/resolve/main/snowflake-arctic-embed-m-v1.5.Q8_0.gguf
+    name: ${{ matrix.model }}
     steps:
       - uses: actions/checkout@v4
       # llama.cpp takes a few minutes to build: keep the build between runs
@@ -31,7 +49,13 @@ jobs:
       - name: The meaning model
         run: |
           mkdir -p models
-          curl -fsSL --retry 3 -o models/meaning.gguf "https://github.com/$GITHUB_REPOSITORY/releases/download/ai-models/meaning-bge-small-en-v1.5-q8_0.gguf"
+          for u in ${{ matrix.urls }}; do
+            echo "trying $u"
+            curl -fsSL --retry 3 -o models/meaning.gguf "$u" && head -c 4 models/meaning.gguf | grep -q GGUF && break
+            rm -f models/meaning.gguf
+          done
+          test -f models/meaning.gguf || { echo "::error::couldn't download the model"; exit 1; }
+          ls -l models/meaning.gguf
       - name: Match the notes to their specs
         run: |
           UA="Streamline/0.7 (+https://github.com/whozdgt/streamline)"
