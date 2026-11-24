@@ -273,7 +273,10 @@ struct Tuning {
 static Tuning tuningFor(size_t dims)
 {
     if (dims >= 768) return {3.2, 4.6, 0.8, 0.57, 0.57, 3.2};   // BGE base (tried, not used: no better than small)
-    return {3.6, 4.6, 0.8, 0.63, 0.70, 3.3};                     // BGE small
+    // BGE small. fitClose: A Level History's key questions are alike ("How effectively did … govern …?"), so a note
+    // close to one stands out less; no note on another subject in tests/match came within 0.68 of any point (most
+    // under 0.6). A document filed this way is still marked to check unless it is sure.
+    return {3.6, 4.6, 0.8, 0.63, 0.68, 2.4};
 }
 
 // Points that are not content of their own, such as AQA's "Key ideas" (ideas that run through the whole subject):
