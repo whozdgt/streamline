@@ -1,0 +1,46 @@
+# spec: https://www.cambridgeinternational.org/Images/718292-2027-2029-syllabus.pdf
+# A Level History notes written for this test, the way a sixth former's folder looks: lesson notes, source work,
+# essay plans and file names like "09.01.03. History today". Each is under the AS key question it is about (and any
+# other it covers as much). The first six are like a real student's documents that a pod left out.
+=== 8.1 | Treaty of Trianon
+Treaty of Trianon, June 1920, between the Allies and Hungary. Hungary lost about two thirds of its territory and over three million Magyars ended up in Czechoslovakia, Romania and Yugoslavia. Army limited to 35,000, reparations. Seen in Hungary as a national humiliation; revisionism became the main aim of Hungarian foreign policy between the wars and pushed Hungary towards Italy and later Germany.
+=== 8.1 | treaty of Sevres
+Treaty of Sevres 1920 with the Ottoman Empire: Arab lands to Britain and France as mandates, Smyrna to Greece, the Straits internationalised, an independent Armenia and possible Kurdish state. Mustafa Kemal and the Turkish nationalists rejected it, war with Greece, Sevres never ratified and replaced by Lausanne 1923 - the only peace treaty to be successfully revised by force.
+=== 8.1,8.2 | Wilson Speech
+Fourteen Points speech to Congress, January 1918. Open diplomacy, freedom of the seas, removal of trade barriers, arms reductions, self-determination for the peoples of Austria-Hungary, an independent Poland with access to the sea, and point 14: a general association of nations to guarantee independence and territory of great and small states alike. Germany expected the armistice to be based on the points and felt betrayed at Versailles.
+=== 8.2 | articles of covenant
+Covenant of the League of Nations, part of every peace treaty. Article 10: members to respect and preserve each other's territory against aggression. Article 11: any war or threat of war is a matter for the whole League. Article 16: sanctions against an aggressor, economic first, then military if the Council recommends. Decisions of the Assembly and Council had to be unanimous. Mandates under article 22.
+=== 8.2,8.3 | The Conference of Ambassadors
+The Conference of Ambassadors (Britain, France, Italy, Japan) was set up to enforce the peace treaties and often acted instead of the League. Vilna 1920: Poland seized it from Lithuania and the Conference gave it to Poland in 1923. Corfu 1923: after the murder of General Tellini, Mussolini bombarded and occupied Corfu; the Conference made Greece pay compensation, which showed big powers could bypass the League.
+=== 9.1 | 09.01.03. History today - Mussolini and Hitler
+History Today article on Mussolini and Hitler. Fascist Italy and Nazi Germany: aggressive nationalism, rejection of Versailles, glorification of war. Relations cool at first over Austria (1934 Dollfuss murder, Italian troops to the Brenner) then the Abyssinian crisis pushes Mussolini towards Hitler: Rome-Berlin Axis 1936, Anti-Comintern Pact, Pact of Steel 1939. How did the rise of extremist regimes destabilise international relations?
+=== 1.1 | causes of the revolution 1789
+Long term: Enlightenment ideas, resentment of privilege of first and second estates, taxation falling on the third estate. Short term: bankruptcy after the American war, Calonne and Brienne fail, bad harvest of 1788 and bread prices, Estates General May 1789, Tennis Court Oath, storming of the Bastille. Immediate consequences: abolition of feudalism 4 August, Declaration of the Rights of Man.
+=== 1.4 | napoleon essay plan
+Q: Why was Napoleon able to come to power in 1799? Military success in Italy, weakness of the Directory, coup of Brumaire with Sieyes. Then why did he fall: Continental System, Peninsular War, the retreat from Moscow 1812, Battle of Leipzig 1813, abdication 1814.
+=== 2.4 | bismarck's wars
+Unification through three wars: Danish war 1864 (Schleswig-Holstein), Austro-Prussian war 1866 (Koniggratz, North German Confederation), Franco-Prussian war 1870-71 (Ems telegram, Sedan). German Empire proclaimed at Versailles January 1871. Role of Prussian economic strength, the Zollverein and Moltke's army vs Bismarck's diplomacy.
+=== 3.3 | october 1917 source q
+Sources on the Bolshevik seizure of power: weakness of the Provisional Government, July Days, Kornilov affair arms the Red Guards, Lenin's April Theses (peace, land, bread), Trotsky and the Military Revolutionary Committee storm the Winter Palace 25 October. How far do the sources agree it was a coup rather than a popular revolution?
+=== 4.2 | civil war outbreak
+Lincoln elected November 1860 on a Republican platform against extension of slavery; South Carolina secedes, Confederacy formed. Crittenden compromise fails. Fort Sumter fired on April 1861, Lincoln calls for 75,000 volunteers and the upper South secedes.
+=== 5.3 | progressives
+Progressive Movement: muckrakers (Ida Tarbell, Upton Sinclair The Jungle), urban middle class reformers, settlement houses. Aims: end corruption of political machines, regulate trusts, protect workers and consumers, direct democracy (initiative, referendum, recall), prohibition and women's suffrage.
+=== 6.3 | hundred days
+FDR's first New Deal 1933: Emergency Banking Act and fireside chats, Glass-Steagall, AAA for farmers, NIRA and the NRA, CCC, TVA. How successful: restored confidence in banks, unemployment fell but stayed high, AAA and NIRA struck down by the Supreme Court.
+=== 7.1 | scramble for africa
+Why imperialism in Africa from 1870: economic motives (raw materials, markets), strategic (Suez Canal, Egypt 1882), missionaries and Social Darwinism, explorers, new technology (quinine, maxim gun, steamships). Berlin West Africa Conference 1884-85 and effective occupation.
+=== 7.3 | japan
+Meiji restoration modernisation, Sino-Japanese war 1894-95, Triple Intervention, Anglo-Japanese alliance 1902, Russo-Japanese war 1904-05 and Tsushima, Treaty of Portsmouth. First European power defeated by an Asian state; Japan seen as a world power.
+=== 9.2 | abyssinia
+Abyssinian crisis 1935-36: Walwal incident, Italy invades October 1935, League votes sanctions but not on oil, Suez Canal left open, Hoare-Laval Pact leaked. Haile Selassie speaks to the League. Showed the League could not stop a major power and wrecked collective security.
+=== 9.3 | appeasement
+Why Chamberlain appeased Hitler: memories of WW1, public opinion, weak armed forces and rearmament not ready, Dominions unwilling to fight, sympathy with some German grievances about Versailles, fear of communism. Rhineland 1936, Anschluss 1938, Munich Agreement September 1938 and the Sudetenland.
+=== 9.4 | outbreak of war 1939
+Hitler takes the rest of Czechoslovakia March 1939, British guarantee to Poland, Nazi-Soviet Pact 23 August 1939 removes the threat of a war on two fronts, invasion of Poland 1 September, Britain and France declare war 3 September. Taylor vs intentionalists debate.
+=== - | physics electricity
+V = IR. In series the current is the same everywhere; in parallel the voltage is the same across each branch.
+=== - | uni personal statement draft
+I have always been interested in medicine since volunteering at a care home. Work experience at the local GP surgery taught me about communication.
+=== - | to do
+buy printer ink, return library books, email Mr Ahmed about extension
