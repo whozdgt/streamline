@@ -49,7 +49,7 @@ Window {
     property string promptPath: ""
     property string currentPlaylist: ""
     onSearchOpenChanged: { if (searchOpen) searchBar.open(); else library.search = "" }
-    property string view: "home"           // home | library | songs | albums | artists | playlists | profile | friends | user | friendpl | flashcards | pods | todos
+    property string view: settings.startView || "home"     // (--set startView=pods: a picture of another page, for CI) home | library | songs | albums | artists | playlists | profile | friends | user | friendpl | flashcards | pods | todos
     property string backView: ""
     property string userBack: "home"        // where "back" goes from someone's profile
     property string profileMode: "edit"     // edit | preview (your own profile page)
