@@ -1,0 +1,29 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Commerce/2017/specification-and-sample-assessments/international-gcse-Spec-Commerce.pdf
+# International GCSE Commerce notes written for this test: revision notes and exam answers. Each is under the point it
+# is about.
+=== 1.1.2;1.1.4 | factors of production
+Production and the factors of production: land, labour, capital and enterprise; primary, secondary and tertiary sectors; division of labour and specialisation, its advantages and disadvantages.
+=== 1.4.2;1.4.4 | retailers
+Types of retailer: supermarkets, department stores, discount stores, independent shops, chain stores, franchises; retail techniques like self-service, loyalty cards and product placement.
+=== 1.5.2 | wholesalers
+Wholesalers break bulk, store goods, provide credit and transport, and give advice to retailers; cash and carry vs delivery wholesalers.
+=== 1.6.1;1.6.2 | ecommerce
+E-commerce: online shopping, marketplaces like Amazon, the effects on high street shops, convenience for customers, delivery logistics, security of online payments.
+=== 1.7.3;1.7.4 | trade
+Balance of trade and balance of payments: visible and invisible trade, deficits and surpluses, trading blocs like the EU and ASEAN, free trade areas and customs unions.
+=== 2.1.2 | insurance principles
+Principles of insurance: utmost good faith, insurable interest, indemnity, contribution, subrogation, proximate cause; pooling of risk and premiums.
+=== 2.2.1 | consumer protection
+Consumer protection: legislation on product safety, fair trading and labelling, consumer rights to a refund or repair, trading standards, consumer organisations.
+=== 3.1.2;3.3.1 | banking
+Banking services and methods of payment: current and savings accounts, loans and overdrafts, debit and credit cards, standing orders and direct debits, contactless and mobile payments.
+=== 4.2.2;4.2.3 | transport
+Forms of transport for commerce: road, rail, sea, air and pipeline; containerisation; choosing a mode of transport by cost, speed, safety and the type of goods.
+=== 4.4.2 | advertising
+Methods of advertising and promotion: TV, radio, newspapers, billboards, social media and influencers, sales promotions like buy one get one free, informative vs persuasive advertising.
+=== - | biology
+Mitosis produces two identical diploid cells.
+=== - | history
+The Cuban Missile Crisis, October 1962.
+=== - | phone
+charge phone before trip

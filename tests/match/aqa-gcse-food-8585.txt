@@ -1,0 +1,31 @@
+# spec: https://filestore.aqa.org.uk/resources/food/specifications/AQA-8585-SP-2016.PDF
+# GCSE Food Preparation and Nutrition notes written for this test: revision notes and practical write-ups. Each is under
+# the point it is about.
+=== 3.2.1.1 | protein
+Protein: high biological value (meat, fish, eggs, soya) and low biological value proteins, protein complementation (beans on toast), functions (growth, repair, energy), deficiency (kwashiorkor) and excess.
+=== 3.2.2.1 | vitamins
+Vitamins: fat-soluble A, D, E and K, water-soluble B group and C, their functions and sources, vitamin D and calcium for bones, deficiency diseases like scurvy and rickets.
+=== 3.2.3.2 | energy
+Energy needs: basal metabolic rate, physical activity level, energy from carbohydrate (4 kcal/g), fat (9 kcal/g) and protein (4 kcal/g), recommended percentages of energy from each nutrient.
+=== 3.2.3.4 | diet and health
+Diet, nutrition and health: obesity, cardiovascular disease, high blood pressure, type 2 diabetes, bone health, dental caries, iron deficiency anaemia.
+=== 3.3.1.1 | heat transfer
+Why food is cooked: to make it safe, improve flavour, texture and appearance; heat transfer by conduction, convection and radiation, e.g. boiling, frying, grilling, baking.
+=== 3.3.2.1;3.3.2.2 | denaturation and gelatinisation
+Food science: protein denaturation and coagulation (cooking an egg), gluten formation in bread dough, gelatinisation of starch in a white sauce, dextrinisation on toast, caramelisation of sugar.
+=== 3.3.2.5 | raising agents
+Raising agents: mechanical (whisking air into a sponge), chemical (bicarbonate of soda, baking powder), biological (yeast fermentation producing carbon dioxide), steam in choux pastry.
+=== 3.4.1.4 | bacteria
+Bacterial contamination: salmonella, E. coli, campylobacter, listeria; signs and symptoms of food poisoning, the danger zone 5-63 degrees C, high-risk foods, cross-contamination.
+=== 3.4.2.1 | storage
+Buying and storing food: use-by and best-before dates, fridge at 0-5 degrees C, freezer at -18 degrees C, stock rotation (first in first out), storing raw meat at the bottom of the fridge.
+=== 3.5.1.3 | food labels
+Food labelling: traffic light labels, allergen information, nutritional information per 100 g, marketing influences like special offers and celebrity endorsements.
+=== 3.6.1.3 | sustainability
+Sustainability: food miles, food waste, food security, Fairtrade, seasonal and local food, organic farming, the carbon footprint of food.
+=== - | history
+Elizabeth I's religious settlement 1559.
+=== - | physics
+Speed = distance / time.
+=== - | reminder
+buy flour and eggs for practical tuesday

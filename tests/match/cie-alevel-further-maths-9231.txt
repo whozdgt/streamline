@@ -1,0 +1,33 @@
+# spec: https://www.cambridgeinternational.org/Images/697357-2026-2027-syllabus.pdf
+# AS & A Level Further Mathematics notes written for this test: worked examples and method summaries. Each is under the
+# point it is about.
+=== 1.1 | roots
+Roots of polynomial equations: if alpha, beta, gamma are roots of a cubic then sum of roots = -b/a, sum of products in pairs = c/a, product = -d/a; finding an equation whose roots are alpha^2, beta^2, gamma^2 by substitution y = x^2.
+=== 1.3 | method of differences
+Summation of series: sum of r, r^2, r^3 formulae, method of differences with partial fractions 1/(r(r+1)) = 1/r - 1/(r+1), convergence of a series and its sum to infinity.
+=== 1.4;2.2 | matrices
+Matrices: 2x2 and 3x3 matrices, determinants, inverses, matrices as transformations (rotation, reflection, enlargement, shear), invariant points and invariant lines, eigenvalues and eigenvectors, diagonalisation.
+=== 1.5 | polar
+Polar coordinates: converting between polar and Cartesian, sketching r = a(1 + cos theta), area enclosed by a polar curve = 1/2 integral of r^2 dtheta.
+=== 1.7 | induction
+Proof by induction: base case n = 1, assume true for n = k, prove for n = k + 1, conclusion; proving divisibility results and formulae for sums of series.
+=== 2.1 | hyperbolic
+Hyperbolic functions: sinh x, cosh x, tanh x defined with exponentials, identities cosh^2 x - sinh^2 x = 1, inverse hyperbolic functions in logarithmic form, arsinh x = ln(x + root(x^2 + 1)).
+=== 2.5 | complex numbers
+Complex numbers: modulus-argument form, exponential form re^(i theta), de Moivre's theorem, nth roots of unity, using de Moivre to express cos 3 theta in powers of cos theta.
+=== 2.6 | DEs
+Differential equations: first order linear equations with an integrating factor, second order linear equations with constant coefficients, auxiliary equation, complementary function and particular integral.
+=== 3.1 | projectiles
+Motion of a projectile: horizontal and vertical components, time of flight, range, maximum height, the equation of the trajectory y = x tan theta - g x^2 / (2 u^2 cos^2 theta).
+=== 3.3 | circular motion
+Circular motion: angular speed omega, acceleration v^2/r towards the centre, motion in a vertical circle, the conical pendulum, conditions to complete the circle.
+=== 4.2 | t-tests
+Inference: the t-distribution for small samples, confidence intervals for a population mean, paired-sample t-test, two-sample t-test with pooled variance.
+=== 4.4 | non parametric
+Non-parametric tests: the sign test, Wilcoxon signed-rank test, Wilcoxon rank-sum test, when to use them instead of a t-test.
+=== - | chemistry
+Benzene undergoes electrophilic substitution, not addition.
+=== - | history
+The Treaty of Brest-Litovsk 1918.
+=== - | errand
+pick up dry cleaning

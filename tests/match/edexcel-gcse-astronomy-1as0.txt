@@ -1,0 +1,21 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/GCSE/Astronomy/2017/Specification%20and%20sample%20assessments/gcse-astronomy-specification.pdf
+# GCSE Astronomy notes written for this test: revision notes and observation write-ups. Each is under the points it is
+# about.
+=== 1.1;1.3;1.6 | the earth
+The Earth: an oblate spheroid, its internal structure (crust, mantle, outer core, inner core), the atmosphere and light pollution affecting observations.
+=== 2.4;2.5;2.6;2.8 | the moon
+The lunar disc: maria (Sea of Tranquility, Sea of Crises), craters like Tycho and Copernicus, the lunar highlands, synchronous rotation so we always see the same side, libration lets us see 59% of the surface.
+=== 3.8;3.9;3.10 | eclipses
+Eclipses: solar eclipses (total, partial, annular), the umbra and penumbra, the diamond ring effect, lunar eclipses and why the Moon turns red, why eclipses don't happen every month.
+=== 4.1;4.9;4.10 | lunar phases
+Sidereal and synodic months, the lunar phase cycle from new moon to waxing crescent, first quarter, gibbous, full moon and back.
+=== 4.2;4.3;4.5;4.8 | time and sundials
+Apparent solar time and mean solar time, the equation of time and why it varies through the year, using a sundial and the gnomon, finding local noon from the Sun's shadow.
+=== 3.3 | eratosthenes
+Eratosthenes measured the circumference of the Earth from the angle of shadows at Syene and Alexandria; Aristarchus estimated the relative distances of the Sun and Moon.
+=== - | chemistry
+Group 1 metals react with water to make hydroxides and hydrogen.
+=== - | french
+le passé composé avec être: aller, venir, partir
+=== - | money
+pocket money £10 saved

@@ -1,0 +1,29 @@
+# spec: https://www.ocr.org.uk/Images/322105-specification-accredited-a-level-gce-geology-h414.pdf
+# A Level Geology notes written for this test: revision notes, fieldwork write-ups and exam answers. Each is under the
+# point it is about.
+=== 2.1.2;3.2.2;5.3.1 | igneous rocks
+Igneous rocks: intrusive (granite, gabbro, dolerite) vs extrusive (basalt, rhyolite), crystal size and cooling rate, Bowen's reaction series, partial melting, fractional crystallisation, magma composition (basic, intermediate, acidic).
+=== 2.1.3;5.1.1 | sedimentary rocks
+Sedimentary rocks: clastic (sandstone, mudstone, conglomerate), grain size, sorting and roundness, bedding, cross bedding and ripple marks as way-up structures, limestones and reef environments.
+=== 2.1.4;5.4.1 | metamorphism
+Metamorphic rocks: contact vs regional metamorphism, slate, schist and gneiss, metamorphic aureoles, index minerals (chlorite, biotite, garnet), slaty cleavage and foliation.
+=== 2.2.1;7.1.2 | fossils
+Fossils: modes of preservation, trace fossils, trilobites, ammonites and graptolites as zone fossils, morphology of brachiopods vs bivalves, palaeoenvironment interpretation.
+=== 4.2.1;2.2.2 | dating
+Relative dating: superposition, cross-cutting relationships, unconformities, biostratigraphy with zone fossils; absolute dating with radiometric decay and half-lives, the geological time scale.
+=== 3.2.1 | plate tectonics
+The plate tectonics paradigm: evidence from palaeomagnetism and sea-floor spreading, seismic tomography, mantle convection, ridge push and slab pull, the Wilson cycle.
+=== 3.3.1;3.3.2 | folds and faults
+Rock mechanics and structural geology: stress and strain, brittle and ductile deformation, folds (anticlines, synclines), normal, reverse and thrust faults, joints, structures at plate boundaries.
+=== 5.5.1;5.5.2 | metals
+Exploration for metals: ore minerals, hydrothermal deposits, placer deposits, geochemical and geophysical exploration, open pit vs underground mining, environmental impacts and remediation.
+=== 6.1.1;6.1.2 | earthquakes
+Earthquake geology: seismic waves (P, S, surface waves), the Richter and moment magnitude scales, liquefaction, hazard and risk analysis, earthquake prediction and building design.
+=== 7.1.3 | mass extinctions
+Mass extinctions: the end-Permian and end-Cretaceous events, the Chicxulub impact, the Deccan Traps, iridium anomalies, recovery and adaptive radiation.
+=== - | english
+Jekyll and Hyde: duality of human nature.
+=== - | economics
+Fiscal policy uses taxes and government spending.
+=== - | travel
+train to Leeds 9.15 sat

@@ -1,0 +1,35 @@
+# spec: https://filestore.aqa.org.uk/resources/politics/specifications/AQA-7152-SP-2017.PDF
+# A-level Politics notes written for this test: essay plans, case studies and revision notes. Each is under the point it
+# is about (pressure groups and civil rights come up in UK, US and comparative politics alike).
+=== 3.1.1.1 | uk constitution
+The UK constitution: uncodified, flexible, unitary; its sources (statute law, common law, conventions, authoritative works like Dicey and Bagehot, treaties); parliamentary sovereignty and the rule of law; constitutional reform since 1997 (the Human Rights Act, House of Lords reform, the Supreme Court).
+=== 3.1.1.3 | pm and cabinet
+The Prime Minister and cabinet: prime ministerial power (patronage, the party, the media), cabinet government vs presidential government, collective and individual ministerial responsibility, Thatcher's and Blair's styles of leadership.
+=== 3.1.1.5 | devolution
+Devolution: the Scottish Parliament, the Welsh Senedd, the Northern Ireland Assembly and the Good Friday Agreement, the West Lothian question, English votes for English laws, the 2014 independence referendum.
+=== 3.1.2.2 | elections
+Electoral systems: first past the post, the additional member system in Scotland, the single transferable vote in Northern Ireland, the supplementary vote, the 2011 AV referendum, the 2016 EU referendum, voting behaviour and class dealignment.
+=== 3.1.2.3 | uk parties
+UK political parties: the Conservatives (one nation vs New Right), Labour (Old Labour, New Labour, Corbyn), the Liberal Democrats, the SNP, UKIP and minor parties, party funding, the two-party system.
+=== 3.2.1.2 | congress
+US Congress: the House of Representatives and the Senate, the legislative process, committees, the filibuster, oversight of the executive, the power of the purse, incumbency, partisanship and gridlock.
+=== 3.2.1.3 | the president
+The US President: formal powers in Article II (commander in chief, veto, appointments), informal powers (the bully pulpit, executive orders), the Executive Office of the President, the imperial and imperilled presidency, Trump and Biden.
+=== 3.2.1.4 | supreme court
+The US Supreme Court: judicial review (Marbury v Madison), the appointment process and confirmation hearings, judicial activism and restraint, landmark cases like Roe v Wade and Dobbs, living constitution vs originalism.
+=== 3.2.1.8;3.2.2.6 | us civil rights
+Civil rights in the USA: affirmative action, Brown v Board, the Voting Rights Act, campaigns for LGBTQ rights (Obergefell v Hodges), the role of the NAACP, Black Lives Matter.
+=== 3.2.2.1 | comparing constitutions
+Comparative politics: the US codified constitution vs the UK uncodified constitution, federalism vs devolution, entrenchment and amendment, rational, cultural and structural approaches to comparison.
+=== 3.3.1.1 | liberalism
+Liberalism: John Locke, J.S. Mill and the harm principle, Mary Wollstonecraft, T.H. Green, John Rawls and Betty Friedan; classical vs modern liberalism, individualism, freedom, the state, the economy.
+=== 3.3.1.3 | socialism
+Socialism: Karl Marx and Friedrich Engels, Beatrice Webb, Rosa Luxemburg, Anthony Crosland, Anthony Giddens; collectivism, common humanity, equality, revolutionary socialism vs social democracy and the Third Way.
+=== 3.3.2.2 | feminism
+Feminism: liberal feminism, radical feminism, socialist feminism, post-modern feminism; Charlotte Perkins Gilman, Simone de Beauvoir, Kate Millett, Sheila Rowbotham, bell hooks; the personal is political, patriarchy.
+=== - | biology
+The kidney filters the blood in the glomerulus.
+=== - | music
+practise scales for 20 mins
+=== - | geography
+Rostow's model of development: five stages.

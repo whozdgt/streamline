@@ -1,0 +1,31 @@
+# spec: https://www.cambridgeinternational.org/Images/662470-2025-2027-syllabus.pdf
+# IGCSE Additional Mathematics notes written for this test: worked examples and method summaries. Each is under the
+# topic it is about (a topic accepts any of its points).
+=== 1 | functions
+Functions: domain and range, one-one functions, finding an inverse function f^-1(x), composite functions fg(x), the modulus function |f(x)|, sketching y = f(x) and y = f^-1(x) as reflections in y = x.
+=== 2 | quadratics
+Quadratic functions: completing the square to find the maximum or minimum, the discriminant b^2 - 4ac for real roots, quadratic inequalities, conditions for a line to be a tangent to a curve.
+=== 3 | factor theorem
+Factors of polynomials: the remainder theorem and factor theorem, f(a) = 0 means (x - a) is a factor, dividing a cubic to find a quadratic factor, solving cubic equations.
+=== 6 | logs
+Logarithmic and exponential functions: laws of logarithms, change of base, solving 3^x = 20 using logs, graphs of y = e^x and y = ln x.
+=== 7 | straight lines
+Straight line graphs: gradients of parallel and perpendicular lines, midpoint and length of a line segment, transforming y = ax^n into a linear form using logs to find a and n.
+=== 8 | circles
+Coordinate geometry of the circle: equation (x - a)^2 + (y - b)^2 = r^2, intersection of a line and a circle, tangents to a circle.
+=== 9 | radians
+Circular measure: radians, arc length s = r theta, area of a sector 1/2 r^2 theta.
+=== 10 | trig
+Trigonometry: the six trigonometric functions (sec, cosec, cot), amplitude and period of y = a sin bx + c, solving trigonometric equations in a given domain, proving identities with sec^2 x = 1 + tan^2 x.
+=== 11 | perms and combs
+Permutations and combinations: n!, nPr and nCr, arrangements with restrictions, choosing a committee.
+=== 12 | binomial
+Series: the binomial expansion of (a + b)^n, the general term, arithmetic and geometric progressions, sum to infinity of a geometric series when |r| < 1.
+=== 14 | calculus
+Calculus: differentiating products and quotients, the chain rule, tangents and normals, stationary points, connected rates of change, integration as the reverse of differentiation, definite integrals and the area under a curve, kinematics with displacement, velocity and acceleration.
+=== - | english
+Of Mice and Men: George and Lennie's dream of the farm.
+=== - | biology
+Xylem carries water up the stem by transpiration.
+=== - | sport
+netball match thursday 4pm
