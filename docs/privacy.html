@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Paraplay privacy policy</title>
+<title>Streamline privacy policy</title>
 <link rel="icon" href="icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -11,25 +11,29 @@
 <main>
   <header>
     <img src="icon.png" alt="">
-    <a href="index.html">Paraplay</a>
+    <a href="index.html">Streamline</a>
     <nav><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="delete-account.html">Delete account</a></nav>
   </header>
 
   <h1>Privacy policy</h1>
-  <p class="muted">Last updated 4 November 2026. Applies to Paraplay on Android, iPhone, Linux and Windows.</p>
+  <p class="muted">Last updated 28 November 2026. Applies to Streamline on Android, iPhone, iPad, Mac, Linux and Windows.</p>
 
-  <p>Paraplay is a music player for music you already have: files on your device, or a server you run yourself.
+  <p>Streamline is a music player for music you already have (files on your device, or a server you run yourself), with
+  study tools: Pods, which sort your notes and match them to your exam board's specification, flashcards and to-dos.
   It has no ads, no analytics and no tracking, and nothing about you is sold or shared for advertising.</p>
 
   <h2>Without an account</h2>
-  <p>You can use Paraplay without an account. Your music, playlists, listening history and settings then stay on your
-  device. The only things that leave it are these, and each can be switched off in Settings:</p>
+  <p>You can use Streamline without an account. Your music, playlists, listening history, documents, pods, flashcards,
+  to-dos and settings then stay on your device. <strong>Your documents are never uploaded:</strong> Pods read and sort them
+  on your device, and the AI that does it runs on your device too. The only things that leave it are these, and each can be switched off in Settings:</p>
   <div class="table-wrap"><table>
     <tr><th>Feature</th><th>What is sent</th><th>To</th><th>Setting</th></tr>
     <tr><td>Lyrics</td><td>The playing song's title, artist, album and length</td><td><a href="https://lrclib.net">lrclib.net</a></td><td>Look › Lyrics and pictures</td></tr>
     <tr><td>Artist pictures</td><td>Artist names</td><td><a href="https://www.deezer.com">Deezer</a>'s public API</td><td>Look › Lyrics and pictures</td></tr>
     <tr><td>Update check (only the versions downloaded from GitHub, not store versions)</td><td>A request for the newest version number</td><td>GitHub</td><td>About › Updates</td></tr>
     <tr><td>Your own media server</td><td>Your sign-in for that server, and requests for your music</td><td>The server you added</td><td>Library › Servers</td></tr>
+    <tr><td>Pods: the AI models (only when you download them)</td><td>A request for the model file</td><td>GitHub</td><td>Pods › the models</td></tr>
+    <tr><td>Pods: the list of specifications and the specification you choose</td><td>A request for the list, and for that document</td><td>GitHub, and your exam board's own website (AQA, Cambridge, Pearson, OCR)</td><td>Only when you use the spec finder</td></tr>
   </table></div>
   <p>These requests carry no account or device identifier. Like any internet request, they show your IP address to the
   service that answers it.</p>
@@ -37,12 +41,13 @@
   <h2>With an account</h2>
   <p>An account is optional. It lets you keep playlists across devices and follow friends. It is made with a username
   and a password only: no email address, phone number or real name is asked for. Accounts are stored by
-  <a href="https://supabase.com">Supabase</a>, which runs Paraplay's database and file storage.</p>
+  <a href="https://supabase.com">Supabase</a>, which runs Streamline's database and file storage.</p>
   <p>An account stores:</p>
   <ul>
     <li>your username and your password (kept only as a secure hash);</li>
     <li>a display name, short bio, profile picture and banner, if you add them;</li>
     <li>playlists you save to your account (their names and each song's title, artist, album and length);</li>
+    <li>your to-dos and flashcards, so they sync between your devices (and with Dayline);</li>
     <li>who you follow, follow requests, and people you block;</li>
     <li>reports you make about other accounts, so they can be reviewed;</li>
     <li>the song you're playing right now, but only while you've switched on sharing what you listen to;</li>
@@ -64,18 +69,18 @@
   </ul>
 
   <h2>Security</h2>
-  <p>Connections to Paraplay's database, lyrics and artist pictures use encryption (https). A media server you add
+  <p>Connections to Streamline's database, lyrics and artist pictures use encryption (https). A media server you add
   yourself is reached the way you set it up, which at home is often plain http on your own network.</p>
 
   <h2>Children</h2>
-  <p>Paraplay isn't made for children under 13, and accounts aren't meant for them.</p>
+  <p>Streamline isn't made for children under 13, and accounts aren't meant for them.</p>
 
   <h2>Changes and contact</h2>
   <p>If this policy changes, the new version is posted here with a new date. Questions or requests:
-  <a href="https://github.com/whozdgt/Paraplay/issues">open an issue on GitHub</a>, or use the contact address on the
+  <a href="https://github.com/whozdgt/streamline/issues">open an issue on GitHub</a>, or use the contact address on the
   app's store page.</p>
 
-  <footer>Paraplay is open source: <a href="https://github.com/whozdgt/Paraplay">github.com/whozdgt/Paraplay</a></footer>
+  <footer>Streamline is open source: <a href="https://github.com/whozdgt/streamline">github.com/whozdgt/streamline</a></footer>
 </main>
 </body>
 </html>

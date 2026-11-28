@@ -87,8 +87,8 @@ Item {
                 linkColor: root.pri
                 textFormat: Text.StyledText
                 text: (root.creating ? "By creating an account you agree to the " : "Using an account means you agree to the ")
-                      + "<a href=\"https://whozdgt.github.io/Paraplay/terms.html\">Terms</a> (no abusive or hateful content) and the "
-                      + "<a href=\"https://whozdgt.github.io/Paraplay/privacy.html\">Privacy policy</a>."
+                      + "<a href=\"https://whozdgt.github.io/streamline/terms.html\">Terms</a> (no abusive or hateful content) and the "
+                      + "<a href=\"https://whozdgt.github.io/streamline/privacy.html\">Privacy policy</a>."
                 onLinkActivated: (link) => Qt.openUrlExternally(link)
                 HoverHandler { cursorShape: parent.hoveredLink !== "" ? Qt.PointingHandCursor : Qt.ArrowCursor }
             }

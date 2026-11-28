@@ -83,8 +83,8 @@ ColumnLayout {
             Flow {
                 Layout.fillWidth: true
                 spacing: 8
-                Btn { large: true; primary: false; label: "Privacy policy"; onClicked: Qt.openUrlExternally("https://whozdgt.github.io/Paraplay/privacy.html") }
-                Btn { large: true; primary: false; label: "Terms"; onClicked: Qt.openUrlExternally("https://whozdgt.github.io/Paraplay/terms.html") }
+                Btn { large: true; primary: false; label: "Privacy policy"; onClicked: Qt.openUrlExternally("https://whozdgt.github.io/streamline/privacy.html") }
+                Btn { large: true; primary: false; label: "Terms"; onClicked: Qt.openUrlExternally("https://whozdgt.github.io/streamline/terms.html") }
             }
         }
     }
