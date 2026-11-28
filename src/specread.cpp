@@ -118,6 +118,9 @@ bool parseNum(const std::string &line, Num &n)
         break;
     }
     if (i < line.size() && std::isupper(uint8_t(line[i])) && n.parts.size() >= 2 && i + 1 < line.size() && line[i + 1] == ' ') n.suffix = line.substr(i++, 1);
+    // a starred statement ("1.6* Christian eschatology", Edexcel GCSE Religious Studies: one a question may ask to
+    // compare with another religion's)
+    if (i + 1 < line.size() && line[i] == '*' && n.parts.size() >= 2 && line[i + 1] == ' ') ++i;
     if (i < line.size() && (line[i] == '.' || line[i] == ':' || line[i] == ')')) ++i;
     if (i >= line.size() || !std::isspace(uint8_t(line[i]))) return false;
     n.title = trim(line.substr(i));
@@ -336,6 +339,8 @@ bool contentTitle(const std::string &title)
 {
     const std::string t = lower(title);
     if (t.find("content") == std::string::npos) return false;
+    // (nor a mark scheme's lowest band: "0 0 0 No creditable content", Cambridge IGCSE Islamiyat)
+    if (t.empty() || !std::isalpha(uint8_t(t[0])) || t.rfind("no ", 0) == 0) return false;
     return t.size() < 70 && t.find("contents") == std::string::npos;
 }
 
@@ -387,7 +392,7 @@ Info identify(const std::string &text)
         return trim(s);
     };
     if (info.board == "Cambridge") {
-        static const std::regex re("Cambridge (International AS (?:&|and) A Level|IGCSE|O Level|International A Level|International AS Level)\\S* ([A-Z][A-Za-z ,&()-]{2,40}?) ([0-9]{4})");
+        static const std::regex re("Cambridge (International AS (?:&|and) A Level|IGCSE|O Level|International A Level|International AS Level)\\S*\\s+([A-Z][A-Za-z ,&()-]{2,40}?) ([0-9]{4})");      // (the level and the subject can be on lines of their own: "Cambridge IGCSE™", "Islamiyat 0493")
         if (std::regex_search(head, m, re)) info.name = "Cambridge " + clean(m[1].str()) + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
     } else if (info.board == "Edexcel") {
         // the course the document names whose code it uses most (a draft notice on the cover can name another course)
@@ -601,7 +606,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     for (size_t j = i - k; j < i && ok; ++j) ok = nameLine(all[j]) && freq[norm(all[j])] < 20;      // (not a column's heading)
                     const std::string &before = all[i - k - 1];
                     Key bk;      // (or after a heading: "Paper 4, Option 4A: Buddhism", "Religious", "beliefs, values"…)
-                    if (!ok || before.empty() || (before.back() != '.' && before.back() != ')' && !parseKey(before, bk))) continue;
+                    const bool wordless = std::none_of(before.begin(), before.end(), [](char c) { return std::isalpha(uint8_t(c)); });
+                    const bool reference = before.size() > 8 && std::isdigit(uint8_t(before.back())) && before.find("ISBN") != std::string::npos;
+                    if (!ok || (!wordless && !reference && before.back() != '.' && before.back() != ')' && !parseKey(before, bk))) continue;
                     for (size_t j = i - k; j < i; ++j) keep[j] = 1;
                     break;
                 }
@@ -682,7 +689,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         int section = -1;
         for (size_t i = 0; i < all.size(); ++i) {
             Num n;
-            if (!parseNum(all[i], n) || n.parts.size() != 1 || !n.prefix.empty()) continue;
+            if (!parseNum(all[i], n) || n.parts.size() != 1 || !n.prefix.empty() || n.parts[0] < 1) continue;
             if (section < 0) {
                 if (tocLine(all[i])) continue;
                 if (contentTitle(cleanTitle(n.title))) { section = n.parts[0]; from = i + 1; }
@@ -720,7 +727,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             // When content parts follow one another, the first is an overview of the next ("2b. Content of GCSE (9–1)
             // in Biology A", a table of its topics): the content starts at the second.
             static const std::regex part("^([0-9])([a-z])\\.?\\s+([A-Z].+)$");
-            struct Part { size_t line; std::string label; bool content; bool qualification; };
+            struct Part { size_t line; std::string label; bool content; bool qualification; std::string title; };
             std::vector<Part> parts;
             for (size_t i = 0; i < all.size(); ++i) {
                 std::smatch m;
@@ -732,13 +739,17 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 for (size_t j = i >= 4 ? i - 4 : 0; j < all.size() && j <= i + 4; ++j) if (std::regex_match(all[j], next, part)) ++near;
                 if (near >= 5) continue;
                 const std::string here = m[1].str() + m[2].str();
-                if (!parts.empty() && parts.back().label == here) continue;      // the same part again ("2c. Topic B7…")
                 const std::string title = lower(cleanTitle(m[3].str()));
+                // the same part again ("2c. Topic B7…"), unless it is another component's content under the same letter
+                // ("2c. Content of Devising drama (01/02)", then "2c. Content of Presenting and performing texts (03)":
+                // OCR GCSE Drama)
+                if (!parts.empty() && parts.back().label == here &&
+                    !(parts.back().content && title.rfind("content of ", 0) == 0 && parts.back().title != title)) continue;
                 const bool qualification = title.find("gcse") != std::string::npos || title.find("a level") != std::string::npos ||
                                            title.find("as level") != std::string::npos;
                 // (a part's title can be long: "Content of Computational thinking, algorithms and programming (J277/02)")
                 const bool content = title.find("content") != std::string::npos && title.find("contents") == std::string::npos && title.size() < 110;
-                parts.push_back({i, here, content, qualification});
+                parts.push_back({i, here, content, qualification, title});
             }
             if (std::getenv("SPECREAD_DEBUG"))
                 for (const Part &pt : parts) std::fprintf(stderr, "part %s%s: %s\n", pt.label.c_str(), pt.content ? " (content)" : "", shape(all[pt.line]).c_str());
@@ -989,12 +1000,15 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     // the first number with dots after line i, and its first part ("2.1" → 2)
     // (or, where every numbered line is a statement, the next statement's: "8.1 use the following units…" after
     // "8 Astrophysics", Edexcel International GCSE Physics)
+    // (a statement straight after the heading counts too: "2 Process information", then "2.1 Perform appropriate
+    // operations…", Cambridge Thinking Skills)
     auto nextDottedMajor = [&](size_t i) {
         int any = -1;
         for (size_t j = i + 1; j < lines.size() && j < i + 400; ++j) {
             Num n;
             if (!parseNum(lines[j], n) || n.parts.size() < 2) continue;
             if (!statementLike(n.title)) return n.parts[0];
+            if (n.prefix.empty() && j < i + 4 && n.parts.back() == 1) return n.parts[0];
             if (any < 0 && n.prefix.empty() && j < i + 40) any = n.parts[0];
         }
         return any;
@@ -1025,7 +1039,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 std::string where = "-";
                 if (!stack.empty()) {
                     const auto &p = pts[size_t(stack.back().point)];
-                    where = p.number + " " + p.title.substr(0, 40) + " (rank " + std::to_string(stack.back().rank) + ")";
+                    where = p.number + " " + p.title.substr(0, 30) + " (rank " + std::to_string(stack.back().rank) + ")";
+                    std::string up;      // and the points it is in, by number
+                    for (int q = p.parent; q >= 0; q = pts[size_t(q)].parent)
+                        up = (pts[size_t(q)].number.empty() ? pts[size_t(q)].title.substr(0, 12) : pts[size_t(q)].number) + (up.empty() ? "" : " > " + up);
+                    if (!up.empty()) where += " in " + up;
                 }
                 std::printf("  %5zu %-58.58s -> %s\n", i, lines[i].c_str(), where.c_str());
             };
@@ -1046,7 +1064,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
 
         if ((parseNum(l, n) && columnHeading(n.title)) || (parseKey(l, k) && columnHeading(k.title))) continue;
         if (partHeadings && l.size() > 4 && std::isdigit(uint8_t(l[0])) && std::islower(uint8_t(l[1]))) {
-            static const std::regex part("^[0-9][a-z]\\.?\\s+(?:Content of\\s+)?([A-Z].*?)(?:\\s*\\([A-Z][0-9]{3}[^)]*\\))?$");
+            static const std::regex part("^[0-9][a-z]\\.?\\s+(?:Content of\\s+)?([A-Z].*?)(?:\\s*\\((?:[A-Z][0-9]{3}[^)]*|[0-9]{2}(?:/[0-9]{2})?)\\))?$");
             std::smatch pm;
             const std::string low = lower(l);
             if (std::regex_match(l, pm, part) && low.find("content") != std::string::npos && low.find("contents") == std::string::npos) {
@@ -1165,6 +1183,18 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (heading && (books.count(lower(firstWord(t))) || lt.find(" students ") != std::string::npos ||
                                 lt.find(" learners ") != std::string::npos || lt.find(" candidates ") != std::string::npos))
                     heading = false;
+                // nor figures ("5 8 12", a worked example's numbers: it would make 5 the last topic, and topic 3 a step
+                // back), nor a unit's facts ("2 Examination • First assessment: June 2019", Edexcel International A level Maths)
+                {
+                    int run = 0;
+                    bool word = false;
+                    for (unsigned char c : t + " ") { if (std::isalpha(c)) { if (++run >= 3) word = true; } else run = 0; }
+                    if (!word) heading = false;
+                }
+                const std::string fw = lower(firstWord(t));
+                if (heading && (t.find("\xE2\x80\xA2") != std::string::npos || fw == "examination" || fw == "assessment" ||
+                                lt.rfind(" externally assessed", 0) == 0 || lt.rfind(" internally assessed", 0) == 0))
+                    heading = false;
                 // nor a level of a mark scheme: "1 1-5 A system that tackles some aspects…" (AQA A-level Computer
                 // Science's non-exam assessment)
                 static const std::regex band("^[0-9]{1,2}\\s*(-|\xE2\x80\x93)\\s*[0-9]{1,2}\\b.*");
@@ -1238,6 +1268,12 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 } else body(l);
             } else if (n.parts.size() == 1 && !statement && t.size() >= 3) {
                 made = open(30, number, t, false);      // a lettered theme or topic: "OT1 Mathematical argument, language and proof"
+            } else if (Key pk; n.parts.size() == 2 && n.prefix.empty() && parseKey(t, pk) && pk.rank <= 12) {
+                // a numbered part of the document that is a paper's content ("5.1 Paper 1", then its topics, "1. Major
+                // themes of the Qur'an": Cambridge IGCSE Islamiyat's older syllabuses): the paper, its topics numbered afresh
+                made = open(pk.rank, number, t, false);
+                lastTop = 0;
+                innerLast = 0;
             } else if (n.parts.size() >= 2 && std::none_of(t.begin(), t.end(), [](char c) { return std::isalpha(uint8_t(c)); })) {
                 body(l);      // figures, not a heading: "0.6 60%", a worked example's fraction and percentage
             } else if (n.parts.size() >= 2) {
@@ -1272,7 +1308,12 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                         // (or after a heading: "Paper 4, Option 4A: Buddhism", then "Religious", "beliefs, values",
                         // "and teachings", then "1.1": Edexcel A level Religious Studies)
                         Key bk;
-                        const bool after = !before.empty() && (before.back() == '.' || before.back() == ')' || parseKey(before, bk));
+                        // (or after figures and symbols, the end of a worked example: "1 1 12", "− +−", Edexcel A level
+                        // Further Maths)
+                        const bool wordless = std::none_of(before.begin(), before.end(), [](char c) { return std::isalpha(uint8_t(c)); });
+                        // (or after a reference: "ISBN 9789679920673", Edexcel A level Religious Studies' options)
+                        const bool after = wordless || before.back() == '.' || before.back() == ')' || parseKey(before, bk) ||
+                                           (before.size() > 8 && std::isdigit(uint8_t(before.back())) && before.find("ISBN") != std::string::npos);
                         if (ok && after) { first = i - k; take = k; }
                     }
                     if (take) {

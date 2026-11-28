@@ -27,6 +27,7 @@ A understand that symbols may be used to represent numbers
 in equations or variables in expressions and formulae
 B understand that algebraic expressions follow the
 generalised rules of arithmetic
+5 8 12
 Linear equations
 A solve linear equations, with integer or fractional
 coefficients, in one unknown
@@ -45,5 +46,9 @@ A convert recurring decimals into fractions
 Use of symbols
 A use index notation involving fractional, negative and zero
 powers
+3 Sequences, functions and graphs
+Sequences
+A generate terms of a sequence using term-to-term rules
+B find the nth term of an arithmetic sequence
 3 Assessment information
 Assessment requirements

@@ -1,10 +1,12 @@
 board: Edexcel
 name: Edexcel International GCSE Mathematics (Specification A) (4MA1)
-points: 7 (to match: 5)
+points: 9 (to match: 6)
 1 Numbers and the number system  [0]
   Integers  [170]
   Fractions  [171]
   Decimals  [44]
 2 Equations, formulae and identities  [0]
-  Use of symbols  [264]
+  Use of symbols  [271]
   Linear equations  [170]
+3 Sequences, functions and graphs  [0]
+  Sequences  [102]
