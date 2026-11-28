@@ -40,8 +40,19 @@ QVariantList FolderBrowser::roots() const
             add(v.displayName().isEmpty() ? QStringLiteral("SD card") : v.displayName(), r);
     }
 #elif defined(Q_OS_IOS)
-    // the only place an iPhone app may look: its own folder (Files › On My iPhone › Paraplay)
-    add(QStringLiteral("Paraplay folder"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    // the only place an iPhone app may look: its own folder (Files › On My iPhone › Streamline), where folders brought
+    // in from the Files app land too
+    add(QStringLiteral("Streamline folder"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+#elif defined(Q_OS_MACOS)
+    add(QStringLiteral("Music"), QStandardPaths::writableLocation(QStandardPaths::MusicLocation));
+    add(QStringLiteral("Documents"), QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    add(QStringLiteral("Desktop"), QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));
+    add(QStringLiteral("Downloads"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+    add(QStringLiteral("Home"), QDir::homePath());
+    // iCloud Drive, and the drives plugged in
+    add(QStringLiteral("iCloud Drive"), QDir::homePath() + QStringLiteral("/Library/Mobile Documents/com~apple~CloudDocs"));
+    for (const QFileInfo &v : QDir(QStringLiteral("/Volumes")).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+        if (!v.isSymLink()) add(v.fileName(), v.absoluteFilePath());
 #elif defined(Q_OS_WIN)
     add(QStringLiteral("Music"), QStandardPaths::writableLocation(QStandardPaths::MusicLocation));
     add(QStringLiteral("Home"), QDir::homePath());

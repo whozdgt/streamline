@@ -13,8 +13,22 @@ Item {
     readonly property color muted: Qt.rgba(pri.r, pri.g, pri.b, 0.72)
     readonly property var entries: path === "" ? folders.roots() : folders.list(path)
     readonly property int songs: path === "" ? 0 : (docs ? pods.docCount(path) : folders.audioCount(path))
+    // iPhone and iPad: a folder from the Files app (iCloud Drive, OneDrive…) comes in as a copy in the app's own folder
+    readonly property bool fromFiles: docs && pods.canImportFolder()
+    property string importNote: ""
+    property bool importing: false
 
-    onVisibleChanged: if (visible) path = folders.isDir(startPath) ? startPath : ""
+    Connections {
+        target: pods
+        enabled: root.visible && root.fromFiles
+        function onFolderImported(dir, error) {
+            root.importing = false
+            if (dir !== "") { root.importNote = ""; root.chosen(dir) }
+            else root.importNote = error
+        }
+    }
+
+    onVisibleChanged: if (visible) { path = folders.isDir(startPath) ? startPath : ""; importNote = ""; importing = false }
 
     Rectangle { anchors.fill: parent; color: Qt.rgba(1, 1, 1, 0.35) }
     MouseArea { anchors.fill: parent; onClicked: root.cancelled() }
@@ -86,6 +100,17 @@ Item {
 
             Text {
                 Layout.fillWidth: true
+                visible: root.fromFiles && (root.path === "" || root.importNote !== "" || root.importing)
+                wrapMode: Text.Wrap
+                font.pixelSize: 12
+                color: root.muted
+                text: root.importing ? "Copying the folder…"
+                      : root.importNote !== "" ? root.importNote
+                      : "A folder in iCloud Drive, OneDrive or anywhere else in Files: tap From Files. Streamline keeps a copy of it here; pick the folder again to bring the copy up to date."
+            }
+
+            Text {
+                Layout.fillWidth: true
                 visible: root.path !== ""
                 wrapMode: Text.Wrap
                 font.pixelSize: 12
@@ -98,6 +123,8 @@ Item {
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 10
+                Btn { visible: root.fromFiles; Layout.fillWidth: true; label: "From Files…"; enabled: !root.importing
+                      onClicked: { root.importNote = ""; root.importing = true; pods.importFolder() } }
                 Btn { Layout.fillWidth: true; label: "Use this folder"; enabled: root.path !== ""; onClicked: root.chosen(root.path) }
                 Btn { Layout.preferredWidth: 110; primary: false; label: "Cancel"; onClicked: root.cancelled() }
             }

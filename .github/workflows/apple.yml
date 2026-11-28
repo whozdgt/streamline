@@ -1,0 +1,349 @@
+name: apple
+
+# Streamline for iPhone, iPad and Mac, built on GitHub's Macs. Every push to main publishes both on the rolling
+# "apple-latest" release:
+#   Streamline-ios.ipa   iPhone and iPad. Not signed: install it with a sideloading app (SideStore, AltStore,
+#                        Sideloadly) and your own free Apple ID, which signs it for your devices. Apple's rules for free
+#                        accounts: it has to be refreshed every 7 days, at most 3 apps and 3 devices. See APPLE.md.
+#   Streamline-mac.dmg   Apple-silicon Macs, macOS 13 or newer. Signed ad hoc, not by Apple: the first time, open it
+#                        with right-click › Open (or System Settings › Privacy & Security › Open Anyway).
+#
+# The App Store: with an Apple Developer Program membership, add the secrets listed in APPLE.md and the "appstore" job
+# signs the iPhone app and uploads it to App Store Connect (TestFlight, then review). Without them it is skipped.
+on:
+  push:
+    branches: [main]
+    paths: ['src/**', 'qml/**', 'packaging/ios/**', 'packaging/macos/**', 'CMakeLists.txt', 'cmake/**', 'specs/catalog.json',
+            '.github/workflows/apple.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write      # to publish the apple-latest release
+
+env:
+  QT_SERIES: "6.10"          # iOS 17 to 26, macOS 13 to 26, and Xcode 26 (the App Store requires Xcode 26)
+  TAGLIB_VERSION: v2.0.2
+  IOS_MIN: "17.0"
+  MAC_MIN: "13.0"
+  JBM_URL: https://github.com/JetBrains/JetBrainsMono/releases/download/v2.304/JetBrainsMono-2.304.zip
+
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 120
+    outputs:
+      qt: ${{ steps.qt.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode 26
+        run: |
+          x="$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)"
+          if [ -z "$x" ]; then echo "::error::No Xcode 26 on this runner"; ls -d /Applications/Xcode*.app; exit 1; fi
+          sudo xcode-select -s "$x/Contents/Developer"
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+
+      - name: Pick the Qt version
+        id: qt
+        run: |
+          pip3 install --quiet --break-system-packages aqtinstall || pip3 install --quiet aqtinstall
+          v="$(python3 -m aqt list-qt mac ios --spec "$QT_SERIES" --latest-version)"
+          [ -n "$v" ] || { python3 -m aqt list-qt mac ios; exit 1; }
+          echo "Using Qt $v"
+          echo "QT_VERSION=$v" >> "$GITHUB_ENV"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
+      - name: Cached Qt
+        id: qtcache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/qt
+          key: qt-ios-${{ env.QT_VERSION }}-v1
+
+      # The build tools run on the Mac (macos), the libraries go into the app (ios).
+      - name: Qt for the Mac and for iOS
+        if: steps.qtcache.outputs.cache-hit != 'true'
+        run: |
+          python3 -m aqt install-qt mac desktop "$QT_VERSION" clang_64 -O "$GITHUB_WORKSPACE/qt"
+          python3 -m aqt install-qt mac ios "$QT_VERSION" ios -m qtmultimedia -O "$GITHUB_WORKSPACE/qt"
+          ls "$GITHUB_WORKSPACE/qt/$QT_VERSION"
+
+      - name: TagLib for iOS (reads song tags)
+        run: |
+          git clone --depth 1 --branch "$TAGLIB_VERSION" --recurse-submodules https://github.com/taglib/taglib.git
+          cmake -S taglib -B taglib-build \
+            -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET="$IOS_MIN" \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DWITH_ZLIB=OFF \
+            -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+            -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DBUILD_BINDINGS=OFF \
+            -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/taglib-ios"
+          cmake --build taglib-build -j"$(sysctl -n hw.ncpu)"
+          cmake --install taglib-build
+          lipo -info taglib-ios/lib/libtag.a
+
+      - name: Font for the app
+        run: |
+          curl -fsSL -o jbm.zip "$JBM_URL"
+          mkdir -p fonts && unzip -q -j -o jbm.zip 'fonts/ttf/JetBrainsMono-Regular.ttf' 'fonts/ttf/JetBrainsMono-Medium.ttf' \
+            'fonts/ttf/JetBrainsMono-SemiBold.ttf' 'fonts/ttf/JetBrainsMono-Bold.ttf' -d fonts
+
+      - name: Configure
+        run: |
+          "$GITHUB_WORKSPACE/qt/$QT_VERSION/ios/bin/qt-cmake" -S . -B build-ios -G Xcode \
+            -DQT_HOST_PATH="$GITHUB_WORKSPACE/qt/$QT_VERSION/macos" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="$IOS_MIN" \
+            -DTAGLIB_PREFIX="$GITHUB_WORKSPACE/taglib-ios" \
+            -DIOS_FONT_DIR="$GITHUB_WORKSPACE/fonts" \
+            -DIOS_BUILD_NUMBER="${{ github.run_number }}"
+
+      - name: Build (unsigned)
+        run: |
+          set +e
+          cmake --build build-ios --config Release -- -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" 2>&1 | tee build.log \
+            | grep -E "error:|BUILD (SUCCEEDED|FAILED)" | head -80
+          rc=${PIPESTATUS[0]}
+          if [ "$rc" -ne 0 ]; then
+            esc() { sed -e 's/%/%25/g' | awk '{printf "%s%%0A", substr($0,1,300)}'; }
+            msg="$(grep -E 'error:|fatal|Undefined symbol|ld: ' build.log | sort -u | head -25 | esc)"
+            echo "::error title=build errors::${msg}"
+            msg="$(tail -n 25 build.log | esc)"
+            echo "::error title=end of build log::${msg}"
+          fi
+          exit "$rc"
+
+      - name: Check the app and package it
+        run: |
+          app="$(find build-ios -maxdepth 4 -name 'Streamline.app' -path '*Release-iphoneos*' | head -1)"
+          [ -n "$app" ] || { echo "::error::No Streamline.app was built"; find build-ios -maxdepth 4 -name '*.app'; exit 1; }
+          echo "Built: $app"; du -sh "$app"
+          plutil -p "$app/Info.plist" | grep -E "CFBundle(Identifier|DisplayName|ShortVersionString|Version|Executable)|MinimumOSVersion|UIDeviceFamily|UIBackgroundModes|ITSAppUses" -A0
+          ok=1
+          [ -f "$app/PrivacyInfo.xcprivacy" ] && echo "privacy manifest: OK" || { echo "::error::PrivacyInfo.xcprivacy is missing from the app"; ok=0; }
+          [ -f "$app/Assets.car" ] && echo "app icon (Assets.car): OK" || { echo "::error::The app icon catalog is missing"; ok=0; }
+          exe="$app/$(plutil -extract CFBundleExecutable raw "$app/Info.plist")"
+          lipo -info "$exe"
+          # what the store rules forbid in an iPhone app: no self-updater and no downloaded code
+          if strings "$exe" | grep -q "Streamline-android.apk"; then echo "::error::The updater is in the iPhone app"; ok=0; fi
+          mkdir -p Payload && cp -R "$app" Payload/
+          zip -qry Streamline-ios.ipa Payload
+          ls -l Streamline-ios.ipa
+          [ "$ok" = 1 ]
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Streamline-ios
+          path: Streamline-ios.ipa
+          retention-days: 14
+
+  mac:
+    runs-on: macos-15
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode 26
+        run: |
+          x="$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)"
+          [ -n "$x" ] && sudo xcode-select -s "$x/Contents/Developer"
+          xcodebuild -version
+          brew install ninja > /dev/null 2>&1 || true
+
+      - name: Pick the Qt version
+        run: |
+          pip3 install --quiet --break-system-packages aqtinstall || pip3 install --quiet aqtinstall
+          v="$(python3 -m aqt list-qt mac desktop --spec "$QT_SERIES" --latest-version)"
+          [ -n "$v" ] || exit 1
+          echo "QT_VERSION=$v" >> "$GITHUB_ENV"
+
+      - name: Cached Qt
+        id: qtcache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/qt
+          key: qt-mac-${{ env.QT_VERSION }}-v1
+
+      - name: Qt for the Mac
+        if: steps.qtcache.outputs.cache-hit != 'true'
+        run: python3 -m aqt install-qt mac desktop "$QT_VERSION" clang_64 -m qtmultimedia -O "$GITHUB_WORKSPACE/qt"
+
+      - name: TagLib for the Mac
+        run: |
+          git clone --depth 1 --branch "$TAGLIB_VERSION" --recurse-submodules https://github.com/taglib/taglib.git
+          cmake -S taglib -B taglib-build -G Ninja \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET="$MAC_MIN" \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DWITH_ZLIB=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+            -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DBUILD_BINDINGS=OFF \
+            -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/taglib-mac"
+          cmake --build taglib-build
+          cmake --install taglib-build
+
+      - name: Font and icon
+        run: |
+          curl -fsSL -o jbm.zip "$JBM_URL"
+          mkdir -p fonts && unzip -q -j -o jbm.zip 'fonts/ttf/JetBrainsMono-Regular.ttf' 'fonts/ttf/JetBrainsMono-Medium.ttf' \
+            'fonts/ttf/JetBrainsMono-SemiBold.ttf' 'fonts/ttf/JetBrainsMono-Bold.ttf' -d fonts
+          # the Mac's icon, made from the App Store icon
+          src=packaging/ios/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png
+          mkdir -p Streamline.iconset
+          for s in 16 32 128 256 512; do
+            sips -z $s $s "$src" --out Streamline.iconset/icon_${s}x${s}.png > /dev/null
+            d=$((s * 2)); sips -z $d $d "$src" --out Streamline.iconset/icon_${s}x${s}@2x.png > /dev/null
+          done
+          iconutil -c icns Streamline.iconset -o packaging/macos/Streamline.icns
+          ls -l packaging/macos/Streamline.icns
+
+      - name: Build
+        run: |
+          "$GITHUB_WORKSPACE/qt/$QT_VERSION/macos/bin/qt-cmake" -S . -B build-mac -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET="$MAC_MIN" \
+            -DTAGLIB_PREFIX="$GITHUB_WORKSPACE/taglib-mac" -DMAC_FONT_DIR="$GITHUB_WORKSPACE/fonts" \
+            -DMAC_BUILD_NUMBER="${{ github.run_number }}"
+          set +e
+          cmake --build build-mac 2>&1 | tee build.log | grep -E "error:|FAILED" | head -60
+          rc=${PIPESTATUS[0]}
+          [ "$rc" -eq 0 ] || { grep -E "error:|Undefined symbol|ld: " build.log | sort -u | head -30; exit "$rc"; }
+
+      - name: Put Qt inside the app, sign it ad hoc, make the disk image
+        run: |
+          app=build-mac/Streamline.app
+          [ -d "$app" ] || { echo "::error::No Streamline.app"; ls build-mac; exit 1; }
+          "$GITHUB_WORKSPACE/qt/$QT_VERSION/macos/bin/macdeployqt" "$app" -qmldir=qml -always-overwrite
+          # no Apple certificate: an ad hoc signature, which every Mac with Apple silicon needs to run the app at all
+          codesign --force --deep --sign - "$app"
+          codesign --verify --deep --strict "$app" && echo "signature: OK"
+          plutil -p "$app/Contents/Info.plist" | grep -E "CFBundle(Identifier|ShortVersionString|Version|Executable|IconFile)|LSMinimumSystemVersion"
+          lipo -info "$app/Contents/MacOS/Streamline"
+          mkdir -p dmg && cp -R "$app" dmg/ && ln -s /Applications dmg/Applications
+          hdiutil create -volname Streamline -srcfolder dmg -ov -format UDZO Streamline-mac.dmg
+          ls -l Streamline-mac.dmg
+
+      - name: Open it and take a picture of the window
+        run: |
+          app=build-mac/Streamline.app
+          perl -e 'alarm 120; exec @ARGV' "$app/Contents/MacOS/Streamline" --screenshot "$PWD/mac-window.png" --size 1280x800 \
+            > run.log 2>&1; echo "exit: $?"; tail -20 run.log
+          ls -l mac-window.png || { echo "::error::The Mac app didn't open"; exit 1; }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Streamline-mac
+          path: |
+            Streamline-mac.dmg
+            mac-window.png
+          retention-days: 14
+
+  publish:
+    needs: [ios, mac]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+      - name: The apple-latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          cp out/Streamline-ios/Streamline-ios.ipa out/Streamline-mac/Streamline-mac.dmg .
+          title="Streamline for iPhone, iPad and Mac (build ${{ github.run_number }})"
+          body="Streamline-ios.ipa: iPhone and iPad, iOS 17 or newer. Install it with SideStore, AltStore or Sideloadly and your Apple ID (free accounts: refresh every 7 days).
+          Streamline-mac.dmg: Macs with Apple silicon, macOS 13 or newer. The first time, right-click the app and choose Open.
+          How-to: https://github.com/${GITHUB_REPOSITORY}/blob/main/APPLE.md"
+          if ! gh release view apple-latest > /dev/null 2>&1; then
+            gh release create apple-latest Streamline-ios.ipa Streamline-mac.dmg --prerelease --target main --title "$title" --notes "$body" ||
+              gh release upload apple-latest Streamline-ios.ipa Streamline-mac.dmg --clobber
+          else
+            gh release upload apple-latest Streamline-ios.ipa Streamline-mac.dmg --clobber
+            gh release edit apple-latest --title "$title" --notes "$body"
+          fi
+
+  # The App Store: only with an Apple Developer Program membership's secrets (APPLE.md). Signs the iPhone app with the
+  # distribution certificate and profile, and uploads it to App Store Connect.
+  appstore:
+    needs: ios
+    if: github.ref == 'refs/heads/main'
+    runs-on: macos-15
+    timeout-minutes: 120
+    env:
+      HAS_SIGNING: ${{ secrets.IOS_DIST_CERT_P12_BASE64 != '' && secrets.IOS_PROFILE_BASE64 != '' && secrets.ASC_KEY_P8_BASE64 != '' }}
+      QT_VERSION: ${{ needs.ios.outputs.qt }}
+    steps:
+      - name: No App Store secrets
+        if: env.HAS_SIGNING != 'true'
+        run: echo "No Apple Developer secrets, so nothing goes to the App Store. See APPLE.md."
+      - uses: actions/checkout@v4
+        if: env.HAS_SIGNING == 'true'
+      - name: Xcode 26, Qt, TagLib, font
+        if: env.HAS_SIGNING == 'true'
+        run: |
+          x="$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"; sudo xcode-select -s "$x/Contents/Developer"
+          pip3 install --quiet --break-system-packages aqtinstall || pip3 install --quiet aqtinstall
+          python3 -m aqt install-qt mac desktop "$QT_VERSION" clang_64 -O "$GITHUB_WORKSPACE/qt"
+          python3 -m aqt install-qt mac ios "$QT_VERSION" ios -m qtmultimedia -O "$GITHUB_WORKSPACE/qt"
+          git clone --depth 1 --branch "$TAGLIB_VERSION" --recurse-submodules https://github.com/taglib/taglib.git
+          cmake -S taglib -B taglib-build -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_ARCHITECTURES=arm64 \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="$IOS_MIN" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DWITH_ZLIB=OFF \
+            -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_TESTING=OFF \
+            -DBUILD_EXAMPLES=OFF -DBUILD_BINDINGS=OFF -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/taglib-ios"
+          cmake --build taglib-build -j"$(sysctl -n hw.ncpu)" && cmake --install taglib-build
+          curl -fsSL -o jbm.zip "$JBM_URL"
+          mkdir -p fonts && unzip -q -j -o jbm.zip 'fonts/ttf/JetBrainsMono-*.ttf' -d fonts
+      - name: Certificate and profile
+        if: env.HAS_SIGNING == 'true'
+        env:
+          CERT: ${{ secrets.IOS_DIST_CERT_P12_BASE64 }}
+          CERT_PASSWORD: ${{ secrets.IOS_DIST_CERT_PASSWORD }}
+          PROFILE: ${{ secrets.IOS_PROFILE_BASE64 }}
+        run: |
+          kc="$RUNNER_TEMP/signing.keychain-db"; kp="$(uuidgen)"
+          security create-keychain -p "$kp" "$kc"
+          security set-keychain-settings -lut 21600 "$kc"
+          security unlock-keychain -p "$kp" "$kc"
+          echo "$CERT" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" -P "$CERT_PASSWORD" -A -t cert -f pkcs12 -k "$kc"
+          security set-key-partition-list -S apple-tool:,apple: -k "$kp" "$kc" > /dev/null
+          security list-keychain -d user -s "$kc" $(security list-keychains -d user | tr -d '"')
+          echo "$PROFILE" | base64 --decode > "$RUNNER_TEMP/profile.mobileprovision"
+          security cms -D -i "$RUNNER_TEMP/profile.mobileprovision" > "$RUNNER_TEMP/profile.plist"
+          uuid="$(/usr/libexec/PlistBuddy -c 'Print UUID' "$RUNNER_TEMP/profile.plist")"
+          team="$(/usr/libexec/PlistBuddy -c 'Print TeamIdentifier:0' "$RUNNER_TEMP/profile.plist")"
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          cp "$RUNNER_TEMP/profile.mobileprovision" "$HOME/Library/MobileDevice/Provisioning Profiles/$uuid.mobileprovision"
+          echo "PROFILE_UUID=$uuid" >> "$GITHUB_ENV"; echo "TEAM_ID=$team" >> "$GITHUB_ENV"
+      - name: Archive, sign and upload to App Store Connect
+        if: env.HAS_SIGNING == 'true'
+        env:
+          ASC_KEY: ${{ secrets.ASC_KEY_P8_BASE64 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          "$GITHUB_WORKSPACE/qt/$QT_VERSION/ios/bin/qt-cmake" -S . -B build-ios -G Xcode \
+            -DQT_HOST_PATH="$GITHUB_WORKSPACE/qt/$QT_VERSION/macos" -DCMAKE_OSX_DEPLOYMENT_TARGET="$IOS_MIN" \
+            -DTAGLIB_PREFIX="$GITHUB_WORKSPACE/taglib-ios" -DIOS_FONT_DIR="$GITHUB_WORKSPACE/fonts" \
+            -DIOS_BUILD_NUMBER="${{ github.run_number }}" -DIOS_TEAM_ID="$TEAM_ID"
+          xcodebuild archive -project build-ios/musicplayer.xcodeproj -scheme musicplayer -configuration Release \
+            -sdk iphoneos -archivePath "$RUNNER_TEMP/Streamline.xcarchive" \
+            CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_IDENTITY="Apple Distribution" \
+            PROVISIONING_PROFILE="$PROFILE_UUID" | tail -40
+          mkdir -p "$RUNNER_TEMP/asc" && echo "$ASC_KEY" | base64 --decode > "$RUNNER_TEMP/asc/AuthKey_$ASC_KEY_ID.p8"
+          cat > "$RUNNER_TEMP/export.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>$TEAM_ID</string>
+            <key>signingStyle</key><string>manual</string>
+            <key>provisioningProfiles</key><dict><key>io.github.whozdgt.streamline</key><string>$PROFILE_UUID</string></dict>
+          </dict></plist>
+          EOF
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/Streamline.xcarchive" -exportOptionsPlist "$RUNNER_TEMP/export.plist" \
+            -exportPath "$RUNNER_TEMP/export" -authenticationKeyPath "$RUNNER_TEMP/asc/AuthKey_$ASC_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" -allowProvisioningUpdates

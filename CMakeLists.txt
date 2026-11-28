@@ -12,19 +12,21 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # An app-store build (Google Play, Apple's App Store) has no self-updater: the store installs updates.
-# iOS builds are always store builds.
+# iOS builds are always store builds, and so are Mac builds: a Mac picks up new versions from the App Store, or from the
+# releases page when installed by hand.
 option(PARAPLAY_STORE "Build for an app store: no in-app updater" OFF)
 # Linux: built as a distribution package (packaging/arch/PKGBUILD). Its updates then come as packages from the
 # "linux-latest" release, installed with pacman, instead of being built from source by update.sh.
 option(LINUX_PACKAGE "Linux: built as a package; update through pacman" OFF)
 set(LINUX_BUILD 0 CACHE STRING "Linux package: the CI build number")
-if(IOS)
+if(APPLE)
   set(PARAPLAY_STORE ON)
 endif()
 
 find_package(Qt6 6.6 REQUIRED COMPONENTS Core Gui Qml Quick Concurrent Network)
-if(ANDROID OR IOS)
-  # Phones: Qt Multimedia plays the audio, and TagLib is built for the phone by the CI workflow (TAGLIB_PREFIX).
+if(ANDROID OR APPLE)
+  # Phones and Macs: Qt Multimedia plays the audio (on Apple's devices through Apple's own decoders), and TagLib is
+  # built for the device by the CI workflow (TAGLIB_PREFIX).
   find_package(Qt6 6.6 REQUIRED COMPONENTS Multimedia)
   if(NOT TAGLIB_PREFIX)
     message(FATAL_ERROR "Set -DTAGLIB_PREFIX=<folder where TagLib was installed for the phone>")
@@ -164,12 +166,12 @@ if(ANDROID)
     endif()
   endif()
 elseif(IOS)
-  # iPhone: Qt Multimedia plays through Apple's own decoders; iosmedia.mm keeps music going with the screen locked
-  # and shows it on the lock screen.
-  target_sources(musicplayer PRIVATE src/iosmedia.mm src/iosmedia.h)
-  set_source_files_properties(src/iosmedia.mm PROPERTIES COMPILE_OPTIONS "-fobjc-arc")
+  # iPhone and iPad: Qt Multimedia plays through Apple's own decoders; iosmedia.mm keeps music going with the screen
+  # locked and shows it on the lock screen; iosfiles.mm brings a folder in from the Files app for a pod.
+  target_sources(musicplayer PRIVATE src/iosmedia.mm src/iosmedia.h src/iosfiles.mm src/iosfiles.h)
+  set_source_files_properties(src/iosmedia.mm src/iosfiles.mm PROPERTIES COMPILE_OPTIONS "-fobjc-arc")
   target_link_libraries(musicplayer PRIVATE Qt6::Multimedia taglib_static
-    "-framework AVFoundation" "-framework MediaPlayer" "-framework UIKit")
+    "-framework AVFoundation" "-framework MediaPlayer" "-framework UIKit" "-framework UniformTypeIdentifiers")
   # Play through Apple's own decoders (AVFoundation). Qt's FFmpeg backend would need FFmpeg built for iOS as well.
   if(TARGET Qt6::QDarwinMediaPlugin)
     qt_import_plugins(musicplayer INCLUDE_BY_TYPE multimedia Qt6::QDarwinMediaPlugin)
@@ -188,13 +190,15 @@ elseif(IOS)
   set_target_properties(musicplayer PROPERTIES
     MACOSX_BUNDLE ON
     MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/packaging/ios/Info.plist.in"
-    MACOSX_BUNDLE_GUI_IDENTIFIER "io.github.whozdgt.paraplay"
-    MACOSX_BUNDLE_BUNDLE_NAME "Paraplay"
+    MACOSX_BUNDLE_GUI_IDENTIFIER "io.github.whozdgt.streamline"
+    MACOSX_BUNDLE_BUNDLE_NAME "Streamline"
     MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
     MACOSX_BUNDLE_BUNDLE_VERSION "${IOS_BUILD_NUMBER}"
-    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "io.github.whozdgt.paraplay"
+    OUTPUT_NAME "Streamline"
+    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "io.github.whozdgt.streamline"
+    XCODE_ATTRIBUTE_PRODUCT_NAME "Streamline"
     XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
-    XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1"              # iPhone (it also runs on iPad, in an iPhone-sized window)
+    XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"            # iPhone and iPad
     XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "17.0"
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic")
   if(IOS_TEAM_ID)
@@ -213,6 +217,46 @@ elseif(IOS)
       qt_add_resources(musicplayer fonts PREFIX "/fonts" BASE "${IOS_FONT_DIR}" FILES ${font_files})
     endif()
   endif()
+elseif(APPLE)
+  # Mac: like the iPhone, Qt Multimedia plays through Apple's own decoders, and the media keys, Control Centre and the
+  # menu bar's Now Playing work through iosmedia.mm (MediaPlayer is on the Mac too).
+  target_sources(musicplayer PRIVATE src/iosmedia.mm src/iosmedia.h)
+  set_source_files_properties(src/iosmedia.mm PROPERTIES COMPILE_OPTIONS "-fobjc-arc")
+  target_link_libraries(musicplayer PRIVATE Qt6::Multimedia taglib_static
+    "-framework AVFoundation" "-framework MediaPlayer" "-framework AppKit")
+  if(TARGET Qt6::QDarwinMediaPlugin)
+    qt_import_plugins(musicplayer INCLUDE_BY_TYPE multimedia Qt6::QDarwinMediaPlugin)
+  endif()
+  if(NOT MAC_BUILD_NUMBER)
+    set(MAC_BUILD_NUMBER 1)
+  endif()
+  set(mac_icon "${CMAKE_CURRENT_SOURCE_DIR}/packaging/macos/Streamline.icns")
+  if(EXISTS "${mac_icon}")
+    target_sources(musicplayer PRIVATE "${mac_icon}")
+    set_source_files_properties("${mac_icon}" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  endif()
+  set_target_properties(musicplayer PROPERTIES
+    MACOSX_BUNDLE ON
+    OUTPUT_NAME "Streamline"
+    MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/packaging/macos/Info.plist.in"
+    MACOSX_BUNDLE_GUI_IDENTIFIER "io.github.whozdgt.streamline"
+    MACOSX_BUNDLE_BUNDLE_NAME "Streamline"
+    MACOSX_BUNDLE_ICON_FILE "Streamline.icns"
+    MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+    MACOSX_BUNDLE_BUNDLE_VERSION "${MAC_BUILD_NUMBER}")
+  target_compile_definitions(musicplayer PRIVATE PARAPLAY_BUILD=${MAC_BUILD_NUMBER})
+  if(MAC_FONT_DIR)
+    set(font_files "")
+    foreach(w Regular Medium SemiBold Bold)
+      if(EXISTS "${MAC_FONT_DIR}/JetBrainsMono-${w}.ttf")
+        list(APPEND font_files "${MAC_FONT_DIR}/JetBrainsMono-${w}.ttf")
+      endif()
+    endforeach()
+    if(font_files)
+      qt_add_resources(musicplayer fonts PREFIX "/fonts" BASE "${MAC_FONT_DIR}" FILES ${font_files})
+    endif()
+  endif()
+  install(TARGETS musicplayer BUNDLE DESTINATION .)
 else()
   target_link_libraries(musicplayer PRIVATE PkgConfig::MPV PkgConfig::TAGLIB)
   target_compile_definitions(musicplayer PRIVATE HAVE_MPV)

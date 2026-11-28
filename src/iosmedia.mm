@@ -2,9 +2,17 @@
 
 #include <QImage>
 
+#include <TargetConditionals.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+typedef UIImage PlatformImage;
+#else
+// the Mac: the same Now Playing and remote commands (media keys, Control Centre, the menu bar), with AppKit's images
+#import <AppKit/AppKit.h>
+typedef NSImage PlatformImage;
+#endif
 
 #include "cover.h"
 #include "player.h"
@@ -13,7 +21,7 @@
 // and let go with __bridge_transfer.
 
 namespace {
-UIImage *toUIImage(const QImage &src)
+PlatformImage *toPlatformImage(const QImage &src)
 {
     if (src.isNull()) return nil;
     QImage img = src.convertToFormat(QImage::Format_RGBA8888);
@@ -23,7 +31,11 @@ UIImage *toUIImage(const QImage &src)
     CGImageRef cg = CGImageCreate(img.width(), img.height(), 8, 32, img.bytesPerLine(), cs,
                                   CGBitmapInfo(kCGBitmapByteOrderDefault) | CGBitmapInfo(kCGImageAlphaLast), provider, nullptr, false,
                                   kCGRenderingIntentDefault);
-    UIImage *out = cg ? [UIImage imageWithCGImage:cg] : nil;
+#if TARGET_OS_IPHONE
+    PlatformImage *out = cg ? [UIImage imageWithCGImage:cg] : nil;
+#else
+    PlatformImage *out = cg ? [[NSImage alloc] initWithCGImage:cg size:NSZeroSize] : nil;
+#endif
     if (cg) CGImageRelease(cg);
     CGDataProviderRelease(provider);
     CFRelease(data);
@@ -34,6 +46,8 @@ UIImage *toUIImage(const QImage &src)
 
 IosMedia::IosMedia(Player *player, QObject *parent) : QObject(parent), m_p(player)
 {
+    Player *p = m_p;
+#if TARGET_OS_IPHONE
     // "Playback": keeps playing with the screen locked and the silent switch on, like any music app.
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *err = nil;
@@ -41,7 +55,6 @@ IosMedia::IosMedia(Player *player, QObject *parent) : QObject(parent), m_p(playe
     [session setActive:YES error:&err];
 
     // A phone call or an alarm interrupts the music: pause, so it doesn't jump back in by surprise afterwards.
-    Player *p = m_p;
     id obs = [[NSNotificationCenter defaultCenter]
         addObserverForName:AVAudioSessionInterruptionNotification object:session queue:[NSOperationQueue mainQueue]
                 usingBlock:^(NSNotification *n) {
@@ -49,6 +62,7 @@ IosMedia::IosMedia(Player *player, QObject *parent) : QObject(parent), m_p(playe
                     if (type == AVAudioSessionInterruptionTypeBegan && p->playing()) p->toggle();
                 }];
     m_observer = (__bridge_retained void *)obs;
+#endif
 
     MPRemoteCommandCenter *cc = [MPRemoteCommandCenter sharedCommandCenter];
     const auto add = [this](MPRemoteCommand *cmd, MPRemoteCommandHandlerStatus (^handler)(MPRemoteCommandEvent *)) {
@@ -125,9 +139,9 @@ void IosMedia::push()
         if (m_artwork) { id old = (__bridge_transfer id)m_artwork; (void)old; m_artwork = nullptr; }
         const bool streaming = path.startsWith(QLatin1String("srv://"));
         QImage img = streaming ? m_p->coverImage() : loadCover(path, QSize(600, 600));
-        if (UIImage *ui = toUIImage(img)) {
+        if (PlatformImage *ui = toPlatformImage(img)) {
             MPMediaItemArtwork *art = [[MPMediaItemArtwork alloc] initWithBoundsSize:ui.size
-                                                                      requestHandler:^UIImage *(CGSize) { return ui; }];
+                                                                      requestHandler:^PlatformImage *(CGSize) { return ui; }];
             m_artwork = (__bridge_retained void *)art;
         }
         // a streamed song's cover can arrive a moment later: try again next time

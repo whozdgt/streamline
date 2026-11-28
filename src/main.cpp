@@ -42,7 +42,7 @@
 #include "android.h"
 #include "androidmedia.h"
 #endif
-#ifdef Q_OS_IOS
+#if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
 #include "iosmedia.h"
 #endif
 #ifdef Q_OS_WIN
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     for (int i = 1; i < argc; ++i)
         if (!std::strcmp(argv[i], "--version") || !std::strcmp(argv[i], "-v")) { std::printf("streamline %s\n", APP_VERSION); return 0; }
 #endif
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_WIN) && !defined(Q_OS_IOS)
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_WIN) && !defined(Q_OS_IOS) && !defined(Q_OS_MACOS)
     QQuickWindow::setDefaultAlphaBuffer(true);   // transparent window so the compositor can blur behind it
 #endif
     QGuiApplication app(argc, argv);
@@ -68,8 +68,8 @@ int main(int argc, char *argv[])
     QGuiApplication::setOrganizationName("streamline");
     QGuiApplication::setDesktopFileName("streamline");    // Wayland app_id / window class (streamline.desktop), not Paraplay's
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN)
-    // phones and most Windows PCs don't have JetBrains Mono, so the build packs it into the app
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+    // phones, Macs and most Windows PCs don't have JetBrains Mono, so the build packs it into the app
     const QDir fontDir(QStringLiteral(":/fonts"));
     for (const QString &f : fontDir.entryList({QStringLiteral("*.ttf"), QStringLiteral("*.otf")}, QDir::Files))
         QFontDatabase::addApplicationFont(fontDir.filePath(f));
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     settings->insert("primary", QVariant::fromValue(QColor(st.value("primary", "#000000").toString())));
     settings->insert("accent", QVariant::fromValue(QColor(st.value("accent", "#16a34a").toString())));
 #ifdef Q_OS_IOS
-    // An iPhone app can only read its own folder. The Files app shows it as On My iPhone › Paraplay, and a Mac's
+    // An iPhone app can only read its own folder. The Files app shows it as On My iPhone › Streamline, and a Mac's
     // Finder shows it when the phone is plugged in: that is where the music goes.
     const QString defaultDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     QDir().mkpath(defaultDir);
@@ -144,8 +144,8 @@ int main(int argc, char *argv[])
     // replace them without touching what you chose under Classic.
     const auto refreshTheme = [settings]() {
         const bool midnight = settings->value("theme").toString() == QLatin1String("midnight");
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN)
-        const bool solid = true;          // phones and Windows can't blur what is behind the window
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+        const bool solid = true;          // phones, Macs and Windows can't blur what is behind the window
 #else
         const bool solid = midnight || !settings->value("frosted").toBool();
 #endif
@@ -308,8 +308,8 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_WIN
     WinMedia winMedia(&player);              // the keyboard's media keys
 #endif
-#ifdef Q_OS_IOS
-    IosMedia iosMedia(&player);              // keeps playing with the screen locked; lock-screen controls
+#if defined(Q_OS_IOS) || defined(Q_OS_MACOS)
+    IosMedia iosMedia(&player);              // iPhone: keeps playing with the screen locked; lock screen, Control Centre and media keys
 #endif
 #ifdef Q_OS_ANDROID
     AndroidMedia androidMedia(&player);      // notification, lock-screen controls and playing with the screen off

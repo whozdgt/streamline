@@ -49,7 +49,7 @@ ColumnLayout {
             }
             Text {
                 Layout.fillWidth: true; wrapMode: Text.Wrap; font.pixelSize: 12; lineHeight: 1.25; color: root.muted
-                text: library.scanning ? "Scanning…" : (Qt.platform.os === "ios" ? "Copy your music into Files › On My iPhone › Paraplay (or drag it there in Finder on a Mac), then tap Scan again."
+                text: library.scanning ? "Scanning…" : (Qt.platform.os === "ios" ? "Copy your music into Files › On My iPhone › Streamline (or drag it there in Finder on a Mac), then tap Scan again."
                                      : settings.mobile ? "Tap Choose folder to pick where your music is. It is scanned right away." : "Choose a folder, or type its path and press Enter.")
             }
         }

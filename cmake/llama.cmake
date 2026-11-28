@@ -9,8 +9,15 @@ foreach(opt LLAMA_BUILD_COMMON LLAMA_BUILD_TESTS LLAMA_BUILD_TOOLS LLAMA_BUILD_E
             GGML_OPENMP GGML_NATIVE GGML_BACKEND_DL GGML_CPU_ALL_VARIANTS)
   set(${opt} OFF CACHE BOOL "" FORCE)
 endforeach()
+# Apple's devices: the CPU too (no Metal shaders to compile and ship), plain ARMv8 like every phone.
+if(APPLE)
+  foreach(opt GGML_METAL GGML_BLAS)
+    set(${opt} OFF CACHE BOOL "" FORCE)
+  endforeach()
+endif()
 # Computers: the instructions every PC made since about 2013 has (AVX2). Phones: plain ARMv8, which every phone runs.
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(x86_64|AMD64|amd64)$" AND NOT ANDROID)
+# (Not when building for an iPhone or a Mac on an Intel Mac: the build machine's processor isn't the device's.)
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(x86_64|AMD64|amd64)$" AND NOT ANDROID AND NOT APPLE)
   foreach(opt GGML_SSE42 GGML_AVX GGML_AVX2 GGML_FMA GGML_F16C)
     set(${opt} ON CACHE BOOL "" FORCE)
   endforeach()

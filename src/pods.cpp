@@ -4,6 +4,9 @@
 #include "podai.h"
 #include "pdftext.h"
 #include "specread.h"
+#ifdef Q_OS_IOS
+#include "iosfiles.h"
+#endif
 #ifdef Q_OS_ANDROID
 #include "android.h"
 #endif
@@ -1116,6 +1119,25 @@ void Pods::askFiles() const
 {
 #ifdef Q_OS_ANDROID
     android::askFiles();
+#endif
+}
+
+bool Pods::canImportFolder() const
+{
+#ifdef Q_OS_IOS
+    return true;
+#else
+    return false;
+#endif
+}
+
+void Pods::importFolder()
+{
+#ifdef Q_OS_IOS
+    QPointer<Pods> self(this);
+    iosfiles::importFolder([self](const QString &dir, const QString &error) {
+        if (self) emit self->folderImported(dir, error);
+    });
 #endif
 }
 

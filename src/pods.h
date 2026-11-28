@@ -62,6 +62,9 @@ public:
     // Android 11+: reading documents (not just music) needs "All files access"
     Q_INVOKABLE bool filesAllowed() const;
     Q_INVOKABLE void askFiles() const;
+    // iPhone and iPad: a folder from the Files app, copied into the app's own folder; folderImported answers
+    Q_INVOKABLE bool canImportFolder() const;
+    Q_INVOKABLE void importFolder();
 
     struct Scanned {
         QString path, rel, name, ext, title, headings, body;
@@ -73,6 +76,7 @@ public:
 signals:
     void revisionChanged();
     void specLoaded(const QString &podId, const QVariantMap &result);     // { name, points } or { error }
+    void folderImported(const QString &dir, const QString &error);
 
 private:
     struct Doc {
