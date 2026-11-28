@@ -515,6 +515,13 @@ std::vector<podsort::SpecPoint> rowTable(const std::vector<std::string> &lines)
         const bool symbol = l.size() > 3 && uint8_t(l[0]) == 0xEF && (uint8_t(l[1]) == 0x82 || uint8_t(l[1]) == 0x81) && l[3] == ' ';
         return l.rfind("\xE2\x80\xA2", 0) == 0 || l.rfind("\xE2\x97\x8F", 0) == 0 || l.rfind("\xE2\x96\xAA", 0) == 0 || symbol;
     };
+    // a book in a column of suggested reading ("Darton, Longman & Todd Ltd, Chapter 5", "University Press, Chapters 2
+    // and 3": OCR A Level Religious Studies), not a topic's name
+    auto reference = [](const std::string &l) {
+        static const char *words[] = {" Press", "Publishing", "Publishers", " Ltd", "Chapter ", "Chapters ", "University ", "ISBN"};
+        for (const char *w : words) if (l.find(w) != std::string::npos) return true;
+        return false;
+    };
     for (const std::string &raw : lines) {
         const std::string l = trim(raw);
         if (l.empty()) continue;
@@ -527,7 +534,7 @@ std::vector<podsort::SpecPoint> rowTable(const std::vector<std::string> &lines)
         } else if (bullet(l)) {
             if (!pending.empty()) { rows.push_back({pending, std::string()}); pending.clear(); }
             if (!rows.empty() && rows.back().body.size() < 6000) rows.back().body += l + "\n";
-        } else if (!pending.empty() || (std::isupper(uint8_t(l[0])) && l.size() <= 50 && l.back() != '.' && l.back() != ',')) {
+        } else if (!reference(l) && (!pending.empty() || (std::isupper(uint8_t(l[0])) && l.size() <= 50 && l.back() != '.' && l.back() != ','))) {
             if (pending.size() < 8) pending.push_back(l);      // a name, or more of one
         } else if (!rows.empty() && rows.back().body.size() < 6000) {
             rows.back().body += l + "\n";      // more of the last bullet
