@@ -38,6 +38,15 @@ int main(int argc, char **argv)
             if (line.find(argv[3]) != std::string::npos) { std::printf("  find: %s\n", line.substr(0, 80).c_str()); ++shown; }
         return 0;
     }
+    if (argc > 3 && std::strcmp(argv[2], "--trace") == 0) {     // the reader's lines from the first starting with argv[3],
+#ifdef _WIN32                                                    // each with the point it went to
+        _putenv_s("SPECREAD_TRACE", argv[3]);
+#else
+        setenv("SPECREAD_TRACE", argv[3], 1);
+#endif
+        podsort::parseSpec(text);
+        return 0;
+    }
     if (argc > 3 && std::strcmp(argv[2], "--around") == 0) {    // a few lines either side of the first line starting with argv[3]
         std::vector<std::string> ls;                              // (or of the first argv[4] such lines)
         std::istringstream in(text);

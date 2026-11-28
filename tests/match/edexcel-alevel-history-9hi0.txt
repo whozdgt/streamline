@@ -1,0 +1,29 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/A%20Level/History/2015/Specification%20and%20sample%20assessments/9781446914366-gce-2015-a-hist.pdf
+# A level History notes written for this test, for Edexcel's options (a student takes a Paper 1 option, a Paper 2
+# option from the same route, and a Paper 3 option). Each is under the option it is about.
+=== 1A | crusades
+Pope Urban II and the Council of Clermont 1095, religious motives (remission of sins, pilgrimage), the First Crusade and the fall of Jerusalem 1099, the crusader states of Outremer, the Second Crusade, Saladin and the battle of Hattin 1187, Richard I and the Third Crusade, the Fourth Crusade and the sack of Constantinople 1204.
+=== 1E | lenin to yeltsin
+Communist government in the USSR: Lenin and the Bolshevik consolidation, Stalin's dictatorship, Khrushchev's de-Stalinisation, Brezhnev's stagnation, Gorbachev's glasnost and perestroika, Yeltsin. Industrialisation, the Five Year Plans, collectivisation, the purges and the gulag, the role of the NKVD and KGB.
+=== 1G | germany and west germany
+Germany and West Germany 1918-89: the Weimar constitution, hyperinflation, Hitler's consolidation of power, the Nazi economy, Adenauer's chancellorship, the Wirtschaftswunder, Ostpolitik under Brandt, the Basic Law, women in Germany, the Guest workers.
+=== 1H | britain transformed
+Britain transformed 1918-97: the impact of the First World War, the general strike 1926, the National Government, Attlee's welfare state and the NHS, the post-war consensus, Thatcherism, the changing role of women, immigration and race relations, the Notting Hill riots, youth culture in the 1960s.
+=== 2C.2 | russia in revolution
+Russia in revolution 1894-1924: the rule of Nicholas II, the 1905 revolution and the October Manifesto, Stolypin, Rasputin, the impact of the First World War, the February revolution, the Provisional Government and the Kornilov affair, the October revolution, the Civil War, War Communism and the New Economic Policy.
+=== 2E.1 | maos china
+Mao's China 1949-76: establishing communist rule, the Korean War, the Hundred Flowers campaign, the Great Leap Forward and the famine, the Cultural Revolution and the Red Guards, the Gang of Four, Lin Biao, Mao's personality cult.
+=== 2G.1 | fascist italy
+The rise and fall of fascism in Italy c1911-46: the liberal state, the impact of the First World War, the mutilated victory, the March on Rome 1922, the Matteotti crisis, the Lateran Pacts, the corporate state, the Abyssinian war, the fall of Mussolini 1943.
+=== 2H.1 | usa boom bust
+The USA c1920-55: the boom of the 1920s, Prohibition, the Red Scare, the Wall Street Crash 1929, the Depression, Roosevelt's New Deal, the Second World War economy, McCarthyism.
+=== Option 36.2 | ireland
+Ireland and the Union c1774-1923: Grattan's Parliament, the 1798 rebellion, the Act of Union 1801, O'Connell and Catholic emancipation, the Great Famine, Fenianism, Parnell and Home Rule, the Easter Rising 1916, partition and the Anglo-Irish Treaty 1921.
+=== Option 39.1 | civil rights usa
+Civil rights and race relations in the USA 1850-2009: slavery and the Civil War, Reconstruction and the 13th, 14th and 15th amendments, Jim Crow laws, Plessy v Ferguson 1896, the Great Migration, Brown v Board 1954, Martin Luther King, the Civil Rights Act 1964, Obama's election in 2008.
+=== - | chemistry
+Electrolysis of molten lead bromide: lead at the cathode, bromine at the anode.
+=== - | maths
+area of a circle = pi r squared
+=== - | reminder
+renew bus pass

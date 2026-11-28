@@ -1,0 +1,25 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Mathematics%20A/2016/Specification%20and%20sample%20assessments/international-gcse-in-mathematics-spec-a.pdf
+# International GCSE Mathematics A notes written for this test: worked examples and revision notes. Each is under the
+# topic it is about.
+=== 1 | fractions and percentages
+Fractions: equivalent fractions, adding fractions with different denominators, multiplying and dividing mixed numbers. Percentages: percentage increase and decrease, reverse percentages, compound interest 1.05^n, standard form 3.2 x 10^5.
+=== 1 | surds and bounds
+Recurring decimals to fractions (x = 0.272727..., 100x - x), surds: simplify root 50 = 5 root 2, rationalising the denominator, upper and lower bounds of a calculation.
+=== 2 | solving equations
+Linear equations with brackets and fractions, simultaneous equations by elimination and substitution, quadratic equations by factorising, the quadratic formula, completing the square, linear inequalities on a number line.
+=== 2 | rearranging formulae
+Changing the subject of a formula, expanding brackets, factorising expressions, algebraic fractions, index laws with negative and fractional powers.
+=== 3 | graphs
+Straight line graphs y = mx + c, gradient and intercept, sequences and the nth term of an arithmetic sequence, function notation f(x), inverse and composite functions, differentiation to find turning points.
+=== 4 | geometry
+Angles in polygons, circle theorems (angle at the centre is twice the angle at the circumference, alternate segment theorem), Pythagoras' theorem, SOHCAHTOA, the sine rule and cosine rule, area of a sector, volume of a cone and sphere.
+=== 5 | vectors
+Column vectors, adding and subtracting vectors, vector proofs with parallel lines, transformations: reflection, rotation, enlargement with fractional scale factor, translation by a vector.
+=== 6 | statistics and probability
+Mean, median and mode from a frequency table, cumulative frequency and box plots, histograms with frequency density, tree diagrams, conditional probability, Venn diagrams.
+=== - | history
+The Treaty of Versailles: war guilt clause, reparations of £6.6 billion.
+=== - | biology
+Enzymes are denatured above their optimum temperature.
+=== - | chores
+take the bins out tuesday night

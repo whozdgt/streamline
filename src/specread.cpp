@@ -174,6 +174,9 @@ bool parseKey(const std::string &line, Key &k)
         k.id = id;
         k.title = trim(line.substr(i));
         k.rank = rank;
+        // "Chapter 8" on its own: a reference to a book's chapter (OCR A Level Religious Studies' "Contextual
+        // references"), not a heading
+        if (w == "chapter" && k.title.empty()) return false;
         // "Paper 3. Teaching approaches to content must reflect this.": a sentence that starts with a paper's name
         if (fullStop && !k.title.empty() && k.title.back() == '.' && k.title.size() > 25) return false;
         // "Section 6 7). Use of…", "Paper 3 Statistics and Mechanics. Students are required…": a sentence, not a heading
@@ -808,6 +811,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     std::vector<Open> stack;
     int lastTop = 0;
     int innerLast = 0;          // the last of a subsection's own numbered parts ("5 Specialisation…" in 1.3.1), if any
+    bool letteredLayout = false;      // subtopics named above lettered statements ("Integers", "A understand…")
     int listNext = 0;           // the next item of a numbered list in the text ("1. Python", "2. C#"), and its line
     size_t listLine = 0;
     int topSection = 0;
@@ -884,14 +888,37 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         return -1;
     };
 
+    static const std::regex optionNumRe("^([1-9][0-9]?[A-Z])(?:\\.([0-9]{1,2}))?\\s+([A-Z].*)$");      // "2A", "2A.1"
+    // For working out a layout: SPECREAD_TRACE="1.3.1 Introductory" prints the 40 lines from the first one starting so,
+    // each with the point it went to (spec_test --trace)
+    const char *traceAt = std::getenv("SPECREAD_TRACE");
+    size_t traceFrom = std::string::npos;
+    struct Trace {
+        std::function<void()> f;
+        ~Trace() { if (f) f(); }
+    };
     for (size_t i = 0; i < lines.size(); ++i) {
         const std::string &l = lines[i];
+        if (traceAt && traceFrom == std::string::npos && l.rfind(traceAt, 0) == 0) traceFrom = i;
+        Trace trace;
+        if (traceFrom != std::string::npos && i < traceFrom + 40)
+            trace.f = [&, i]() {
+                std::string where = "-";
+                if (!stack.empty()) {
+                    const auto &p = pts[size_t(stack.back().point)];
+                    where = p.number + " " + p.title.substr(0, 40) + " (rank " + std::to_string(stack.back().rank) + ")";
+                }
+                std::printf("  %5zu %-58.58s -> %s\n", i, lines[i].c_str(), where.c_str());
+            };
         while (size_t(topSection) < sectionStarts.size() && from + i > sectionStarts[size_t(topSection)]) ++topSection;
         Num n;
         Key k;
         char letter = 0;
         // a contents page (in pasted text, where the subject content wasn't found and the whole text is read)
-        const bool toc = tocLine(l) && (!foundSection || l.find("....") != std::string::npos);
+        // (or a list of the content's topics at its start, each with its page: "2: Equations, formulae and identities 15",
+        // Edexcel International GCSE Mathematics A)
+        const bool listed = tocLine(l) && ((i + 1 < lines.size() && tocLine(lines[i + 1])) || (i > 0 && tocLine(lines[i - 1])));
+        const bool toc = (tocLine(l) && (!foundSection || l.find("....") != std::string::npos)) || listed;
         if (toc && ((parseNum(l, n) && !statementLike(n.title)) || parseKey(l, k))) continue;
         std::string code, title;
         int made = -1;
@@ -946,7 +973,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // ("Topic 1: The origins of the First World War") rather than numbers
                 // or the next topic, when its numbers carry on from the last paper's (Cambridge IGCSE Sociology:
                 // Paper 1's topics 1–3, then Paper 2's 4–6)
-                if (!heads && k.rank <= 12) {
+                // (and so does an option whose numbering starts again: "Paper 4, Option 4A: Buddhism", then 1.1;
+                // "Option 4B: Christianity", then 1.1 again: Edexcel A level Religious Studies)
+                if (!heads && (k.rank <= 12 || lower(k.keyword) == "option")) {
                     int openMajor = -1;      // the numbered point open now ("3" in 3.3.3), if any
                     for (const auto &o : stack) {
                         const std::string &num = pts[size_t(o.point)].number;
@@ -975,6 +1004,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (rank < 30) { lastTop = 0; innerLast = 0; }
         } else if (useCode2 && parseCode2(l, code, title)) {
             made = open(50, code, cleanTitle(title), false);
+        } else if (std::smatch om; board == "Edexcel" && l.size() < 160 && !tocLine(l) &&
+                   std::regex_match(l, om, optionNumRe)) {
+            // a topic's options and their key ideas: "2A Glaciated Landscapes and Change", then "2A.1 The causes of
+            // longer and shorter climate change…" (Edexcel A level Geography)
+            if (om[2].matched) {
+                made = open(36, om[1].str() + "." + om[2].str(), cleanTitle(om[3].str()), true);
+                numbersSeen.insert(om[1].str() + "." + om[2].str());
+            } else made = open(29, om[1].str(), cleanTitle(om[3].str()), false);
         } else if (board == "OCR" && l.size() > 8 && std::isupper(uint8_t(l[0])) && std::isdigit(uint8_t(l[1])) && std::isdigit(uint8_t(l[2])) &&
                    std::isdigit(uint8_t(l[3])) && l[4] == ' ' && std::isupper(uint8_t(l[5])) && !tocLine(l)) {
             made = open(40, l.substr(0, 4), cleanTitle(l.substr(5)), false);      // OCR's units: "Y101 Alfred and the Making of England 871–1066"
@@ -995,6 +1032,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // a topic ("2 Organisation of the organism"), or a numbered learning statement under a subtopic
                 const int v = n.parts[0];
                 bool heading = !statement;
+                // a date in the text, not a topic: "19 March, Suspects and Frimaire" (Edexcel A level History); nor
+                // a number far past the last topic's
+                static const std::set<std::string> months = {"january", "february", "march", "april", "may", "june", "july",
+                                                             "august", "september", "october", "november", "december"};
+                if (heading && (months.count(lower(firstWord(t))) || (!dottedOpen() && lastTop > 0 && v > lastTop + 3))) heading = false;
                 // a numbered list in the text, after the line that brings it in ("…the following programming
                 // languages:", "1. Python", "2. C#", "3. Java.": Edexcel International GCSE Computer Science)
                 if (heading && ((v == 1 && i > 0 && !lines[i - 1].empty() && lines[i - 1].back() == ':') ||
@@ -1076,7 +1118,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                         bool ok = std::isupper(uint8_t(lines[i - k][0]));
                         for (size_t j = i - k; j < i && ok; ++j) ok = nameLike(lines[j]);
                         const std::string &before = i - k > 0 ? lines[i - k - 1] : std::string(".");
-                        const bool after = !before.empty() && (before.back() == '.' || before.back() == ')');
+                        // (or after a heading: "Paper 4, Option 4A: Buddhism", then "Religious", "beliefs, values",
+                        // "and teachings", then "1.1": Edexcel A level Religious Studies)
+                        Key bk;
+                        const bool after = !before.empty() && (before.back() == '.' || before.back() == ')' || parseKey(before, bk));
                         if (ok && after) { first = i - k; take = k; }
                     }
                     if (take) {
@@ -1124,19 +1169,41 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (justOpened >= 0 && justKeyword && !stack.empty() && stack.back().point == justOpened &&
                 pts[size_t(justOpened)].title.empty() && l.size() >= 3 && l.size() <= 100 && std::isupper(uint8_t(l[0])) &&
                 l.back() != '.') {
-                pts[size_t(justOpened)].title = cleanTitle(l);
+                std::string name = l;
+                // and its second line, unless the name has ended ("Anglo-Saxon England and the Anglo-Norman",
+                // "Kingdom, c1053–1106"; not "Lancastrians, Yorkists and Henry VII," then "Overview")
+                static const std::set<std::string> next = {"overview", "content", "introduction", "themes", "key topics",
+                                                           "aspects in breadth", "aspects in depth", "themes in breadth"};
+                if (i + 1 < lines.size() && !lines[i + 1].empty() && lines[i + 1].size() <= 60 && !std::isdigit(uint8_t(name.back())) &&
+                    !next.count(lower(trim(lines[i + 1]))) && lines[i + 1].back() != '.' && lines[i + 1].back() != ':') {
+                    Num nn;
+                    Key kk;
+                    if (!parseNum(lines[i + 1], nn) && !parseKey(lines[i + 1], kk)) name += " " + lines[++i];
+                }
+                pts[size_t(justOpened)].title = cleanTitle(name);
                 justKeyword = false;
-                rawEndsComma = l.back() == ',';
+                justOpened = -1;
                 continue;
             }
             // a subtopic named above its coded statements: "Structure and calculation", then "N1 order positive and
             // negative integers…" (the statements' codes, N1, A1, G1, aren't numbers of the document's own)
             if (i + 1 < lines.size() && !stack.empty() && l.size() >= 3 && l.size() <= 60 && std::isupper(uint8_t(l[0])) &&
-                l.back() != '.' && l.back() != ':' && !statementLike(l) &&
+                l.back() != '.' && l.back() != ':' &&
                 std::none_of(l.begin(), l.end(), [](char c) { return std::isdigit(uint8_t(c)); }) &&
                 lines[i + 1].size() > 4 && std::isupper(uint8_t(lines[i + 1][0]))) {
                 static const std::regex coded("^[A-Z]{1,2}[0-9]{1,2}[a-z]?\\s+[a-z].*");
-                if (std::regex_match(lines[i + 1], coded)) {
+                // (or above lettered ones, "Integers", then "A understand and use integers…", "B understand place
+                // value"; or "See Foundation Tier" in the Higher Tier's copy: Edexcel International GCSE Mathematics A.
+                // Lettered statements under it make it a subtopic even when its name starts like one: "Use of symbols")
+                static const std::regex lettered("^[A-Z]\\s+[a-z].*"), seeTier("^See (Foundation|Higher) Tier.*");
+                bool letters = false;
+                if (lines[i + 1].size() > 2 && lines[i + 1][0] == 'A' && std::regex_match(lines[i + 1], lettered)) {
+                    letters = letteredLayout;      // (once there have been some, one with only an A is one too)
+                    for (size_t j = i + 2; j < lines.size() && j < i + 10 && !letters; ++j)
+                        letters = lines[j].size() > 2 && lines[j][0] == 'B' && std::regex_match(lines[j], lettered);
+                    letteredLayout = letteredLayout || letters;
+                }
+                if ((!statementLike(l) && (std::regex_match(lines[i + 1], coded) || std::regex_match(lines[i + 1], seeTier))) || letters) {
                     made = open(33, "", cleanTitle(l), false);
                     justOpened = made;
                     justMerged = merged;
@@ -1160,8 +1227,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 std::string capital = l;
                 if (c0 < 0x80) capital[0] = char(std::toupper(c0));
                 const bool command = c0 < 0x80 && std::islower(c0) && statementLike(capital) && firstWord(l) != "and" && firstWord(l) != "of";
+                // (a title that is a sentence under way carries on, whatever word comes next: "3.1 Globalisation is a
+                // long-standing" + "process which has…", Edexcel A level Geography's key ideas)
+                const std::string lb = " " + lower(bt) + " ";
+                const bool sentence = lb.find(" is ") != std::string::npos || lb.find(" are ") != std::string::npos ||
+                                      lb.find(" has ") != std::string::npos || lb.find(" have ") != std::string::npos ||
+                                      lb.find(" can ") != std::string::npos;
                 const bool carries = ((c0 < 0x80 && std::islower(c0) && !justKeyword) || joiners.count(lower(lastWord)) || rawEndsComma) &&
-                                     !(command && !joiners.count(lower(lastWord)) && !rawEndsComma);
+                                     !(command && !joiners.count(lower(lastWord)) && !rawEndsComma && !sentence);
                 // (a word broken at its hyphen carries on whatever its case: "1 Late Anglo-" + "Saxon England,")
                 const bool broken = !bt.empty() && bt.back() == '-' && bt.size() >= 2 && std::isalpha(uint8_t(bt[bt.size() - 2])) &&
                                     std::isalpha(c0);
@@ -1189,6 +1262,16 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     std::vector<int> twin(pts.size(), -1);
     {
         std::map<std::pair<std::string, std::string>, int> first;
+        // the option a point is in ("4A Buddhism", "Option 30"), if any: the same topic in two options ("1 Religious
+        // beliefs, values and teachings" in Buddhism and in Christianity) is two points
+        static const std::regex optionCode("^[0-9]{1,2}[A-Z](\\.[0-9]{1,2})?$");
+        auto optionOf = [&](size_t i) {
+            for (int q = pts[i].parent; q >= 0; q = pts[size_t(q)].parent) {
+                const std::string &n = pts[size_t(q)].number;
+                if (n.rfind("Option ", 0) == 0 || std::regex_match(n, optionCode)) return n;
+            }
+            return std::string();
+        };
         for (size_t i = 0; i < pts.size(); ++i) {
             const std::string &t = pts[i].title;
             int words = 0, run = 0;      // words of three letters or more ("France, 1774–1814" has one)
@@ -1206,12 +1289,13 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if ((!t.empty() && words == 0) || pts[i].number == "0" || lt == "unit description" || lt == "assessment information" ||
                 lt == "unit content" || lt == "content" || objective) { gone[i] = true; continue; }
             if (pts[i].number.empty() || t.empty()) continue;
-            const auto key = std::make_pair(pts[i].number, lower(t));
+            const std::string where = optionOf(i) + "|" + pts[i].number;
+            const auto key = std::make_pair(where, lower(t));
             auto it = first.find(key);
             if (it == first.end()) {
                 // or the same number, its title cut short in one of them ("Y201 The Rise of Islam c.550–750", listed,
                 // then as a unit's heading; a statement that ran on into the next line in one copy)
-                for (auto f = first.lower_bound({pts[i].number, std::string()}); f != first.end() && f->first.first == pts[i].number; ++f) {
+                for (auto f = first.lower_bound({where, std::string()}); f != first.end() && f->first.first == where; ++f) {
                     const std::string &a = f->first.second, b = lower(t);
                     const size_t n = std::min(a.size(), b.size());
                     if (n >= (std::isalpha(uint8_t(pts[i].number[0])) ? 8u : 20u) && a.compare(0, n, b, 0, n) == 0) { it = f; break; }

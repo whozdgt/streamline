@@ -1,0 +1,31 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/A%20Level/Geography/2016/specification-and-sample-assessments/pearson-edexcel-a-level-geography-issue-6.pdf
+# A level Geography notes written for this test: case studies, fieldwork notes and essay plans. Each is under the key
+# idea, option or topic it is about.
+=== 1.1;1.2 | plate tectonics
+Plate boundaries: constructive, destructive and conservative margins, hotspots (Hawaii), the global distribution of earthquakes and volcanoes, mantle convection, slab pull and ridge push, sea floor spreading and palaeomagnetism.
+=== 1.4;1.5;1.6 | vulnerability
+The pressure and release (PAR) model, the hazard risk equation, vulnerability and resilience, Haiti 2010 vs Chile 2010 earthquakes, the role of governance and corruption, Degg's model, hazard profiles of magnitude, frequency and duration.
+=== Topic 1 | managing tectonic hazards
+Prediction and forecasting of volcanic eruptions, Park's model of the disaster response curve, the hazard management cycle, land use zoning, earthquake resistant buildings, the role of aid and insurance.
+=== 2A | glaciation
+Milankovitch cycles and the Pleistocene, the Loch Lomond stadial, glacier mass balance, warm-based and cold-based glaciers, corries, aretes and pyramidal peaks, drumlins, eskers and kames, periglacial landforms like pingos and patterned ground.
+=== 2B | coasts
+The littoral zone, high and low energy coasts, Holderness coastline erosion rates, longshore drift, spits and bars, hard engineering (sea walls, groynes) vs soft engineering (beach nourishment), shoreline management plans and managed retreat.
+=== Topic 3 | globalisation
+The KOF index of globalisation, switched on and switched off places, the role of the WTO, IMF and World Bank, special economic zones in China, TNCs and outsourcing, the global shift of manufacturing, glocalisation, westernisation of culture.
+=== 4A | regeneration
+Regenerating places: the Olympic legacy in Stratford, east London, rebranding of rural places, deindustrialisation, the Index of Multiple Deprivation, how successful regeneration is measured.
+=== 5.4;5.5;5.6 | drought and floods
+Drought: meteorological, hydrological and agricultural drought, ENSO cycles and the Sahel. Floods: the 2007 UK floods, Somerset levels 2014, storm hydrographs and lag time, the effect of climate change on the water cycle.
+=== Topic 6 | carbon and energy
+The carbon cycle: geological and biological stores, ocean sequestration, the biological pump. Energy security: energy mix, energy players like Gazprom, unconventional fossil fuels (tar sands, fracking, deep water oil), renewables, nuclear power, biofuels.
+=== Topic 7 | superpowers
+Superpowers: hard and soft power, Mackinder's heartland theory, unipolar, bipolar and multipolar worlds, the rise of the BRICS, China's Belt and Road Initiative, the role of the USA in NATO and the UN Security Council.
+=== 8B | migration and sovereignty
+Migration, identity and sovereignty: international migration flows, the EU's free movement of people, Brexit, national identity, the role of the UN and contested territories like Crimea.
+=== - | biology
+The Krebs cycle takes place in the mitochondrial matrix.
+=== - | english
+Jane Eyre: the red room and Bertha Mason as Jane's double.
+=== - | money
+paid back Sam £20

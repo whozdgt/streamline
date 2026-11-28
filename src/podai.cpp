@@ -494,6 +494,14 @@ std::vector<Placement> matchSpec(const std::vector<std::vector<std::vector<float
         const double s = std::clamp(std::sqrt(double(nl > 1 ? nl - 1 : 1) / 97.0), 0.55, 1.0);
         t.match *= s; t.sure *= s; t.standoutClose *= s; t.margin *= s;
     }
+    // A handful of broad points (AQA GCSE English Literature: Shakespeare, the 19th-century novel, modern texts,
+    // poetry): among so few, how far the best stands out says little, and a spec like that names its texts without
+    // discussing them, so notes on them fit it more loosely. Filed there to check (never sure: among so few points
+    // nothing can stand out that far).
+    if (nl <= 8) {
+        t.fitFloor = std::min(t.fitFloor, 0.56);
+        t.match = std::min(t.match, 1.6);
+    }
     // the documents you have put under a point yourself: each one's leaf (k), and the whole document's meaning
     std::map<int, size_t> leafPos;
     for (size_t k = 0; k < nl; ++k) leafPos[leaves[k]] = k;

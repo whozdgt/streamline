@@ -28,7 +28,8 @@ jobs:
               want = line.strip()
               if not want or want.startswith("#"): continue
               # "id | around | 2.1 ": a few lines either side of the first line starting with "2.1 ", instead
-              # ("id | around | Algebra and | 5": of the first five such lines)
+              # ("id | around | Algebra and | 5": of the first five such lines; "id | trace | 1.3.1 Intro": the reader's own
+              # lines from there, each with the point it went to)
               extra = [x for x in want.split(" | ")[1:]]
               want = want.split(" | ")[0]
               url = cat[want]["url"] if want in cat else want
@@ -39,6 +40,9 @@ jobs:
               except Exception as e:
                   print("not downloaded:", e); continue
               open("spec.pdf", "wb").write(data)
+              if extra and extra[0] == "trace":
+                  print(subprocess.run(["./spec_test", "spec.pdf", "--trace", extra[1]], capture_output=True, text=True, errors="replace").stdout, flush=True)
+                  continue
               if extra and extra[0] == "around":
                   print(subprocess.run(["./spec_test", "spec.pdf", "--around"] + extra[1:3], capture_output=True, text=True, errors="replace").stdout, flush=True)
                   continue
