@@ -1,0 +1,25 @@
+# spec: https://www.cambridgeinternational.org/Images/697412-2026-2027-syllabus.pdf
+# AS & A Level Thinking Skills notes written for this test: problem solving and critical thinking revision notes. Each
+# is under the point it is about.
+=== 2.2 | puzzles with criteria
+Problem solving: finding every case that satisfies the conditions, e.g. which arrangements of five people round a table meet all the seating rules, or which delivery routes are possible; listing systematically so none are missed.
+=== 3.1 | transforming data
+Transforming data: turning a table into a chart, converting units, working out percentages and percentage change, ratios, reading timetables and changing data from one form to another.
+=== 3.2 | explaining trends
+Explaining trends in data: suggesting reasons why ticket sales rose then fell, correlation is not causation, other factors that could explain a pattern.
+=== 4.2 | modelling
+Developing a model: writing a formula for a taxi fare (fixed charge plus a rate per mile), modelling costs and choosing the cheapest option, testing the model with values.
+=== 5.1 | evaluating evidence
+Evaluating evidence: credibility criteria — reputation, ability to see, expertise, vested interest, neutrality, corroboration; reliability of sources and statistics.
+=== 6.1 | structure of arguments
+Analysing arguments: identifying the main conclusion, reasons, intermediate conclusions, assumptions, counter-assertions and examples; argument indicators like therefore and because.
+=== 7.1 | flaws
+Flaws in reasoning: straw man, ad hominem, slippery slope, post hoc (assuming cause from sequence), circular argument, false dichotomy, hasty generalisation, appeal to popularity.
+=== 8.1 | writing an argument
+Constructing your own argument: a clear conclusion, well-supported reasons, intermediate conclusions, a counter-argument and its response, persuasive and logical structure.
+=== - | biology
+Mitosis produces two genetically identical daughter cells.
+=== - | geography
+Hard engineering coastal defences include sea walls and groynes.
+=== - | music
+A perfect cadence is chord V to chord I.

@@ -1,0 +1,28 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Human%20Biology/2017/specification-and-sample-assessment/international-gcse-human-biology-2017-spec.pdf
+# International GCSE Human Biology notes written for this test: revision notes. Each is under the points it is about.
+=== 1.3,1.4 | dna
+DNA is a double helix of two strands held together by complementary base pairs, A with T and C with G; in replication the strands separate and each acts as a template for a new strand.
+=== 2.6,2.7 | enzymes
+Enzymes are biological catalysts; the substrate fits the active site (lock and key); activity increases with temperature to an optimum then the enzyme denatures; each enzyme has an optimum pH.
+=== 4.2,4.3 | joints
+Synovial joints like the knee: cartilage reduces friction, synovial fluid lubricates, ligaments hold bones together; the elbow is a hinge joint, the shoulder a ball and socket joint.
+=== 5.11,5.12 | the eye
+The eye: the cornea and lens focus light on the retina, the iris controls the pupil size, accommodation for near and distant objects; short sight is corrected with a concave lens, long sight with a convex lens.
+=== 6.5,6.6,6.7 | digestion
+Digestion: the alimentary canal from mouth to anus; peristalsis moves food; amylase breaks starch into maltose, protease breaks proteins into amino acids, lipase breaks lipids into fatty acids and glycerol.
+=== 8.2,8.3 | breathing
+Ventilation: the intercostal muscles and diaphragm contract, the volume of the thorax increases and air is drawn in; alveoli are adapted for gas exchange with a large surface area and thin walls.
+=== 9.10,9.11 | the heart
+The heart: four chambers, valves stop backflow, the left ventricle has a thick muscular wall; coronary heart disease is caused by fatty deposits in the coronary arteries, treated with stents and bypass surgery.
+=== 10.6,10.5 | adh
+Osmoregulation: when the blood is too concentrated, the hypothalamus detects it and the pituitary gland releases ADH, which makes the collecting ducts in the kidney reabsorb more water, so less urine is made.
+=== 11.5 | menstrual cycle
+The menstrual cycle: FSH makes an egg mature, oestrogen builds up the uterus lining, LH triggers ovulation on about day 14, progesterone maintains the lining.
+=== 12.13,12.14 | vaccination
+Vaccines contain dead or weakened pathogens; white blood cells make antibodies and memory cells, so a second infection is fought off quickly; artificial active immunity compared with natural immunity.
+=== - | geography
+A meander is a bend in a river; erosion on the outside, deposition on the inside.
+=== - | business
+A sole trader has unlimited liability.
+=== - | latin
+amo, amas, amat — I love, you love, he loves.

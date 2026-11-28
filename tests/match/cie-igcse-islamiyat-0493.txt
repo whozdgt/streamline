@@ -1,0 +1,21 @@
+# spec: https://www.cambridgeinternational.org/Images/697174-2026-2027-syllabus.pdf
+# IGCSE Islamiyat notes written for this test: revision notes for Papers 1 and 2. Each is under the point it is about;
+# Paper 2's topics, numbered 1 to 4 again, are named with their titles.
+=== 1 | themes of the quran
+Major themes of the Qur’an: God in himself (Ayat al-Kursi, Surat al-Ikhlas), God's relationship with his created world, and with his messengers; the passages set for special study and their main teachings.
+=== 2 | history of the quran
+The history and importance of the Qur’an: the first revelation in the cave of Hira, the compilation under Abu Bakr and the standard copy under Uthman; the Qur’an as the first source of law with the Hadith, ijma and qiyas.
+=== 3 | life of the prophet
+The life of the Prophet Muhammad (pbuh): his early life in Makka, marriage to Khadija, the first revelation, persecution in Makka, the hijra to Madina in 622, the battles of Badr, Uhud and the Trench, the conquest of Makka.
+=== 4 | first community
+The first Islamic community: the Prophet's wives, his descendants, the Ansar and the Muhajirun, the migration to Abyssinia, and companions such as Bilal and Abu Bakr.
+=== 2 The history and importance of the Hadiths | hadith collections
+The history of the Hadiths: their compilation, the six authentic collections such as Sahih Bukhari and Sahih Muslim, the isnad (chain of narrators) and matn (text), and their use alongside the Qur’an in law.
+=== 4 The Articles of Faith and the Pillars of Islam | pillars
+The Articles of Faith (God, angels, books, prophets, the Last Day, predestination) and the Five Pillars: shahada, salat, zakat, sawm in Ramadan and hajj.
+=== - | chemistry
+An exothermic reaction gives out energy to the surroundings.
+=== - | maths
+The gradient of y = 3x + 2 is 3.
+=== - | music
+The Beatles' Sgt Pepper used studio effects.

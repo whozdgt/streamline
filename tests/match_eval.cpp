@@ -152,6 +152,9 @@ int main(int argc, char **argv)
             int found = -1;
             for (size_t i = 0; i < points.size() && found < 0; ++i)
                 if (points[i].number.empty() && lowerOf(points[i].title) == lowerOf(one)) found = int(i);
+            // or by its number and title, where letters come again in each topic ("(b) Forests")
+            for (size_t i = 0; i < points.size() && found < 0; ++i)
+                if (!points[i].number.empty() && lowerOf(points[i].number + " " + points[i].title) == lowerOf(one)) found = int(i);
             if (found >= 0) ok.push_back(found);
             else std::printf("  no point %s in the spec (note \"%s\")\n", one.c_str(), n.title.c_str());
         }

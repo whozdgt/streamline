@@ -1,0 +1,31 @@
+# spec: https://www.cambridgeinternational.org/Images/697151-2026-syllabus.pdf
+# IGCSE Enterprise notes written for this test: revision notes and parts of an enterprise project. Each is under the
+# point it is about.
+=== 1.1 | what is enterprise
+What is meant by enterprise: having an idea and taking the initiative and the risk to make it happen; entrepreneurs, enterprising activity in business and in the community.
+=== 2.2 | types of business
+Types of business organisation: sole trader, partnership, private and public limited companies, social enterprises and charities; unlimited and limited liability.
+=== 3.1 | skills of enterprising people
+Skills of enterprising people: problem solving, team working, communication, leadership, planning, time management, creativity and resilience.
+=== 4.2 | risk
+Risk in an enterprise project: what could go wrong (no customers, losing money, stock going out of date), how likely each risk is, and how to reduce it, e.g. a risk assessment.
+=== 5.1 | negotiation
+The negotiation process: preparing, knowing what you want and your limits, discussing, bargaining, reaching agreement and confirming it, e.g. negotiating a price with a supplier.
+=== 6.1 | sources of finance
+Sources of finance for an enterprise: personal savings, family and friends, bank loans and overdrafts, grants, crowdfunding, and their advantages and disadvantages.
+=== 6.4 | financial records
+Financial records: a cash flow forecast, an income statement (revenue minus costs gives profit), keeping receipts and invoices, break-even.
+=== 7.3 | business plan
+A business plan: the business idea, aims and objectives, market research findings, the marketing plan, financial forecasts, why banks ask to see one.
+=== 8.2 | market research
+Market research: primary research (questionnaires, interviews, observation, test marketing) and secondary research (internet, government statistics), sampling.
+=== 8.4 | marketing communications
+Marketing communications: advertising, social media, leaflets and posters, sales promotions, choosing the right method for the target market.
+=== 10.2 | meetings
+Meetings and presentations: agendas, minutes, chairing a meeting, preparing a presentation with slides to pitch our idea, speaking clearly to an audience.
+=== - | chemistry
+Alkanes are saturated hydrocarbons with the general formula CnH2n+2.
+=== - | history
+The Cuban Missile Crisis lasted thirteen days in October 1962.
+=== - | spanish
+Me gusta jugar al fútbol con mis amigos los fines de semana.

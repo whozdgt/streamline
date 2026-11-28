@@ -1,0 +1,27 @@
+# spec: https://qualifications.pearson.com/content/dam/pdf/GCSE/Statistics/2017/specification-and-sample-assessments/gcse-9-1-statistics-specification.pdf
+# GCSE Statistics notes written for this test: revision notes and worked examples. Each is under the point it is
+# about, the lettered points named with their titles.
+=== (a) Planning | planning an investigation
+Planning a statistical investigation: writing a hypothesis, deciding what data to collect, identifying problems and constraints, the data handling cycle (plan, collect, process, interpret, evaluate).
+=== (c) Population and sampling | sampling
+Sampling methods: random sampling with a random number generator, systematic sampling, stratified sampling in proportion to group sizes, quota and cluster sampling, the sampling frame, bias in samples.
+=== (d) Collecting data | questionnaires
+Collecting data: designing a questionnaire with non-overlapping response boxes, avoiding leading questions, pilot surveys, interviews, controlled experiments and capture-recapture.
+=== (a) Tabulation, diagrams and representation | diagrams
+Representing data: pie charts, histograms with unequal class widths (frequency density), cumulative frequency graphs, stem and leaf diagrams, choosing an appropriate diagram, misleading graphs.
+=== (b) Measures of central tendency | averages
+Averages: mean, median and mode for raw data, and the estimated mean from grouped frequency tables using midpoints; weighted means; which average to use.
+=== (c) Measures of dispersion | spread
+Measures of spread: range, interquartile range, standard deviation, box plots and outliers (more than 1.5 x IQR beyond the quartiles), comparing two distributions.
+=== (e) Scatter diagrams and correlation | correlation
+Scatter diagrams: positive and negative correlation, a line of best fit through the mean point, Spearman's rank correlation coefficient, correlation does not mean causation.
+=== (f) Time series | time series
+Time series: plotting data over time, trend lines, seasonal variation, moving averages to smooth the data and predicting future values.
+=== 3 | probability
+Probability: sample spaces, Venn diagrams, tree diagrams for independent and dependent events, P(A and B) = P(A) x P(B) for independent events, expected frequency, risk.
+=== - | biology
+Enzymes are denatured at high temperatures.
+=== - | religious studies
+The Five Pillars of Islam include salah, five daily prayers.
+=== - | drama
+A proscenium arch stage has the audience on one side.

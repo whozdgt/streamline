@@ -1,0 +1,31 @@
+# spec: https://www.cambridgeinternational.org/Images/697200-2026-syllabus.pdf
+# IGCSE Agriculture notes written for this test: revision notes on crops, soils and livestock. Each is under the point
+# it is about.
+=== 2.1 | soil formation
+Soil formation: weathering of parent rock by physical weathering (freeze-thaw, temperature changes), chemical weathering and biological weathering by roots and organisms; the soil profile with topsoil, subsoil and bedrock.
+=== 2.3 | soil fertility
+Soil fertility: the nutrients plants need (nitrogen, phosphorus, potassium), organic matter and humus, manure and compost, inorganic fertilisers, crop rotation and soil pH, liming acid soils.
+=== 2.4 | soil erosion
+Soil erosion by wind and water, overgrazing and deforestation; soil conservation by contour ploughing, terracing, windbreaks, mulching and cover crops.
+=== 2.5 | irrigation
+Drainage and irrigation: waterlogged soils need drains; irrigation methods — flood, furrow, sprinkler and drip irrigation — and their advantages, salinisation.
+=== 3.2 | plant reproduction
+Reproduction in plants: the structure of a flower, pollination by insects and wind, fertilisation, seed and fruit formation, asexual propagation by cuttings, grafting and tubers.
+=== 5.2 | pest control
+Pest control: insect pests like aphids and locusts, the damage they cause, chemical pesticides, biological control with ladybirds, cultural control, integrated pest management.
+=== 6.1 | ruminant digestion
+Digestion in ruminants: the four stomach chambers (rumen, reticulum, omasum, abomasum), chewing the cud, microbes digesting cellulose; compared with the simple stomach of a pig.
+=== 7.2 | feeding livestock
+Livestock nutrition: a balanced ration with carbohydrates, protein, minerals and vitamins; concentrates and roughage; maintenance and production rations for a dairy cow.
+=== 7.3 | animal health
+Livestock health: signs of a healthy animal, diseases such as foot-and-mouth and mastitis, parasites like ticks and worms, vaccination, dipping and drenching.
+=== 9.2 | selective breeding
+Selective breeding: choosing parents with desirable traits such as high milk yield or disease resistance, cross-breeding, artificial insemination, improved crop varieties.
+=== 10.5 | machinery
+Farm machinery: tractors, ploughs, harrows, seed drills and combine harvesters, maintaining machinery, the benefits of mechanisation.
+=== - | economics
+Price elasticity of demand = % change in quantity demanded / % change in price.
+=== - | english
+Use a semicolon to join two related independent clauses.
+=== - | physics
+Speed = distance / time.

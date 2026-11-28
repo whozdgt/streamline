@@ -1,5 +1,5 @@
 {
- "version": 2026112802,
+ "version": 2026112803,
  "about": "Official links to exam boards' course specifications. Streamline downloads one from its board's website when you choose it; the documents themselves aren't kept here. Checked every week by .github/workflows/catalog.yml.",
  "specs": [
   {
@@ -353,6 +353,36 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-information-technology-9626/"
   },
   {
+   "id": "cambridge-9680-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Arabic",
+   "code": "9680",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697404-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-arabic-9680/"
+  },
+  {
+   "id": "cambridge-9680-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Arabic",
+   "code": "9680",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/721448-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-arabic-9680/"
+  },
+  {
+   "id": "cambridge-9680-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Arabic",
+   "code": "9680",
+   "exams": "2028",
+   "url": "https://www.cambridgeinternational.org/Images/744615-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-arabic-9680/"
+  },
+  {
    "id": "cambridge-9693-2025",
    "board": "Cambridge",
    "level": "AS & A Level",
@@ -683,6 +713,26 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-french-language-literature-9898/"
   },
   {
+   "id": "cambridge-9981-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "European History",
+   "code": "9981",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718219-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-history-9981/"
+  },
+  {
+   "id": "cambridge-9982-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "International History",
+   "code": "9982",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718222-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-history-9982/"
+  },
+  {
    "id": "cambridge-9990-2027",
    "board": "Cambridge",
    "level": "AS & A Level",
@@ -761,6 +811,36 @@
    "exams": "2027–2029",
    "url": "https://www.cambridgeinternational.org/Images/721331-2027-2029-syllabus.pdf",
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-level-sport-and-physical-education-8386/"
+  },
+  {
+   "id": "cambridge-0264-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Business",
+   "code": "0264",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718123-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-business-0264/"
+  },
+  {
+   "id": "cambridge-0265-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Computer Science",
+   "code": "0265",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/763395-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-computer-science-0265/"
+  },
+  {
+   "id": "cambridge-0266-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Psychology",
+   "code": "0266",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718092-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-psychology-0266/"
   },
   {
    "id": "cambridge-0400-2026",
@@ -1113,6 +1193,26 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-travel-and-tourism-0471/"
   },
   {
+   "id": "cambridge-0472-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as an Additional Language",
+   "code": "0472",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697158-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-an-additional-language-0472/"
+  },
+  {
+   "id": "cambridge-0472-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as an Additional Language",
+   "code": "0472",
+   "exams": "2029–2030",
+   "url": "https://www.cambridgeinternational.org/Images/764286-2029-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-an-additional-language-0472/"
+  },
+  {
    "id": "cambridge-0475-2026",
    "board": "Cambridge",
    "level": "IGCSE",
@@ -1161,6 +1261,36 @@
    "exams": "2029–2031",
    "url": "https://www.cambridgeinternational.org/Images/763431-2029-2031-syllabus.pdf",
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-computer-science-0478/"
+  },
+  {
+   "id": "cambridge-0479-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Statistics",
+   "code": "0479",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/718153-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-statistics-0479/"
+  },
+  {
+   "id": "cambridge-0479-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Statistics",
+   "code": "0479",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744788-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-statistics-0479/"
+  },
+  {
+   "id": "cambridge-0480-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Latin",
+   "code": "0480",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697172-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-latin-0480/"
   },
   {
    "id": "cambridge-0490-2025",
@@ -1251,6 +1381,106 @@
    "exams": "2027–2029",
    "url": "https://www.cambridgeinternational.org/Images/718783-2027-2029-syllabus.pdf",
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-first-language-0500/"
+  },
+  {
+   "id": "cambridge-0501-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "French – First Language",
+   "code": "0501",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697179-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-french-first-language-0501/"
+  },
+  {
+   "id": "cambridge-0501-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "French – First Language",
+   "code": "0501",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721371-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-french-first-language-0501/"
+  },
+  {
+   "id": "cambridge-0502-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Spanish – First Language",
+   "code": "0502",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664614-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-spanish-first-language-0502/"
+  },
+  {
+   "id": "cambridge-0502-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Spanish – First Language",
+   "code": "0502",
+   "exams": "2028–2029",
+   "url": "https://www.cambridgeinternational.org/Images/744798-2028-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-spanish-first-language-0502/"
+  },
+  {
+   "id": "cambridge-0505-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "German – First Language",
+   "code": "0505",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697181-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-german-first-language-0505/"
+  },
+  {
+   "id": "cambridge-0505-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "German – First Language",
+   "code": "0505",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721335-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-german-first-language-0505/"
+  },
+  {
+   "id": "cambridge-0508-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Arabic – First Language",
+   "code": "0508",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697182-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-arabic-first-language-0508/"
+  },
+  {
+   "id": "cambridge-0508-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Arabic – First Language",
+   "code": "0508",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/719278-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-arabic-first-language-0508/"
+  },
+  {
+   "id": "cambridge-0509-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Chinese – First Language",
+   "code": "0509",
+   "exams": "2026–2027",
+   "url": "https://www.cambridgeinternational.org/Images/697185-2026-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chinese-first-language-0509/"
+  },
+  {
+   "id": "cambridge-0509-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Chinese – First Language",
+   "code": "0509",
+   "exams": "2028–2029",
+   "url": "https://www.cambridgeinternational.org/Images/744811-2028-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chinese-first-language-0509/"
   },
   {
    "id": "cambridge-0510-2024",
@@ -1353,6 +1583,66 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-spanish-foreign-language-0530/"
   },
   {
+   "id": "cambridge-0538-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Bahasa Indonesia",
+   "code": "0538",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664631-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-bahasa-indonesia-0538/"
+  },
+  {
+   "id": "cambridge-0538-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Bahasa Indonesia",
+   "code": "0538",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/745676-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-bahasa-indonesia-0538/"
+  },
+  {
+   "id": "cambridge-0539-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Urdu as a Second Language",
+   "code": "0539",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664633-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-urdu-as-a-second-language-0539/"
+  },
+  {
+   "id": "cambridge-0539-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Urdu as a Second Language",
+   "code": "0539",
+   "exams": "2028–2029",
+   "url": "https://www.cambridgeinternational.org/Images/745678-2028-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-urdu-as-a-second-language-0539/"
+  },
+  {
+   "id": "cambridge-0544-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Arabic – Foreign Language",
+   "code": "0544",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664635-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-arabic-foreign-language-0544/"
+  },
+  {
+   "id": "cambridge-0544-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Arabic – Foreign Language",
+   "code": "0544",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743910-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-arabic-foreign-language-0544/"
+  },
+  {
    "id": "cambridge-0547-2025",
    "board": "Cambridge",
    "level": "IGCSE",
@@ -1371,6 +1661,26 @@
    "exams": "2028–2030",
    "url": "https://www.cambridgeinternational.org/Images/743359-2028-2030-syllabus.pdf",
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chinese-mandarin-foreign-language-0547/"
+  },
+  {
+   "id": "cambridge-0549-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Hindi as a Second Language",
+   "code": "0549",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697196-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-hindi-as-a-second-language-0549/"
+  },
+  {
+   "id": "cambridge-0549-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Hindi as a Second Language",
+   "code": "0549",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/719328-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-hindi-as-a-second-language-0549/"
   },
   {
    "id": "cambridge-0580-2025",
@@ -1613,6 +1923,56 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-marine-science-0697/"
   },
   {
+   "id": "cambridge-0715-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Commerce",
+   "code": "0715",
+   "exams": "2028",
+   "url": "https://www.cambridgeinternational.org/Images/745979-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-commerce-0715/"
+  },
+  {
+   "id": "cambridge-0715-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Commerce",
+   "code": "0715",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764336-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-commerce-0715/"
+  },
+  {
+   "id": "cambridge-0716-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Japanese – Foreign Language",
+   "code": "0716",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/722865-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-japanese-0716/"
+  },
+  {
+   "id": "cambridge-0772-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as an Additional Language (9–1)",
+   "code": "0772",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697231-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-an-additional-language-9-1-0772/"
+  },
+  {
+   "id": "cambridge-0772-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as an Additional Language (9–1)",
+   "code": "0772",
+   "exams": "2029–2030",
+   "url": "https://www.cambridgeinternational.org/Images/764349-2029-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-an-additional-language-9-1-0772/"
+  },
+  {
    "id": "cambridge-0970-2026",
    "board": "Cambridge",
    "level": "IGCSE",
@@ -1673,6 +2033,76 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-9-1-0972/"
   },
   {
+   "id": "cambridge-0976-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Geography (9–1)",
+   "code": "0976",
+   "exams": "2025–2026",
+   "url": "https://www.cambridgeinternational.org/Images/664647-2025-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-geography-9-1-0976/"
+  },
+  {
+   "id": "cambridge-0976-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Geography (9–1)",
+   "code": "0976",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718939-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-geography-9-1-0976/"
+  },
+  {
+   "id": "cambridge-0977-2024",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "History (9–1)",
+   "code": "0977",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/649638-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-history-9-1-0977/"
+  },
+  {
+   "id": "cambridge-0977-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "History (9–1)",
+   "code": "0977",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721357-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-history-9-1-0977/"
+  },
+  {
+   "id": "cambridge-0977-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "History (9–1)",
+   "code": "0977",
+   "exams": "2029–2030",
+   "url": "https://www.cambridgeinternational.org/Images/764372-2029-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-history-9-1-0977/"
+  },
+  {
+   "id": "cambridge-0978-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Music (9–1)",
+   "code": "0978",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/694054-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-music-9-1-0978/"
+  },
+  {
+   "id": "cambridge-0978-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Music (9–1)",
+   "code": "0978",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/764374-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-music-9-1-0978/"
+  },
+  {
    "id": "cambridge-0980-2025",
    "board": "Cambridge",
    "level": "IGCSE",
@@ -1693,6 +2123,126 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-9-1-0980/"
   },
   {
+   "id": "cambridge-0983-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Information and Communication Technology (9–1)",
+   "code": "0983",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697246-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-information-and-communication-technology-9-1-0983/"
+  },
+  {
+   "id": "cambridge-0983-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Information and Communication Technology (9–1)",
+   "code": "0983",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764380-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-information-and-communication-technology-9-1-0983/"
+  },
+  {
+   "id": "cambridge-0984-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Computer Science (9–1)",
+   "code": "0984",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697248-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-computer-science-0984/"
+  },
+  {
+   "id": "cambridge-0984-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Computer Science (9–1)",
+   "code": "0984",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/763435-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-computer-science-0984/"
+  },
+  {
+   "id": "cambridge-0985-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Accounting (9–1)",
+   "code": "0985",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697252-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-accounting-9-1-0985/"
+  },
+  {
+   "id": "cambridge-0985-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Accounting (9–1)",
+   "code": "0985",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718200-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-accounting-9-1-0985/"
+  },
+  {
+   "id": "cambridge-0986-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Business Studies (9–1)",
+   "code": "0986",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697256-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-business-studies-9-1-0986/"
+  },
+  {
+   "id": "cambridge-0987-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Economics (9–1)",
+   "code": "0987",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697258-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-economics-9-1-0987/"
+  },
+  {
+   "id": "cambridge-0987-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Economics (9–1)",
+   "code": "0987",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718202-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-economics-9-1-0987/"
+  },
+  {
+   "id": "cambridge-0989-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Art and Design (9–1)",
+   "code": "0989",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697261-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-art-and-design-9-1-0989/"
+  },
+  {
+   "id": "cambridge-0989-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Art and Design (9–1)",
+   "code": "0989",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/729780-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-art-and-design-9-1-0989/"
+  },
+  {
+   "id": "cambridge-0989-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Art and Design (9–1)",
+   "code": "0989",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743322-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-art-and-design-9-1-0989/"
+  },
+  {
    "id": "cambridge-0990-2024",
    "board": "Cambridge",
    "level": "IGCSE",
@@ -1711,6 +2261,26 @@
    "exams": "2027–2029",
    "url": "https://www.cambridgeinternational.org/Images/718785-2027-2029-syllabus.pdf",
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-first-language-english-0990/"
+  },
+  {
+   "id": "cambridge-0991-2024",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as a Second Language (9–1)",
+   "code": "0991",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/637361-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-second-language-9-1-count-in-speaking/"
+  },
+  {
+   "id": "cambridge-0991-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as a Second Language (9–1)",
+   "code": "0991",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721375-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-second-language-9-1-count-in-speaking/"
   },
   {
    "id": "cambridge-0992-2026",
@@ -1741,6 +2311,66 @@
    "exams": "2028–2030",
    "url": "https://www.cambridgeinternational.org/Images/743323-2028-2030-syllabus.pdf",
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-literature-0992/"
+  },
+  {
+   "id": "cambridge-0994-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Drama (9–1)",
+   "code": "0994",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/721668-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-drama-9-1-0994/"
+  },
+  {
+   "id": "cambridge-0994-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Drama (9–1)",
+   "code": "0994",
+   "exams": "2028",
+   "url": "https://www.cambridgeinternational.org/Images/744841-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-drama-9-1-0994/"
+  },
+  {
+   "id": "cambridge-0994-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Drama (9–1)",
+   "code": "0994",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/763442-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-drama-9-1-0994/"
+  },
+  {
+   "id": "cambridge-0995-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physical Education (9–1)",
+   "code": "0995",
+   "exams": "2025–2026",
+   "url": "https://www.cambridgeinternational.org/Images/664661-2025-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-education-0995/"
+  },
+  {
+   "id": "cambridge-0995-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physical Education (9–1)",
+   "code": "0995",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721394-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-education-0995/"
+  },
+  {
+   "id": "cambridge-0995-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physical Education (9–1)",
+   "code": "0995",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/766703-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-education-0995/"
   },
   {
    "id": "aqa-7037",

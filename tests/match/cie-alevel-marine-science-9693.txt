@@ -1,0 +1,27 @@
+# spec: https://www.cambridgeinternational.org/Images/664553-2025-2027-syllabus.pdf
+# AS & A Level Marine Science notes written for this test: revision notes and case studies. Each is under the points it
+# is about.
+=== 2.3.1,2.3.2,2.3.3 | tides
+Tides are caused by the gravitational pull of the Moon and the Sun; spring tides happen when they're aligned (full and new moon) with the largest tidal range, neap tides when they're at right angles.
+=== 2.3.6 | el nino
+El Niño: the trade winds weaken, warm water spreads east across the Pacific, upwelling off Peru stops and anchovy catches collapse; La Niña is the opposite.
+=== 5.2.1,5.2.2,5.2.3,5.2.6 | coral reefs
+Coral reefs need warm, clear, shallow, sunlit water; fringing, barrier and atoll reefs; corals are cnidarians whose polyps get most of their food from zooxanthellae living in their tissues.
+=== 5.5.1,5.5.3,5.5.4,5.5.6 | mangroves
+Mangrove forests: the red mangrove Rhizophora mangle has prop roots and salt-excreting leaves; mangroves are nursery grounds for fish and protect coasts from storms, but are cleared for shrimp farms.
+=== 6.4.2,6.4.3,6.4.4 | osmoregulation
+Salmon are euryhaline: they move between fresh and salt water and osmoregulate — in the sea they drink water and excrete salt from their gills; most marine invertebrates are osmoconformers.
+=== 8.2.1,8.2.2,8.2.4 | fisheries
+Sustainable fisheries: overfishing of North Atlantic cod, modern technology like sonar and huge trawl nets, and management tools such as quotas, closed seasons, mesh size limits and marine protected areas.
+=== 8.3.1,8.3.2,8.3.4 | aquaculture
+Aquaculture: intensive salmon farming in sea cages and extensive mussel farming on ropes; impacts include habitat destruction, disease and sea lice spreading to wild fish, and pollution from waste.
+=== 9.1.3,9.1.5,9.1.6 | plastics
+Microplastics are plastic particles smaller than 5 mm; they're eaten by plankton and fish and move up food chains; strategies to reduce plastic pollution include bans on microbeads and better recycling.
+=== 9.3.1,9.3.2,9.3.3 | ocean acidification
+Ocean acidification: carbon dioxide dissolves in sea water to form carbonic acid, lowering the pH; less carbonate is available, so hard corals and shelled organisms struggle to build their calcium carbonate skeletons.
+=== - | history
+Stalin's Five-Year Plans industrialised the USSR.
+=== - | accounting
+Depreciation spreads the cost of a non-current asset over its useful life.
+=== - | spanish
+Ayer fuimos a la playa con mis primos.

@@ -392,8 +392,12 @@ Info identify(const std::string &text)
         return trim(s);
     };
     if (info.board == "Cambridge") {
-        static const std::regex re("Cambridge (International AS (?:&|and) A Level|IGCSE|O Level|International A Level|International AS Level)\\S*\\s+([A-Z][A-Za-z ,&()-]{2,40}?) ([0-9]{4})");      // (the level and the subject can be on lines of their own: "Cambridge IGCSE™", "Islamiyat 0493")
-        if (std::regex_search(head, m, re)) info.name = "Cambridge " + clean(m[1].str()) + " " + clean(m[2].str()) + " (" + m[3].str() + ")";
+        // (the level and the subject can be on lines of their own: "Cambridge IGCSE™", "Islamiyat 0493"; the grades in
+        // between: "Cambridge IGCSE™ (9–1)", "Computer Science 0984")
+        static const std::regex re("Cambridge (International AS (?:&|and) A Level|IGCSE|O Level|International A Level|International AS Level)\\S*"
+                                   "(\\s*\\(9.{1,3}1\\))?\\s+([A-Z][A-Za-z ,&()-]{2,40}?) ([0-9]{4})");
+        if (std::regex_search(head, m, re))
+            info.name = "Cambridge " + clean(m[1].str()) + (m[2].matched ? " (9\xE2\x80\x93" "1)" : "") + " " + clean(m[3].str()) + " (" + m[4].str() + ")";
     } else if (info.board == "Edexcel") {
         // the course the document names whose code it uses most (a draft notice on the cover can name another course)
         static const std::regex re("(GCSE|International GCSE|Advanced Subsidiary GCE|Advanced GCE|GCE A level|International Advanced Level)(?: \\(9.{1,3}1\\))?(?: in)? ([A-Z][A-Za-z ,&()-]{2,50}?) \\(([0-9A-Z]{4,5})\\)");
@@ -633,7 +637,12 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             // repeated on page after page goes
             const bool fragment = l.size() < 12 || std::count(l.begin(), l.end(), ' ') < 1;
             const int need = numberedLine ? 8 : fragment ? 10 : 4;
-            if (l.size() <= 160 && !topicHeading && f >= need) continue;
+            // a table's header stays too, the same over each table ("Key topics Learners should have studied the
+            // following content:"): it says a table of topics starts (OCR)
+            const std::string ll = lower(l);
+            const bool tableHeader = (ll.rfind("key topic", 0) == 0 || ll.rfind("topic", 0) == 0 || ll.rfind("content", 0) == 0) &&
+                                     (ll.find("learners should") != std::string::npos || ll.find("following content") != std::string::npos);
+            if (l.size() <= 160 && !topicHeading && !tableHeader && f >= need) continue;
             kept.push_back(l);
         }
         all.swap(kept);
@@ -930,6 +939,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     int lastTop = 0;
     int innerLast = 0;          // the last of a subsection's own numbered parts ("5 Specialisation…" in 1.3.1), if any
     bool letteredLayout = false;      // subtopics named above lettered statements ("Integers", "A understand…")
+    // OCR's tables of topics: a header ("Key topics Learners should have studied the following content:"), then each
+    // row's topic in a narrow column, its name over a line or two ("Education in", "Sparta"), and then its content
+    bool ocrTable = false;
+    struct PartLines { std::string title; size_t from, to; };
+    std::vector<PartLines> partLines;      // where each of OCR's content parts is, by line
     int listNext = 0;           // the next item of a numbered list in the text ("1. Python", "2. C#"), and its line
     size_t listLine = 0;
     int topSection = 0;
@@ -1068,7 +1082,12 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             std::smatch pm;
             const std::string low = lower(l);
             if (std::regex_match(l, pm, part) && low.find("content") != std::string::npos && low.find("contents") == std::string::npos) {
-                const int made = open(14, "", cleanTitle(pm[1].str()), false);
+                // (above a component's units and sections: "Unit Y113: Britain 1930–1997" is in "British period
+                // studies and enquiries", OCR A Level History A; "Section A: The legal system" in "H418/01", Law)
+                const int made = open(11, "", cleanTitle(pm[1].str()), false);
+                if (!partLines.empty()) partLines.back().to = i;
+                partLines.push_back({cleanTitle(pm[1].str()), i, lines.size()});
+                ocrTable = false;
                 justOpened = made;
                 justMerged = merged;
                 justKeyword = true;
@@ -1139,6 +1158,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                               std::any_of(k.id.begin(), k.id.end(), [](char c) { return std::isdigit(uint8_t(c)); });
             made = open(rank, code ? k.id : k.keyword + " " + k.id, cleanTitle(k.title), false);
             if (rank < 30) { lastTop = 0; innerLast = 0; }
+            ocrTable = false;
         } else if (useCode2 && parseCode2(l, code, title)) {
             made = open(50, code, cleanTitle(title), false);
         } else if (std::smatch om; board == "Edexcel" && l.size() < 160 && !tocLine(l) &&
@@ -1268,7 +1288,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 } else body(l);
             } else if (n.parts.size() == 1 && !statement && t.size() >= 3) {
                 made = open(30, number, t, false);      // a lettered theme or topic: "OT1 Mathematical argument, language and proof"
-            } else if (Key pk; n.parts.size() == 2 && n.prefix.empty() && parseKey(t, pk) && pk.rank <= 12) {
+            } else if (Key pk; board == "Cambridge" && n.parts.size() == 2 && n.prefix.empty() && parseKey(t, pk) && pk.rank <= 12 &&
+                               pk.title.size() <= 40) {
                 // a numbered part of the document that is a paper's content ("5.1 Paper 1", then its topics, "1. Major
                 // themes of the Qur'an": Cambridge IGCSE Islamiyat's older syllabuses): the paper, its topics numbered afresh
                 made = open(pk.rank, number, t, false);
@@ -1388,6 +1409,51 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 rawEndsComma = false;
                 lastTop = 0;
                 continue;
+            }
+            if (board == "OCR") {
+                // an option of a component: "Depth study in H407/12: The Culture and Politics of Athens, c. 460–c.399
+                // BC" (OCR A Level Ancient History)
+                static const std::regex study("^(?:Depth|Period) study in [A-Z][0-9]{3}/[0-9]{2}: ([A-Z].{5,100})$");
+                std::smatch sm;
+                if (std::regex_match(l, sm, study)) {
+                    made = open(16, "", cleanTitle(sm[1].str()), false);
+                    ocrTable = false;
+                    justOpened = made;
+                    justMerged = merged;
+                    justKeyword = false;
+                    rawEndsComma = false;
+                    continue;
+                }
+                const std::string ll = lower(l);
+                if ((ll.rfind("key topic", 0) == 0 || ll.rfind("topic", 0) == 0 || ll.rfind("content", 0) == 0) &&
+                    (ll.find("learners should") != std::string::npos || ll.find("following content") != std::string::npos)) {
+                    ocrTable = true;      // the table's header: not content
+                    continue;
+                }
+                // a row's topic: a short line or two, after the header or the end of the last row's text, and then the
+                // row's text
+                auto narrow = [](const std::string &x) {
+                    return x.size() >= 3 && x.size() <= 34 && x.back() != '.' && x.back() != ',' && x.back() != ';' && x.back() != ':' &&
+                           x.find("  ") == std::string::npos;
+                };
+                const std::string &prev = i > 0 ? lines[i - 1] : std::string();
+                const std::string lp = lower(prev);
+                const bool rowStart = prev.empty() || prev.back() == '.' || prev.back() == ')' || prev.back() == ':' ||
+                                      lp.rfind("key topic", 0) == 0 || lp.rfind("topic", 0) == 0 || lp.rfind("content", 0) == 0;
+                if (ocrTable && rowStart && std::isupper(uint8_t(l[0])) && narrow(l) && !statementLike(l)) {
+                    size_t j = i;
+                    std::string name = l;
+                    while (j + 1 < lines.size() && j < i + 2 && narrow(lines[j + 1]) && !std::isdigit(uint8_t(lines[j + 1][0]))) name += " " + lines[++j];
+                    if (j + 1 < lines.size() && lines[j + 1].size() >= 45 && std::isupper(uint8_t(lines[j + 1][0]))) {
+                        made = open(22, "", cleanTitle(name), false);
+                        i = j;
+                        justOpened = -1;      // (its name is whole)
+                        justMerged = merged;
+                        justKeyword = false;
+                        rawEndsComma = false;
+                        continue;
+                    }
+                }
             }
             // a subtopic named above its coded statements: "Structure and calculation", then "N1 order positive and
             // negative integers…" (the statements' codes, N1, A1, G1, aren't numbers of the document's own)
@@ -1654,6 +1720,31 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 break;
             }
         }
+    }
+    // An OCR component's content with nothing read in it, but a table of its topics: its rows, as for a whole
+    // specification's below (OCR GCSE History A's period study and depth studies, each a part "2c. Content of …")
+    if (partLines.size() >= 2) {
+        std::vector<podsort::SpecPoint> out;
+        std::vector<int> remap(pts.size(), -1);
+        for (size_t p = 0; p < pts.size(); ++p) {
+            podsort::SpecPoint q = pts[p];
+            if (q.parent >= 0) q.parent = remap[size_t(q.parent)];
+            remap[p] = int(out.size());
+            out.push_back(q);
+            if (pts[p].parent >= 0 || !pts[p].number.empty()) continue;
+            if (std::any_of(pts.begin(), pts.end(), [&](const podsort::SpecPoint &c) { return c.parent == int(p); })) continue;
+            for (const auto &r : partLines) {
+                if (r.title != pts[p].title || r.to <= r.from + 1) continue;
+                auto rows = rowTable(std::vector<std::string>(lines.begin() + long(r.from) + 1, lines.begin() + long(r.to)));
+                const int me = remap[p], base = int(out.size());
+                for (auto row : rows) {
+                    row.parent = row.parent < 0 ? me : base + row.parent;
+                    out.push_back(row);
+                }
+                break;
+            }
+        }
+        pts.swap(out);
     }
     // Nothing numbered in the content, but a table of topics, sub-topics and their bullet points, the topic's name on
     // every row ("Business objectives", "and strategy", then "Mission statement • explain the nature and purpose of a

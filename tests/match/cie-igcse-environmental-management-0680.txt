@@ -1,0 +1,33 @@
+# spec: https://www.cambridgeinternational.org/Images/718156-2027-2029-syllabus.pdf
+# IGCSE Environmental Management notes written for this test: revision notes and case studies. Each is under the
+# points it is about.
+=== 1.4.2,1.4.3,1.4.4 | energy resources
+Energy resources: renewable (solar, wind, hydroelectric, geothermal, tidal, biofuels) and non-renewable (coal, oil, natural gas, nuclear); how each generates electricity, e.g. steam turning a turbine; benefits and limitations of each.
+=== 1.6.1,1.6.2 | fracking
+Fracking: pumping water, sand and chemicals at high pressure into shale rock to release natural gas. Benefits: energy security, jobs. Limitations: earthquakes, groundwater pollution, methane leaks.
+=== 2.3.1,2.3.2,2.3.3 | soil erosion
+Soil erosion: caused by deforestation, overgrazing and ploughing up and down slopes; leads to loss of fertile topsoil and desertification; reduced by terracing, contour ploughing, windbreaks and cover crops.
+=== 3.1.7,3.1.8 | desalination
+Desalination by reverse osmosis or distillation turns sea water into fresh water, e.g. in Saudi Arabia; it's reliable but uses lots of energy and releases brine.
+=== 3.3.1,3.3.2 | malaria
+Malaria is spread by female Anopheles mosquitoes; control by insecticide-treated bed nets, draining stagnant water, spraying insecticides and antimalarial drugs.
+=== 3.5.1,3.5.2,3.5.3,3.5.4 | oil spill
+Oil spills: Deepwater Horizon 2010; oil coats seabirds and kills marine life; prevention with double-hulled tankers; clean-up with booms, skimmers, dispersants and burning.
+=== 4.2.3,4.2.4,4.2.5 | climate change
+The enhanced greenhouse effect: burning fossil fuels and deforestation increase carbon dioxide and methane; global warming causes sea level rise, melting ice caps and more extreme weather.
+=== 4.4.1,4.4.2 | ozone
+CFCs from old aerosols and refrigerators break down ozone in the stratosphere; more UV radiation reaches the Earth, causing skin cancer and cataracts; the Montreal Protocol banned CFCs.
+=== 5.2.1,5.2.2 | deforestation
+Deforestation of the Amazon rainforest for cattle ranching, soya, logging and mining; impacts: loss of biodiversity, soil erosion, climate change, loss of indigenous peoples' land.
+=== 6.1.3,6.1.4 | plate tectonics
+Earthquakes and volcanoes happen at plate boundaries, e.g. the Pacific Ring of Fire; convection currents in the mantle move the plates apart at constructive boundaries and together at destructive ones.
+=== 6.2.1,6.2.2 | tropical cyclones
+Tropical cyclones form over oceans warmer than 27 °C between 5 and 20 degrees of latitude; Cyclone Idai hit Mozambique with strong winds, storm surges and flooding.
+=== 7.1.2,7.1.4 | population pyramids
+Population pyramids: an LIC like Niger has a wide base (high birth rate, young population); an HIC like Japan has a narrow base and many elderly people.
+=== - | history
+The Wall Street Crash of 1929 led to the Great Depression.
+=== - | computer science
+A bubble sort compares adjacent items and swaps them if they are in the wrong order.
+=== - | drama
+Brecht used placards and direct address to alienate the audience.
