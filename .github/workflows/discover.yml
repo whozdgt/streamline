@@ -1,0 +1,128 @@
+name: discover
+# Finding the official specification for courses not in the spec finder yet (.github/specs/discover.json: each
+# course with links to try): its board's page for the course is read for links to the specification (or the
+# syllabuses, one per run of exam years, for Cambridge), each is downloaded, and Streamline's readers say which
+# course it is and how many points they found. Prints catalog entries for specs/catalog.json, names and counts
+# only, never the documents.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/specs/discover.json', '.github/workflows/discover.yml']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the readers
+        run: g++ -std=c++17 -O2 -Isrc src/pdftext.cpp src/pdfcrypto.cpp src/specread.cpp src/podsort.cpp tests/spec_test.cpp -o spec_test
+      - name: Look for each course's specification
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess, urllib.request, urllib.parse, concurrent.futures as cf
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          APP_UA = "Streamline/0.7 (+https://github.com/whozdgt/streamline)"
+          wanted = json.load(open(".github/specs/discover.json"))
+          os.makedirs("pdf", exist_ok=True)
+          def get(url, limit, ua):
+              try:
+                  req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept": "*/*"})
+                  with urllib.request.urlopen(req, timeout=60) as r:
+                      return r.status, r.geturl(), r.read(limit)
+              except urllib.error.HTTPError as e:
+                  return e.code, url, b""
+              except Exception as e:
+                  return str(e)[:40], url, b""
+          def links(html, base):
+              found = []
+              for m in re.finditer(rb'href\s*=\s*["\']([^"\']+?\.pdf)(?:\?[^"\']*)?["\']', html, re.I):
+                  u = urllib.parse.urljoin(base, m.group(1).decode("utf-8", "replace").replace("&amp;", "&"))
+                  if u not in found: found.append(u)
+              for m in re.finditer(rb'https?://filestore\.aqa\.org\.uk/[^"\'\s<>]+?\.pdf', html, re.I):
+                  u = m.group(0).decode("utf-8", "replace")
+                  if u not in found: found.append(u)
+              return found
+          def read(path, code):
+              out = subprocess.run(["./spec_test", path], capture_output=True, text=True, errors="replace", timeout=180).stdout
+              name = re.search(r"^name: (.*)$", out, re.M)
+              pts = re.search(r"^points: (\d+)", out, re.M)
+              text = subprocess.run(["./spec_test", path, "--text"], capture_output=True, text=True, errors="replace", timeout=180).stdout
+              return (name.group(1) if name else ""), (int(pts.group(1)) if pts else 0), code.lower() in text.lower()
+          def fetch(url, code, i):
+              # the app downloads with its own name; some sites only answer a browser's
+              for ua in (APP_UA, UA):
+                  st, final, data = get(url, 60 * 1024 * 1024, ua)
+                  if data.startswith(b"%PDF"):
+                      path = f"pdf/{code}-{i}.pdf"
+                      open(path, "wb").write(data)
+                      name, pts, found = read(path, code)
+                      return {"url": url, "mb": round(len(data) / 1e6, 1), "name": name, "points": pts, "code": found, "ua": "app" if ua == APP_UA else "browser"}
+              return None
+          def one(w):
+              code = w["code"]
+              tried, results, notes = 0, [], []
+              for i, u in enumerate(w.get("pdfs", [])):
+                  r = fetch(u, code, i)
+                  tried += 1
+                  if r and r["code"]:
+                      results.append(r)
+                      break
+              if not results:
+                  for p in w.get("pages", []):
+                      st, final, html = get(p, 4 * 1024 * 1024, UA)
+                      notes.append(f"page {st}")
+                      if not html: continue
+                      cands = links(html, final)
+                      if w["board"] == "Cambridge":
+                          # every syllabus on the page: one per run of exam years
+                          syl = [u for u in cands if re.search(r"/Images/\d+-\d{4}(-\d{4})?-syllabus\.pdf$", u, re.I)]
+                          for i, u in enumerate(syl[:4]):
+                              r = fetch(u, code, 100 + i)
+                              if r:
+                                  m = re.search(r"-(\d{4})(?:-(\d{4}))?-syllabus\.pdf$", u)
+                                  r["exams"] = m.group(1) + ("–" + m.group(2) if m.group(2) else "")
+                                  r["page"] = final
+                                  results.append(r)
+                          if results: break
+                          continue
+                      # the specification: its link names it, and the course's code if it can
+                      def rank(u):
+                          l = u.lower()
+                          return (code.lower() in l, "spec" in l or "syllabus" in l, "specification" in l, -len(l))
+                      spec = [u for u in cands if re.search(r"spec|syllabus", u, re.I) and not re.search(r"summary|changes|guide|sample|sam[s]?\b|-sams|mark|qp|ms\.pdf|teaching|transition", u, re.I)]
+                      spec.sort(key=rank, reverse=True)
+                      for i, u in enumerate(spec[:5]):
+                          r = fetch(u, code, 200 + i)
+                          if r:
+                              r["page"] = final
+                              results.append(r)
+                              if r["code"] and r["points"] >= 8: break
+                      if results: break
+              return w, results, notes
+          with cf.ThreadPoolExecutor(8) as ex:
+              done = list(ex.map(one, wanted))
+          entries = []
+          for w, results, notes in done:
+              if not results:
+                  print(f"NOT FOUND  {w['id']:<22} {w['board']} {w['level']} {w['subject']}  ({', '.join(notes)})")
+                  continue
+              for r in results:
+                  flag = "" if r["code"] and r["points"] >= 8 else "  <--"
+                  print(f"found      {w['id']:<22} {r['mb']:>5} MB {r['points']:>4} points  {'code ok ' if r['code'] else 'NO CODE '} {r['name']}{flag}")
+                  e = {"id": w["id"] + ("-" + r["exams"][:4] if "exams" in r else ""), "board": w["board"], "level": w["level"],
+                       "subject": w["subject"], "code": w["code"]}
+                  if "exams" in r: e["exams"] = r["exams"]
+                  e["url"] = r["url"]
+                  if r.get("page"): e["page"] = r["page"]
+                  e["_check"] = {"name": r["name"], "points": r["points"], "code": r["code"], "ua": r["ua"]}
+                  entries.append(e)
+          print(f"\n{len(set(e['id'] for e in entries))} entries for {sum(1 for _, r, _ in done if r)} of {len(done)} courses")
+          print("=== ENTRIES ===")
+          for e in entries: print(json.dumps(e, ensure_ascii=False))
+          print("=== END ===")
+          PY
