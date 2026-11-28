@@ -1,8 +1,7 @@
 # the specs spec-outline.yml reads: ids from specs/catalog.json, or URLs ("id | around | 2.1 " shows the lines around one;
 # "id | around | 2.1 | 3" around the first three; "id | trace | 1.3.1 Intro" the reader's own lines from just before
 # there, each with the point it went to; "…#2" from the second such line)
-edexcel-1ra0 | trace | 2.8
-ocr-h407 | trace | Key topics
-ocr-j316
-cambridge-0493-2026
-ocr-h444
+ocr-h418
+ocr-j282
+ocr-h407 | around | Key topics | 2
+ocr-j199 | around | Myth and religion | 2
