@@ -523,6 +523,23 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     if (drop[j] || !std::equal(nm.begin(), nm.end(), all.begin() + long(j))) continue;
                     for (size_t q = j; q < j + nm.size(); ++q) keep[q] = 1;
                 }
+            // and a topic's name on the lines just before its first statement, after the last topic's text ("…ideas of
+            // Augustine and Irenaeus.", "Religious", "language", "4.1 Analogy and Symbol": Edexcel A level Religious
+            // Studies, where "Religious" comes up on page after page)
+            static const std::regex firstOfTopic("^[0-9]{1,2}\\.0?1\\s+[A-Z].*");
+            for (size_t i = 2; i < all.size(); ++i) {
+                if (!std::regex_match(all[i], firstOfTopic)) continue;
+                for (size_t k = 3; k >= 1; --k) {
+                    if (k + 1 > i) continue;
+                    bool ok = std::isupper(uint8_t(all[i - k][0]));
+                    for (size_t j = i - k; j < i && ok; ++j) ok = nameLine(all[j]) && freq[norm(all[j])] < 20;      // (not a column's heading)
+                    const std::string &before = all[i - k - 1];
+                    Key bk;      // (or after a heading: "Paper 4, Option 4A: Buddhism", "Religious", "beliefs, values"…)
+                    if (!ok || before.empty() || (before.back() != '.' && before.back() != ')' && !parseKey(before, bk))) continue;
+                    for (size_t j = i - k; j < i; ++j) keep[j] = 1;
+                    break;
+                }
+            }
         }
         std::vector<std::string> kept;
         for (size_t idx = 0; idx < all.size(); ++idx) {
@@ -902,9 +919,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     // each with the point it went to (spec_test --trace)
     const char *traceAt = std::getenv("SPECREAD_TRACE");
     size_t traceFrom = std::string::npos;      // (from a few lines before it)
-    if (traceAt)
+    if (traceAt) {
+        std::string at = traceAt;      // "7 Radioactivity#2": the second line that starts so
+        int nth = 1;
+        const size_t hash = at.rfind('#');
+        if (hash != std::string::npos && hash + 1 < at.size() && std::isdigit(uint8_t(at[hash + 1]))) { nth = std::atoi(at.c_str() + hash + 1); at.resize(hash); }
         for (size_t j = 0; j < lines.size() && traceFrom == std::string::npos; ++j)
-            if (lines[j].rfind(traceAt, 0) == 0) traceFrom = j >= 8 ? j - 8 : 0;
+            if (lines[j].rfind(at, 0) == 0 && --nth <= 0) traceFrom = j >= 8 ? j - 8 : 0;
+    }
     struct Trace {
         std::function<void()> f;
         ~Trace() { if (f) f(); }
@@ -1387,6 +1409,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (p >= 0 && pts[size_t(p)].number == up) continue;
             const auto it = byNumber.find(up);
             if (it == byNumber.end() || it->second == int(i)) continue;
+            // (within its own paper or option: Paper 4's "1.1" isn't Paper 1's topic 1's)
+            auto root = [&](int q) { while (pts[size_t(q)].parent >= 0) q = pts[size_t(q)].parent; return q; };
+            if (root(int(i)) != root(it->second)) continue;
             bool loop = false;      // never under a point inside it
             for (int q = it->second; q >= 0 && !loop; q = pts[size_t(q)].parent) loop = q == int(i);
             if (!loop) pts[i].parent = it->second;

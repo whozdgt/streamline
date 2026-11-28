@@ -1,5 +1,5 @@
 {
- "version": 2026112801,
+ "version": 2026112802,
  "about": "Official links to exam boards' course specifications. Streamline downloads one from its board's website when you choose it; the documents themselves aren't kept here. Checked every week by .github/workflows/catalog.yml.",
  "specs": [
   {
@@ -741,6 +741,26 @@
    "exams": "2028–2030",
    "url": "https://www.cambridgeinternational.org/Images/744593-2028-2030-syllabus.pdf",
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-environmental-management-8291/"
+  },
+  {
+   "id": "cambridge-8386-2024",
+   "board": "Cambridge",
+   "level": "AS Level",
+   "subject": "Sport and Physical Education",
+   "code": "8386",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/635241-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-level-sport-and-physical-education-8386/"
+  },
+  {
+   "id": "cambridge-8386-2027",
+   "board": "Cambridge",
+   "level": "AS Level",
+   "subject": "Sport and Physical Education",
+   "code": "8386",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721331-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-level-sport-and-physical-education-8386/"
   },
   {
    "id": "cambridge-0400-2026",
@@ -1875,12 +1895,36 @@
    "url": "https://filestore.aqa.org.uk/resources/sociology/specifications/AQA-7191-7192-SP-2015.PDF"
   },
   {
+   "id": "aqa-7201",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Art and Design",
+   "code": "7201",
+   "url": "https://filestore.aqa.org.uk/resources/art-and-design/specifications/AQA-ART-A-LEVEL-SP-2015.PDF"
+  },
+  {
    "id": "aqa-7237",
    "board": "AQA",
    "level": "AS and A-level",
    "subject": "Dance",
    "code": "7237",
    "url": "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-7237-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-7262",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Drama and Theatre",
+   "code": "7262",
+   "url": "https://filestore.aqa.org.uk/resources/drama/specifications/AQA-7262-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-7272",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Music",
+   "code": "7272",
+   "url": "https://filestore.aqa.org.uk/resources/music/specifications/AQA-7272-SP-2016.PDF"
   },
   {
    "id": "aqa-7402",
@@ -1945,6 +1989,14 @@
    "subject": "English Language",
    "code": "7702",
    "url": "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7701-7702-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7707",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "English Language and Literature",
+   "code": "7707",
+   "url": "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7707-SP-2015.PDF"
   },
   {
    "id": "aqa-7712",
@@ -2033,6 +2085,14 @@
    "subject": "Sociology",
    "code": "8192",
    "url": "https://filestore.aqa.org.uk/resources/sociology/specifications/AQA-8192-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8201",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Art and Design",
+   "code": "8201",
+   "url": "https://filestore.aqa.org.uk/resources/art-and-design/specifications/AQA-ART-GCSE-SP-2016.PDF"
   },
   {
    "id": "aqa-8236",
@@ -2322,6 +2382,14 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/drama-and-theatre-2016.html"
   },
   {
+   "id": "edexcel-9dt0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Design and Technology (Product Design)",
+   "code": "9DT0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Design%20and%20Technology%20-%20Product%20Design/2017/specification-and-sample-assessments/Pearson_Edexcel_Level_3_GCE_in_Design_and_Technology_Specification_issue2.pdf"
+  },
+  {
    "id": "edexcel-9eb0",
    "board": "Edexcel",
    "level": "A level",
@@ -2428,6 +2496,14 @@
    "code": "9MU0",
    "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Music/2016/Specification%20and%20sample%20assessments/Pearson_Edexcel_Level_3_Advanced_GCE_in_Music_9MU0_specification_issue7.pdf",
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/music-2016.html"
+  },
+  {
+   "id": "edexcel-9pe0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Physical Education",
+   "code": "9PE0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Physical%20Education/2016/Specification%20and%20sample%20assessments/a-level-pe-specification-issue-4.pdf"
   },
   {
    "id": "edexcel-9ph0",
@@ -2547,6 +2623,15 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/drama-2016.html"
   },
   {
+   "id": "edexcel-1dt0",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Design and Technology",
+   "code": "1DT0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/design-and-technology/2017/specification-and-sample-assessments/Pearson_Edexcel_GCSE_9_to_1_in_Design_and_Technology_Specification_issue3.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/design-and-technology-9-1-from-2017.html"
+  },
+  {
    "id": "edexcel-1en0",
    "board": "Edexcel",
    "level": "GCSE",
@@ -2628,6 +2713,14 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/music-2016.html"
   },
   {
+   "id": "edexcel-1pe0",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Physical Education",
+   "code": "1PE0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Physical%20Education/2016/Specification%20and%20sample%20assessments/gcse-pe-specification-issue-6.pdf"
+  },
+  {
    "id": "edexcel-1ph0",
    "board": "Edexcel",
    "level": "GCSE",
@@ -2691,6 +2784,14 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/statistics-2017.html"
   },
   {
+   "id": "edexcel-yac11",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "Accounting",
+   "code": "YAC11",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Accounting/2015/specification-and-sample-assessments/pearson-edexcel-ial-accounting-specification.pdf"
+  },
+  {
    "id": "edexcel-ybi11",
    "board": "Edexcel",
    "level": "International A level",
@@ -2745,6 +2846,22 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/english-literature-2015.html"
   },
   {
+   "id": "edexcel-yge01",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "Geography",
+   "code": "YGE01",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Geography/2016/specification-and-sample-assessments/ial-geography-specification.pdf"
+  },
+  {
+   "id": "edexcel-yhi01",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "History",
+   "code": "YHI01",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/history/2015/specification-and-sample-assessments/IAL-History-Specification.pdf"
+  },
+  {
    "id": "edexcel-yit11",
    "board": "Edexcel",
    "level": "International A level",
@@ -2770,6 +2887,14 @@
    "code": "YPH11",
    "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Physics/2018/Specification%20and%20Sample%20Assessment/9781446957783_IAL_Physics_Iss3.pdf",
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/physics-2018.html"
+  },
+  {
+   "id": "edexcel-yps01",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "Psychology",
+   "code": "YPS01",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/psychology/2015/specification-and-sample-assessments/ial-psychology-specification.pdf"
   },
   {
    "id": "edexcel-4ac1",
@@ -2861,6 +2986,14 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-economics-2017.html"
   },
   {
+   "id": "edexcel-4es1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "English as a Second Language",
+   "code": "4ES1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/English%20(as%202nd%20language)/2017/specification-and-sample-assessments/international-gcse-esl-2017-specification.pdf"
+  },
+  {
    "id": "edexcel-4et1",
    "board": "Edexcel",
    "level": "International GCSE",
@@ -2886,6 +3019,22 @@
    "code": "4GE1",
    "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Geography/2017/specification-and-sample-assessments/9781446958360-int-gcse-geog-issue-3.pdf",
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-geography-2017.html"
+  },
+  {
+   "id": "edexcel-4gl1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Global Citizenship",
+   "code": "4GL1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Global%20Citizenship/2017/Specification%20and%20sample%20assessments/international-gcse-global-citizenship-spec.pdf"
+  },
+  {
+   "id": "edexcel-4gn1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "German",
+   "code": "4GN1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/German/2017/specification-and-sample-assessments/International-GCSE-German-Specification.pdf"
   },
   {
    "id": "edexcel-4hb1",
@@ -2931,6 +3080,14 @@
    "code": "4MA1",
    "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Mathematics%20A/2016/Specification%20and%20sample%20assessments/international-gcse-in-mathematics-spec-a.pdf",
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-mathematics-a-2016.html"
+  },
+  {
+   "id": "edexcel-4mb1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Mathematics B",
+   "code": "4MB1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Mathematics%20B/2016/Specification%20and%20sample%20assessments/international-gcse-in-mathematics-spec-b.pdf"
   },
   {
    "id": "edexcel-4pa1",
@@ -3570,6 +3727,14 @@
    "code": "J587",
    "url": "https://www.ocr.org.uk/Images/234822-specification-accredited-gcse-physical-education-j587.pdf",
    "page": "https://www.ocr.org.uk/qualifications/gcse/physical-education-j587-from-2016/"
+  },
+  {
+   "id": "ocr-j625",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Religious Studies",
+   "code": "J625",
+   "url": "https://www.ocr.org.uk/Images/240547-specification-accredited-gcse-religious-studies-j625.pdf"
   }
  ]
 }
