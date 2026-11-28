@@ -26,6 +26,7 @@ Rectangle {
         { k: "sound", t: "Sound", icon: "wave" },
         { k: "look", t: "Look", icon: "eye" },
         { k: "home", t: "Home", icon: "home" },
+        { k: "ai", t: "AI", icon: "ai" },
         { k: "about", t: "About", icon: "info" }]
     readonly property string headTitle: searching ? "Search results"
         : (showList ? "Settings" : titleOf(cat))
@@ -54,6 +55,12 @@ Rectangle {
         }
         if (k === "sound") return "Bit-perfect " + (settings.bitPerfect ? "on" : "off") + " · quality badges " + (settings.badges ? "on" : "off")
         if (k === "look") return "Size, colours, lyrics, cover art"
+        if (k === "ai") {
+            ai.revision
+            const ms = ai.models()
+            const got = ms.filter(function(m) { return m.installed }).length
+            return "On-device models for Pods · " + got + " of " + ms.length + " downloaded"
+        }
         if (k === "home") {
             const l = layout ? layout.listed : []
             let on = 0
@@ -227,6 +234,7 @@ Rectangle {
                     SetSound { Layout.fillWidth: true; visible: root.searching || root.shownCat === "sound" }
                     SetLook { Layout.fillWidth: true; visible: root.searching || root.shownCat === "look" }
                     SetHome { Layout.fillWidth: true; panel: root; visible: root.searching || root.shownCat === "home" }
+                    SetAI { Layout.fillWidth: true; visible: root.searching || root.shownCat === "ai" }
                     SetAbout { Layout.fillWidth: true; visible: root.searching || root.shownCat === "about" }
                 }
             }

@@ -62,6 +62,13 @@
             <meta-data
                 android:name="android.app.arguments"
                 android:value="-- %%INSERT_APP_ARGUMENTS%% --" />
+
+            <!-- keep the app's own code running in the background, so the lock screen's, notification's and
+                 pop-up controls' pause, next and previous take effect straight away (Qt pauses it otherwise until
+                 the app is opened again), and the next song starts with the screen off -->
+            <meta-data
+                android:name="android.app.background_running"
+                android:value="true" />
         </activity>
 
         <service

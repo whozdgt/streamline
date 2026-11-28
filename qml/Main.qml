@@ -110,14 +110,20 @@ Window {
     property string studyView: "flashcards"
     onViewChanged: if (view === "flashcards" || view === "pods") studyView = view
     property real lastScrollY: 0
-    function noteScroll(y) {
+    // Only the person's own scrolling counts. A list that moves because the bars changed size, or bounces back at its end,
+    // isn't scrolling: counting it made the bars tuck and untuck over and over, and the mini player jump about.
+    function noteScroll(y, moving) {
         if (!phone) return
+        if (!moving || tuckSettle.running) { lastScrollY = y; return }
+        const was = barsTucked
         if (y < 40) barsTucked = false
         else if (y > lastScrollY + 14) barsTucked = true
         else if (y < lastScrollY - 14) barsTucked = false
         else return
         lastScrollY = y
+        if (barsTucked !== was) tuckSettle.restart()
     }
+    Timer { id: tuckSettle; interval: 450 }      // while the bars change size, the list under them settles
     // Phones: which tab is lit, and what tapping one does
     readonly property string currentTab: searchOpen ? "search"
         : (view === "home" ? "home" : (view === "flashcards" || view === "pods") ? "study" : view === "todos" ? "todos" : (view === "friends" || view === "user" || view === "friendpl") ? "friends" : "library")
@@ -128,7 +134,8 @@ Window {
         navigate(k)
     }
     readonly property bool albumHeader: settings.round && view === "songs" && library.filterKind !== ""     // Midnight's album/artist/playlist page
-    readonly property real dockSpace: phone && !expanded ? dock.height + 26 : 0
+    // (the bars' full height, tucked or not: a list's end that moved as they tucked would scroll it, and tuck them again)
+    readonly property real dockSpace: phone && !expanded ? dock.fullHeight + 26 : 0
     function openUser(name) {
         searchOpen = false
         if (view !== "user" && view !== "friendpl") userBack = view
@@ -519,7 +526,7 @@ Window {
                     visible: win.view === "home"
                     layout: homeLayout
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     gutter: win.gutter
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: settings.round ? 4 : (win.phone ? 56 : 18) }
                     onOpenUser: (username) => win.openUser(username)
@@ -535,7 +542,7 @@ Window {
                     visible: win.view === "library"
                     gutter: win.gutter
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onShowView: (v) => { win.navigate(v); win.backView = "library" }
                     onAddServer: win.addServerOpen = true
@@ -546,7 +553,7 @@ Window {
                     visible: win.view === "profile"
                     editing: win.profileMode === "edit"
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onSignInRequested: win.authOpen = true
                     onImageRequested: (kind) => { imagePopup.kind = kind; imagePopup.visible = true }
@@ -567,7 +574,7 @@ Window {
                 PublicProfile {
                     visible: win.view === "user"
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onOpenPlaylist: (pid, name, owner) => win.openFriendPlaylist(pid, name, owner, true)
                 }
@@ -580,7 +587,7 @@ Window {
                     visible: win.view === "flashcards"
                     gutter: win.gutter
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                 }
                 PodsPage {
@@ -588,23 +595,24 @@ Window {
                     visible: win.view === "pods"
                     gutter: win.gutter
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onChooseFolder: docPicker.visible = true
+                    onOpenAiSettings: { settingsPanel.show("ai"); win.settingsOpen = true }
                 }
                 TodosPage {
                     id: todosPage
                     visible: win.view === "todos"
                     gutter: win.gutter
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onSignInRequested: win.authOpen = true
                 }
                 SongList {
                     visible: win.view === "songs"
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     onMenuRequested: (path, gx, gy) => { win.menuPath = path; const q = ui.mapFromItem(null, gx, gy); win.menuX = q.x; win.menuY = q.y }
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                 }
@@ -614,7 +622,7 @@ Window {
                     active: win.phone && settings.phoneGrid && win.view === "albums"
                     visible: active
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; leftMargin: 8; right: parent.right; rightMargin: 8; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onPicked: (key, name) => win.pick("album", key, name)
                 }
@@ -624,7 +632,7 @@ Window {
                     active: win.phone && settings.phoneGrid && win.view === "artists"
                     visible: active
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; leftMargin: 8; right: parent.right; rightMargin: 8; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onPicked: (key, name) => win.pick("artist", key, name)
                 }
@@ -634,7 +642,7 @@ Window {
                     active: win.phone && settings.phoneGrid && win.view === "playlists"
                     visible: active
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY)
+                    onContentYChanged: win.noteScroll(contentY, moving)
                     anchors { left: parent.left; leftMargin: 8; right: parent.right; rightMargin: 8; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onPicked: (key, name) => win.openPlaylist(key, name)
                 }

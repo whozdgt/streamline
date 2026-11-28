@@ -11,7 +11,9 @@ Item {
     property int gutter: 36
     property real bottomMargin: 0
     property alias contentY: flick.contentY
+    readonly property alias moving: flick.moving       // the person is scrolling it (not a page that changed size)
     signal chooseFolder()
+    signal openAiSettings()      // Settings › AI, where the models are downloaded
 
     property string mode: "list"            // list | pod | doc (a phone: one document on its own page)
     property string podId: ""
@@ -646,16 +648,18 @@ Item {
                     }
                 }
 
-                Card {      // the free on-device AI
+                Card {      // the free on-device AI: what's downloaded; the models themselves are in Settings › AI
+                    id: aiCard
+                    readonly property var models: { ai.revision; return ai.models() }
+                    readonly property int got: models.filter(function(m) { return m.installed }).length
                     Text { text: "On-device AI"; font.pixelSize: 15; font.weight: Font.DemiBold; color: settings.ink }
                     Para {
-                        text: "Two free AI models that read your documents and sort them by what they're about. They run on this device: "
-                            + "your documents never leave it, and once downloaded they work offline. Without them, pods sort by key words."
+                        text: (aiCard.got === aiCard.models.length ? "Both AI models are downloaded: pods sort by meaning, on this device."
+                               : aiCard.got > 0 ? aiCard.got + " of " + aiCard.models.length + " AI models downloaded."
+                               : "Pods sort by key words. Download the free on-device AI models to sort by meaning.")
+                            + " Download or remove them in Settings › AI."
                     }
-                    Repeater {
-                        model: { ai.revision; return ai.models() }
-                        AiModelRow { required property var modelData; width: parent.width; info: modelData }
-                    }
+                    Btn { label: "AI settings"; primary: false; onClicked: root.openAiSettings() }
                 }
             }
 
