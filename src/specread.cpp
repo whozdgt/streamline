@@ -906,12 +906,17 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
         return false;
     };
     // the first number with dots after line i, and its first part ("2.1" → 2)
+    // (or, where every numbered line is a statement, the next statement's: "8.1 use the following units…" after
+    // "8 Astrophysics", Edexcel International GCSE Physics)
     auto nextDottedMajor = [&](size_t i) {
+        int any = -1;
         for (size_t j = i + 1; j < lines.size() && j < i + 400; ++j) {
             Num n;
-            if (parseNum(lines[j], n) && n.parts.size() >= 2 && !statementLike(n.title)) return n.parts[0];
+            if (!parseNum(lines[j], n) || n.parts.size() < 2) continue;
+            if (!statementLike(n.title)) return n.parts[0];
+            if (any < 0 && n.prefix.empty() && j < i + 40) any = n.parts[0];
         }
-        return -1;
+        return any;
     };
 
     static const std::regex optionNumRe("^([1-9][0-9]?[A-Z])(?:\\.([0-9]{1,2}))?\\s+([A-Z].*)$");      // "2A", "2A.1"
@@ -1119,6 +1124,18 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     const int next = nextDottedMajor(i);
                     heading = v == lastTop || (v > lastTop && next == v && (v == lastTop + 1 || !contentTitle(t))) ||
                               (v == lastTop + 1 && next > v && !contentTitle(t));
+                } else if (heading && v < lastTop) {
+                    // going back to an earlier topic: only that topic's heading again ("1 Number" at the top of a page),
+                    // not a line of text that starts with its number ("6 C to describe particular nuclei", the 6 of
+                    // carbon-14's symbol, inside topic 7: Edexcel International GCSE Physics)
+                    bool again = false;
+                    for (const auto &p : pts)
+                        if (p.number == number) {
+                            const std::string a = lower(p.title), b = lower(t);
+                            const size_t m = std::min(a.size(), b.size());
+                            again = again || a == b || (m >= 8 && a.compare(0, m, b, 0, m) == 0);
+                        }
+                    heading = again;
                 } else if (heading && lastTop == 0 && v > 1) {
                     // before the first topic, a number the content's own numbering hasn't reached: an item of a list
                     // ("6 The internally assessed Practical Endorsement", then Module 1's 1.1: OCR A Level Chemistry A)
@@ -1336,7 +1353,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if ((!t.empty() && words == 0) || pts[i].number == "0" || lt == "unit description" || lt == "assessment information" ||
                 lt == "unit content" || lt == "content" || objective || labels.count(lt)) { gone[i] = true; continue; }
             if (pts[i].number.empty() || t.empty()) continue;
-            const std::string where = optionOf(i) + "|" + pts[i].number;
+            // (a lettered part is one of its topic's: "(a) Units" in each of International GCSE Physics' topics)
+            const std::string where = optionOf(i) + "|" +
+                                      (pts[i].number[0] == '(' && pts[i].parent >= 0 ? pts[size_t(pts[i].parent)].number + " " : std::string()) +
+                                      pts[i].number;
             const auto key = std::make_pair(where, lower(t));
             auto it = first.find(key);
             if (it == first.end()) {
