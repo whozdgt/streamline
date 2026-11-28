@@ -40,12 +40,18 @@ jobs:
                   return str(e)[:40], url, b""
           def links(html, base):
               found = []
+              def add(raw):
+                  raw = raw.replace("\\/", "/").replace("&amp;", "&").strip()
+                  u = urllib.parse.urljoin(base, raw)
+                  u = urllib.parse.quote(u, safe=":/?&=%#+")      # (Pearson's paths have spaces)
+                  if u not in found: found.append(u)
               for m in re.finditer(rb'href\s*=\s*["\']([^"\']+?\.pdf)(?:\?[^"\']*)?["\']', html, re.I):
-                  u = urllib.parse.urljoin(base, m.group(1).decode("utf-8", "replace").replace("&amp;", "&"))
-                  if u not in found: found.append(u)
+                  add(m.group(1).decode("utf-8", "replace"))
+              # links a page's script builds, or keeps in its data: any quoted path to a PDF
+              for m in re.finditer(rb'["\'](https?:\\?/\\?/[^"\'<>]+?\.pdf|/[^"\'<>]+?\.pdf)["\']', html, re.I):
+                  add(m.group(1).decode("utf-8", "replace"))
               for m in re.finditer(rb'https?://filestore\.aqa\.org\.uk/[^"\'\s<>]+?\.pdf', html, re.I):
-                  u = m.group(0).decode("utf-8", "replace")
-                  if u not in found: found.append(u)
+                  add(m.group(0).decode("utf-8", "replace"))
               return found
           def read(path, code):
               out = subprocess.run(["./spec_test", path], capture_output=True, text=True, errors="replace", timeout=180).stdout
@@ -92,9 +98,13 @@ jobs:
                           continue
                       # the specification: its link names it, and the course's code if it can
                       def rank(u):
-                          l = u.lower()
+                          l = fname(u).lower()
                           return (code.lower() in l, "spec" in l or "syllabus" in l, "specification" in l, -len(l))
-                      spec = [u for u in cands if re.search(r"spec|syllabus", u, re.I) and not re.search(r"summary|changes|guide|sample|sam[s]?\b|-sams|mark|qp|ms\.pdf|teaching|transition", u, re.I)]
+                      # (judged by the file's own name: Pearson keeps every specification in a folder called
+                      # "specification-and-sample-assessments")
+                      fname = lambda u: urllib.parse.unquote(u.rsplit("/", 1)[-1])
+                      spec = [u for u in cands if re.search(r"spec|syllabus", u, re.I) and
+                              not re.search(r"summary|changes|guide|sample|\bsams?\b|-sams|mark|qp|ms\.pdf|teaching|transition|exemplar|mapping|checklist", fname(u), re.I)]
                       spec.sort(key=rank, reverse=True)
                       for i, u in enumerate(spec[:5]):
                           r = fetch(u, code, 200 + i)

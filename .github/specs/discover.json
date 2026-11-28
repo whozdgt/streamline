@@ -1,211 +1,5 @@
 [
  {
-  "id": "aqa-8652",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "French",
-  "code": "8652",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/french/specifications/AQA-8652-SP-2024.PDF",
-   "https://filestore.aqa.org.uk/resources/french/specifications/AQA-8652-SP-2024.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8652"
-  ]
- },
- {
-  "id": "aqa-8692",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Spanish",
-  "code": "8692",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/spanish/specifications/AQA-8692-SP-2024.PDF",
-   "https://filestore.aqa.org.uk/resources/spanish/specifications/AQA-8692-SP-2024.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8692"
-  ]
- },
- {
-  "id": "aqa-8662",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "German",
-  "code": "8662",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/german/specifications/AQA-8662-SP-2024.PDF",
-   "https://filestore.aqa.org.uk/resources/german/specifications/AQA-8662-SP-2024.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8662"
-  ]
- },
- {
-  "id": "aqa-8261",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Drama",
-  "code": "8261",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/drama/specifications/AQA-8261-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/drama/specifications/AQA-8261-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8261"
-  ]
- },
- {
-  "id": "aqa-8271",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Music",
-  "code": "8271",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/music/specifications/AQA-8271-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/music/specifications/AQA-8271-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8271"
-  ]
- },
- {
-  "id": "aqa-8572",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Media Studies",
-  "code": "8572",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/media-studies/specifications/AQA-8572-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/media-studies/specifications/AQA-8572-SP-2017.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8572"
-  ]
- },
- {
-  "id": "aqa-8585",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Food Preparation and Nutrition",
-  "code": "8585",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/food/specifications/AQA-8585-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/food/specifications/AQA-8585-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8585"
-  ]
- },
- {
-  "id": "aqa-8382",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Statistics",
-  "code": "8382",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8382-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8382-SP-2017.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8382"
-  ]
- },
- {
-  "id": "aqa-8365",
-  "board": "AQA",
-  "level": "Level 2 Certificate",
-  "subject": "Further Mathematics",
-  "code": "8365",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8365-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8365-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8365-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8365-SP-2018.pdf",
-   "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8365-SP-2019.PDF",
-   "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8365-SP-2019.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8365"
-  ]
- },
- {
-  "id": "aqa-8465",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Combined Science: Synergy",
-  "code": "8465",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/science/specifications/AQA-8465-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/science/specifications/AQA-8465-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8465"
-  ]
- },
- {
-  "id": "aqa-8063",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Religious Studies B",
-  "code": "8063",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-8063-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-8063-SP-2016.pdf",
-   "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-8063-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-8063-SP-2017.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8063"
-  ]
- },
- {
-  "id": "aqa-8100",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Citizenship Studies",
-  "code": "8100",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/citizenship/specifications/AQA-8100-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/citizenship/specifications/AQA-8100-SP-2016.pdf",
-   "https://filestore.aqa.org.uk/resources/citizenship/specifications/AQA-8100-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/citizenship/specifications/AQA-8100-SP-2017.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8100"
-  ]
- },
- {
-  "id": "aqa-8852",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Engineering",
-  "code": "8852",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/engineering/specifications/AQA-8852-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/engineering/specifications/AQA-8852-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/engineering/specifications/AQA-8852-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/engineering/specifications/AQA-8852-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8852"
-  ]
- },
- {
-  "id": "aqa-8236",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Dance",
-  "code": "8236",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-8236-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-8236-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8236"
-  ]
- },
- {
   "id": "aqa-8201",
   "board": "AQA",
   "level": "GCSE",
@@ -220,134 +14,6 @@
   ]
  },
  {
-  "id": "aqa-8673",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Chinese (spoken Mandarin)",
-  "code": "8673",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/chinese/specifications/AQA-8673-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/chinese/specifications/AQA-8673-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/chinese/specifications/AQA-8673-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/chinese/specifications/AQA-8673-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8673"
-  ]
- },
- {
-  "id": "aqa-8633",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Italian",
-  "code": "8633",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/italian/specifications/AQA-8633-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/italian/specifications/AQA-8633-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/italian/specifications/AQA-8633-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/italian/specifications/AQA-8633-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8633"
-  ]
- },
- {
-  "id": "aqa-8688",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Polish",
-  "code": "8688",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/polish/specifications/AQA-8688-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/polish/specifications/AQA-8688-SP-2016.pdf",
-   "https://filestore.aqa.org.uk/resources/polish/specifications/AQA-8688-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/polish/specifications/AQA-8688-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/polish/specifications/AQA-8688-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/polish/specifications/AQA-8688-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8688"
-  ]
- },
- {
-  "id": "aqa-8648",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Urdu",
-  "code": "8648",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/urdu/specifications/AQA-8648-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/urdu/specifications/AQA-8648-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/urdu/specifications/AQA-8648-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/urdu/specifications/AQA-8648-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8648"
-  ]
- },
- {
-  "id": "aqa-8638",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Bengali",
-  "code": "8638",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/bengali/specifications/AQA-8638-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/bengali/specifications/AQA-8638-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/bengali/specifications/AQA-8638-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/bengali/specifications/AQA-8638-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8638"
-  ]
- },
- {
-  "id": "aqa-8683",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Panjabi",
-  "code": "8683",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/panjabi/specifications/AQA-8683-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/panjabi/specifications/AQA-8683-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/panjabi/specifications/AQA-8683-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/panjabi/specifications/AQA-8683-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8683"
-  ]
- },
- {
-  "id": "aqa-8678",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Modern Hebrew",
-  "code": "8678",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/modern-hebrew/specifications/AQA-8678-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/modern-hebrew/specifications/AQA-8678-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/modern-hebrew/specifications/AQA-8678-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/modern-hebrew/specifications/AQA-8678-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/8678"
-  ]
- },
- {
-  "id": "aqa-7717",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "English Literature B",
-  "code": "7717",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7716-7717-SP-2015.PDF",
-   "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7716-7717-SP-2015.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7717"
-  ]
- },
- {
   "id": "aqa-7707",
   "board": "AQA",
   "level": "AS and A-level",
@@ -359,48 +25,6 @@
   ],
   "pages": [
    "https://www.aqa.org.uk/7707"
-  ]
- },
- {
-  "id": "aqa-7652",
-  "board": "AQA",
-  "level": "A-level",
-  "subject": "French",
-  "code": "7652",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/french/specifications/AQA-7652-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/french/specifications/AQA-7652-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7652"
-  ]
- },
- {
-  "id": "aqa-7692",
-  "board": "AQA",
-  "level": "A-level",
-  "subject": "Spanish",
-  "code": "7692",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/spanish/specifications/AQA-7692-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/spanish/specifications/AQA-7692-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7692"
-  ]
- },
- {
-  "id": "aqa-7662",
-  "board": "AQA",
-  "level": "A-level",
-  "subject": "German",
-  "code": "7662",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/german/specifications/AQA-7662-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/german/specifications/AQA-7662-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7662"
   ]
  },
  {
@@ -429,84 +53,6 @@
   ],
   "pages": [
    "https://www.aqa.org.uk/7272"
-  ]
- },
- {
-  "id": "aqa-7572",
-  "board": "AQA",
-  "level": "A-level",
-  "subject": "Media Studies",
-  "code": "7572",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/media-studies/specifications/AQA-7572-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/media-studies/specifications/AQA-7572-SP-2017.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7572"
-  ]
- },
- {
-  "id": "aqa-7127",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "Accounting",
-  "code": "7127",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7126-7127-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7126-7127-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7126-7127-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7126-7127-SP-2018.pdf",
-   "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7127-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7127-SP-2017.pdf",
-   "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7127-SP-2018.PDF",
-   "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7127-SP-2018.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7127"
-  ]
- },
- {
-  "id": "aqa-7552",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "Design and Technology: Product Design",
-  "code": "7552",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-7552-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-7552-SP-2017.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7552"
-  ]
- },
- {
-  "id": "aqa-7562",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "Design and Technology: Fashion and Textiles",
-  "code": "7562",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-7562-SP-2017.PDF",
-   "https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-7562-SP-2017.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7562"
-  ]
- },
- {
-  "id": "aqa-7237",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "Dance",
-  "code": "7237",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-7236-7237-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-7236-7237-SP-2016.pdf",
-   "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-7237-SP-2016.PDF",
-   "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-7237-SP-2016.pdf"
-  ],
-  "pages": [
-   "https://www.aqa.org.uk/7237"
   ]
  },
  {
@@ -571,7 +117,9 @@
   "code": "0606",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-additional-mathematics-0606/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-additional-0606/",
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-additional-mathematics-0606/",
+   "https://www.cambridgeinternational.org/0606"
   ]
  },
  {
@@ -582,7 +130,8 @@
   "code": "0475",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-literature-in-english-0475/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-literature-in-english-0475/",
+   "https://www.cambridgeinternational.org/0475"
   ]
  },
  {
@@ -593,7 +142,8 @@
   "code": "0510",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-a-second-language-speaking-endorsement-0510/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-a-second-language-speaking-endorsement-0510/",
+   "https://www.cambridgeinternational.org/0510"
   ]
  },
  {
@@ -604,40 +154,8 @@
   "code": "0511",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-a-second-language-count-in-speaking-0511/"
-  ]
- },
- {
-  "id": "cambridge-0520",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "French – Foreign Language",
-  "code": "0520",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-french-foreign-language-0520/"
-  ]
- },
- {
-  "id": "cambridge-0530",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Spanish – Foreign Language",
-  "code": "0530",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-spanish-foreign-language-0530/"
-  ]
- },
- {
-  "id": "cambridge-0525",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "German – Foreign Language",
-  "code": "0525",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-german-foreign-language-0525/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-a-second-language-count-in-speaking-0511/",
+   "https://www.cambridgeinternational.org/0511"
   ]
  },
  {
@@ -648,7 +166,8 @@
   "code": "0547",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mandarin-chinese-foreign-language-0547/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mandarin-chinese-foreign-language-0547/",
+   "https://www.cambridgeinternational.org/0547"
   ]
  },
  {
@@ -659,7 +178,8 @@
   "code": "0654",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-co-ordinated-sciences-double-award-0654/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-co-ordinated-sciences-double-award-0654/",
+   "https://www.cambridgeinternational.org/0654"
   ]
  },
  {
@@ -670,172 +190,8 @@
   "code": "0653",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-combined-science-0653/"
-  ]
- },
- {
-  "id": "cambridge-0652",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Physical Science",
-  "code": "0652",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-science-0652/"
-  ]
- },
- {
-  "id": "cambridge-0454",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Enterprise",
-  "code": "0454",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-enterprise-0454/"
-  ]
- },
- {
-  "id": "cambridge-0471",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Travel and Tourism",
-  "code": "0471",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-travel-and-tourism-0471/"
-  ]
- },
- {
-  "id": "cambridge-0400",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Art and Design",
-  "code": "0400",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-art-and-design-0400/"
-  ]
- },
- {
-  "id": "cambridge-0410",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Music",
-  "code": "0410",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-music-0410/"
-  ]
- },
- {
-  "id": "cambridge-0411",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Drama",
-  "code": "0411",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-drama-0411/"
-  ]
- },
- {
-  "id": "cambridge-0413",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Physical Education",
-  "code": "0413",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-education-0413/"
-  ]
- },
- {
-  "id": "cambridge-0490",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Religious Studies",
-  "code": "0490",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-religious-studies-0490/"
-  ]
- },
- {
-  "id": "cambridge-0445",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Design and Technology",
-  "code": "0445",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-design-and-technology-0445/"
-  ]
- },
- {
-  "id": "cambridge-0648",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Food and Nutrition",
-  "code": "0648",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-food-and-nutrition-0648/"
-  ]
- },
- {
-  "id": "cambridge-0600",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Agriculture",
-  "code": "0600",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-agriculture-0600/"
-  ]
- },
- {
-  "id": "cambridge-0697",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Marine Science",
-  "code": "0697",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-marine-science-0697/"
-  ]
- },
- {
-  "id": "cambridge-0448",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Pakistan Studies",
-  "code": "0448",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-pakistan-studies-0448/"
-  ]
- },
- {
-  "id": "cambridge-0493",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Islamiyat",
-  "code": "0493",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-islamiyat-0493/"
-  ]
- },
- {
-  "id": "cambridge-0408",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "World Literature",
-  "code": "0408",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-world-literature-0408/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-combined-science-0653/",
+   "https://www.cambridgeinternational.org/0653"
   ]
  },
  {
@@ -846,7 +202,8 @@
   "code": "0970",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-biology-0970/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-biology-0970/",
+   "https://www.cambridgeinternational.org/0970"
   ]
  },
  {
@@ -857,7 +214,8 @@
   "code": "0971",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-chemistry-0971/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-chemistry-0971/",
+   "https://www.cambridgeinternational.org/0971"
   ]
  },
  {
@@ -868,7 +226,8 @@
   "code": "0972",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-physics-0972/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-physics-0972/",
+   "https://www.cambridgeinternational.org/0972"
   ]
  },
  {
@@ -879,7 +238,8 @@
   "code": "0980",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-mathematics-0980/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-mathematics-0980/",
+   "https://www.cambridgeinternational.org/0980"
   ]
  },
  {
@@ -890,7 +250,8 @@
   "code": "0990",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-english-first-language-0990/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-english-first-language-0990/",
+   "https://www.cambridgeinternational.org/0990"
   ]
  },
  {
@@ -901,18 +262,8 @@
   "code": "0992",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-literature-in-english-0992/"
-  ]
- },
- {
-  "id": "cambridge-0450",
-  "board": "Cambridge",
-  "level": "IGCSE",
-  "subject": "Business Studies",
-  "code": "0450",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-business-studies-0450/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-literature-in-english-0992/",
+   "https://www.cambridgeinternational.org/0992"
   ]
  },
  {
@@ -923,7 +274,9 @@
   "code": "9231",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-further-mathematics-9231/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-further-9231/",
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-further-mathematics-9231/",
+   "https://www.cambridgeinternational.org/9231"
   ]
  },
  {
@@ -934,73 +287,8 @@
   "code": "9695",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-literature-in-english-9695/"
-  ]
- },
- {
-  "id": "cambridge-9239",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Global Perspectives & Research",
-  "code": "9239",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-global-perspectives-and-research-9239/"
-  ]
- },
- {
-  "id": "cambridge-9693",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Marine Science",
-  "code": "9693",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-marine-science-9693/"
-  ]
- },
- {
-  "id": "cambridge-9607",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Media Studies",
-  "code": "9607",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-media-studies-9607/"
-  ]
- },
- {
-  "id": "cambridge-9694",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Thinking Skills",
-  "code": "9694",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-thinking-skills-9694/"
-  ]
- },
- {
-  "id": "cambridge-9479",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Art & Design",
-  "code": "9479",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-art-and-design-9479/"
-  ]
- },
- {
-  "id": "cambridge-9483",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Music",
-  "code": "9483",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-music-9483/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-literature-in-english-9695/",
+   "https://www.cambridgeinternational.org/9695"
   ]
  },
  {
@@ -1011,40 +299,8 @@
   "code": "9396",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-physical-education-9396/"
-  ]
- },
- {
-  "id": "cambridge-9395",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Travel & Tourism",
-  "code": "9395",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-travel-and-tourism-9395/"
-  ]
- },
- {
-  "id": "cambridge-9274",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Classical Studies",
-  "code": "9274",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-classical-studies-9274/"
-  ]
- },
- {
-  "id": "cambridge-9705",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Design & Technology",
-  "code": "9705",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-design-and-technology-9705/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-physical-education-9396/",
+   "https://www.cambridgeinternational.org/9396"
   ]
  },
  {
@@ -1055,18 +311,8 @@
   "code": "9481",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-digital-media-and-design-9481/"
-  ]
- },
- {
-  "id": "cambridge-9482",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Drama",
-  "code": "9482",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-drama-9482/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-digital-media-and-design-9481/",
+   "https://www.cambridgeinternational.org/9481"
   ]
  },
  {
@@ -1077,7 +323,8 @@
   "code": "9898",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-french-9898/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-french-9898/",
+   "https://www.cambridgeinternational.org/9898"
   ]
  },
  {
@@ -1088,18 +335,8 @@
   "code": "9844",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-spanish-9844/"
-  ]
- },
- {
-  "id": "cambridge-9897",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "German",
-  "code": "9897",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-german-9897/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-spanish-9844/",
+   "https://www.cambridgeinternational.org/9844"
   ]
  },
  {
@@ -1110,18 +347,8 @@
   "code": "9868",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-chinese-9868/"
-  ]
- },
- {
-  "id": "cambridge-9488",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Islamic Studies",
-  "code": "9488",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-islamic-studies-9488/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-chinese-9868/",
+   "https://www.cambridgeinternational.org/9868"
   ]
  },
  {
@@ -1132,7 +359,8 @@
   "code": "9011",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-divinity-9011/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-divinity-9011/",
+   "https://www.cambridgeinternational.org/9011"
   ]
  },
  {
@@ -1143,40 +371,8 @@
   "code": "9631",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-design-and-textiles-9631/"
-  ]
- },
- {
-  "id": "cambridge-9618",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Computer Science",
-  "code": "9618",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-computer-science-9618/"
-  ]
- },
- {
-  "id": "cambridge-9696",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "Geography",
-  "code": "9696",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-geography-9696/"
-  ]
- },
- {
-  "id": "cambridge-9489",
-  "board": "Cambridge",
-  "level": "AS & A Level",
-  "subject": "History",
-  "code": "9489",
-  "pdfs": [],
-  "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-history-9489/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-design-and-textiles-9631/",
+   "https://www.cambridgeinternational.org/9631"
   ]
  },
  {
@@ -1187,7 +383,8 @@
   "code": "8291",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-level-environmental-management-8291/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-level-environmental-management-8291/",
+   "https://www.cambridgeinternational.org/8291"
   ]
  },
  {
@@ -1198,7 +395,8 @@
   "code": "8021",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-level-english-general-paper-8021/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-level-english-general-paper-8021/",
+   "https://www.cambridgeinternational.org/8021"
   ]
  },
  {
@@ -1232,17 +430,6 @@
   "pdfs": [],
   "pages": [
    "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/german-2024.html"
-  ]
- },
- {
-  "id": "edexcel-1mu0",
-  "board": "Edexcel",
-  "level": "GCSE",
-  "subject": "Music",
-  "code": "1MU0",
-  "pdfs": [],
-  "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/music-2016.html"
   ]
  },
  {
@@ -1595,9 +782,12 @@
   "level": "International GCSE",
   "subject": "Business",
   "code": "4BS1",
-  "pdfs": [],
+  "pdfs": [
+   "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Business%20Studies/2017/specification-and-sample-assessment/9781446942765-international-gcse-business-specification.pdf"
+  ],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-business-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-business-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/business-2017.html"
   ]
  },
  {
@@ -1608,7 +798,8 @@
   "code": "4AC1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-accounting-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-accounting-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/accounting-2017.html"
   ]
  },
  {
@@ -1619,7 +810,8 @@
   "code": "4GE1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-geography-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-geography-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/geography-2017.html"
   ]
  },
  {
@@ -1630,7 +822,8 @@
   "code": "4HI1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-history-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-history-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/history-2017.html"
   ]
  },
  {
@@ -1641,7 +834,8 @@
   "code": "4ET1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-literature-2016.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-literature-2016.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/english-literature-2016.html"
   ]
  },
  {
@@ -1653,7 +847,9 @@
   "pdfs": [],
   "pages": [
    "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-information-and-communication-technology-2017.html",
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-ict-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-ict-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/information-and-communication-technology-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/ict-2017.html"
   ]
  },
  {
@@ -1664,7 +860,8 @@
   "code": "4PM1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-further-pure-mathematics-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-further-pure-mathematics-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/further-pure-mathematics-2017.html"
   ]
  },
  {
@@ -1675,7 +872,8 @@
   "code": "4MB1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-mathematics-b-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-mathematics-b-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/mathematics-b-2017.html"
   ]
  },
  {
@@ -1686,7 +884,8 @@
   "code": "4HB1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-human-biology-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-human-biology-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/human-biology-2017.html"
   ]
  },
  {
@@ -1697,7 +896,8 @@
   "code": "4CM1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-commerce-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-commerce-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/commerce-2017.html"
   ]
  },
  {
@@ -1708,7 +908,8 @@
   "code": "4EB1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-language-b-2016.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-language-b-2016.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/english-language-b-2016.html"
   ]
  },
  {
@@ -1719,7 +920,8 @@
   "code": "4ES1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-as-a-second-language-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-as-a-second-language-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/english-as-a-second-language-2017.html"
   ]
  },
  {
@@ -1730,7 +932,8 @@
   "code": "4FR1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-french-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-french-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/french-2017.html"
   ]
  },
  {
@@ -1741,7 +944,8 @@
   "code": "4SP1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-spanish-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-spanish-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/spanish-2017.html"
   ]
  },
  {
@@ -1752,7 +956,8 @@
   "code": "4GN1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-german-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-german-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/german-2017.html"
   ]
  },
  {
@@ -1763,7 +968,8 @@
   "code": "4IS1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-islamic-studies-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-islamic-studies-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/islamic-studies-2017.html"
   ]
  },
  {
@@ -1774,7 +980,8 @@
   "code": "4RS1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-religious-studies-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-religious-studies-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/religious-studies-2017.html"
   ]
  },
  {
@@ -1785,7 +992,8 @@
   "code": "4GC1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-global-citizenship-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-global-citizenship-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/global-citizenship-2017.html"
   ]
  },
  {
@@ -1796,7 +1004,8 @@
   "code": "4PA1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-pakistan-studies-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-pakistan-studies-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/pakistan-studies-2017.html"
   ]
  },
  {
@@ -1807,7 +1016,8 @@
   "code": "4SD0",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-science-double-award-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-science-double-award-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/science-double-award-2017.html"
   ]
  },
  {
@@ -1818,7 +1028,8 @@
   "code": "4SS0",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-science-single-award-2017.html"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-science-single-award-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/science-single-award-2017.html"
   ]
  },
  {
@@ -1829,95 +1040,8 @@
   "code": "4CN1",
   "pdfs": [],
   "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-chinese-2017.html"
-  ]
- },
- {
-  "id": "ocr-j257",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Biology B (Twenty First Century Science)",
-  "code": "J257",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/twenty-first-century-science-suite-biology-b-j257-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j258",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Chemistry B (Twenty First Century Science)",
-  "code": "J258",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/twenty-first-century-science-suite-chemistry-b-j258-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j259",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Physics B (Twenty First Century Science)",
-  "code": "J259",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/twenty-first-century-science-suite-physics-b-j259-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j260",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Combined Science B (Twenty First Century Science)",
-  "code": "J260",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/twenty-first-century-science-suite-combined-science-b-j260-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j351",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "English Language",
-  "code": "J351",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/english-language-j351-from-2015/"
-  ]
- },
- {
-  "id": "ocr-j411",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "History B (Schools History Project)",
-  "code": "J411",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/history-b-schools-history-project-j411-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j383",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Geography A (Geographical Themes)",
-  "code": "J383",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/geography-a-geographical-themes-j383-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j384",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Geography B (Geography for Enquiring Minds)",
-  "code": "J384",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/geography-b-geography-for-enquiring-minds-j384-from-2016/"
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-chinese-2017.html",
+   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/chinese-2017.html"
   ]
  },
  {
@@ -1929,149 +1053,6 @@
   "pdfs": [],
   "pages": [
    "https://www.ocr.org.uk/qualifications/gcse/religious-studies-j625-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j199",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Classical Civilisation",
-  "code": "J199",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/classical-civilisation-j199-from-2017/"
-  ]
- },
- {
-  "id": "ocr-j282",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Latin",
-  "code": "J282",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/latin-j282-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j198",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Ancient History",
-  "code": "J198",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/ancient-history-j198-from-2017/"
-  ]
- },
- {
-  "id": "ocr-j204",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Business",
-  "code": "J204",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/business-j204-from-2017/"
-  ]
- },
- {
-  "id": "ocr-j205",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Economics",
-  "code": "J205",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/economics-j205-from-2017/"
-  ]
- },
- {
-  "id": "ocr-j587",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Physical Education",
-  "code": "J587",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/physical-education-j587-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j200",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Media Studies",
-  "code": "J200",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/media-studies-j200-from-2017/"
-  ]
- },
- {
-  "id": "ocr-j536",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Music",
-  "code": "J536",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/music-j536-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j316",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Drama",
-  "code": "J316",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/drama-j316-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j310",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Design and Technology",
-  "code": "J310",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/design-and-technology-j310-from-2017/"
-  ]
- },
- {
-  "id": "ocr-j309",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Food Preparation and Nutrition",
-  "code": "J309",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/food-preparation-and-nutrition-j309-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j270",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Citizenship Studies",
-  "code": "J270",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/citizenship-studies-j270-from-2016/"
-  ]
- },
- {
-  "id": "ocr-j292",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Classical Greek",
-  "code": "J292",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/classical-greek-j292-from-2016/"
   ]
  },
  {
@@ -2108,237 +1089,6 @@
   ]
  },
  {
-  "id": "ocr-j170",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Art and Design",
-  "code": "J170",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/art-and-design-j170-j176-from-2016/"
-  ]
- },
- {
-  "id": "ocr-h422",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Biology B (Advancing Biology)",
-  "code": "H422",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/biology-b-advancing-biology-h022-h422-from-2015/"
-  ]
- },
- {
-  "id": "ocr-h433",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Chemistry B (Salters)",
-  "code": "H433",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/chemistry-b-salters-h033-h433-from-2015/"
-  ]
- },
- {
-  "id": "ocr-h557",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Physics B (Advancing Physics)",
-  "code": "H557",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/physics-b-advancing-physics-h157-h557-from-2015/"
-  ]
- },
- {
-  "id": "ocr-h245",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Further Mathematics A",
-  "code": "H245",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/further-mathematics-a-h235-h245-from-2017/"
-  ]
- },
- {
-  "id": "ocr-h640",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Mathematics B (MEI)",
-  "code": "H640",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/mathematics-b-mei-h630-h640-from-2017/"
-  ]
- },
- {
-  "id": "ocr-h645",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Further Mathematics B (MEI)",
-  "code": "H645",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/further-mathematics-b-mei-h635-h645-from-2017/"
-  ]
- },
- {
-  "id": "ocr-h481",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Geography",
-  "code": "H481",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/geography-h081-h481-from-2016/"
-  ]
- },
- {
-  "id": "ocr-h472",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "English Literature",
-  "code": "H472",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/english-literature-h072-h472-from-2015/"
-  ]
- },
- {
-  "id": "ocr-h470",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "English Language",
-  "code": "H470",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/english-language-h070-h470-from-2015/"
-  ]
- },
- {
-  "id": "ocr-h474",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "English Language and Literature (EMC)",
-  "code": "H474",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/english-language-and-literature-emc-h074-h474-from-2015/"
-  ]
- },
- {
-  "id": "ocr-h408",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Classical Civilisation",
-  "code": "H408",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/classical-civilisation-h008-h408-from-2017/"
-  ]
- },
- {
-  "id": "ocr-h443",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Latin",
-  "code": "H443",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/latin-h043-h443-from-2016/"
-  ]
- },
- {
-  "id": "ocr-h407",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Ancient History",
-  "code": "H407",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/ancient-history-h007-h407-from-2017/"
-  ]
- },
- {
-  "id": "ocr-h431",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Business",
-  "code": "H431",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/business-h031-h431-from-2015/"
-  ]
- },
- {
-  "id": "ocr-h418",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Law",
-  "code": "H418",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/law-h018-h418-from-2020/"
-  ]
- },
- {
-  "id": "ocr-h555",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Physical Education",
-  "code": "H555",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/physical-education-h155-h555-from-2016/"
-  ]
- },
- {
-  "id": "ocr-h409",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Media Studies",
-  "code": "H409",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/media-studies-h009-h409-from-2017/"
-  ]
- },
- {
-  "id": "ocr-h543",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Music",
-  "code": "H543",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/music-h143-h543-from-2016/"
-  ]
- },
- {
-  "id": "ocr-h459",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Drama and Theatre",
-  "code": "H459",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/drama-and-theatre-h059-h459-from-2016/"
-  ]
- },
- {
-  "id": "ocr-h404",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Design and Technology",
-  "code": "H404",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/design-and-technology-h004-h006-h404-h406-from-2017/"
-  ]
- },
- {
   "id": "ocr-h600",
   "board": "OCR",
   "level": "AS and A Level",
@@ -2350,17 +1100,6 @@
   ]
  },
  {
-  "id": "ocr-h444",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Classical Greek",
-  "code": "H444",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/classical-greek-h044-h444-from-2016/"
-  ]
- },
- {
   "id": "ocr-h463",
   "board": "OCR",
   "level": "AS and A Level",
@@ -2369,17 +1108,6 @@
   "pdfs": [],
   "pages": [
    "https://www.ocr.org.uk/qualifications/as-and-a-level/electronics-h063-h463-from-2017/"
-  ]
- },
- {
-  "id": "ocr-h414",
-  "board": "OCR",
-  "level": "AS and A Level",
-  "subject": "Geology",
-  "code": "H414",
-  "pdfs": [],
-  "pages": [
-   "https://www.ocr.org.uk/qualifications/as-and-a-level/geology-h014-h414-from-2017/"
   ]
  }
 ]
