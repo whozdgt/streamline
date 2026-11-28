@@ -339,8 +339,12 @@ bool contentTitle(const std::string &title)
 {
     const std::string t = lower(title);
     if (t.find("content") == std::string::npos) return false;
-    // (nor a mark scheme's lowest band: "0 0 0 No creditable content", Cambridge IGCSE Islamiyat)
-    if (t.empty() || !std::isalpha(uint8_t(t[0])) || t.rfind("no ", 0) == 0) return false;
+    // (nor a mark scheme's lowest band: "0 0 0 No creditable content", Cambridge IGCSE Islamiyat; an OCR part's label
+    // is fine: "2 2b. Content of A Level in Physics B", its section's number and its own)
+    size_t s = 0;
+    if (t.size() > 4 && std::isdigit(uint8_t(t[0])) && std::islower(uint8_t(t[1])) && (t[2] == '.' || t[2] == ' ')) s = t[2] == '.' ? 3 : 2;
+    while (s < t.size() && t[s] == ' ') ++s;
+    if (s >= t.size() || !std::isalpha(uint8_t(t[s])) || t.compare(s, 3, "no ") == 0) return false;
     return t.size() < 70 && t.find("contents") == std::string::npos;
 }
 
@@ -507,7 +511,9 @@ std::vector<podsort::SpecPoint> rowTable(const std::vector<std::string> &lines)
     std::vector<Row> rows;
     std::vector<std::string> pending;      // the lines of a name being read
     auto bullet = [](const std::string &l) {
-        return l.rfind("\xE2\x80\xA2", 0) == 0 || l.rfind("\xE2\x97\x8F", 0) == 0 || l.rfind("\xE2\x96\xAA", 0) == 0;
+        // (and a symbol font's, in the private use area: U+F0A8, U+F0B7)
+        const bool symbol = l.size() > 3 && uint8_t(l[0]) == 0xEF && (uint8_t(l[1]) == 0x82 || uint8_t(l[1]) == 0x81) && l[3] == ' ';
+        return l.rfind("\xE2\x80\xA2", 0) == 0 || l.rfind("\xE2\x97\x8F", 0) == 0 || l.rfind("\xE2\x96\xAA", 0) == 0 || symbol;
     };
     for (const std::string &raw : lines) {
         const std::string l = trim(raw);
@@ -942,8 +948,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     // OCR's tables of topics: a header ("Key topics Learners should have studied the following content:"), then each
     // row's topic in a narrow column, its name over a line or two ("Education in", "Sparta"), and then its content
     bool ocrTable = false;
-    struct PartLines { std::string title; size_t from, to; };
-    std::vector<PartLines> partLines;      // where each of OCR's content parts is, by line
+    struct PartLines { std::string number, title; size_t from, to; };
+    std::vector<PartLines> partLines;      // where each of OCR's content parts and keyed headings is, by line
     int listNext = 0;           // the next item of a numbered list in the text ("1. Python", "2. C#"), and its line
     size_t listLine = 0;
     int topSection = 0;
@@ -1086,7 +1092,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // studies and enquiries", OCR A Level History A; "Section A: The legal system" in "H418/01", Law)
                 const int made = open(11, "", cleanTitle(pm[1].str()), false);
                 if (!partLines.empty()) partLines.back().to = i;
-                partLines.push_back({cleanTitle(pm[1].str()), i, lines.size()});
+                partLines.push_back({std::string(), cleanTitle(pm[1].str()), i, lines.size()});
                 ocrTable = false;
                 justOpened = made;
                 justMerged = merged;
@@ -1153,12 +1159,21 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (!heads) rank += 50;
             }
             if (useCode2 && k.keyword == "Part") rank = 75;
+            // a section of an option ("1C Islam", then "Section 3: Sources of Wisdom and Authority", its statements
+            // numbered as in every other option's: Edexcel GCSE Religious Studies) is in it
+            if (k.keyword == "Section" && rank < 29)
+                for (auto it = stack.rbegin(); it != stack.rend(); ++it)
+                    if (it->rank == 29) { rank = 30; break; }
             // "Topic B1: Cell level systems" is the topic an overview listed as "B1 Cell level systems": the same point
             const bool code = std::any_of(k.id.begin(), k.id.end(), [](char c) { return std::isalpha(uint8_t(c)); }) &&
                               std::any_of(k.id.begin(), k.id.end(), [](char c) { return std::isdigit(uint8_t(c)); });
             made = open(rank, code ? k.id : k.keyword + " " + k.id, cleanTitle(k.title), false);
             if (rank < 30) { lastTop = 0; innerLast = 0; }
             ocrTable = false;
+            if (board == "OCR") {
+                if (!partLines.empty()) partLines.back().to = i;
+                partLines.push_back({code ? k.id : k.keyword + " " + k.id, cleanTitle(k.title), i, lines.size()});
+            }
         } else if (useCode2 && parseCode2(l, code, title)) {
             made = open(50, code, cleanTitle(title), false);
         } else if (std::smatch om; board == "Edexcel" && l.size() < 160 && !tocLine(l) &&
@@ -1189,6 +1204,12 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 // a topic ("2 Organisation of the organism"), or a numbered learning statement under a subtopic
                 const int v = n.parts[0];
                 bool heading = !statement;
+                // (a skill's name is a topic too when its own points follow: "2 Process information", then "2.1 Perform
+                // appropriate operations with information", Cambridge Thinking Skills)
+                if (statement && std::isupper(uint8_t(t[0])) && std::count(t.begin(), t.end(), ' ') <= 4 && i + 1 < lines.size()) {
+                    Num nn;
+                    heading = parseNum(lines[i + 1], nn) && nn.parts.size() == 2 && nn.parts[0] == v && nn.parts[1] == 1 && nn.prefix.empty();
+                }
                 // a date in the text, not a topic: "19 March, Suspects and Frimaire" (Edexcel A level History); nor
                 // a number far past the last topic's
                 static const std::set<std::string> months = {"january", "february", "march", "april", "may", "june", "july",
@@ -1707,8 +1728,14 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             std::string &num = pts[i].number;
             if (num.empty() || !std::isdigit(uint8_t(num[0]))) continue;
             if (used.insert(num).second) continue;
+            static const std::regex optionCode("^[0-9]{1,2}[A-Z]$");
             for (int q = pts[i].parent; q >= 0; q = pts[size_t(q)].parent) {
                 const std::string &an = pts[size_t(q)].number;
+                // (or the option: "1C 1.1", Islam's 1.1 in Edexcel GCSE Religious Studies)
+                if (std::regex_match(an, optionCode)) {
+                    if (used.insert(an + " " + num).second) num = an + " " + num;
+                    break;
+                }
                 const size_t sp = an.find(' ');
                 if (sp == std::string::npos) continue;
                 const std::string word = lower(an.substr(0, sp));
@@ -1721,8 +1748,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             }
         }
     }
-    // An OCR component's content with nothing read in it, but a table of its topics: its rows, as for a whole
-    // specification's below (OCR GCSE History A's period study and depth studies, each a part "2c. Content of …")
+    // An OCR component's content (or a section of it) with nothing read in it, but a table of its topics: its rows, as
+    // for a whole specification's below (OCR GCSE History A's period study and depth studies, each a part "2c. Content
+    // of …"; A Level Law's sections, "Civil courts and other forms of dispute resolution", then its bullets)
     if (partLines.size() >= 2) {
         std::vector<podsort::SpecPoint> out;
         std::vector<int> remap(pts.size(), -1);
@@ -1731,10 +1759,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (q.parent >= 0) q.parent = remap[size_t(q.parent)];
             remap[p] = int(out.size());
             out.push_back(q);
-            if (pts[p].parent >= 0 || !pts[p].number.empty()) continue;
             if (std::any_of(pts.begin(), pts.end(), [&](const podsort::SpecPoint &c) { return c.parent == int(p); })) continue;
             for (const auto &r : partLines) {
-                if (r.title != pts[p].title || r.to <= r.from + 1) continue;
+                if (r.number != pts[p].number || r.title != pts[p].title || r.to <= r.from + 1) continue;
                 auto rows = rowTable(std::vector<std::string>(lines.begin() + long(r.from) + 1, lines.begin() + long(r.to)));
                 const int me = remap[p], base = int(out.size());
                 for (auto row : rows) {
