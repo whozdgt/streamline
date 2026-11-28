@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(musicplayer VERSION 0.8.1 LANGUAGES CXX)
+project(musicplayer VERSION 0.8.2 LANGUAGES CXX)
 
 if(WIN32)
   enable_language(RC)      # the program's icon and version information
