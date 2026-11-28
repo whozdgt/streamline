@@ -1,224 +1,427 @@
 [
  {
-  "id": "aqa-8201",
-  "board": "AQA",
-  "level": "GCSE",
-  "subject": "Art and Design",
-  "code": "8201",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/art-and-design/specifications/AQA-ART-GCSE-SP-2016.PDF"
-  ],
-  "pages": []
- },
- {
-  "id": "aqa-7707",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "English Language and Literature",
-  "code": "7707",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7707-SP-2015.PDF"
-  ],
-  "pages": []
- },
- {
-  "id": "aqa-7262",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "Drama and Theatre",
-  "code": "7262",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/drama/specifications/AQA-7262-SP-2016.PDF"
-  ],
-  "pages": []
- },
- {
-  "id": "aqa-7272",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "Music",
-  "code": "7272",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/music/specifications/AQA-7272-SP-2016.PDF"
-  ],
-  "pages": []
- },
- {
-  "id": "aqa-7201",
-  "board": "AQA",
-  "level": "AS and A-level",
-  "subject": "Art and Design",
-  "code": "7201",
-  "pdfs": [
-   "https://filestore.aqa.org.uk/resources/art-and-design/specifications/AQA-ART-AS-A-LEVEL-SP-2015.PDF",
-   "https://filestore.aqa.org.uk/resources/art-and-design/specifications/AQA-ART-A-LEVEL-SP-2015.PDF",
-   "https://filestore.aqa.org.uk/resources/art-and-design/specifications/AQA-ART-AS-A-SP-2015.PDF"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-1dt0",
-  "board": "Edexcel",
-  "level": "GCSE",
-  "subject": "Design and Technology",
-  "code": "1DT0",
-  "pdfs": [],
-  "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/design-and-technology-9-1-from-2017.html"
-  ]
- },
- {
-  "id": "edexcel-1pe0",
-  "board": "Edexcel",
-  "level": "GCSE",
-  "subject": "Physical Education",
-  "code": "1PE0",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/GCSE/Physical%20Education/2016/Specification%20and%20sample%20assessments/gcse-pe-specification-issue-6.pdf"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-9pe0",
-  "board": "Edexcel",
-  "level": "A level",
-  "subject": "Physical Education",
-  "code": "9PE0",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Physical%20Education/2016/Specification%20and%20sample%20assessments/a-level-pe-specification-issue-4.pdf"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-9dt0",
-  "board": "Edexcel",
-  "level": "A level",
-  "subject": "Design and Technology (Product Design)",
-  "code": "9DT0",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Design%20and%20Technology%20-%20Product%20Design/2017/specification-and-sample-assessments/Pearson_Edexcel_Level_3_GCE_in_Design_and_Technology_Specification_issue2.pdf",
-   "https://secure.qualifications.pearson.com/content/dam/pdf/A%20Level/Design%20and%20Technology%20-%20Product%20Design/2017/specification-and-sample-assessments/Pearson_Edexcel_Level_3_GCE_in_Design_and_Technology_Specification_issue2.pdf"
-  ],
-  "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/design-technology-product-design-2017.html"
-  ]
- },
- {
-  "id": "edexcel-yps01",
-  "board": "Edexcel",
-  "level": "International A level",
-  "subject": "Psychology",
-  "code": "YPS01",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/psychology/2015/specification-and-sample-assessments/edexcel-international-specifications-ial-psychology-v2.pdf",
-   "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/psychology/2015/specification-and-sample-assessments/ial-psychology-specification.pdf"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-yac11",
-  "board": "Edexcel",
-  "level": "International A level",
-  "subject": "Accounting",
-  "code": "YAC11",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Accounting/2015/specification-and-sample-assessments/pearson-edexcel-ial-accounting-specification.pdf"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-yge01",
-  "board": "Edexcel",
-  "level": "International A level",
-  "subject": "Geography",
-  "code": "YGE01",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Geography/2016/specification-and-sample-assessments/ial-geography-specification.pdf"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-yhi01",
-  "board": "Edexcel",
-  "level": "International A level",
-  "subject": "History",
-  "code": "YHI01",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/history/2015/specification-and-sample-assessments/Edexcel-International_Specifications_IAL_History_v2.pdf",
-   "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/history/2015/specification-and-sample-assessments/IAL-History-Specification.pdf"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-4mb1",
-  "board": "Edexcel",
-  "level": "International GCSE",
-  "subject": "Mathematics B",
-  "code": "4MB1",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Mathematics%20B/2016/Specification%20and%20sample%20assessments/international-gcse-in-mathematics-spec-b.pdf"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-4es1",
-  "board": "Edexcel",
-  "level": "International GCSE",
-  "subject": "English as a Second Language",
-  "code": "4ES1",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/English%20(as%202nd%20language)/2017/specification-and-sample-assessments/international-gcse-esl-2017-specification.pdf"
-  ],
-  "pages": []
- },
- {
-  "id": "edexcel-4gn1",
-  "board": "Edexcel",
-  "level": "International GCSE",
-  "subject": "German",
-  "code": "4GN1",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/German/2017/specification-and-sample-assessments/International-GCSE-German-Specification.pdf",
-   "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/German/2017/specification-and-sample-assessments/international-gcse-german-specification.pdf"
-  ],
-  "pages": [
-   "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-german-2017.html"
-  ]
- },
- {
-  "id": "cambridge-8386",
+  "id": "cambridge-0264",
   "board": "Cambridge",
-  "level": "AS Level",
-  "subject": "Sport and Physical Education",
-  "code": "8386",
+  "level": "IGCSE",
+  "subject": "Business",
+  "code": "0264",
   "pdfs": [],
   "pages": [
-   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-level-sport-and-physical-education-8386/",
-   "https://www.cambridgeinternational.org/8386"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-business-0264/",
+   "https://www.cambridgeinternational.org/0264"
   ]
  },
  {
-  "id": "ocr-j625",
-  "board": "OCR",
-  "level": "GCSE",
-  "subject": "Religious Studies",
-  "code": "J625",
-  "pdfs": [
-   "https://www.ocr.org.uk/Images/240547-specification-accredited-gcse-religious-studies-j625.pdf"
-  ],
+  "id": "cambridge-0265",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Computer Science",
+  "code": "0265",
+  "pdfs": [],
   "pages": [
-   "https://www.ocr.org.uk/qualifications/gcse/religious-studies-j625-from-2016/"
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-computer-science-0265/",
+   "https://www.cambridgeinternational.org/0265"
   ]
  },
  {
-  "id": "edexcel-4gl1",
-  "board": "Edexcel",
-  "level": "International GCSE",
-  "subject": "Global Citizenship",
-  "code": "4GL1",
-  "pdfs": [
-   "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Global%20Citizenship/2017/Specification%20and%20sample%20assessments/international-gcse-global-citizenship-spec.pdf"
-  ],
-  "pages": []
+  "id": "cambridge-0266",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Psychology",
+  "code": "0266",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-psychology-0266/",
+   "https://www.cambridgeinternational.org/0266"
+  ]
+ },
+ {
+  "id": "cambridge-0479",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Statistics",
+  "code": "0479",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-statistics-0479/",
+   "https://www.cambridgeinternational.org/0479"
+  ]
+ },
+ {
+  "id": "cambridge-0715",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Commerce",
+  "code": "0715",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-commerce-0715/",
+   "https://www.cambridgeinternational.org/0715"
+  ]
+ },
+ {
+  "id": "cambridge-0472",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "English as an Additional Language",
+  "code": "0472",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-an-additional-language-0472/",
+   "https://www.cambridgeinternational.org/0472"
+  ]
+ },
+ {
+  "id": "cambridge-0772",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "English as an Additional Language (9–1)",
+  "code": "0772",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-english-as-an-additional-language-0772/",
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-as-an-additional-language-9-1-0772/",
+   "https://www.cambridgeinternational.org/0772"
+  ]
+ },
+ {
+  "id": "cambridge-0716",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Japanese – Foreign Language",
+  "code": "0716",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-japanese-foreign-language-0716/",
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-japanese-0716/",
+   "https://www.cambridgeinternational.org/0716"
+  ]
+ },
+ {
+  "id": "cambridge-0984",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Computer Science (9–1)",
+  "code": "0984",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-computer-science-0984/",
+   "https://www.cambridgeinternational.org/0984"
+  ]
+ },
+ {
+  "id": "cambridge-0985",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Accounting (9–1)",
+  "code": "0985",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-accounting-0985/",
+   "https://www.cambridgeinternational.org/0985"
+  ]
+ },
+ {
+  "id": "cambridge-0986",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Business Studies (9–1)",
+  "code": "0986",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-business-studies-0986/",
+   "https://www.cambridgeinternational.org/0986"
+  ]
+ },
+ {
+  "id": "cambridge-0987",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Economics (9–1)",
+  "code": "0987",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-economics-0987/",
+   "https://www.cambridgeinternational.org/0987"
+  ]
+ },
+ {
+  "id": "cambridge-0976",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Geography (9–1)",
+  "code": "0976",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-geography-0976/",
+   "https://www.cambridgeinternational.org/0976"
+  ]
+ },
+ {
+  "id": "cambridge-0977",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "History (9–1)",
+  "code": "0977",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-history-0977/",
+   "https://www.cambridgeinternational.org/0977"
+  ]
+ },
+ {
+  "id": "cambridge-0983",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Information and Communication Technology (9–1)",
+  "code": "0983",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-information-and-communication-technology-0983/",
+   "https://www.cambridgeinternational.org/0983"
+  ]
+ },
+ {
+  "id": "cambridge-0991",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "English as a Second Language (9–1)",
+  "code": "0991",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-english-as-a-second-language-0991/",
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-english-as-a-second-language-count-in-speaking-0991/",
+   "https://www.cambridgeinternational.org/0991"
+  ]
+ },
+ {
+  "id": "cambridge-0995",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Physical Education (9–1)",
+  "code": "0995",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-physical-education-0995/",
+   "https://www.cambridgeinternational.org/0995"
+  ]
+ },
+ {
+  "id": "cambridge-0978",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Music (9–1)",
+  "code": "0978",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-music-0978/",
+   "https://www.cambridgeinternational.org/0978"
+  ]
+ },
+ {
+  "id": "cambridge-0989",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Art and Design (9–1)",
+  "code": "0989",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-art-and-design-0989/",
+   "https://www.cambridgeinternational.org/0989"
+  ]
+ },
+ {
+  "id": "cambridge-0994",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Drama (9–1)",
+  "code": "0994",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-drama-0994/",
+   "https://www.cambridgeinternational.org/0994"
+  ]
+ },
+ {
+  "id": "cambridge-0637",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Child Development",
+  "code": "0637",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-child-development-0637/",
+   "https://www.cambridgeinternational.org/0637"
+  ]
+ },
+ {
+  "id": "cambridge-0501",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "French – First Language",
+  "code": "0501",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-french-first-language-0501/",
+   "https://www.cambridgeinternational.org/0501"
+  ]
+ },
+ {
+  "id": "cambridge-0502",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Spanish – First Language",
+  "code": "0502",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-spanish-first-language-0502/",
+   "https://www.cambridgeinternational.org/0502"
+  ]
+ },
+ {
+  "id": "cambridge-0505",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "German – First Language",
+  "code": "0505",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-german-first-language-0505/",
+   "https://www.cambridgeinternational.org/0505"
+  ]
+ },
+ {
+  "id": "cambridge-0508",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Arabic – First Language",
+  "code": "0508",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-arabic-first-language-0508/",
+   "https://www.cambridgeinternational.org/0508"
+  ]
+ },
+ {
+  "id": "cambridge-0509",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Chinese – First Language",
+  "code": "0509",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chinese-first-language-0509/",
+   "https://www.cambridgeinternational.org/0509"
+  ]
+ },
+ {
+  "id": "cambridge-0544",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Arabic – Foreign Language",
+  "code": "0544",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-arabic-foreign-language-0544/",
+   "https://www.cambridgeinternational.org/0544"
+  ]
+ },
+ {
+  "id": "cambridge-0549",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Hindi as a Second Language",
+  "code": "0549",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-hindi-as-a-second-language-0549/",
+   "https://www.cambridgeinternational.org/0549"
+  ]
+ },
+ {
+  "id": "cambridge-0539",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Urdu as a Second Language",
+  "code": "0539",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-urdu-as-a-second-language-0539/",
+   "https://www.cambridgeinternational.org/0539"
+  ]
+ },
+ {
+  "id": "cambridge-0538",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Bahasa Indonesia",
+  "code": "0538",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-bahasa-indonesia-0538/",
+   "https://www.cambridgeinternational.org/0538"
+  ]
+ },
+ {
+  "id": "cambridge-0480",
+  "board": "Cambridge",
+  "level": "IGCSE",
+  "subject": "Latin",
+  "code": "0480",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-latin-0480/",
+   "https://www.cambridgeinternational.org/0480"
+  ]
+ },
+ {
+  "id": "cambridge-9396",
+  "board": "Cambridge",
+  "level": "AS & A Level",
+  "subject": "Physical Education",
+  "code": "9396",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-physical-education-9396/",
+   "https://www.cambridgeinternational.org/9396"
+  ]
+ },
+ {
+  "id": "cambridge-9680",
+  "board": "Cambridge",
+  "level": "AS & A Level",
+  "subject": "Arabic",
+  "code": "9680",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-arabic-9680/",
+   "https://www.cambridgeinternational.org/9680"
+  ]
+ },
+ {
+  "id": "cambridge-9981",
+  "board": "Cambridge",
+  "level": "AS & A Level",
+  "subject": "European History",
+  "code": "9981",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-history-9981/",
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-european-history-9981/",
+   "https://www.cambridgeinternational.org/9981"
+  ]
+ },
+ {
+  "id": "cambridge-9982",
+  "board": "Cambridge",
+  "level": "AS & A Level",
+  "subject": "International History",
+  "code": "9982",
+  "pdfs": [],
+  "pages": [
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-history-9982/",
+   "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-international-history-9982/",
+   "https://www.cambridgeinternational.org/9982"
+  ]
  }
 ]

@@ -1,6 +1,7 @@
 #include "speccatalog.h"
 #include "pods.h"
 
+#include <QDate>
 #include <QDir>
 #include <QFile>
 #include <QJsonArray>
@@ -46,8 +47,17 @@ QString websiteOf(const QString &board)
 int stageOf(const QString &level)
 {
     const QString l = level.toLower();
-    if (l.contains(QLatin1String("gcse"))) return 0;      // GCSE, IGCSE, International GCSE
+    if (l.contains(QLatin1String("gcse")) || l.contains(QLatin1String("level 2"))) return 0;      // GCSE, IGCSE, International GCSE, Level 2 Certificate
     return 1;                                              // AS & A Level, A-level, International A level
+}
+
+// The last year a syllabus is examined in ("2024–2026": 2026, "2026": 2026), or 0 when the list doesn't say
+int lastExamYear(const QString &exams)
+{
+    static const QRegularExpression year(QStringLiteral("\\b(20[0-9][0-9])\\b"));
+    int last = 0;
+    for (auto it = year.globalMatch(exams); it.hasNext();) last = std::max(last, it.next().captured(1).toInt());
+    return last;
 }
 
 int boardOrder(const QString &board)
@@ -174,8 +184,11 @@ QVariantList SpecCatalog::find(const QString &query, const QString &board, const
         else if (w == QLatin1String("eng")) w = QStringLiteral("english");
     }
     QVector<const Entry *> hits;
+    const QDate today = QDate::currentDate();
     for (const Entry &e : m_entries) {
         if (!board.isEmpty() && e.board != board) continue;
+        // a syllabus whose exams are over ("2024–2026", in 2027) isn't offered any more
+        if (const int last = lastExamYear(e.exams); last && last < today.year()) continue;
         if (stage == QLatin1String("gcse") && stageOf(e.level) != 0) continue;
         if (stage == QLatin1String("alevel") && stageOf(e.level) != 1) continue;
         const QString hay = (e.board + QLatin1Char(' ') + (e.board == QLatin1String("Edexcel") ? QStringLiteral("pearson ") : QString()) +
@@ -189,11 +202,14 @@ QVariantList SpecCatalog::find(const QString &query, const QString &board, const
         }
         if (all) hits.push_back(&e);
     }
-    std::stable_sort(hits.begin(), hits.end(), [](const Entry *a, const Entry *b) {
+    // once the summer's exams are over, a syllabus whose last exams are this year comes after the one for next year's
+    const auto ending = [&](const Entry *e) { return today.month() >= 7 && lastExamYear(e->exams) == today.year(); };
+    std::stable_sort(hits.begin(), hits.end(), [&](const Entry *a, const Entry *b) {
         if (boardOrder(a->board) != boardOrder(b->board)) return boardOrder(a->board) < boardOrder(b->board);
         if (stageOf(a->level) != stageOf(b->level)) return stageOf(a->level) < stageOf(b->level);
         if (a->level != b->level) return a->level < b->level;
         if (a->subject != b->subject) return a->subject < b->subject;
+        if (ending(a) != ending(b)) return !ending(a);
         return a->exams < b->exams;
     });
     QVariantList out;
