@@ -229,6 +229,9 @@ jobs:
           perl -e 'alarm 120; exec @ARGV' "$app/Contents/MacOS/Streamline" --screenshot "$PWD/mac-window.png" --size 1280x800 \
             > run.log 2>&1; echo "exit: $?"; tail -20 run.log
           ls -l mac-window.png || { echo "::error::The Mac app didn't open"; exit 1; }
+          # the picture, small, in the log (where it can be looked at without downloading anything)
+          sips -Z 900 mac-window.png --out small.png > /dev/null
+          echo "=== PNG mac-window ==="; base64 -b 76 -i small.png; echo "=== END ==="
 
       - uses: actions/upload-artifact@v4
         with:
@@ -237,6 +240,80 @@ jobs:
             Streamline-mac.dmg
             mac-window.png
           retention-days: 14
+
+  # The iPhone and iPad app in Apple's simulator: built for it, opened, and a picture taken of each screen. Its result
+  # doesn't hold up the release (the simulator isn't a phone), but it shows the app starts and how it looks.
+  simulator:
+    runs-on: macos-15
+    timeout-minutes: 120
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode 26 and Qt
+        run: |
+          x="$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"; sudo xcode-select -s "$x/Contents/Developer"
+          pip3 install --quiet --break-system-packages aqtinstall || pip3 install --quiet aqtinstall
+          v="$(python3 -m aqt list-qt mac ios --spec "$QT_SERIES" --latest-version)"
+          echo "QT_VERSION=$v" >> "$GITHUB_ENV"
+      - name: Cached Qt
+        id: qtcache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/qt
+          key: qt-ios-${{ env.QT_VERSION }}-v1
+      - name: Qt for the Mac and for iOS
+        if: steps.qtcache.outputs.cache-hit != 'true'
+        run: |
+          python3 -m aqt install-qt mac desktop "$QT_VERSION" clang_64 -O "$GITHUB_WORKSPACE/qt"
+          python3 -m aqt install-qt mac ios "$QT_VERSION" ios -m qtmultimedia -O "$GITHUB_WORKSPACE/qt"
+      - name: What Qt for iOS is built for
+        run: |
+          lipo -info "$GITHUB_WORKSPACE/qt/$QT_VERSION/ios/lib/libQt6Core.a" || ls "$GITHUB_WORKSPACE/qt/$QT_VERSION/ios/lib" | head
+      - name: TagLib and font for the simulator
+        run: |
+          git clone --depth 1 --branch "$TAGLIB_VERSION" --recurse-submodules https://github.com/taglib/taglib.git
+          cmake -S taglib -B taglib-build -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET="$IOS_MIN" -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=OFF -DWITH_ZLIB=OFF -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY \
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DBUILD_BINDINGS=OFF \
+            -DCMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/taglib-sim"
+          cmake --build taglib-build -j"$(sysctl -n hw.ncpu)" && cmake --install taglib-build
+          curl -fsSL -o jbm.zip "$JBM_URL"
+          mkdir -p fonts && unzip -q -j -o jbm.zip 'fonts/ttf/JetBrainsMono-*.ttf' -d fonts
+      - name: Build for the simulator
+        run: |
+          "$GITHUB_WORKSPACE/qt/$QT_VERSION/ios/bin/qt-cmake" -S . -B build-sim -G Xcode \
+            -DQT_HOST_PATH="$GITHUB_WORKSPACE/qt/$QT_VERSION/macos" -DCMAKE_OSX_DEPLOYMENT_TARGET="$IOS_MIN" \
+            -DTAGLIB_PREFIX="$GITHUB_WORKSPACE/taglib-sim" -DIOS_FONT_DIR="$GITHUB_WORKSPACE/fonts"
+          set +e
+          cmake --build build-sim --config Release -- -sdk iphonesimulator -arch arm64 CODE_SIGNING_ALLOWED=NO 2>&1 | tee build.log \
+            | grep -E "error:|BUILD (SUCCEEDED|FAILED)" | head -40
+          rc=${PIPESTATUS[0]}
+          [ "$rc" -eq 0 ] || { grep -E "error:|Undefined symbol|ld: |building for" build.log | sort -u | head -30; exit "$rc"; }
+      - name: Open it on an iPhone and an iPad
+        run: |
+          app="$(find build-sim -maxdepth 4 -name 'Streamline.app' -path '*iphonesimulator*' | head -1)"
+          codesign --force --deep --sign - "$app"
+          shoot() {   # $1: device name pattern, $2: picture name
+            udid="$(xcrun simctl list devices available -j | python3 -c "
+          import json, re, sys
+          d = json.load(sys.stdin)['devices']
+          ds = [x for rt in sorted(d) if 'iOS' in rt for x in d[rt] if re.search(sys.argv[1], x['name'])]
+          print(ds[-1]['udid'] if ds else '')" "$1")"
+            [ -n "$udid" ] || { echo "no simulator like $1"; xcrun simctl list devices available | head -30; return 1; }
+            xcrun simctl boot "$udid" 2>/dev/null; xcrun simctl bootstatus "$udid" -b > /dev/null
+            xcrun simctl install "$udid" "$app"
+            xcrun simctl launch --console-pty "$udid" io.github.whozdgt.streamline > "$2.log" 2>&1 &
+            sleep 40
+            xcrun simctl io "$udid" screenshot "$2.png"
+            tail -25 "$2.log"
+            sips -Z 900 "$2.png" --out "$2-small.png" > /dev/null
+            echo "=== PNG $2 ==="; base64 -b 76 -i "$2-small.png"; echo "=== END ==="
+            xcrun simctl terminate "$udid" io.github.whozdgt.streamline || true
+            xcrun simctl shutdown "$udid" || true
+          }
+          shoot '^iPhone 1[67]( Pro)?$' iphone
+          shoot '^iPad (Pro|Air).*1[13]' ipad
 
   publish:
     needs: [ios, mac]

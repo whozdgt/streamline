@@ -14,6 +14,11 @@ if(APPLE)
   foreach(opt GGML_METAL GGML_BLAS)
     set(${opt} OFF CACHE BOOL "" FORCE)
   endforeach()
+  # An iPhone build leaves the processor unnamed (Xcode picks it), and ggml would then use its slow generic code instead
+  # of the ARM one: every iPhone and iPad it runs on is arm64.
+  if(IOS AND NOT CMAKE_SYSTEM_PROCESSOR)
+    set(CMAKE_SYSTEM_PROCESSOR arm64)
+  endif()
 endif()
 # Computers: the instructions every PC made since about 2013 has (AVX2). Phones: plain ARMv8, which every phone runs.
 # (Not when building for an iPhone or a Mac on an Intel Mac: the build machine's processor isn't the device's.)

@@ -13,7 +13,7 @@ Window {
     color: opaque || settings.round ? settings.ground : "transparent"     // phones and Windows can't blur what is behind the window
 
     readonly property bool android: settings.mobile
-    readonly property bool opaque: android || Qt.platform.os === "windows"
+    readonly property bool opaque: android || Qt.platform.os === "windows" || Qt.platform.os === "osx"      // (no blur behind the window there)
     // Settings > Look > Interface size. A bigger size needs a bigger window (a phone down to 300 wide, a computer down to 800),
     // so when the window is too small for it, the size is held back until the window grows.
     // A phone draws the app under its status bar and gesture bar; the app keeps to the space between them.
