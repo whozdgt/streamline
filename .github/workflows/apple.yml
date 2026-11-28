@@ -243,13 +243,14 @@ jobs:
         continue-on-error: true
         run: |
           exe=build-mac/Streamline.app/Contents/MacOS/Streamline
-          shot() {   # $1 name, $2 size, $3 top,bottom insets, $4 the page
-            STREAMLINE_FAKE_INSETS="$3" perl -e 'alarm 120; exec @ARGV' "$exe" --mobile --set "startView=$4" --screenshot "$PWD/$1.png" --size "$2" > /dev/null 2>&1
+          shot() {   # $1 name, $2 size, $3 top,bottom insets, $4 a setting for the run (which page to open)
+            STREAMLINE_FAKE_INSETS="$3" perl -e 'alarm 60; exec @ARGV' "$exe" --mobile --set "$4" --screenshot "$PWD/$1.png" --size "$2" > /dev/null 2>&1
             sips -Z 900 "$1.png" --out "$1-small.png" > /dev/null
             echo "=== PNG $1 ==="; base64 -b 76 -i "$1-small.png"; echo "=== END ==="
           }
-          shot iphone 393x852 59,34 home
-          shot ipad 1032x1376 24,20 home
+          shot iphone 393x852 59,34 startView=home
+          shot ipad 1032x1376 24,20 startView=home
+          shot iphone-ai 393x852 59,34 startSettings=ai
 
       - uses: actions/upload-artifact@v4
         with:
