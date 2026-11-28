@@ -1,5 +1,5 @@
 # the specs spec-outline.yml reads: ids from specs/catalog.json, or URLs ("id | around | 2.1 " shows the lines around one;
 # "id | around | 2.1 | 3" around the first three; "id | trace | 1.3.1 Intro" the reader's own lines from just before
 # there, each with the point it went to; "…#2" from the second such line)
-edexcel-1ra0 | trace | Area of Study 1A
-edexcel-1ra0 | trace | Area of Study 1B
+edexcel-1ra0
+cambridge-0413-2027

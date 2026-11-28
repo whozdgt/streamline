@@ -1171,6 +1171,9 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 if (!heads) rank += 50;
             }
             if (useCode2 && k.keyword == "Part") rank = 75;
+            // an option named as one ("Area of Study 1A – Catholic Christianity", then its sections: Edexcel GCSE
+            // Religious Studies) is the option
+            if (board == "Edexcel" && k.id.size() == 2 && std::isdigit(uint8_t(k.id[0])) && std::isupper(uint8_t(k.id[1]))) rank = 29;
             // a section of an option ("1C Islam", then "Section 3: Sources of Wisdom and Authority", its statements
             // numbered as in every other option's: Edexcel GCSE Religious Studies) is in it
             if (k.keyword == "Section" && rank < 29)
@@ -1194,7 +1197,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             // longer and shorter climate change…" (Edexcel A level Geography)
             // (the option's name at the top of each of its pages, "1C Islam", isn't the option starting again)
             const bool again = !om[2].matched && std::any_of(stack.begin(), stack.end(), [&](const auto &o) {
-                return pts[size_t(o.point)].number == om[1].str() && lower(pts[size_t(o.point)].title) == lower(cleanTitle(om[3].str()));
+                return o.rank == 29 && pts[size_t(o.point)].number == om[1].str() && lower(pts[size_t(o.point)].title) == lower(cleanTitle(om[3].str()));
             });
             if (again) continue;
             if (om[2].matched) {
@@ -1491,6 +1494,34 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                         rawEndsComma = false;
                         continue;
                     }
+                }
+            }
+            // Cambridge's unnumbered subtopics in a numbered topic ("1 Anatomy and physiology", then "Components of
+            // blood", "The function of:", its bullets, "Haemoglobin", "The role of haemoglobin in carrying…": IGCSE PE):
+            // a name on a line of its own, after a sentence's end or another name, and then what to learn about it
+            if (board == "Cambridge" && !dottedOpen() && !letterOpen() && i + 1 < lines.size() &&
+                std::any_of(stack.begin(), stack.end(), [&](const auto &o) { return o.rank == 30; })) {
+                auto nameShape = [&](const std::string &x) {
+                    if (x.size() < 3 || x.size() > 50 || !std::isupper(uint8_t(x[0])) || x.rfind("The ", 0) == 0) return false;
+                    const char e = x.back();
+                    if (e == '.' || e == ':' || e == ',' || e == ';' || e == ')') return false;
+                    if (std::any_of(x.begin(), x.end(), [](char c) { return std::isdigit(uint8_t(c)); })) return false;
+                    return std::count(x.begin(), x.end(), ' ') <= 6 && !statementLike(x);
+                };
+                const std::string &prev = i > 0 ? lines[i - 1] : std::string(".");
+                const std::string &next = lines[i + 1];
+                Num pn;
+                const bool afterEnd = !prev.empty() && (prev.back() == '.' || prev.back() == ':' || prev.back() == ')' || nameShape(prev) ||
+                                                        (parseNum(prev, pn) && pn.parts.size() == 1));
+                const bool about = next.size() > 3 && std::isupper(uint8_t(next[0])) &&
+                                   (statementLike(next) || next.rfind("The ", 0) == 0 || next.back() == ':');
+                if (afterEnd && about && nameShape(l)) {
+                    made = open(33, "", cleanTitle(l), false);
+                    justOpened = -1;
+                    justMerged = merged;
+                    justKeyword = false;
+                    rawEndsComma = false;
+                    continue;
                 }
             }
             // a subtopic named above its coded statements: "Structure and calculation", then "N1 order positive and
