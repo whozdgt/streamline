@@ -124,7 +124,7 @@ Rectangle {
                 onClicked: root.sourceSelected("")
             }
             NavItem {
-                width: parent.width; text: "This computer"
+                width: parent.width; text: Qt.platform.os === "ios" ? "This iPad" : settings.mobile ? "This phone" : "This computer"
                 active: library.source === "local" || (!root.hasServers && library.source === "")
                 onClicked: root.sourceSelected("local")
             }

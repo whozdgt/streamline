@@ -63,7 +63,7 @@ Flickable {
                 Repeater {
                     model: {
                         servers.revision
-                        return [{ id: "", name: "All" }, { id: "local", name: settings.mobile ? "This phone" : "This computer" }]
+                        return [{ id: "", name: "All" }, { id: "local", name: Qt.platform.os === "ios" ? "This device" : settings.mobile ? "This phone" : "This computer" }]
                             .concat(servers.list().filter(function(x) { return x.enabled }))
                     }
                     Rectangle {
