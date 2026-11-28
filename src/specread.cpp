@@ -648,7 +648,19 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             const std::string ll = lower(l);
             const bool tableHeader = (ll.rfind("key topic", 0) == 0 || ll.rfind("topic", 0) == 0 || ll.rfind("content", 0) == 0) &&
                                      (ll.find("learners should") != std::string::npos || ll.find("following content") != std::string::npos);
-            if (l.size() <= 160 && !topicHeading && !tableHeader && f >= need) continue;
+            // and an option's heading, on each of its pages and the same name in another paper ("1A Catholic
+            // Christianity", "2A Catholic Christianity": Edexcel GCSE Religious Studies), whose copies the reader passes over
+            static const std::regex optionHeading("^[1-9][0-9]?[A-Z] [A-Z][A-Za-z ,'()\xE2\x80\x99-]{2,60}$");
+            const bool option = l.size() <= 64 && std::regex_match(l, optionHeading);
+            // and a section's heading that is the same in each option, just before its first statement ("Section 2:
+            // Practices", then "2.1 …", for each religion in Edexcel GCSE Religious Studies)
+            bool sectionStart = false;
+            if (numberedLine && idx + 1 < all.size() && parseKey(l, k)) {
+                Num nn;
+                sectionStart = parseNum(all[idx + 1], nn) && nn.parts.size() == 2 && nn.parts[1] == 1 && nn.prefix.empty() &&
+                               std::to_string(nn.parts[0]) == k.id;
+            }
+            if (l.size() <= 160 && !topicHeading && !tableHeader && !sectionStart && !option && f >= need) continue;
             kept.push_back(l);
         }
         all.swap(kept);
@@ -1180,6 +1192,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                    std::regex_match(l, om, optionNumRe)) {
             // a topic's options and their key ideas: "2A Glaciated Landscapes and Change", then "2A.1 The causes of
             // longer and shorter climate change…" (Edexcel A level Geography)
+            // (the option's name at the top of each of its pages, "1C Islam", isn't the option starting again)
+            const bool again = !om[2].matched && std::any_of(stack.begin(), stack.end(), [&](const auto &o) {
+                return pts[size_t(o.point)].number == om[1].str() && lower(pts[size_t(o.point)].title) == lower(cleanTitle(om[3].str()));
+            });
+            if (again) continue;
             if (om[2].matched) {
                 made = open(36, om[1].str() + "." + om[2].str(), cleanTitle(om[3].str()), true);
                 numbersSeen.insert(om[1].str() + "." + om[2].str());
