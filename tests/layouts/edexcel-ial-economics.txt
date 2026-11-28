@@ -1,5 +1,7 @@
 Pearson Edexcel International Advanced Level in Economics (YEC11)
 Unit 1: Markets in action
+1 IAS compulsory unit
+Externally assessed
 1.1 Unit description
 Students are introduced to the nature of economics.
 1.2 Assessment information
@@ -11,8 +13,7 @@ economics
 a) Economics as a social science: inability to conduct scientific
 experiments.
 b) The development of models in economics based on assumptions.
-2 The economic problem
-a) The problem of scarcity: where there are unlimited wants and
+2 The economic problem a) The problem of scarcity: where there are unlimited wants and
 finite resources.
 3 Production possibility
 frontiers

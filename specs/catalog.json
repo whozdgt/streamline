@@ -1,276 +1,466 @@
 {
- "version": 2026112401,
+ "version": 2026112801,
  "about": "Official links to exam boards' course specifications. Streamline downloads one from its board's website when you choose it; the documents themselves aren't kept here. Checked every week by .github/workflows/catalog.yml.",
  "specs": [
   {
-   "id": "cambridge-0610-2026",
+   "id": "cambridge-9084-2026",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Biology",
-   "code": "0610",
+   "level": "AS & A Level",
+   "subject": "Law",
+   "code": "9084",
    "exams": "2026–2028",
-   "url": "https://www.cambridgeinternational.org/Images/697203-2026-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-biology-0610/"
+   "url": "https://www.cambridgeinternational.org/Images/697352-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-law-9084/"
   },
   {
-   "id": "cambridge-0610-2029",
+   "id": "cambridge-9084-2029",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Biology",
-   "code": "0610",
-   "exams": "2029",
-   "url": "https://www.cambridgeinternational.org/Images/764324-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-biology-0610/"
-  },
-  {
-   "id": "cambridge-0620-2026",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Chemistry",
-   "code": "0620",
-   "exams": "2026–2028",
-   "url": "https://www.cambridgeinternational.org/Images/697205-2026-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chemistry-0620/"
-  },
-  {
-   "id": "cambridge-0620-2029",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Chemistry",
-   "code": "0620",
-   "exams": "2029",
-   "url": "https://www.cambridgeinternational.org/Images/764330-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chemistry-0620/"
-  },
-  {
-   "id": "cambridge-0625-2026",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Physics",
-   "code": "0625",
-   "exams": "2026–2028",
-   "url": "https://www.cambridgeinternational.org/Images/697209-2026-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-0625/"
-  },
-  {
-   "id": "cambridge-0625-2029",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Physics",
-   "code": "0625",
-   "exams": "2029",
-   "url": "https://www.cambridgeinternational.org/Images/764332-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-0625/"
-  },
-  {
-   "id": "cambridge-0580-2025",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Mathematics",
-   "code": "0580",
-   "exams": "2025–2027",
-   "url": "https://www.cambridgeinternational.org/Images/662466-2025-2027-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-0580/"
-  },
-  {
-   "id": "cambridge-0580-2028",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Mathematics",
-   "code": "0580",
-   "exams": "2028–2030",
-   "url": "https://www.cambridgeinternational.org/Images/745681-2028-2030-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-0580/"
-  },
-  {
-   "id": "cambridge-0607-2025",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "International Mathematics",
-   "code": "0607",
-   "exams": "2025–2027",
-   "url": "https://www.cambridgeinternational.org/Images/662472-2025-2027-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-international-mathematics-0607/"
-  },
-  {
-   "id": "cambridge-0607-2028",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "International Mathematics",
-   "code": "0607",
-   "exams": "2028–2030",
-   "url": "https://www.cambridgeinternational.org/Images/745685-2028-2030-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-international-mathematics-0607/"
-  },
-  {
-   "id": "cambridge-0478-2026",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Computer Science",
-   "code": "0478",
-   "exams": "2026–2028",
-   "url": "https://www.cambridgeinternational.org/Images/697167-2026-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-computer-science-0478/"
-  },
-  {
-   "id": "cambridge-0478-2029",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Computer Science",
-   "code": "0478",
-   "exams": "2029–2031",
-   "url": "https://www.cambridgeinternational.org/Images/763431-2029-2031-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-computer-science-0478/"
-  },
-  {
-   "id": "cambridge-0417-2026",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Information and Communication Technology",
-   "code": "0417",
-   "exams": "2026–2028",
-   "url": "https://www.cambridgeinternational.org/Images/697139-2026-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-information-and-communication-technology-0417/"
-  },
-  {
-   "id": "cambridge-0417-2029",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Information and Communication Technology",
-   "code": "0417",
-   "exams": "2029",
-   "url": "https://www.cambridgeinternational.org/Images/764206-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-information-and-communication-technology-0417/"
-  },
-  {
-   "id": "cambridge-0455-2027",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Economics",
-   "code": "0455",
-   "exams": "2027–2029",
-   "url": "https://www.cambridgeinternational.org/Images/718148-2027-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-economics-0455/"
-  },
-  {
-   "id": "cambridge-0450-2026",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Business Studies",
-   "code": "0450",
-   "exams": "2026",
-   "url": "https://www.cambridgeinternational.org/Images/697146-2026-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-business-studies-0450/"
-  },
-  {
-   "id": "cambridge-0452-2027",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Accounting",
-   "code": "0452",
-   "exams": "2027–2029",
-   "url": "https://www.cambridgeinternational.org/Images/718141-2027-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-accounting-0452/"
-  },
-  {
-   "id": "cambridge-0460-2027",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Geography",
-   "code": "0460",
-   "exams": "2027–2029",
-   "url": "https://www.cambridgeinternational.org/Images/718150-2027-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-geography-0460/"
-  },
-  {
-   "id": "cambridge-0470-2027",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "History",
-   "code": "0470",
-   "exams": "2027–2028",
-   "url": "https://www.cambridgeinternational.org/Images/721327-2027-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-history-0470/"
-  },
-  {
-   "id": "cambridge-0470-2029",
-   "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "History",
-   "code": "0470",
+   "level": "AS & A Level",
+   "subject": "Law",
+   "code": "9084",
    "exams": "2029–2030",
-   "url": "https://www.cambridgeinternational.org/Images/764279-2029-2030-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-history-0470/"
+   "url": "https://www.cambridgeinternational.org/Images/764185-2029-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-law-9084/"
   },
   {
-   "id": "cambridge-0500-2027",
+   "id": "cambridge-9093-2027",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "English – First Language",
-   "code": "0500",
-   "exams": "2027–2029",
-   "url": "https://www.cambridgeinternational.org/Images/718783-2027-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-first-language-0500/"
+   "level": "AS & A Level",
+   "subject": "English Language",
+   "code": "9093",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721359-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-english-language-9093/"
   },
   {
-   "id": "cambridge-0495-2025",
+   "id": "cambridge-9093-2029",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Sociology",
-   "code": "0495",
-   "exams": "2025–2027",
-   "url": "https://www.cambridgeinternational.org/Images/662464-2025-2027-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-sociology-0495/"
+   "level": "AS & A Level",
+   "subject": "English Language",
+   "code": "9093",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/763854-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-english-language-9093/"
   },
   {
-   "id": "cambridge-0495-2028",
+   "id": "cambridge-9231-2026",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Sociology",
-   "code": "0495",
+   "level": "AS & A Level",
+   "subject": "Further Mathematics",
+   "code": "9231",
+   "exams": "2026–2027",
+   "url": "https://www.cambridgeinternational.org/Images/697357-2026-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-further-9231/"
+  },
+  {
+   "id": "cambridge-9231-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Further Mathematics",
+   "code": "9231",
    "exams": "2028–2030",
-   "url": "https://www.cambridgeinternational.org/Images/744795-2028-2030-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-sociology-0495/"
+   "url": "https://www.cambridgeinternational.org/Images/744603-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-further-9231/"
   },
   {
-   "id": "cambridge-0457-2025",
+   "id": "cambridge-9239-2026",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Global Perspectives",
-   "code": "0457",
+   "level": "AS & A Level",
+   "subject": "Global Perspectives & Research",
+   "code": "9239",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697359-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-global-perspectives-and-research-9239/"
+  },
+  {
+   "id": "cambridge-9239-2029",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Global Perspectives & Research",
+   "code": "9239",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/764529-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-global-perspectives-and-research-9239/"
+  },
+  {
+   "id": "cambridge-9274-2025",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Classical Studies",
+   "code": "9274",
    "exams": "2025–2027",
-   "url": "https://www.cambridgeinternational.org/Images/662457-2025-2027-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-global-perspectives-0457/"
+   "url": "https://www.cambridgeinternational.org/Images/664534-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-classical-studies-9274/"
   },
   {
-   "id": "cambridge-0457-2028",
+   "id": "cambridge-9274-2028",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Global Perspectives",
-   "code": "0457",
-   "exams": "2028",
-   "url": "https://www.cambridgeinternational.org/Images/744776-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-global-perspectives-0457/"
+   "level": "AS & A Level",
+   "subject": "Classical Studies",
+   "code": "9274",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744606-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-classical-studies-9274/"
   },
   {
-   "id": "cambridge-0457-2029",
+   "id": "cambridge-9395-2024",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Global Perspectives",
-   "code": "0457",
-   "exams": "2029",
-   "url": "https://www.cambridgeinternational.org/Images/764255-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-global-perspectives-0457/"
+   "level": "AS & A Level",
+   "subject": "Travel & Tourism",
+   "code": "9395",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/634457-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-travel-and-tourism-9395/"
   },
   {
-   "id": "cambridge-0680-2027",
+   "id": "cambridge-9395-2027",
    "board": "Cambridge",
-   "level": "IGCSE",
-   "subject": "Environmental Management",
-   "code": "0680",
+   "level": "AS & A Level",
+   "subject": "Travel & Tourism",
+   "code": "9395",
    "exams": "2027–2029",
-   "url": "https://www.cambridgeinternational.org/Images/718156-2027-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-environmental-management-0680/"
+   "url": "https://www.cambridgeinternational.org/Images/721364-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-travel-and-tourism-9395/"
+  },
+  {
+   "id": "cambridge-9479-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Art & Design",
+   "code": "9479",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697364-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-art-and-design-9479/"
+  },
+  {
+   "id": "cambridge-9479-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Art & Design",
+   "code": "9479",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/729788-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-art-and-design-9479/"
+  },
+  {
+   "id": "cambridge-9479-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Art & Design",
+   "code": "9479",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744022-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-art-and-design-9479/"
+  },
+  {
+   "id": "cambridge-9481-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Digital Media & Design",
+   "code": "9481",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/693608-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-digital-media-design-9481/"
+  },
+  {
+   "id": "cambridge-9481-2029",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Digital Media & Design",
+   "code": "9481",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/764187-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-digital-media-design-9481/"
+  },
+  {
+   "id": "cambridge-9482-2024",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Drama",
+   "code": "9482",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/635919-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-drama-9482/"
+  },
+  {
+   "id": "cambridge-9482-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Drama",
+   "code": "9482",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721645-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-drama-9482/"
+  },
+  {
+   "id": "cambridge-9483-2025",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Music",
+   "code": "9483",
+   "exams": "2025–2026",
+   "url": "https://www.cambridgeinternational.org/Images/664546-2025-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-music-9483/"
+  },
+  {
+   "id": "cambridge-9483-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Music",
+   "code": "9483",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721445-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-music-9483/"
+  },
+  {
+   "id": "cambridge-9483-2029",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Music",
+   "code": "9483",
+   "exams": "2029–2030",
+   "url": "https://www.cambridgeinternational.org/Images/764403-2029-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-music-9483/"
+  },
+  {
+   "id": "cambridge-9488-2024",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Islamic Studies",
+   "code": "9488",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/636058-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-islamic-studies-9488/"
+  },
+  {
+   "id": "cambridge-9488-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Islamic Studies",
+   "code": "9488",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721377-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-islamic-studies-9488/"
+  },
+  {
+   "id": "cambridge-9489-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "History",
+   "code": "9489",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697368-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-history-9489/"
+  },
+  {
+   "id": "cambridge-9489-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "History",
+   "code": "9489",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718292-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-history-9489/"
+  },
+  {
+   "id": "cambridge-9607-2024",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Media Studies",
+   "code": "9607",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/636087-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-media-studies-9607/"
+  },
+  {
+   "id": "cambridge-9607-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Media Studies",
+   "code": "9607",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/721382-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-media-studies-9607/"
+  },
+  {
+   "id": "cambridge-9607-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Media Studies",
+   "code": "9607",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743924-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-media-studies-9607/"
+  },
+  {
+   "id": "cambridge-9609-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Business",
+   "code": "9609",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697371-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-business-9609/"
+  },
+  {
+   "id": "cambridge-9609-2029",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Business",
+   "code": "9609",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764399-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-business-9609/"
+  },
+  {
+   "id": "cambridge-9618-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Computer Science",
+   "code": "9618",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697372-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-computer-science-9618/"
+  },
+  {
+   "id": "cambridge-9618-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Computer Science",
+   "code": "9618",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721397-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-computer-science-9618/"
+  },
+  {
+   "id": "cambridge-9626-2025",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Information Technology",
+   "code": "9626",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/662482-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-information-technology-9626/"
+  },
+  {
+   "id": "cambridge-9626-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Information Technology",
+   "code": "9626",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744612-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-information-technology-9626/"
+  },
+  {
+   "id": "cambridge-9693-2025",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Marine Science",
+   "code": "9693",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664553-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-marine-science-9693/"
+  },
+  {
+   "id": "cambridge-9693-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Marine Science",
+   "code": "9693",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744618-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-marine-science-9693/"
+  },
+  {
+   "id": "cambridge-9694-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Thinking Skills",
+   "code": "9694",
+   "exams": "2026–2027",
+   "url": "https://www.cambridgeinternational.org/Images/697412-2026-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-thinking-skills-9694/"
+  },
+  {
+   "id": "cambridge-9694-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Thinking Skills",
+   "code": "9694",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743336-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-thinking-skills-9694/"
+  },
+  {
+   "id": "cambridge-9695-2024",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Literature in English",
+   "code": "9695",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/636097-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-english-literature-9695/"
+  },
+  {
+   "id": "cambridge-9695-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Literature in English",
+   "code": "9695",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721410-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-english-literature-9695/"
+  },
+  {
+   "id": "cambridge-9695-2029",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Literature in English",
+   "code": "9695",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/763896-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-english-literature-9695/"
+  },
+  {
+   "id": "cambridge-9696-2025",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Geography",
+   "code": "9696",
+   "exams": "2025–2026",
+   "url": "https://www.cambridgeinternational.org/Images/664556-2025-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-geography-9696/"
+  },
+  {
+   "id": "cambridge-9696-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Geography",
+   "code": "9696",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718332-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-geography-9696/"
+  },
+  {
+   "id": "cambridge-9699-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Sociology",
+   "code": "9699",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721413-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-sociology-9699/"
+  },
+  {
+   "id": "cambridge-9699-2029",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Sociology",
+   "code": "9699",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/764506-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-sociology-9699/"
   },
   {
    "id": "cambridge-9700-2025",
@@ -333,94 +523,24 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-physics-9702/"
   },
   {
-   "id": "cambridge-9709-2026",
+   "id": "cambridge-9705-2025",
    "board": "Cambridge",
    "level": "AS & A Level",
-   "subject": "Mathematics",
-   "code": "9709",
-   "exams": "2026–2027",
-   "url": "https://www.cambridgeinternational.org/Images/697427-2026-2027-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-9709/"
-  },
-  {
-   "id": "cambridge-9709-2028",
-   "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Mathematics",
-   "code": "9709",
-   "exams": "2028–2030",
-   "url": "https://www.cambridgeinternational.org/Images/744634-2028-2030-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-9709/"
-  },
-  {
-   "id": "cambridge-9618-2027",
-   "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Computer Science",
-   "code": "9618",
-   "exams": "2027–2029",
-   "url": "https://www.cambridgeinternational.org/Images/721397-2027-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-computer-science-9618/"
-  },
-  {
-   "id": "cambridge-9626-2025",
-   "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Information Technology",
-   "code": "9626",
+   "subject": "Design & Technology",
+   "code": "9705",
    "exams": "2025–2027",
-   "url": "https://www.cambridgeinternational.org/Images/662482-2025-2027-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-information-technology-9626/"
+   "url": "https://www.cambridgeinternational.org/Images/675267-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-design-and-technology-9705/"
   },
   {
-   "id": "cambridge-9626-2028",
+   "id": "cambridge-9705-2028",
    "board": "Cambridge",
    "level": "AS & A Level",
-   "subject": "Information Technology",
-   "code": "9626",
+   "subject": "Design & Technology",
+   "code": "9705",
    "exams": "2028–2030",
-   "url": "https://www.cambridgeinternational.org/Images/744612-2028-2030-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-information-technology-9626/"
-  },
-  {
-   "id": "cambridge-9708-2026",
-   "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Economics",
-   "code": "9708",
-   "exams": "2026–2028",
-   "url": "https://www.cambridgeinternational.org/Images/697423-2026-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-economics-9708/"
-  },
-  {
-   "id": "cambridge-9708-2029",
-   "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Economics",
-   "code": "9708",
-   "exams": "2029",
-   "url": "https://www.cambridgeinternational.org/Images/764392-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-economics-9708/"
-  },
-  {
-   "id": "cambridge-9609-2026",
-   "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Business",
-   "code": "9609",
-   "exams": "2026–2028",
-   "url": "https://www.cambridgeinternational.org/Images/697371-2026-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-business-9609/"
-  },
-  {
-   "id": "cambridge-9609-2029",
-   "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Business",
-   "code": "9609",
-   "exams": "2029",
-   "url": "https://www.cambridgeinternational.org/Images/764399-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-business-9609/"
+   "url": "https://www.cambridgeinternational.org/Images/744633-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-design-and-technology-9705/"
   },
   {
    "id": "cambridge-9706-2026",
@@ -443,6 +563,126 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-accounting-9706/"
   },
   {
+   "id": "cambridge-9708-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Economics",
+   "code": "9708",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697423-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-economics-9708/"
+  },
+  {
+   "id": "cambridge-9708-2029",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Economics",
+   "code": "9708",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764392-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-economics-9708/"
+  },
+  {
+   "id": "cambridge-9709-2026",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Mathematics",
+   "code": "9709",
+   "exams": "2026–2027",
+   "url": "https://www.cambridgeinternational.org/Images/697427-2026-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-9709/"
+  },
+  {
+   "id": "cambridge-9709-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Mathematics",
+   "code": "9709",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744634-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-9709/"
+  },
+  {
+   "id": "cambridge-9844-2024",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Spanish",
+   "code": "9844",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/649879-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-spanish-language-and-literature-9844/"
+  },
+  {
+   "id": "cambridge-9844-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Spanish",
+   "code": "9844",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721428-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-spanish-language-and-literature-9844/"
+  },
+  {
+   "id": "cambridge-9868-2024",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Chinese",
+   "code": "9868",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/649875-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-chinese-language-and-literature-9868/"
+  },
+  {
+   "id": "cambridge-9868-2027",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "Chinese",
+   "code": "9868",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721432-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-chinese-language-and-literature-9868/"
+  },
+  {
+   "id": "cambridge-9897-2025",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "German",
+   "code": "9897",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664366-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-german-9897/"
+  },
+  {
+   "id": "cambridge-9897-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "German",
+   "code": "9897",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744651-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-german-9897/"
+  },
+  {
+   "id": "cambridge-9898-2025",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "French",
+   "code": "9898",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664368-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-french-language-literature-9898/"
+  },
+  {
+   "id": "cambridge-9898-2028",
+   "board": "Cambridge",
+   "level": "AS & A Level",
+   "subject": "French",
+   "code": "9898",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744655-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-french-language-literature-9898/"
+  },
+  {
    "id": "cambridge-9990-2027",
    "board": "Cambridge",
    "level": "AS & A Level",
@@ -463,84 +703,1376 @@
    "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-psychology-9990/"
   },
   {
-   "id": "cambridge-9699-2027",
+   "id": "cambridge-8021-2025",
    "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Sociology",
-   "code": "9699",
-   "exams": "2027–2028",
-   "url": "https://www.cambridgeinternational.org/Images/721413-2027-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-sociology-9699/"
+   "level": "AS Level",
+   "subject": "English General Paper",
+   "code": "8021",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664519-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-general-paper-as-level-only-8021/"
   },
   {
-   "id": "cambridge-9699-2029",
+   "id": "cambridge-8021-2028",
    "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Sociology",
-   "code": "9699",
-   "exams": "2029–2031",
-   "url": "https://www.cambridgeinternational.org/Images/764506-2029-2031-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-sociology-9699/"
+   "level": "AS Level",
+   "subject": "English General Paper",
+   "code": "8021",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743333-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-general-paper-as-level-only-8021/"
   },
   {
-   "id": "cambridge-9093-2027",
+   "id": "cambridge-8291-2025",
    "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "English Language",
-   "code": "9093",
-   "exams": "2027–2028",
-   "url": "https://www.cambridgeinternational.org/Images/721359-2027-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-english-language-9093/"
+   "level": "AS Level",
+   "subject": "Environmental Management",
+   "code": "8291",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664522-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-environmental-management-8291/"
   },
   {
-   "id": "cambridge-9093-2029",
+   "id": "cambridge-8291-2028",
    "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "English Language",
-   "code": "9093",
-   "exams": "2029–2031",
-   "url": "https://www.cambridgeinternational.org/Images/763854-2029-2031-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-english-language-9093/"
+   "level": "AS Level",
+   "subject": "Environmental Management",
+   "code": "8291",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744593-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-environmental-management-8291/"
   },
   {
-   "id": "cambridge-9489-2027",
+   "id": "cambridge-0400-2026",
    "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "History",
-   "code": "9489",
-   "exams": "2027–2029",
-   "url": "https://www.cambridgeinternational.org/Images/718292-2027-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-history-9489/"
+   "level": "IGCSE",
+   "subject": "Art and Design",
+   "code": "0400",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697135-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-art-and-design-0400/"
   },
   {
-   "id": "cambridge-9696-2027",
+   "id": "cambridge-0400-2027",
    "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Geography",
-   "code": "9696",
-   "exams": "2027–2029",
-   "url": "https://www.cambridgeinternational.org/Images/718332-2027-2029-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-geography-9696/"
+   "level": "IGCSE",
+   "subject": "Art and Design",
+   "code": "0400",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/729776-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-art-and-design-0400/"
   },
   {
-   "id": "cambridge-9084-2026",
+   "id": "cambridge-0400-2028",
    "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Law",
-   "code": "9084",
+   "level": "IGCSE",
+   "subject": "Art and Design",
+   "code": "0400",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743279-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-art-and-design-0400/"
+  },
+  {
+   "id": "cambridge-0408-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "World Literature",
+   "code": "0408",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664592-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-world-literature-0408/"
+  },
+  {
+   "id": "cambridge-0408-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "World Literature",
+   "code": "0408",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744009-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-world-literature-0408/"
+  },
+  {
+   "id": "cambridge-0410-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Music",
+   "code": "0410",
    "exams": "2026–2028",
-   "url": "https://www.cambridgeinternational.org/Images/697352-2026-2028-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-law-9084/"
+   "url": "https://www.cambridgeinternational.org/Images/694052-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-music-0410/"
   },
   {
-   "id": "cambridge-9084-2029",
+   "id": "cambridge-0410-2029",
    "board": "Cambridge",
-   "level": "AS & A Level",
-   "subject": "Law",
-   "code": "9084",
+   "level": "IGCSE",
+   "subject": "Music",
+   "code": "0410",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/764200-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-music-0410/"
+  },
+  {
+   "id": "cambridge-0411-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Drama",
+   "code": "0411",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664602-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-drama-0411/"
+  },
+  {
+   "id": "cambridge-0411-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Drama",
+   "code": "0411",
+   "exams": "2028",
+   "url": "https://www.cambridgeinternational.org/Images/744756-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-drama-0411/"
+  },
+  {
+   "id": "cambridge-0411-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Drama",
+   "code": "0411",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/763402-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-drama-0411/"
+  },
+  {
+   "id": "cambridge-0413-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physical Education",
+   "code": "0413",
+   "exams": "2025–2026",
+   "url": "https://www.cambridgeinternational.org/Images/664604-2025-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-education-0413/"
+  },
+  {
+   "id": "cambridge-0413-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physical Education",
+   "code": "0413",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721298-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-education-0413/"
+  },
+  {
+   "id": "cambridge-0413-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physical Education",
+   "code": "0413",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/765035-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-education-0413/"
+  },
+  {
+   "id": "cambridge-0417-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Information and Communication Technology",
+   "code": "0417",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697139-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-information-and-communication-technology-0417/"
+  },
+  {
+   "id": "cambridge-0417-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Information and Communication Technology",
+   "code": "0417",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764206-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-information-and-communication-technology-0417/"
+  },
+  {
+   "id": "cambridge-0445-2024",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Design and Technology",
+   "code": "0445",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/635750-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-design-and-technology-0445/"
+  },
+  {
+   "id": "cambridge-0445-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Design and Technology",
+   "code": "0445",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/721302-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-design-and-technology-0445/"
+  },
+  {
+   "id": "cambridge-0445-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Design and Technology",
+   "code": "0445",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743280-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-design-and-technology-0445/"
+  },
+  {
+   "id": "cambridge-0448-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Pakistan Studies",
+   "code": "0448",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697142-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-pakistan-studies-0448/"
+  },
+  {
+   "id": "cambridge-0448-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Pakistan Studies",
+   "code": "0448",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/732847-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-pakistan-studies-0448/"
+  },
+  {
+   "id": "cambridge-0448-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Pakistan Studies",
+   "code": "0448",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743605-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-pakistan-studies-0448/"
+  },
+  {
+   "id": "cambridge-0450-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Business Studies",
+   "code": "0450",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697146-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-business-studies-0450/"
+  },
+  {
+   "id": "cambridge-0452-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Accounting",
+   "code": "0452",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718141-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-accounting-0452/"
+  },
+  {
+   "id": "cambridge-0454-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Enterprise",
+   "code": "0454",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697151-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-enterprise-0454/"
+  },
+  {
+   "id": "cambridge-0454-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Enterprise",
+   "code": "0454",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/721305-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-enterprise-0454/"
+  },
+  {
+   "id": "cambridge-0454-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Enterprise",
+   "code": "0454",
+   "exams": "2028",
+   "url": "https://www.cambridgeinternational.org/Images/744767-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-enterprise-0454/"
+  },
+  {
+   "id": "cambridge-0455-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Economics",
+   "code": "0455",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718148-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-economics-0455/"
+  },
+  {
+   "id": "cambridge-0457-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Global Perspectives",
+   "code": "0457",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/662457-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-global-perspectives-0457/"
+  },
+  {
+   "id": "cambridge-0457-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Global Perspectives",
+   "code": "0457",
+   "exams": "2028",
+   "url": "https://www.cambridgeinternational.org/Images/744776-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-global-perspectives-0457/"
+  },
+  {
+   "id": "cambridge-0457-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Global Perspectives",
+   "code": "0457",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764255-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-global-perspectives-0457/"
+  },
+  {
+   "id": "cambridge-0460-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Geography",
+   "code": "0460",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718150-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-geography-0460/"
+  },
+  {
+   "id": "cambridge-0470-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "History",
+   "code": "0470",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721327-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-history-0470/"
+  },
+  {
+   "id": "cambridge-0470-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "History",
+   "code": "0470",
    "exams": "2029–2030",
-   "url": "https://www.cambridgeinternational.org/Images/764185-2029-2030-syllabus.pdf",
-   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-law-9084/"
+   "url": "https://www.cambridgeinternational.org/Images/764279-2029-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-history-0470/"
+  },
+  {
+   "id": "cambridge-0471-2024",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Travel and Tourism",
+   "code": "0471",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/634449-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-travel-and-tourism-0471/"
+  },
+  {
+   "id": "cambridge-0471-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Travel and Tourism",
+   "code": "0471",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721329-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-travel-and-tourism-0471/"
+  },
+  {
+   "id": "cambridge-0475-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Literature in English",
+   "code": "0475",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697163-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/english-literature-0475/"
+  },
+  {
+   "id": "cambridge-0475-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Literature in English",
+   "code": "0475",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/721333-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/english-literature-0475/"
+  },
+  {
+   "id": "cambridge-0475-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Literature in English",
+   "code": "0475",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743282-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/english-literature-0475/"
+  },
+  {
+   "id": "cambridge-0478-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Computer Science",
+   "code": "0478",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697167-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-computer-science-0478/"
+  },
+  {
+   "id": "cambridge-0478-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Computer Science",
+   "code": "0478",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/763431-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-computer-science-0478/"
+  },
+  {
+   "id": "cambridge-0490-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Religious Studies",
+   "code": "0490",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/663158-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-religious-studies-0490/"
+  },
+  {
+   "id": "cambridge-0490-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Religious Studies",
+   "code": "0490",
+   "exams": "2028",
+   "url": "https://www.cambridgeinternational.org/Images/744791-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-religious-studies-0490/"
+  },
+  {
+   "id": "cambridge-0490-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Religious Studies",
+   "code": "0490",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764295-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-religious-studies-0490/"
+  },
+  {
+   "id": "cambridge-0493-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Islamiyat",
+   "code": "0493",
+   "exams": "2026–2027",
+   "url": "https://www.cambridgeinternational.org/Images/697174-2026-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-islamiyat-0493/"
+  },
+  {
+   "id": "cambridge-0493-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Islamiyat",
+   "code": "0493",
+   "exams": "2028",
+   "url": "https://www.cambridgeinternational.org/Images/744793-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-islamiyat-0493/"
+  },
+  {
+   "id": "cambridge-0493-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Islamiyat",
+   "code": "0493",
+   "exams": "2029–2030",
+   "url": "https://www.cambridgeinternational.org/Images/764300-2029-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-islamiyat-0493/"
+  },
+  {
+   "id": "cambridge-0495-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Sociology",
+   "code": "0495",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/662464-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-sociology-0495/"
+  },
+  {
+   "id": "cambridge-0495-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Sociology",
+   "code": "0495",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744795-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-sociology-0495/"
+  },
+  {
+   "id": "cambridge-0500-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English – First Language",
+   "code": "0500",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718783-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-first-language-0500/"
+  },
+  {
+   "id": "cambridge-0510-2024",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as a Second Language (Speaking endorsement)",
+   "code": "0510",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/637160-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-second-language-oral-endorsement-0510/"
+  },
+  {
+   "id": "cambridge-0510-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as a Second Language (Speaking endorsement)",
+   "code": "0510",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721337-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-second-language-oral-endorsement-0510/"
+  },
+  {
+   "id": "cambridge-0511-2024",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as a Second Language (Count-in speaking)",
+   "code": "0511",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/637163-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-second-language-count-in-oral-0511/"
+  },
+  {
+   "id": "cambridge-0511-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English as a Second Language (Count-in speaking)",
+   "code": "0511",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721343-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-second-language-count-in-oral-0511/"
+  },
+  {
+   "id": "cambridge-0520-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "French – Foreign Language",
+   "code": "0520",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664620-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-french-foreign-language-0520/"
+  },
+  {
+   "id": "cambridge-0520-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "French – Foreign Language",
+   "code": "0520",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743340-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-french-foreign-language-0520/"
+  },
+  {
+   "id": "cambridge-0525-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "German – Foreign Language",
+   "code": "0525",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664624-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-german-foreign-language-0525/"
+  },
+  {
+   "id": "cambridge-0525-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "German – Foreign Language",
+   "code": "0525",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743346-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-german-foreign-language-0525/"
+  },
+  {
+   "id": "cambridge-0530-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Spanish – Foreign Language",
+   "code": "0530",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664626-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-spanish-foreign-language-0530/"
+  },
+  {
+   "id": "cambridge-0530-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Spanish – Foreign Language",
+   "code": "0530",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743350-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-spanish-foreign-language-0530/"
+  },
+  {
+   "id": "cambridge-0547-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Mandarin Chinese – Foreign Language",
+   "code": "0547",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/664639-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chinese-mandarin-foreign-language-0547/"
+  },
+  {
+   "id": "cambridge-0547-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Mandarin Chinese – Foreign Language",
+   "code": "0547",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743359-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chinese-mandarin-foreign-language-0547/"
+  },
+  {
+   "id": "cambridge-0580-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Mathematics",
+   "code": "0580",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/662466-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-0580/"
+  },
+  {
+   "id": "cambridge-0580-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Mathematics",
+   "code": "0580",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/745681-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-0580/"
+  },
+  {
+   "id": "cambridge-0600-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Agriculture",
+   "code": "0600",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697200-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-agriculture-0600/"
+  },
+  {
+   "id": "cambridge-0600-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Agriculture",
+   "code": "0600",
+   "exams": "2027–2028",
+   "url": "https://www.cambridgeinternational.org/Images/721347-2027-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-agriculture-0600/"
+  },
+  {
+   "id": "cambridge-0600-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Agriculture",
+   "code": "0600",
+   "exams": "2029–2031",
+   "url": "https://www.cambridgeinternational.org/Images/764304-2029-2031-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-agriculture-0600/"
+  },
+  {
+   "id": "cambridge-0606-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Additional Mathematics",
+   "code": "0606",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/662470-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-additional-0606/"
+  },
+  {
+   "id": "cambridge-0606-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Additional Mathematics",
+   "code": "0606",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/745683-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-additional-0606/"
+  },
+  {
+   "id": "cambridge-0607-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "International Mathematics",
+   "code": "0607",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/662472-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-international-mathematics-0607/"
+  },
+  {
+   "id": "cambridge-0607-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "International Mathematics",
+   "code": "0607",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/745685-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-international-mathematics-0607/"
+  },
+  {
+   "id": "cambridge-0610-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Biology",
+   "code": "0610",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697203-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-biology-0610/"
+  },
+  {
+   "id": "cambridge-0610-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Biology",
+   "code": "0610",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764324-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-biology-0610/"
+  },
+  {
+   "id": "cambridge-0620-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Chemistry",
+   "code": "0620",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697205-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chemistry-0620/"
+  },
+  {
+   "id": "cambridge-0620-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Chemistry",
+   "code": "0620",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764330-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chemistry-0620/"
+  },
+  {
+   "id": "cambridge-0625-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physics",
+   "code": "0625",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697209-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-0625/"
+  },
+  {
+   "id": "cambridge-0625-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physics",
+   "code": "0625",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764332-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-0625/"
+  },
+  {
+   "id": "cambridge-0648-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Food and Nutrition",
+   "code": "0648",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697228-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-food-and-nutrition-0648/"
+  },
+  {
+   "id": "cambridge-0648-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Food and Nutrition",
+   "code": "0648",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764335-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-food-and-nutrition-0648/"
+  },
+  {
+   "id": "cambridge-0652-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physical Science",
+   "code": "0652",
+   "exams": "2025–2026",
+   "url": "https://www.cambridgeinternational.org/Images/664641-2025-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physical-science-0652/"
+  },
+  {
+   "id": "cambridge-0653-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Combined Science",
+   "code": "0653",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/662474-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-science-combined-0653/"
+  },
+  {
+   "id": "cambridge-0653-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Combined Science",
+   "code": "0653",
+   "exams": "2028–2029",
+   "url": "https://www.cambridgeinternational.org/Images/745687-2028-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-science-combined-0653/"
+  },
+  {
+   "id": "cambridge-0654-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Co-ordinated Sciences (Double Award)",
+   "code": "0654",
+   "exams": "2028–2029",
+   "url": "https://www.cambridgeinternational.org/Images/745689-2028-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-sciences-co-ordinated-double-0654/"
+  },
+  {
+   "id": "cambridge-0680-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Environmental Management",
+   "code": "0680",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718156-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-environmental-management-0680/"
+  },
+  {
+   "id": "cambridge-0697-2024",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Marine Science",
+   "code": "0697",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/634451-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-marine-science-0697/"
+  },
+  {
+   "id": "cambridge-0697-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Marine Science",
+   "code": "0697",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/721354-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-marine-science-0697/"
+  },
+  {
+   "id": "cambridge-0970-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Biology (9–1)",
+   "code": "0970",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697234-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-biology-9-1-0970/"
+  },
+  {
+   "id": "cambridge-0970-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Biology (9–1)",
+   "code": "0970",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764352-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-biology-9-1-0970/"
+  },
+  {
+   "id": "cambridge-0971-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Chemistry (9–1)",
+   "code": "0971",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697236-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chemistry-9-1-0971/"
+  },
+  {
+   "id": "cambridge-0971-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Chemistry (9–1)",
+   "code": "0971",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764365-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-chemistry-9-1-0971/"
+  },
+  {
+   "id": "cambridge-0972-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physics (9–1)",
+   "code": "0972",
+   "exams": "2026–2028",
+   "url": "https://www.cambridgeinternational.org/Images/697240-2026-2028-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-9-1-0972/"
+  },
+  {
+   "id": "cambridge-0972-2029",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Physics (9–1)",
+   "code": "0972",
+   "exams": "2029",
+   "url": "https://www.cambridgeinternational.org/Images/764368-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-9-1-0972/"
+  },
+  {
+   "id": "cambridge-0980-2025",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Mathematics (9–1)",
+   "code": "0980",
+   "exams": "2025–2027",
+   "url": "https://www.cambridgeinternational.org/Images/663105-2025-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-9-1-0980/"
+  },
+  {
+   "id": "cambridge-0980-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Mathematics (9–1)",
+   "code": "0980",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/744838-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-mathematics-9-1-0980/"
+  },
+  {
+   "id": "cambridge-0990-2024",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English – First Language (9–1)",
+   "code": "0990",
+   "exams": "2024–2026",
+   "url": "https://www.cambridgeinternational.org/Images/635234-2024-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-first-language-english-0990/"
+  },
+  {
+   "id": "cambridge-0990-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "English – First Language (9–1)",
+   "code": "0990",
+   "exams": "2027–2029",
+   "url": "https://www.cambridgeinternational.org/Images/718785-2027-2029-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-9-1-first-language-english-0990/"
+  },
+  {
+   "id": "cambridge-0992-2026",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Literature in English (9–1)",
+   "code": "0992",
+   "exams": "2026",
+   "url": "https://www.cambridgeinternational.org/Images/697264-2026-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-literature-0992/"
+  },
+  {
+   "id": "cambridge-0992-2027",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Literature in English (9–1)",
+   "code": "0992",
+   "exams": "2027",
+   "url": "https://www.cambridgeinternational.org/Images/721390-2027-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-literature-0992/"
+  },
+  {
+   "id": "cambridge-0992-2028",
+   "board": "Cambridge",
+   "level": "IGCSE",
+   "subject": "Literature in English (9–1)",
+   "code": "0992",
+   "exams": "2028–2030",
+   "url": "https://www.cambridgeinternational.org/Images/743323-2028-2030-syllabus.pdf",
+   "page": "https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-english-literature-0992/"
+  },
+  {
+   "id": "aqa-7037",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Geography",
+   "code": "7037",
+   "url": "https://filestore.aqa.org.uk/resources/geography/specifications/AQA-7037-SP-2016.PDF",
+   "page": "https://www.aqa.org.uk/subjects/geography/a-level/geography-7037/specification"
+  },
+  {
+   "id": "aqa-7062",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Religious Studies",
+   "code": "7062",
+   "url": "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-7062-SP-2016.PDF",
+   "page": "https://www.aqa.org.uk/subjects/religious-studies/a-level/religious-studies-7062/specification"
+  },
+  {
+   "id": "aqa-7152",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Politics",
+   "code": "7152",
+   "url": "https://filestore.aqa.org.uk/resources/politics/specifications/AQA-7152-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/politics/a-level/politics-7152/specification"
+  },
+  {
+   "id": "aqa-7162",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Law",
+   "code": "7162",
+   "url": "https://filestore.aqa.org.uk/resources/law/specifications/AQA-7162-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/law/a-level/law-7162/specification"
+  },
+  {
+   "id": "aqa-7172",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Philosophy",
+   "code": "7172",
+   "url": "https://filestore.aqa.org.uk/resources/philosophy/specifications/AQA-7172-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/philosophy/a-level/philosophy-7172/specification"
+  },
+  {
+   "id": "aqa-7357",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Mathematics",
+   "code": "7357",
+   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7357-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/mathematics/a-level/mathematics-7357/specification"
+  },
+  {
+   "id": "aqa-7367",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Further Mathematics",
+   "code": "7367",
+   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7367-SP-2017.PDF",
+   "page": "https://www.aqa.org.uk/subjects/mathematics/a-level/mathematics-7367/specification"
+  },
+  {
+   "id": "aqa-7572",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Media Studies",
+   "code": "7572",
+   "url": "https://filestore.aqa.org.uk/resources/media-studies/specifications/AQA-7572-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-7582",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Physical Education",
+   "code": "7582",
+   "url": "https://filestore.aqa.org.uk/resources/pe/specifications/AQA-7582-SP-2016.PDF",
+   "page": "https://www.aqa.org.uk/subjects/physical-education/a-level/physical-education-7582/specification"
+  },
+  {
+   "id": "aqa-7652",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "French",
+   "code": "7652",
+   "url": "https://filestore.aqa.org.uk/resources/french/specifications/AQA-7652-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-7662",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "German",
+   "code": "7662",
+   "url": "https://filestore.aqa.org.uk/resources/german/specifications/AQA-7662-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-7692",
+   "board": "AQA",
+   "level": "A-level",
+   "subject": "Spanish",
+   "code": "7692",
+   "url": "https://filestore.aqa.org.uk/resources/spanish/specifications/AQA-7692-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-7042",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "History",
+   "code": "7042",
+   "url": "https://filestore.aqa.org.uk/resources/history/specifications/AQA-7041-7042-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7127",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Accounting",
+   "code": "7127",
+   "url": "https://filestore.aqa.org.uk/resources/accounting/specifications/AQA-7127-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-7132",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Business",
+   "code": "7132",
+   "url": "https://filestore.aqa.org.uk/resources/business/specifications/AQA-7131-7132-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7136",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Economics",
+   "code": "7136",
+   "url": "https://filestore.aqa.org.uk/resources/economics/specifications/AQA-7135-7136-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7182",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Psychology",
+   "code": "7182",
+   "url": "https://filestore.aqa.org.uk/resources/psychology/specifications/AQA-7181-7182-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7192",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Sociology",
+   "code": "7192",
+   "url": "https://filestore.aqa.org.uk/resources/sociology/specifications/AQA-7191-7192-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7237",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Dance",
+   "code": "7237",
+   "url": "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-7237-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-7402",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Biology",
+   "code": "7402",
+   "url": "https://filestore.aqa.org.uk/resources/biology/specifications/AQA-7401-7402-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7405",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Chemistry",
+   "code": "7405",
+   "url": "https://filestore.aqa.org.uk/resources/chemistry/specifications/AQA-7404-7405-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7408",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Physics",
+   "code": "7408",
+   "url": "https://filestore.aqa.org.uk/resources/physics/specifications/AQA-7407-7408-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7447",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Environmental Science",
+   "code": "7447",
+   "url": "https://filestore.aqa.org.uk/resources/science/specifications/AQA-7447-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-7517",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Computer Science",
+   "code": "7517",
+   "url": "https://filestore.aqa.org.uk/resources/computing/specifications/AQA-7516-7517-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7552",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Design and Technology: Product Design",
+   "code": "7552",
+   "url": "https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-7552-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-7562",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "Design and Technology: Fashion and Textiles",
+   "code": "7562",
+   "url": "https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-7562-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-7702",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "English Language",
+   "code": "7702",
+   "url": "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7701-7702-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7712",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "English Literature A",
+   "code": "7712",
+   "url": "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7711-7712-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-7717",
+   "board": "AQA",
+   "level": "AS and A-level",
+   "subject": "English Literature B",
+   "code": "7717",
+   "url": "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7716-7717-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-8035",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Geography",
+   "code": "8035",
+   "url": "https://filestore.aqa.org.uk/resources/geography/specifications/AQA-8035-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8062",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Religious Studies A",
+   "code": "8062",
+   "url": "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-8062-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8063",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Religious Studies B",
+   "code": "8063",
+   "url": "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-8063-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8100",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Citizenship Studies",
+   "code": "8100",
+   "url": "https://filestore.aqa.org.uk/resources/citizenship/specifications/AQA-8100-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8132",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Business",
+   "code": "8132",
+   "url": "https://filestore.aqa.org.uk/resources/business/specifications/AQA-8132-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8136",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Economics",
+   "code": "8136",
+   "url": "https://filestore.aqa.org.uk/resources/economics/specifications/AQA-8136-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8145",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "History",
+   "code": "8145",
+   "url": "https://filestore.aqa.org.uk/resources/history/specifications/AQA-8145-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8182",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Psychology",
+   "code": "8182",
+   "url": "https://filestore.aqa.org.uk/resources/psychology/specifications/AQA-8182-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8192",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Sociology",
+   "code": "8192",
+   "url": "https://filestore.aqa.org.uk/resources/sociology/specifications/AQA-8192-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8236",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Dance",
+   "code": "8236",
+   "url": "https://filestore.aqa.org.uk/resources/dance/specifications/AQA-8236-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8261",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Drama",
+   "code": "8261",
+   "url": "https://filestore.aqa.org.uk/resources/drama/specifications/AQA-8261-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8271",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Music",
+   "code": "8271",
+   "url": "https://filestore.aqa.org.uk/resources/music/specifications/AQA-8271-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8300",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Mathematics",
+   "code": "8300",
+   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8300-SP-2015.PDF"
+  },
+  {
+   "id": "aqa-8382",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Statistics",
+   "code": "8382",
+   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8382-SP-2017.PDF"
   },
   {
    "id": "aqa-8461",
@@ -576,12 +2108,132 @@
    "url": "https://filestore.aqa.org.uk/resources/science/specifications/AQA-8464-SP-2016.PDF"
   },
   {
-   "id": "aqa-8300",
+   "id": "aqa-8465",
    "board": "AQA",
    "level": "GCSE",
-   "subject": "Mathematics",
-   "code": "8300",
-   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8300-SP-2015.PDF"
+   "subject": "Combined Science: Synergy",
+   "code": "8465",
+   "url": "https://filestore.aqa.org.uk/resources/science/specifications/AQA-8465-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8525",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Computer Science",
+   "code": "8525",
+   "url": "https://filestore.aqa.org.uk/resources/computing/specifications/AQA-8525-SP-2020.PDF"
+  },
+  {
+   "id": "aqa-8552",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Design and Technology",
+   "code": "8552",
+   "url": "https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-8552-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8572",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Media Studies",
+   "code": "8572",
+   "url": "https://filestore.aqa.org.uk/resources/media-studies/specifications/AQA-8572-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8582",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Physical Education",
+   "code": "8582",
+   "url": "https://filestore.aqa.org.uk/resources/pe/specifications/AQA-8582-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8585",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Food Preparation and Nutrition",
+   "code": "8585",
+   "url": "https://filestore.aqa.org.uk/resources/food/specifications/AQA-8585-SP-2016.PDF"
+  },
+  {
+   "id": "aqa-8633",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Italian",
+   "code": "8633",
+   "url": "https://filestore.aqa.org.uk/resources/italian/specifications/AQA-8633-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8638",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Bengali",
+   "code": "8638",
+   "url": "https://filestore.aqa.org.uk/resources/bengali/specifications/AQA-8638-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8648",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Urdu",
+   "code": "8648",
+   "url": "https://filestore.aqa.org.uk/resources/urdu/specifications/AQA-8648-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8652",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "French",
+   "code": "8652",
+   "url": "https://filestore.aqa.org.uk/resources/french/specifications/AQA-8652-SP-2024.pdf"
+  },
+  {
+   "id": "aqa-8662",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "German",
+   "code": "8662",
+   "url": "https://filestore.aqa.org.uk/resources/german/specifications/AQA-8662-SP-2024.PDF"
+  },
+  {
+   "id": "aqa-8673",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Chinese (spoken Mandarin)",
+   "code": "8673",
+   "url": "https://filestore.aqa.org.uk/resources/chinese/specifications/AQA-8673-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8678",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Modern Hebrew",
+   "code": "8678",
+   "url": "https://filestore.aqa.org.uk/resources/modern-hebrew/specifications/AQA-8678-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8683",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Panjabi",
+   "code": "8683",
+   "url": "https://filestore.aqa.org.uk/resources/panjabi/specifications/AQA-8683-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8688",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Polish",
+   "code": "8688",
+   "url": "https://filestore.aqa.org.uk/resources/polish/specifications/AQA-8688-SP-2017.PDF"
+  },
+  {
+   "id": "aqa-8692",
+   "board": "AQA",
+   "level": "GCSE",
+   "subject": "Spanish",
+   "code": "8692",
+   "url": "https://filestore.aqa.org.uk/resources/spanish/specifications/AQA-8692-SP-2024.PDF"
   },
   {
    "id": "aqa-8700",
@@ -600,261 +2252,245 @@
    "url": "https://filestore.aqa.org.uk/resources/english/specifications/AQA-8702-SP-2015.PDF"
   },
   {
-   "id": "aqa-8145",
+   "id": "aqa-8852",
    "board": "AQA",
    "level": "GCSE",
-   "subject": "History",
-   "code": "8145",
-   "url": "https://filestore.aqa.org.uk/resources/history/specifications/AQA-8145-SP-2016.PDF"
+   "subject": "Engineering",
+   "code": "8852",
+   "url": "https://filestore.aqa.org.uk/resources/engineering/specifications/AQA-8852-SP-2017.PDF"
   },
   {
-   "id": "aqa-8035",
+   "id": "aqa-8365",
    "board": "AQA",
-   "level": "GCSE",
-   "subject": "Geography",
-   "code": "8035",
-   "url": "https://filestore.aqa.org.uk/resources/geography/specifications/AQA-8035-SP-2016.PDF"
-  },
-  {
-   "id": "aqa-8525",
-   "board": "AQA",
-   "level": "GCSE",
-   "subject": "Computer Science",
-   "code": "8525",
-   "url": "https://filestore.aqa.org.uk/resources/computing/specifications/AQA-8525-SP-2020.PDF"
-  },
-  {
-   "id": "aqa-8182",
-   "board": "AQA",
-   "level": "GCSE",
-   "subject": "Psychology",
-   "code": "8182",
-   "url": "https://filestore.aqa.org.uk/resources/psychology/specifications/AQA-8182-SP-2017.PDF"
-  },
-  {
-   "id": "aqa-8192",
-   "board": "AQA",
-   "level": "GCSE",
-   "subject": "Sociology",
-   "code": "8192",
-   "url": "https://filestore.aqa.org.uk/resources/sociology/specifications/AQA-8192-SP-2017.PDF"
-  },
-  {
-   "id": "aqa-8062",
-   "board": "AQA",
-   "level": "GCSE",
-   "subject": "Religious Studies A",
-   "code": "8062",
-   "url": "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-8062-SP-2016.PDF"
-  },
-  {
-   "id": "aqa-8132",
-   "board": "AQA",
-   "level": "GCSE",
-   "subject": "Business",
-   "code": "8132",
-   "url": "https://filestore.aqa.org.uk/resources/business/specifications/AQA-8132-SP-2017.PDF"
-  },
-  {
-   "id": "aqa-8136",
-   "board": "AQA",
-   "level": "GCSE",
-   "subject": "Economics",
-   "code": "8136",
-   "url": "https://filestore.aqa.org.uk/resources/economics/specifications/AQA-8136-SP-2017.PDF"
-  },
-  {
-   "id": "aqa-8552",
-   "board": "AQA",
-   "level": "GCSE",
-   "subject": "Design and Technology",
-   "code": "8552",
-   "url": "https://filestore.aqa.org.uk/resources/design-and-technology/specifications/AQA-8552-SP-2017.PDF"
-  },
-  {
-   "id": "aqa-8582",
-   "board": "AQA",
-   "level": "GCSE",
-   "subject": "Physical Education",
-   "code": "8582",
-   "url": "https://filestore.aqa.org.uk/resources/pe/specifications/AQA-8582-SP-2016.PDF"
-  },
-  {
-   "id": "aqa-7402",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "Biology",
-   "code": "7402",
-   "url": "https://filestore.aqa.org.uk/resources/biology/specifications/AQA-7401-7402-SP-2015.PDF"
-  },
-  {
-   "id": "aqa-7405",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "Chemistry",
-   "code": "7405",
-   "url": "https://filestore.aqa.org.uk/resources/chemistry/specifications/AQA-7404-7405-SP-2015.PDF"
-  },
-  {
-   "id": "aqa-7408",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "Physics",
-   "code": "7408",
-   "url": "https://filestore.aqa.org.uk/resources/physics/specifications/AQA-7407-7408-SP-2015.PDF"
-  },
-  {
-   "id": "aqa-7357",
-   "board": "AQA",
-   "level": "A-level",
-   "subject": "Mathematics",
-   "code": "7357",
-   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7357-SP-2017.PDF",
-   "page": "https://www.aqa.org.uk/subjects/mathematics/a-level/mathematics-7357/specification"
-  },
-  {
-   "id": "aqa-7367",
-   "board": "AQA",
-   "level": "A-level",
+   "level": "Level 2 Certificate",
    "subject": "Further Mathematics",
-   "code": "7367",
-   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7367-SP-2017.PDF",
-   "page": "https://www.aqa.org.uk/subjects/mathematics/a-level/mathematics-7367/specification"
+   "code": "8365",
+   "url": "https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-8365-SP-2018.PDF"
   },
   {
-   "id": "aqa-7182",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "Psychology",
-   "code": "7182",
-   "url": "https://filestore.aqa.org.uk/resources/psychology/specifications/AQA-7181-7182-SP-2015.PDF"
+   "id": "edexcel-9bi0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Biology B",
+   "code": "9BI0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/biology-b/2015/specification-and-sample-assessment-materials/9781446930892-gce2015-a-biob-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/biology-b-2015.html"
   },
   {
-   "id": "aqa-7192",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "Sociology",
-   "code": "7192",
-   "url": "https://filestore.aqa.org.uk/resources/sociology/specifications/AQA-7191-7192-SP-2015.PDF"
+   "id": "edexcel-9bn0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Biology A (Salters-Nuffield)",
+   "code": "9BN0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/biology-a/2015/specification-and-sample-assessment-materials/9781446930885-gce2015-a-bioa-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/biology-a-2015.html"
   },
   {
-   "id": "aqa-7042",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "History",
-   "code": "7042",
-   "url": "https://filestore.aqa.org.uk/resources/history/specifications/AQA-7041-7042-SP-2015.PDF"
-  },
-  {
-   "id": "aqa-7037",
-   "board": "AQA",
-   "level": "A-level",
-   "subject": "Geography",
-   "code": "7037",
-   "url": "https://filestore.aqa.org.uk/resources/geography/specifications/AQA-7037-SP-2016.PDF",
-   "page": "https://www.aqa.org.uk/subjects/geography/a-level/geography-7037/specification"
-  },
-  {
-   "id": "aqa-7136",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "Economics",
-   "code": "7136",
-   "url": "https://filestore.aqa.org.uk/resources/economics/specifications/AQA-7135-7136-SP-2015.PDF"
-  },
-  {
-   "id": "aqa-7132",
-   "board": "AQA",
-   "level": "AS and A-level",
+   "id": "edexcel-9bs0",
+   "board": "Edexcel",
+   "level": "A level",
    "subject": "Business",
-   "code": "7132",
-   "url": "https://filestore.aqa.org.uk/resources/business/specifications/AQA-7131-7132-SP-2015.PDF"
+   "code": "9BS0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Business%20Studies/2015/specification-and-sample-assessment-materials/9781446914694-gce2015-a-bus-web.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/business-2015.html"
   },
   {
-   "id": "aqa-7517",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "Computer Science",
-   "code": "7517",
-   "url": "https://filestore.aqa.org.uk/resources/computing/specifications/AQA-7516-7517-SP-2015.PDF"
+   "id": "edexcel-9ch0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Chemistry",
+   "code": "9CH0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Chemistry/2015/Specification%20and%20sample%20assessments/a-level-chemistry-2015-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/chemistry-2015.html"
   },
   {
-   "id": "aqa-7712",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "English Literature A",
-   "code": "7712",
-   "url": "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7711-7712-SP-2015.PDF"
+   "id": "edexcel-9cn0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Chinese",
+   "code": "9CN0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Chinese/2017/specification-and-sample-assessments/Specification_GCE_A_level_L3_in_Chinese.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/chinese-2017.html"
   },
   {
-   "id": "aqa-7702",
-   "board": "AQA",
-   "level": "AS and A-level",
+   "id": "edexcel-9dr0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Drama and Theatre",
+   "code": "9DR0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Drama-and-Theatre/2016/Specification%20and%20sample%20assessments/a-level-drama-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/drama-and-theatre-2016.html"
+  },
+  {
+   "id": "edexcel-9eb0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Economics B",
+   "code": "9EB0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Economics/2015/specification-and-sample-assessment-materials/9781446914410_GCE2015_A_ECOB_WEB%20spec.PDF",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/economics-b-2015.html"
+  },
+  {
+   "id": "edexcel-9ec0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Economics A",
+   "code": "9EC0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Economics/2015/specification-and-sample-assessment-materials/A_Level_Econ_A_Spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/economics-a-2015.html"
+  },
+  {
+   "id": "edexcel-9el0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "English Language and Literature",
+   "code": "9EL0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/English%20Language%20and%20Literature/2015/Specification%20and%20sample%20assessments/a-level-englishlanglit-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/english-language-and-literature-2015.html"
+  },
+  {
+   "id": "edexcel-9en0",
+   "board": "Edexcel",
+   "level": "A level",
    "subject": "English Language",
-   "code": "7702",
-   "url": "https://filestore.aqa.org.uk/resources/english/specifications/AQA-7701-7702-SP-2015.PDF"
+   "code": "9EN0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/English%20Language/2015/Specification%20and%20sample%20assessment/AS-EnglishLanguage-Spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/english-language-2015.html"
   },
   {
-   "id": "aqa-7062",
-   "board": "AQA",
-   "level": "A-level",
-   "subject": "Religious Studies",
-   "code": "7062",
-   "url": "https://filestore.aqa.org.uk/resources/rs/specifications/AQA-7062-SP-2016.PDF",
-   "page": "https://www.aqa.org.uk/subjects/religious-studies/a-level/religious-studies-7062/specification"
+   "id": "edexcel-9et0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "English Literature",
+   "code": "9ET0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/English%20Literature/2015/Specification%20and%20sample%20assessments/gce2015-a-level-eng-lit-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/english-literature-2015.html"
   },
   {
-   "id": "aqa-7152",
-   "board": "AQA",
-   "level": "A-level",
+   "id": "edexcel-9fm0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Further Mathematics",
+   "code": "9FM0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-further-mathematics-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/mathematics-2017.html"
+  },
+  {
+   "id": "edexcel-9fr0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "French",
+   "code": "9FR0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/French/2016/Specification%20and%20sample%20assessments/Specification_GCE_A_level_L3_in_French.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/french-2016.html"
+  },
+  {
+   "id": "edexcel-9ge0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Geography",
+   "code": "9GE0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Geography/2016/specification-and-sample-assessments/pearson-edexcel-a-level-geography-issue-6.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/geography-2016.html"
+  },
+  {
+   "id": "edexcel-9gn0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "German",
+   "code": "9GN0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/German/2016/Specification%20and%20sample%20assessments/Specification_GCE_A_level_L3_in_German.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/german-2016.html"
+  },
+  {
+   "id": "edexcel-9hi0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "History",
+   "code": "9HI0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/History/2015/Specification%20and%20sample%20assessments/9781446914366-gce-2015-a-hist.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/history-2015.html"
+  },
+  {
+   "id": "edexcel-9ma0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Mathematics",
+   "code": "9MA0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/mathematics-2017.html"
+  },
+  {
+   "id": "edexcel-9mu0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Music",
+   "code": "9MU0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Music/2016/Specification%20and%20sample%20assessments/Pearson_Edexcel_Level_3_Advanced_GCE_in_Music_9MU0_specification_issue7.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/music-2016.html"
+  },
+  {
+   "id": "edexcel-9ph0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Physics",
+   "code": "9PH0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Physics/2015/Specification%20and%20sample%20assessments/pearsonedexcel-alevel-physics-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/physics-2015.html"
+  },
+  {
+   "id": "edexcel-9pl0",
+   "board": "Edexcel",
+   "level": "A level",
    "subject": "Politics",
-   "code": "7152",
-   "url": "https://filestore.aqa.org.uk/resources/politics/specifications/AQA-7152-SP-2017.PDF",
-   "page": "https://www.aqa.org.uk/subjects/politics/a-level/politics-7152/specification"
+   "code": "9PL0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Politics/2017/Specification%20and%20sample%20assessments/9781446933602-gce2017-al-politics-issue4.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/politics-2017.html"
   },
   {
-   "id": "aqa-7162",
-   "board": "AQA",
-   "level": "A-level",
-   "subject": "Law",
-   "code": "7162",
-   "url": "https://filestore.aqa.org.uk/resources/law/specifications/AQA-7162-SP-2017.PDF",
-   "page": "https://www.aqa.org.uk/subjects/law/a-level/law-7162/specification"
+   "id": "edexcel-9ps0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Psychology",
+   "code": "9PS0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Psychology/2015/specification-and-sample-assessments/al-specification-psychology.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/psychology-2015.html"
   },
   {
-   "id": "aqa-7582",
-   "board": "AQA",
-   "level": "A-level",
-   "subject": "Physical Education",
-   "code": "7582",
-   "url": "https://filestore.aqa.org.uk/resources/pe/specifications/AQA-7582-SP-2016.PDF",
-   "page": "https://www.aqa.org.uk/subjects/physical-education/a-level/physical-education-7582/specification"
+   "id": "edexcel-9rs0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Religious Studies",
+   "code": "9RS0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Religious%20Studies/2016/Specification%20and%20sample%20assessments/Specification_GCE_A_Level_in_Religious_Studies.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/religious-studies-2016.html"
   },
   {
-   "id": "aqa-7172",
-   "board": "AQA",
-   "level": "A-level",
-   "subject": "Philosophy",
-   "code": "7172",
-   "url": "https://filestore.aqa.org.uk/resources/philosophy/specifications/AQA-7172-SP-2017.PDF",
-   "page": "https://www.aqa.org.uk/subjects/philosophy/a-level/philosophy-7172/specification"
+   "id": "edexcel-9sp0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Spanish",
+   "code": "9SP0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Spanish/2016/Specification%20and%20sample%20assessments/Specification_GCE_A_level_L3_in_Spanish.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/spanish-2016.html"
   },
   {
-   "id": "aqa-7447",
-   "board": "AQA",
-   "level": "AS and A-level",
-   "subject": "Environmental Science",
-   "code": "7447",
-   "url": "https://filestore.aqa.org.uk/resources/science/specifications/AQA-7447-SP-2017.PDF"
+   "id": "edexcel-9st0",
+   "board": "Edexcel",
+   "level": "A level",
+   "subject": "Statistics",
+   "code": "9ST0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/statistics/2017/Specification%20and%20Sample%20assessment%20material/a-level-statistics-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/statistics-2017.html"
   },
   {
-   "id": "edexcel-1ma1",
+   "id": "edexcel-1as0",
    "board": "Edexcel",
    "level": "GCSE",
-   "subject": "Mathematics",
-   "code": "1MA1",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html"
+   "subject": "Astronomy",
+   "code": "1AS0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Astronomy/2017/Specification%20and%20sample%20assessments/gcse-astronomy-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/astronomy-2017.html"
   },
   {
    "id": "edexcel-1bi0",
@@ -866,6 +2502,15 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/sciences-2016.html"
   },
   {
+   "id": "edexcel-1bs0",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Business",
+   "code": "1BS0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Business/2017/specification-and-sample-assessments/gcse-business-spec-2017.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/business-2017.html"
+  },
+  {
    "id": "edexcel-1ch0",
    "board": "Edexcel",
    "level": "GCSE",
@@ -875,22 +2520,31 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/sciences-2016.html"
   },
   {
-   "id": "edexcel-1ph0",
+   "id": "edexcel-1cp2",
    "board": "Edexcel",
    "level": "GCSE",
-   "subject": "Physics",
-   "code": "1PH0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Specification/gcse-physics-spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/sciences-2016.html"
+   "subject": "Computer Science",
+   "code": "1CP2",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Computer%20Science/2020/specification-and-sample-assessments/GCSE_L1_L2_Computer_Science_2020_Specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/computer-science-2020.html"
   },
   {
-   "id": "edexcel-1sc0",
+   "id": "edexcel-1cs0",
    "board": "Edexcel",
    "level": "GCSE",
-   "subject": "Combined Science",
-   "code": "1SC0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Specification/gcse-combinedscience-spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/sciences-2016.html"
+   "subject": "Citizenship Studies",
+   "code": "1CS0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Citizenship%20Studies/2016/Specification%20and%20sample%20assessments/specification-gcse-l1-l2-in-citizenship.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/citizenship-studies-2016.html"
+  },
+  {
+   "id": "edexcel-1dr0",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Drama",
+   "code": "1DR0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Drama/2016/Specification%20and%20sample%20assessments/gcse2016-l12-drama.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/drama-2016.html"
   },
   {
    "id": "edexcel-1en0",
@@ -911,13 +2565,13 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/english-literature-2015.html"
   },
   {
-   "id": "edexcel-1hi0",
+   "id": "edexcel-1fr1",
    "board": "Edexcel",
    "level": "GCSE",
-   "subject": "History",
-   "code": "1HI0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/History/2016/specification-and-sample-assessments/gcse-9-1-history-specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/history-2016.html"
+   "subject": "French",
+   "code": "1FR1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/French/2024/specification-and-sample-assessments/gq000023-gcse-french-specification-2024-issue-2.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/french-2024.html"
   },
   {
    "id": "edexcel-1ga0",
@@ -938,13 +2592,49 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/geography-b-2016.html"
   },
   {
-   "id": "edexcel-1bs0",
+   "id": "edexcel-1gn1",
    "board": "Edexcel",
    "level": "GCSE",
-   "subject": "Business",
-   "code": "1BS0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Business/2017/specification-and-sample-assessments/gcse-business-spec-2017.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/business-2017.html"
+   "subject": "German",
+   "code": "1GN1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/German/2024/specification-and-sample-assessments/gq000025-gcse-german-specification-2024-issue-2.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/german-2024.html"
+  },
+  {
+   "id": "edexcel-1hi0",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "History",
+   "code": "1HI0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/History/2016/specification-and-sample-assessments/gcse-9-1-history-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/history-2016.html"
+  },
+  {
+   "id": "edexcel-1ma1",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Mathematics",
+   "code": "1MA1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html"
+  },
+  {
+   "id": "edexcel-1mu0",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Music",
+   "code": "1MU0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Music/2016/specification/pearson-edexcel-gcse-9-to-1-in-music-specification-issue4.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/music-2016.html"
+  },
+  {
+   "id": "edexcel-1ph0",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Physics",
+   "code": "1PH0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Specification/gcse-physics-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/sciences-2016.html"
   },
   {
    "id": "edexcel-1ps0",
@@ -956,13 +2646,13 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/psychology-2017.html"
   },
   {
-   "id": "edexcel-1cp2",
+   "id": "edexcel-1ra0",
    "board": "Edexcel",
    "level": "GCSE",
-   "subject": "Computer Science",
-   "code": "1CP2",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Computer%20Science/2020/specification-and-sample-assessments/GCSE_L1_L2_Computer_Science_2020_Specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/computer-science-2020.html"
+   "subject": "Religious Studies A",
+   "code": "1RA0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Religious%20Studies/2016/Specification%20and%20sample%20assessments/specification-gcse-l1-l2-religious-studies-a-june-2016-draft-4.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/religious-studies-a-2016.html"
   },
   {
    "id": "edexcel-1rb0",
@@ -974,6 +2664,24 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/religious-studies-b-2016.html"
   },
   {
+   "id": "edexcel-1sc0",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Combined Science",
+   "code": "1SC0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Specification/gcse-combinedscience-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/sciences-2016.html"
+  },
+  {
+   "id": "edexcel-1sp1",
+   "board": "Edexcel",
+   "level": "GCSE",
+   "subject": "Spanish",
+   "code": "1SP1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Spanish/2024/specification-and-sample-assessments/gq000027-gcse-spanish-specification-2024-issue-2.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/spanish-2024.html"
+  },
+  {
    "id": "edexcel-1st0",
    "board": "Edexcel",
    "level": "GCSE",
@@ -981,222 +2689,6 @@
    "code": "1ST0",
    "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/Statistics/2017/specification-and-sample-assessments/gcse-9-1-statistics-specification.pdf",
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/statistics-2017.html"
-  },
-  {
-   "id": "edexcel-9ma0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Mathematics",
-   "code": "9MA0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/mathematics-2017.html"
-  },
-  {
-   "id": "edexcel-9fm0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Further Mathematics",
-   "code": "9FM0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-further-mathematics-specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/mathematics-2017.html"
-  },
-  {
-   "id": "edexcel-9bn0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Biology A (Salters-Nuffield)",
-   "code": "9BN0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/biology-a/2015/specification-and-sample-assessment-materials/9781446930885-gce2015-a-bioa-spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/biology-a-2015.html"
-  },
-  {
-   "id": "edexcel-9bi0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Biology B",
-   "code": "9BI0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/biology-b/2015/specification-and-sample-assessment-materials/9781446930892-gce2015-a-biob-spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/biology-b-2015.html"
-  },
-  {
-   "id": "edexcel-9ch0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Chemistry",
-   "code": "9CH0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Chemistry/2015/Specification%20and%20sample%20assessments/a-level-chemistry-2015-specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/chemistry-2015.html"
-  },
-  {
-   "id": "edexcel-9ph0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Physics",
-   "code": "9PH0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Physics/2015/Specification%20and%20sample%20assessments/pearsonedexcel-alevel-physics-spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/physics-2015.html"
-  },
-  {
-   "id": "edexcel-9ec0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Economics A",
-   "code": "9EC0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Economics/2015/specification-and-sample-assessment-materials/A_Level_Econ_A_Spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/economics-a-2015.html"
-  },
-  {
-   "id": "edexcel-9eb0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Economics B",
-   "code": "9EB0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Economics/2015/specification-and-sample-assessment-materials/9781446914410_GCE2015_A_ECOB_WEB%20spec.PDF",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/economics-b-2015.html"
-  },
-  {
-   "id": "edexcel-9ps0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Psychology",
-   "code": "9PS0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Psychology/2015/specification-and-sample-assessments/al-specification-psychology.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/psychology-2015.html"
-  },
-  {
-   "id": "edexcel-9hi0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "History",
-   "code": "9HI0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/History/2015/Specification%20and%20sample%20assessments/9781446914366-gce-2015-a-hist.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/history-2015.html"
-  },
-  {
-   "id": "edexcel-9et0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "English Literature",
-   "code": "9ET0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/English%20Literature/2015/Specification%20and%20sample%20assessments/gce2015-a-level-eng-lit-spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/english-literature-2015.html"
-  },
-  {
-   "id": "edexcel-9ge0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Geography",
-   "code": "9GE0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Geography/2016/specification-and-sample-assessments/pearson-edexcel-a-level-geography-issue-6.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/geography-2016.html"
-  },
-  {
-   "id": "edexcel-9bs0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Business",
-   "code": "9BS0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Business%20Studies/2015/specification-and-sample-assessment-materials/9781446914694-gce2015-a-bus-web.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/business-2015.html"
-  },
-  {
-   "id": "edexcel-9pl0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Politics",
-   "code": "9PL0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Politics/2017/Specification%20and%20sample%20assessments/9781446933602-gce2017-al-politics-issue4.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/politics-2017.html"
-  },
-  {
-   "id": "edexcel-9rs0",
-   "board": "Edexcel",
-   "level": "A level",
-   "subject": "Religious Studies",
-   "code": "9RS0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/A%20Level/Religious%20Studies/2016/Specification%20and%20sample%20assessments/Specification_GCE_A_Level_in_Religious_Studies.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/religious-studies-2016.html"
-  },
-  {
-   "id": "edexcel-4bi1",
-   "board": "Edexcel",
-   "level": "International GCSE",
-   "subject": "Biology",
-   "code": "4BI1",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Biology/2017/specification-and-sample-assessments/international-gcse-biology-2017-specification1.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-biology-2017.html"
-  },
-  {
-   "id": "edexcel-4xbi1",
-   "board": "Edexcel",
-   "level": "International GCSE",
-   "subject": "Biology (Modular)",
-   "code": "4XBI1",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Biology/2024/specification-and-sample-assessments/international-gcse-biology-modular-specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/biology-2024-modular.html"
-  },
-  {
-   "id": "edexcel-4ch1",
-   "board": "Edexcel",
-   "level": "International GCSE",
-   "subject": "Chemistry",
-   "code": "4CH1",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Chemistry/2017/specification-and-sample-assessments/international-gcse-chemistry-2017-specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-chemistry-2017.html"
-  },
-  {
-   "id": "edexcel-4ph1",
-   "board": "Edexcel",
-   "level": "International GCSE",
-   "subject": "Physics",
-   "code": "4PH1",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Physics/2017/specification-and-sample-assessments/international-gcse-physics-2017-specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-physics-2017.html"
-  },
-  {
-   "id": "edexcel-4ma1",
-   "board": "Edexcel",
-   "level": "International GCSE",
-   "subject": "Mathematics A",
-   "code": "4MA1",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Mathematics%20A/2016/Specification%20and%20sample%20assessments/international-gcse-in-mathematics-spec-a.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-mathematics-a-2016.html"
-  },
-  {
-   "id": "edexcel-4ea1",
-   "board": "Edexcel",
-   "level": "International GCSE",
-   "subject": "English Language A",
-   "code": "4EA1",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/English%20Language%20A/2016/Specification%20and%20sample%20assessments/9781446954379-int-gcse-englang-a-iss6-02-02-2023.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-language-a-2016.html"
-  },
-  {
-   "id": "edexcel-4ec1",
-   "board": "Edexcel",
-   "level": "International GCSE",
-   "subject": "Economics",
-   "code": "4EC1",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Economics/2017/Specification%20and%20SAMS/international-gcse-spec-9781446942789.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-economics-2017.html"
-  },
-  {
-   "id": "edexcel-4cp0",
-   "board": "Edexcel",
-   "level": "International GCSE",
-   "subject": "Computer Science",
-   "code": "4CP0",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/computer-science/2017/specification-and-sample-assessments/international-gcse-in-Computer-Science-Specification.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-computer-science-2017.html"
-  },
-  {
-   "id": "edexcel-yma01",
-   "board": "Edexcel",
-   "level": "International A level",
-   "subject": "Mathematics",
-   "code": "YMA01",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Mathematics/2018/Specification-and-Sample-Assessment/international-a-level-maths-spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/mathematics-2018.html"
   },
   {
    "id": "edexcel-ybi11",
@@ -1208,6 +2700,15 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/biology-2018.html"
   },
   {
+   "id": "edexcel-ybs11",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "Business",
+   "code": "YBS11",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Business/2018/Specification-and-Sample-Assessment/International-A-Level-Business-Spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/business-2018.html"
+  },
+  {
    "id": "edexcel-ych11",
    "board": "Edexcel",
    "level": "International A level",
@@ -1215,6 +2716,51 @@
    "code": "YCH11",
    "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Chemistry/2018/Specification-and-Sample-Assessment/International-A-Level-Chemistry-Spec.pdf",
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/chemistry-2018.html"
+  },
+  {
+   "id": "edexcel-yec11",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "Economics",
+   "code": "YEC11",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Economics/2018/Specification-and-Sample-Assessment/International-A-Level-Economics-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/economics-2018.html"
+  },
+  {
+   "id": "edexcel-yen01",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "English Language",
+   "code": "YEN01",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/english-language/2015/specification-and-sample-assessments/9781446954027-ial-englang-iss3.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/english-language-2015.html"
+  },
+  {
+   "id": "edexcel-yet01",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "English Literature",
+   "code": "YET01",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/english-literature/2015/specification-and-sample-assessments/9781446954058-ial-englit-iss6-9-spec-240521pm.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/english-literature-2015.html"
+  },
+  {
+   "id": "edexcel-yit11",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "Information Technology",
+   "code": "YIT11",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Information-Technology/2018/specification-and-sample-assessment/International-AL-Information-Technology-Spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/information-technology-2018.html"
+  },
+  {
+   "id": "edexcel-yma01",
+   "board": "Edexcel",
+   "level": "International A level",
+   "subject": "Mathematics",
+   "code": "YMA01",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Mathematics/2018/Specification-and-Sample-Assessment/international-a-level-maths-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/mathematics-2018.html"
   },
   {
    "id": "edexcel-yph11",
@@ -1226,13 +2772,588 @@
    "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/physics-2018.html"
   },
   {
-   "id": "edexcel-yec11",
+   "id": "edexcel-4ac1",
    "board": "Edexcel",
-   "level": "International A level",
+   "level": "International GCSE",
+   "subject": "Accounting",
+   "code": "4AC1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Accounting/2017/Specification-and-sample-assessments/ig-accountancy-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-accounting-2017.html"
+  },
+  {
+   "id": "edexcel-4bi1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Biology",
+   "code": "4BI1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Biology/2017/specification-and-sample-assessments/international-gcse-biology-2017-specification1.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-biology-2017.html"
+  },
+  {
+   "id": "edexcel-4bs1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Business",
+   "code": "4BS1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Business%20Studies/2017/specification-and-sample-assessment/9781446942765-international-gcse-business-specification.pdf"
+  },
+  {
+   "id": "edexcel-4ch1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Chemistry",
+   "code": "4CH1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Chemistry/2017/specification-and-sample-assessments/international-gcse-chemistry-2017-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-chemistry-2017.html"
+  },
+  {
+   "id": "edexcel-4cm1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Commerce",
+   "code": "4CM1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Commerce/2017/specification-and-sample-assessments/international-gcse-Spec-Commerce.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-commerce-2017.html"
+  },
+  {
+   "id": "edexcel-4cn1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Chinese",
+   "code": "4CN1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Chinese/2017/specification-and-sample-assessments/9781446944516-ig-chinese.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-chinese-2017.html"
+  },
+  {
+   "id": "edexcel-4cp0",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Computer Science",
+   "code": "4CP0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/computer-science/2017/specification-and-sample-assessments/international-gcse-in-Computer-Science-Specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-computer-science-2017.html"
+  },
+  {
+   "id": "edexcel-4ea1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "English Language A",
+   "code": "4EA1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/English%20Language%20A/2016/Specification%20and%20sample%20assessments/9781446954379-int-gcse-englang-a-iss6-02-02-2023.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-language-a-2016.html"
+  },
+  {
+   "id": "edexcel-4eb1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "English Language B",
+   "code": "4EB1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/English%20Language%20B/2016/Specification%20and%20sample%20assessments/international-gcse-english-lang-b-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-language-b-2016.html"
+  },
+  {
+   "id": "edexcel-4ec1",
+   "board": "Edexcel",
+   "level": "International GCSE",
    "subject": "Economics",
-   "code": "YEC11",
-   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Economics/2018/Specification-and-Sample-Assessment/International-A-Level-Economics-spec.pdf",
-   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-advanced-levels/economics-2018.html"
+   "code": "4EC1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Economics/2017/Specification%20and%20SAMS/international-gcse-spec-9781446942789.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-economics-2017.html"
+  },
+  {
+   "id": "edexcel-4et1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "English Literature",
+   "code": "4ET1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/English%20Literature/2016/Specification%20and%20sample%20assessments/international-gcse-english-literature-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-english-literature-2016.html"
+  },
+  {
+   "id": "edexcel-4fr1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "French",
+   "code": "4FR1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/French/2017/specification-and-sample-assessments/international-gcse-french-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-french-2017.html"
+  },
+  {
+   "id": "edexcel-4ge1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Geography",
+   "code": "4GE1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Geography/2017/specification-and-sample-assessments/9781446958360-int-gcse-geog-issue-3.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-geography-2017.html"
+  },
+  {
+   "id": "edexcel-4hb1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Human Biology",
+   "code": "4HB1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Human%20Biology/2017/specification-and-sample-assessment/international-gcse-human-biology-2017-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-human-biology-2017.html"
+  },
+  {
+   "id": "edexcel-4hi1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "History",
+   "code": "4HI1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/History/2017/specification-and-sample-assessments/int-gcse-history-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-history-2017.html"
+  },
+  {
+   "id": "edexcel-4is1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Islamic Studies",
+   "code": "4IS1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/islamic-studies/2017/specification-and-sample-assessments/international-gcse-islamic-studies-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-islamic-studies-2017.html"
+  },
+  {
+   "id": "edexcel-4it1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Information and Communication Technology",
+   "code": "4IT1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Information%20and%20Communication%20Technology/2017/Specification%20and%20sample%20assessments/international-gcse-in-ict-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-information-and-communication-technology-2017.html"
+  },
+  {
+   "id": "edexcel-4ma1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Mathematics A",
+   "code": "4MA1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Mathematics%20A/2016/Specification%20and%20sample%20assessments/international-gcse-in-mathematics-spec-a.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-mathematics-a-2016.html"
+  },
+  {
+   "id": "edexcel-4pa1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Pakistan Studies",
+   "code": "4PA1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Pakistan%20Studies/2017/specification-and-sample-assessments/international-gcse-pakistan-studies-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-pakistan-studies-2017.html"
+  },
+  {
+   "id": "edexcel-4ph1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Physics",
+   "code": "4PH1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Physics/2017/specification-and-sample-assessments/international-gcse-physics-2017-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-physics-2017.html"
+  },
+  {
+   "id": "edexcel-4pm1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Further Pure Mathematics",
+   "code": "4PM1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Further%20Pure%20Mathematics/2016/Specification%20and%20sample%20assessments/international-gcse-in-further-pure-mathematics-spec.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-further-pure-mathematics-2017.html"
+  },
+  {
+   "id": "edexcel-4rs1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Religious Studies",
+   "code": "4RS1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Religious%20Studies/2017/Specification%20and%20sample%20assessments/international-gcse-in-religious-studies.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-religious-studies-2017.html"
+  },
+  {
+   "id": "edexcel-4sd0",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Science (Double Award)",
+   "code": "4SD0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Science%20%28Double%20Award%29/2017/specification-and-sample-assessments/international-gcse-science-double-award-2017-specification1.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-science-double-award-2017.html"
+  },
+  {
+   "id": "edexcel-4sp1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Spanish",
+   "code": "4SP1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Spanish/2017/specification-and-sample-assessments/international-gcse-spanish-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-spanish-2017.html"
+  },
+  {
+   "id": "edexcel-4ss0",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Science (Single Award)",
+   "code": "4SS0",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Science%20%28Single%20Award%29/2017/specification-and-sample-assessments/9781446934302-int-gcse-science-sa-spec-web.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-science-single-award-2017.html"
+  },
+  {
+   "id": "edexcel-4xbi1",
+   "board": "Edexcel",
+   "level": "International GCSE",
+   "subject": "Biology (Modular)",
+   "code": "4XBI1",
+   "url": "https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Biology/2024/specification-and-sample-assessments/international-gcse-biology-modular-specification.pdf",
+   "page": "https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/biology-2024-modular.html"
+  },
+  {
+   "id": "ocr-h240",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Mathematics A",
+   "code": "H240",
+   "url": "https://www.ocr.org.uk/Images/308723-specification-accredited-a-level-gce-mathematics-a-h240.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/mathematics-a-h230-h240-from-2017/"
+  },
+  {
+   "id": "ocr-h245",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Further Mathematics A",
+   "code": "H245",
+   "url": "https://www.ocr.org.uk/Images/308752-specification-accredited-a-level-gce-further-mathematics-a-h245.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/further-mathematics-a-h235-h245-from-2017/"
+  },
+  {
+   "id": "ocr-h404",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Design and Technology",
+   "code": "H404",
+   "url": "https://www.ocr.org.uk/Images/304609-specification-accredited-a-level-gce-design-and-technology-h404-h406.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/design-and-technology-h004-h006-h404-h406-from-2017/"
+  },
+  {
+   "id": "ocr-h407",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Ancient History",
+   "code": "H407",
+   "url": "https://www.ocr.org.uk/Images/313570-specification-accredited-a-level-ancient-history-h407.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/ancient-history-h007-h407-from-2017/"
+  },
+  {
+   "id": "ocr-h408",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Classical Civilisation",
+   "code": "H408",
+   "url": "https://www.ocr.org.uk/Images/315133-specification-accredited-a-level-classical-civilisation-h408.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/classical-civilisation-h008-h408-from-2017/"
+  },
+  {
+   "id": "ocr-h409",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Media Studies",
+   "code": "H409",
+   "url": "https://www.ocr.org.uk/Images/687703-specification-accredited-a-level-gce-media-studies-h409.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/media-studies-h009-h409-from-2023/"
+  },
+  {
+   "id": "ocr-h414",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Geology",
+   "code": "H414",
+   "url": "https://www.ocr.org.uk/Images/322105-specification-accredited-a-level-gce-geology-h414.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/geology-h014-h414-from-2017/"
+  },
+  {
+   "id": "ocr-h418",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Law",
+   "code": "H418",
+   "url": "https://www.ocr.org.uk/Images/587304-specification-accredited-a-level-gce-law-h418.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/law-h018-h418-from-2020/"
+  },
+  {
+   "id": "ocr-h420",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Biology A",
+   "code": "H420",
+   "url": "https://www.ocr.org.uk/Images/687834-download-a-level-specification.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/biology-a-h020-h420-from-2015/"
+  },
+  {
+   "id": "ocr-h422",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Biology B (Advancing Biology)",
+   "code": "H422",
+   "url": "https://www.ocr.org.uk/Images/171714-specification-accredited-a-level-biology-b-advancing-biology-h422.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/biology-b-advancing-biology-h022-h422-from-2015/"
+  },
+  {
+   "id": "ocr-h431",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Business",
+   "code": "H431",
+   "url": "https://www.ocr.org.uk/Images/170837-specification-accredited-a-level-gce-business-h431.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/business-h031-h431-from-2015/"
+  },
+  {
+   "id": "ocr-h432",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Chemistry A",
+   "code": "H432",
+   "url": "https://www.ocr.org.uk/Images/171720-specification-accredited-a-level-gce-chemistry-a-h432.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/chemistry-a-h032-h432-from-2015/"
+  },
+  {
+   "id": "ocr-h433",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Chemistry B (Salters)",
+   "code": "H433",
+   "url": "https://www.ocr.org.uk/Images/171723-specification-accredited-a-level-gce-chemistry-b-salters-h433.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/chemistry-b-salters-h033-h433-from-2015/"
+  },
+  {
+   "id": "ocr-h443",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Latin",
+   "code": "H443",
+   "url": "https://www.ocr.org.uk/Images/220734-specification-accredited-a-level-gce-latin-h443.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/latin-h043-h443-from-2016/"
+  },
+  {
+   "id": "ocr-h444",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Classical Greek",
+   "code": "H444",
+   "url": "https://www.ocr.org.uk/Images/220709-specification-accredited-a-level-gce-classical-greek-h444.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/classical-greek-h044-h444-from-2016/"
+  },
+  {
+   "id": "ocr-h446",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Computer Science",
+   "code": "H446",
+   "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/computer-science-h046-h446-from-2015/"
+  },
+  {
+   "id": "ocr-h459",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Drama and Theatre",
+   "code": "H459",
+   "url": "https://www.ocr.org.uk/Images/242650-specification-accredited-a-level-gce-drama-and-theatre-h459.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/drama-and-theatre-h059-h459-from-2016/"
+  },
+  {
+   "id": "ocr-h460",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Economics",
+   "code": "H460",
+   "url": "https://www.ocr.org.uk/Images/536455-specification-accredited-a-level-gce-economics-h460.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/economics-h060-h460-from-2019/"
+  },
+  {
+   "id": "ocr-h470",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "English Language",
+   "code": "H470",
+   "url": "https://www.ocr.org.uk/Images/171195-specification-accredited-a-level-gce-english-language-h470.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/english-language-h070-h470-from-2015/"
+  },
+  {
+   "id": "ocr-h472",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "English Literature",
+   "code": "H472",
+   "url": "https://www.ocr.org.uk/Images/171200-specification-accredited-a-level-gce-english-literature-h472.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/english-literature-h072-h472-from-2015/"
+  },
+  {
+   "id": "ocr-h474",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "English Language and Literature (EMC)",
+   "code": "H474",
+   "url": "https://www.ocr.org.uk/Images/171202-specification-accredited-a-level-gce-english-language-and-literature-h474.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/english-language-and-literature-emc-h074-h474-from-2015/"
+  },
+  {
+   "id": "ocr-h481",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Geography",
+   "code": "H481",
+   "url": "https://www.ocr.org.uk/Images/223012-specification-accredited-a-level-gce-geography-h481.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/geography-h081-h481-from-2016/"
+  },
+  {
+   "id": "ocr-h505",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "History A",
+   "code": "H505",
+   "url": "https://www.ocr.org.uk/Images/170128-specification-accredited-a-level-gce-history-a-h505.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/history-a-h105-h505-from-2015/"
+  },
+  {
+   "id": "ocr-h543",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Music",
+   "code": "H543",
+   "url": "https://www.ocr.org.uk/Images/219397-specification-accredited-a-level-gce-music-h543.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/music-h143-h543-from-2016/"
+  },
+  {
+   "id": "ocr-h555",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Physical Education",
+   "code": "H555",
+   "url": "https://www.ocr.org.uk/Images/234833-specification-accredited-a-level-gce-physical-education-h555.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/physical-education-h155-h555-from-2016/"
+  },
+  {
+   "id": "ocr-h556",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Physics A",
+   "code": "H556",
+   "url": "https://www.ocr.org.uk/Images/171726-specification-accredited-a-level-gce-physics-a-h556.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/physics-a-h156-h556-from-2015/"
+  },
+  {
+   "id": "ocr-h557",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Physics B (Advancing Physics)",
+   "code": "H557",
+   "url": "https://www.ocr.org.uk/Images/171729-specification-accredited-a-level-gce-physics-b-advancing-physics-h557.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/physics-b-advancing-physics-h157-h557-from-2015/"
+  },
+  {
+   "id": "ocr-h567",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Psychology",
+   "code": "H567",
+   "url": "https://www.ocr.org.uk/Images/171732-specification-accredited-a-level-gce-psychology-h567.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/psychology-h167-h567-from-2015/"
+  },
+  {
+   "id": "ocr-h573",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Religious Studies",
+   "code": "H573",
+   "url": "https://www.ocr.org.uk/Images/242913-specification-accredited-a-level-gce-religious-studies-h573.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/religious-studies-h173-h573-from-2016/"
+  },
+  {
+   "id": "ocr-h580",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Sociology",
+   "code": "H580",
+   "url": "https://www.ocr.org.uk/Images/170212-specification-accredited-a-level-gce-sociology.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/sociology-h180-h580-from-2015/"
+  },
+  {
+   "id": "ocr-h640",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Mathematics B (MEI)",
+   "code": "H640",
+   "url": "https://www.ocr.org.uk/Images/308740-specification-accredited-a-level-gce-mathematics-b-mei-h640.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/mathematics-b-mei-h630-h640-from-2017/"
+  },
+  {
+   "id": "ocr-h645",
+   "board": "OCR",
+   "level": "AS and A Level",
+   "subject": "Further Mathematics B (MEI)",
+   "code": "H645",
+   "url": "https://www.ocr.org.uk/Images/308768-specification-accredited-a-level-gce-further-mathematics-b-mei-h645.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/further-mathematics-b-mei-h635-h645-from-2017/"
+  },
+  {
+   "id": "ocr-j170",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Art and Design",
+   "code": "J170",
+   "url": "https://www.ocr.org.uk/Images/220463-specification-accredited-gcse-art-and-design-j170-j176.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/art-and-design-j170-j176-from-2016/"
+  },
+  {
+   "id": "ocr-j198",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Ancient History",
+   "code": "J198",
+   "url": "https://www.ocr.org.uk/Images/313533-specification-accredited-gcse-ancient-history-j198.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/ancient-history-j198-from-2017/"
+  },
+  {
+   "id": "ocr-j199",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Classical Civilisation",
+   "code": "J199",
+   "url": "https://www.ocr.org.uk/Images/315240-specification-accredited-gcse-classical-civilisation-j199.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/classical-civilisation-j199-from-2017/"
+  },
+  {
+   "id": "ocr-j200",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Media Studies",
+   "code": "J200",
+   "url": "https://www.ocr.org.uk/Images/687701-specification-accredited-gcse-media-studies-j200.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/media-studies-j200-from-2023/"
+  },
+  {
+   "id": "ocr-j203",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Psychology",
+   "code": "J203",
+   "url": "https://www.ocr.org.uk/Images/309306-specification-accredited-gcse-psychology-j203.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/psychology-j203-from-2017/"
+  },
+  {
+   "id": "ocr-j204",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Business",
+   "code": "J204",
+   "url": "https://www.ocr.org.uk/Images/304213-specification-accredited-gcse-business-j204.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/business-j204-from-2017/"
+  },
+  {
+   "id": "ocr-j205",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Economics",
+   "code": "J205",
+   "url": "https://www.ocr.org.uk/Images/306377-specification-accredited-gcse-economics-j205.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/economics-j205-from-2017/"
   },
   {
    "id": "ocr-j247",
@@ -1271,13 +3392,49 @@
    "page": "https://www.ocr.org.uk/qualifications/gcse/gateway-science-suite-combined-science-a-j250-from-2016/"
   },
   {
-   "id": "ocr-j560",
+   "id": "ocr-j257",
    "board": "OCR",
    "level": "GCSE",
-   "subject": "Mathematics",
-   "code": "J560",
-   "url": "https://www.ocr.org.uk/Images/168982-specification-gcse-mathematics.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/"
+   "subject": "Biology B (Twenty First Century Science)",
+   "code": "J257",
+   "url": "https://www.ocr.org.uk/Images/234595-specification-accredited-gcse-twenty-first-century-science-suite-biology-b-j257.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/twenty-first-century-science-suite-biology-b-j257-from-2016/"
+  },
+  {
+   "id": "ocr-j258",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Chemistry B (Twenty First Century Science)",
+   "code": "J258",
+   "url": "https://www.ocr.org.uk/Images/234599-specification-accredited-gcse-twenty-first-century-science-suite-chemistry-b-j258.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/twenty-first-century-science-suite-chemistry-b-j258-from-2016/"
+  },
+  {
+   "id": "ocr-j259",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Physics B (Twenty First Century Science)",
+   "code": "J259",
+   "url": "https://www.ocr.org.uk/Images/234601-specification-accredited-gcse-twenty-first-century-science-suite-physics-b-j259.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/twenty-first-century-science-suite-physics-b-j259-from-2016/"
+  },
+  {
+   "id": "ocr-j260",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Combined Science B (Twenty First Century Science)",
+   "code": "J260",
+   "url": "https://www.ocr.org.uk/Images/234597-specification-accredited-gcse-twenty-first-century-science-suite-combined-science-b-j260.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/twenty-first-century-science-suite-combined-science-b-j260-from-2016/"
+  },
+  {
+   "id": "ocr-j270",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Citizenship Studies",
+   "code": "J270",
+   "url": "https://www.ocr.org.uk/Images/234735-specification-accredited-gcse-citizenship-studies-j270.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/citizenship-studies-j270-from-2016/"
   },
   {
    "id": "ocr-j277",
@@ -1289,6 +3446,60 @@
    "page": "https://www.ocr.org.uk/qualifications/gcse/computer-science-j277-from-2020/"
   },
   {
+   "id": "ocr-j282",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Latin",
+   "code": "J282",
+   "url": "https://www.ocr.org.uk/Images/220702-specification-accredited-gcse-latin-j282.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/latin-j282-from-2016/"
+  },
+  {
+   "id": "ocr-j292",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Classical Greek",
+   "code": "J292",
+   "url": "https://www.ocr.org.uk/Images/220700-specification-accredited-gcse-classical-greek-j292.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/classical-greek-j292-from-2016/"
+  },
+  {
+   "id": "ocr-j309",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Food Preparation and Nutrition",
+   "code": "J309",
+   "url": "https://www.ocr.org.uk/Images/234806-specification-accredited-gcse-food-preparation-and-nutrition-j309.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/food-preparation-and-nutrition-j309-from-2016/"
+  },
+  {
+   "id": "ocr-j310",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Design and Technology",
+   "code": "J310",
+   "url": "https://www.ocr.org.uk/Images/304658-specification-accredited-gcse-design-and-technology-j310.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/design-and-technology-j310-from-2017/"
+  },
+  {
+   "id": "ocr-j316",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Drama",
+   "code": "J316",
+   "url": "https://www.ocr.org.uk/Images/242630-specification-accredited-gcse-drama-j316.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/drama-j316-from-2016/"
+  },
+  {
+   "id": "ocr-j351",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "English Language",
+   "code": "J351",
+   "url": "https://www.ocr.org.uk/Images/168996-specification-accredited-gcse-english-language-j351.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/english-language-j351-from-2015/"
+  },
+  {
    "id": "ocr-j352",
    "board": "OCR",
    "level": "GCSE",
@@ -1296,6 +3507,24 @@
    "code": "J352",
    "url": "https://www.ocr.org.uk/Images/168995-specification-accredited-gcse-english-literature-j352.pdf",
    "page": "https://www.ocr.org.uk/qualifications/gcse/english-literature-j352-from-2015/"
+  },
+  {
+   "id": "ocr-j383",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Geography A (Geographical Themes)",
+   "code": "J383",
+   "url": "https://www.ocr.org.uk/Images/207306-specification-accredited-gcse-geography-a-j383.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/geography-a-geographical-themes-j383-from-2016/"
+  },
+  {
+   "id": "ocr-j384",
+   "board": "OCR",
+   "level": "GCSE",
+   "subject": "Geography B (Geography for Enquiring Minds)",
+   "code": "J384",
+   "url": "https://www.ocr.org.uk/Images/737448-specification-accredited-gcse-geography-b-j384.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/geography-b-geography-for-enquiring-minds-j384-from-2016/"
   },
   {
    "id": "ocr-j410",
@@ -1307,103 +3536,40 @@
    "page": "https://www.ocr.org.uk/qualifications/gcse/history-a-explaining-the-modern-world-j410-from-2016/"
   },
   {
-   "id": "ocr-j203",
+   "id": "ocr-j411",
    "board": "OCR",
    "level": "GCSE",
-   "subject": "Psychology",
-   "code": "J203",
-   "url": "https://www.ocr.org.uk/Images/309306-specification-accredited-gcse-psychology-j203.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/gcse/psychology-j203-from-2017/"
+   "subject": "History B (Schools History Project)",
+   "code": "J411",
+   "url": "https://www.ocr.org.uk/Images/207164-specification-accredited-gcse-history-b-.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/history-b-schools-history-project-j411-from-2016/"
   },
   {
-   "id": "ocr-h420",
+   "id": "ocr-j536",
    "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Biology A",
-   "code": "H420",
-   "url": "https://www.ocr.org.uk/Images/687834-download-a-level-specification.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/biology-a-h020-h420-from-2015/"
+   "level": "GCSE",
+   "subject": "Music",
+   "code": "J536",
+   "url": "https://www.ocr.org.uk/Images/219378-specification-accredited-gcse-music-j536.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/music-j536-from-2016/"
   },
   {
-   "id": "ocr-h432",
+   "id": "ocr-j560",
    "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Chemistry A",
-   "code": "H432",
-   "url": "https://www.ocr.org.uk/Images/171720-specification-accredited-a-level-gce-chemistry-a-h432.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/chemistry-a-h032-h432-from-2015/"
+   "level": "GCSE",
+   "subject": "Mathematics",
+   "code": "J560",
+   "url": "https://www.ocr.org.uk/Images/168982-specification-gcse-mathematics.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/"
   },
   {
-   "id": "ocr-h556",
+   "id": "ocr-j587",
    "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Physics A",
-   "code": "H556",
-   "url": "https://www.ocr.org.uk/Images/171726-specification-accredited-a-level-gce-physics-a-h556.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/physics-a-h156-h556-from-2015/"
-  },
-  {
-   "id": "ocr-h240",
-   "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Mathematics A",
-   "code": "H240",
-   "url": "https://www.ocr.org.uk/Images/308723-specification-accredited-a-level-gce-mathematics-a-h240.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/mathematics-a-h230-h240-from-2017/"
-  },
-  {
-   "id": "ocr-h446",
-   "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Computer Science",
-   "code": "H446",
-   "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/computer-science-h046-h446-from-2015/"
-  },
-  {
-   "id": "ocr-h460",
-   "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Economics",
-   "code": "H460",
-   "url": "https://www.ocr.org.uk/Images/536455-specification-accredited-a-level-gce-economics-h460.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/economics-h060-h460-from-2019/"
-  },
-  {
-   "id": "ocr-h567",
-   "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Psychology",
-   "code": "H567",
-   "url": "https://www.ocr.org.uk/Images/171732-specification-accredited-a-level-gce-psychology-h567.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/psychology-h167-h567-from-2015/"
-  },
-  {
-   "id": "ocr-h505",
-   "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "History A",
-   "code": "H505",
-   "url": "https://www.ocr.org.uk/Images/170128-specification-accredited-a-level-gce-history-a-h505.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/history-a-h105-h505-from-2015/"
-  },
-  {
-   "id": "ocr-h580",
-   "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Sociology",
-   "code": "H580",
-   "url": "https://www.ocr.org.uk/Images/170212-specification-accredited-a-level-gce-sociology.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/sociology-h180-h580-from-2015/"
-  },
-  {
-   "id": "ocr-h573",
-   "board": "OCR",
-   "level": "AS and A Level",
-   "subject": "Religious Studies",
-   "code": "H573",
-   "url": "https://www.ocr.org.uk/Images/242913-specification-accredited-a-level-gce-religious-studies-h573.pdf",
-   "page": "https://www.ocr.org.uk/qualifications/as-and-a-level/religious-studies-h173-h573-from-2016/"
+   "level": "GCSE",
+   "subject": "Physical Education",
+   "code": "J587",
+   "url": "https://www.ocr.org.uk/Images/234822-specification-accredited-gcse-physical-education-j587.pdf",
+   "page": "https://www.ocr.org.uk/qualifications/gcse/physical-education-j587-from-2016/"
   }
  ]
 }

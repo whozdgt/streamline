@@ -566,6 +566,15 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 ++i;
                 continue;
             }
+            // and a topic beside its first lettered statement ("3 Scarcity a) The problem of unlimited wants…",
+            // Edexcel International A level Economics): two lines
+            static const std::regex besideLetter("^([0-9]{1,2} [A-Z][^()0-9]{2,40}?) ([a-h]\\) [A-Z].*)$");
+            std::smatch bm;
+            if (l.size() < 220 && std::regex_match(l, bm, besideLetter)) {
+                joined.push_back(bm[1].str());
+                joined.push_back(bm[2].str());
+                continue;
+            }
             // and a subtopic beside its first statement, two columns on one line ("2.1 Develop code 2.1.1 Be able to
             // write programs in a high-level…": Edexcel International GCSE Computer Science): two lines
             static const std::regex beside("^([0-9]+(?:\\.[0-9]+)+) ([A-Za-z][^0-9]{2,50}?) (([0-9]+(?:\\.[0-9]+)+)\\.[0-9]+ [A-Za-z].*)$");
@@ -892,16 +901,18 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     // For working out a layout: SPECREAD_TRACE="1.3.1 Introductory" prints the 40 lines from the first one starting so,
     // each with the point it went to (spec_test --trace)
     const char *traceAt = std::getenv("SPECREAD_TRACE");
-    size_t traceFrom = std::string::npos;
+    size_t traceFrom = std::string::npos;      // (from a few lines before it)
+    if (traceAt)
+        for (size_t j = 0; j < lines.size() && traceFrom == std::string::npos; ++j)
+            if (lines[j].rfind(traceAt, 0) == 0) traceFrom = j >= 8 ? j - 8 : 0;
     struct Trace {
         std::function<void()> f;
         ~Trace() { if (f) f(); }
     };
     for (size_t i = 0; i < lines.size(); ++i) {
         const std::string &l = lines[i];
-        if (traceAt && traceFrom == std::string::npos && l.rfind(traceAt, 0) == 0) traceFrom = i;
         Trace trace;
-        if (traceFrom != std::string::npos && i < traceFrom + 40)
+        if (traceFrom != std::string::npos && i >= traceFrom && i < traceFrom + 48)
             trace.f = [&, i]() {
                 std::string where = "-";
                 if (!stack.empty()) {
@@ -1037,6 +1048,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 static const std::set<std::string> months = {"january", "february", "march", "april", "may", "june", "july",
                                                              "august", "september", "october", "november", "december"};
                 if (heading && (months.count(lower(firstWord(t))) || (!dottedOpen() && lastTop > 0 && v > lastTop + 3))) heading = false;
+                // nor a level of a mark scheme: "1 1-5 A system that tackles some aspects…" (AQA A-level Computer
+                // Science's non-exam assessment)
+                static const std::regex band("^[0-9]{1,2}\\s*(-|\xE2\x80\x93)\\s*[0-9]{1,2}\\b.*");
+                if (heading && !t.empty() && std::isdigit(uint8_t(t[0])) && std::regex_match(t, band)) heading = false;
                 // a numbered list in the text, after the line that brings it in ("…the following programming
                 // languages:", "1. Python", "2. C#", "3. Java.": Edexcel International GCSE Computer Science)
                 if (heading && ((v == 1 && i > 0 && !lines[i - 1].empty() && lines[i - 1].back() == ':') ||
@@ -1057,7 +1072,12 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     if (dotted[size_t(it->point)] && std::count(num.begin(), num.end(), '.') >= 2) deep = it->point;
                     if (dotted[size_t(it->point)]) break;
                 }
-                if (heading && deep >= 0 && v != lastTop && !topicFor(v) &&
+                // (but not the heading of a topic that is open, repeated at the top of a page: "1 Number" again; a
+                // topic numbered so in an overview doesn't count: "1 IAS compulsory unit")
+                bool repeated = false;
+                for (const auto &o : stack)
+                    repeated = repeated || (pts[size_t(o.point)].number == number && lower(pts[size_t(o.point)].title) == lower(t));
+                if (heading && deep >= 0 && !repeated &&
                     (v <= std::atoi(pts[size_t(deep)].number.c_str()) || (innerLast > 0 && v == innerLast + 1))) {
                     // (under the subsection, whatever was open inside it)
                     while (!stack.empty() && stack.back().point != deep) stack.pop_back();
@@ -1089,6 +1109,8 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 } else body(l);
             } else if (n.parts.size() == 1 && !statement && t.size() >= 3) {
                 made = open(30, number, t, false);      // a lettered theme or topic: "OT1 Mathematical argument, language and proof"
+            } else if (n.parts.size() >= 2 && std::none_of(t.begin(), t.end(), [](char c) { return std::isalpha(uint8_t(c)); })) {
+                body(l);      // figures, not a heading: "0.6 60%", a worked example's fraction and percentage
             } else if (n.parts.size() >= 2) {
                 if (n.parts.size() == 2 && n.parts[1] == 1 && n.prefix.empty() && i > 0 && !dottedOpenWith(n.parts[0]) && !topicFor(n.parts[0])) {
                     // The topic is named just before its first statement: on the line before ("Proof", then "1.1"), or
@@ -1286,8 +1308,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             const std::string &num = pts[i].number;
             const bool objective = num.size() >= 3 && ((num[0] == 'A' && num[1] == 'O') || (num[0] == 'M' && num[1] == 'S')) &&
                                    std::isdigit(uint8_t(num[2])) && num.find(' ') == std::string::npos;
+            // (and a unit's label in Edexcel's International A levels: "1 IAS compulsory unit")
+            static const std::set<std::string> labels = {"ias compulsory unit", "ial compulsory unit", "ias optional unit", "ial optional unit",
+                                                         "a2 compulsory unit", "as compulsory unit", "compulsory unit", "optional unit"};
             if ((!t.empty() && words == 0) || pts[i].number == "0" || lt == "unit description" || lt == "assessment information" ||
-                lt == "unit content" || lt == "content" || objective) { gone[i] = true; continue; }
+                lt == "unit content" || lt == "content" || objective || labels.count(lt)) { gone[i] = true; continue; }
             if (pts[i].number.empty() || t.empty()) continue;
             const std::string where = optionOf(i) + "|" + pts[i].number;
             const auto key = std::make_pair(where, lower(t));
