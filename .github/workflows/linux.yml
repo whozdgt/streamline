@@ -79,6 +79,10 @@ jobs:
           if [ -s /tmp/linux.png ]; then cp /tmp/linux.png linux-screenshot.png; echo "::notice title=starts::Streamline started and drew its window"
           else tail -30 start.log; echo "::error title=starts::Streamline didn't draw its window"; exit 1; fi
           grep -E "(qrc:|qml).*(rror|is not a type|ReferenceError|TypeError)" start.log | head -10 || true
+          # Settings › AI in the phone layout: a picture of it in the log
+          su builder -c "QT_QPA_PLATFORM=xcb timeout 60 xvfb-run -a -s '-screen 0 1600x1000x24' streamline --music /tmp/music --mobile --set startSettings=ai --size 393x852 --screenshot /tmp/ai.png" > ai.log 2>&1 || echo "settings-ai: exit $?"
+          grep -E "(qrc:|qml).*(rror|is not a type|ReferenceError|TypeError)" ai.log | head -10 || true
+          if [ -s /tmp/ai.png ]; then echo "=== PNG linux-ai ==="; base64 -w 76 /tmp/ai.png; echo "=== END ==="; fi
 
       - uses: actions/upload-artifact@v4
         with:
