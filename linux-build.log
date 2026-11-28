@@ -1,0 +1,576 @@
+==> Making package: streamline 0.0.0-1 (Sat Nov 28 16:34:59 2026)
+==> Checking runtime dependencies...
+==> Checking buildtime dependencies...
+==> Retrieving sources...
+==> Extracting sources...
+==> Starting pkgver()...
+==> Updated version: streamline 0.8.2.78-1
+==> Starting build()...
+-- The CXX compiler identification is GNU 16.2.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/sbin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Found OpenGL: /usr/lib/libOpenGL.so
+-- Found WrapOpenGL: TRUE
+-- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
+-- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
+-- Found PkgConfig: /usr/sbin/pkg-config (found version "3.0.11")
+-- Checking for module 'mpv'
+--   Found mpv, version 2.6.0
+-- Checking for module 'taglib'
+--   Found taglib, version 2.3.2
+CMake Warning (author) at /usr/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:3670 (message):
+  Qt policy QTP0004 is not set: You need qmldir files for each extra
+  directory that contains .qml files for your module.  Check
+  https://doc.qt.io/qt-6/qt-cmake-policy-qtp0004.html for policy details.
+  Use the qt_policy command to set the policy and suppress this warning.
+
+Call Stack (most recent call first):
+  /usr/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:4162 (__qt_internal_setup_policy)
+  /usr/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:1039 (qt6_target_qml_sources)
+  /usr/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:1492 (qt6_add_qml_module)
+  CMakeLists.txt:83 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+CMake Warning at /usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:339 (message):
+  This project is using headers of the CorePrivate module and will therefore
+  be tied to this specific Qt module build version.  Running this project
+  against other versions of the Qt modules may crash at any arbitrary point.
+  This is not a bug, but a result of using Qt internals.  You have been
+  warned!
+
+  You can disable this warning by setting QT_NO_PRIVATE_MODULE_WARNING to ON.
+Call Stack (most recent call first):
+  /usr/lib/cmake/Qt6CorePrivate/Qt6CorePrivateConfig.cmake:58 (_qt_internal_show_private_module_warning)
+  /usr/lib/cmake/Qt6/Qt6Config.cmake:225 (find_package)
+  CMakeLists.txt:107 (find_package)
+
+
+CMake Warning at /usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:339 (message):
+  This project is using headers of the GuiPrivate module and will therefore
+  be tied to this specific Qt module build version.  Running this project
+  against other versions of the Qt modules may crash at any arbitrary point.
+  This is not a bug, but a result of using Qt internals.  You have been
+  warned!
+
+  You can disable this warning by setting QT_NO_PRIVATE_MODULE_WARNING to ON.
+Call Stack (most recent call first):
+  /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateConfig.cmake:58 (_qt_internal_show_private_module_warning)
+  /usr/lib/cmake/Qt6/Qt6Config.cmake:225 (find_package)
+  CMakeLists.txt:107 (find_package)
+
+
+-- The C compiler identification is GNU 16.2.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/sbin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- llama.cpp version: 0.8.0-dev
+CMAKE_BUILD_TYPE=Release
+-- Found Git: /usr/sbin/git (found version "2.56.1")
+-- The ASM compiler identification is GNU
+-- Found assembler: /usr/sbin/cc
+-- Setting GGML_NATIVE_DEFAULT to OFF
+-- Warning: ccache not found - consider installing it for faster compilation or disable this warning with GGML_CCACHE=OFF
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- GGML_SYSTEM_ARCH: x86
+-- Including CPU backend
+-- x86 detected
+-- Adding CPU backend variant ggml-cpu: -msse4.2;-mf16c;-mfma;-mavx;-mavx2 GGML_SSE42;GGML_F16C;GGML_FMA;GGML_AVX;GGML_AVX2
+-- ggml version: 0.28.0
+-- ggml commit:  4b29d0262
+-- Configuring done (21.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /__w/streamline/streamline/packaging/arch/src/build
+[1/658] Scanning /usr/include/c++/16/bits/std.compat.cc for CXX dependencies
+[2/658] Copying musicplayer qml resources into build dir
+[3/658] Copying musicplayer qml sources into build dir
+[4/658] Automatic MOC and UIC for target ggml-base
+[5/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml-base_autogen/mocs_compilation.cpp.o
+[6/658] Populating .qmlls.build.ini file at /__w/streamline/streamline/packaging/arch/src/build/.qt/.qmlls.build.ini
+[7/658] Running qmlimportscanner for musicplayer
+[8/658] Scanning /usr/include/c++/16/bits/std.cc for CXX dependencies
+[9/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml.cpp.o
+[10/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml-threading.cpp.o
+[11/658] Building C object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml-alloc.c.o
+[12/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml-opt.cpp.o
+[13/658] Generating CXX dyndep file '_deps/llama-build/src/CMakeFiles/@cmake_cxx_std@synth_0.dir/CXX.dd'
+[14/658] Generating qt.conf part for musicplayer
+[15/658] Generating qt.conf file
+[16/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml-backend.cpp.o
+[17/658] Building C object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+[18/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml-backend-meta.cpp.o
+[19/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/gguf.cpp.o
+[20/658] Building C object _deps/llama-build/ggml/src/CMakeFiles/ggml-base.dir/ggml-quants.c.o
+[21/658] Linking CXX static library _deps/llama-build/ggml/src/libggml-base.a
+[22/658] Automatic MOC and UIC for target ggml-cpu
+[23/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu_autogen/mocs_compilation.cpp.o
+[24/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/hbm.cpp.o
+[25/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/traits.cpp.o
+[26/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/amx.cpp.o
+[27/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.cpp.o
+[28/658] Building C object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.c.o
+[29/658] Building C object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/quants.c.o
+[30/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/mmq.cpp.o
+[31/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/tiled/tiled-kernel.cpp.o
+[32/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/vec.cpp.o
+[33/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/binary-ops.cpp.o
+[34/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/unary-ops.cpp.o
+[35/658] Building C object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/quants.c.o
+[36/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/tiled/tiled.cpp.o
+[37/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/llamafile/sgemm.cpp.o
+[38/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/repack.cpp.o
+[39/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/repack.cpp.o
+[40/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ops.cpp.o
+[41/658] Linking CXX static library _deps/llama-build/ggml/src/libggml-cpu.a
+[42/658] Automatic MOC and UIC for target ggml
+[43/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml.dir/ggml_autogen/mocs_compilation.cpp.o
+[44/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml.dir/ggml-backend-dl.cpp.o
+[45/658] Building CXX object _deps/llama-build/ggml/src/CMakeFiles/ggml.dir/ggml-backend-reg.cpp.o
+[46/658] Linking CXX static library _deps/llama-build/ggml/src/libggml.a
+[47/658] Automatic MOC and UIC for target llama
+[48/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-build/src/llama_autogen/mocs_compilation.cpp for CXX dependencies
+[49/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-arch.cpp for CXX dependencies
+[50/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-context.cpp for CXX dependencies
+[51/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-cparams.cpp for CXX dependencies
+[52/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama.cpp for CXX dependencies
+[53/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-chat.cpp for CXX dependencies
+[54/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-adapter.cpp for CXX dependencies
+[55/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-batch.cpp for CXX dependencies
+[56/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-grammar.cpp for CXX dependencies
+[57/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-impl.cpp for CXX dependencies
+[58/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-io.cpp for CXX dependencies
+[59/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-hparams.cpp for CXX dependencies
+[60/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-graph.cpp for CXX dependencies
+[61/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-kv-cache.cpp for CXX dependencies
+[62/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-kv-cache-iswa.cpp for CXX dependencies
+[63/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-kv-cache-dsa.cpp for CXX dependencies
+[64/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-kv-cache-dsa-iswa.cpp for CXX dependencies
+[65/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-kv-cache-msa.cpp for CXX dependencies
+[66/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-kv-cache-dsv4.cpp for CXX dependencies
+[67/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-memory.cpp for CXX dependencies
+[68/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-memory-hybrid.cpp for CXX dependencies
+[69/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-memory-hybrid-iswa.cpp for CXX dependencies
+[70/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-moe-cache.cpp for CXX dependencies
+[71/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-mmap.cpp for CXX dependencies
+[72/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-memory-hybrid-idx.cpp for CXX dependencies
+[73/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-memory-recurrent.cpp for CXX dependencies
+[74/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-model-loader.cpp for CXX dependencies
+[75/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-model-saver.cpp for CXX dependencies
+[76/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-model.cpp for CXX dependencies
+[77/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/unicode-data.cpp for CXX dependencies
+[78/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-vocab.cpp for CXX dependencies
+[79/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-quant.cpp for CXX dependencies
+[80/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/llama-sampler.cpp for CXX dependencies
+[81/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/unicode.cpp for CXX dependencies
+[82/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/afmoe.cpp for CXX dependencies
+[83/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/apertus.cpp for CXX dependencies
+[84/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/arcee.cpp for CXX dependencies
+[85/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/arctic.cpp for CXX dependencies
+[86/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/arwkv7.cpp for CXX dependencies
+[87/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/baichuan.cpp for CXX dependencies
+[88/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/bailingmoe.cpp for CXX dependencies
+[89/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/bailingmoe2.cpp for CXX dependencies
+[90/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/bailingmoe3.cpp for CXX dependencies
+[91/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/bitnet.cpp for CXX dependencies
+[92/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/bert.cpp for CXX dependencies
+[93/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/beam.cpp for CXX dependencies
+[94/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/bloom.cpp for CXX dependencies
+[95/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/chatglm.cpp for CXX dependencies
+[96/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/clef.cpp for CXX dependencies
+[97/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/chameleon.cpp for CXX dependencies
+[98/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/clip.cpp for CXX dependencies
+[99/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/clover-moe.cpp for CXX dependencies
+[100/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/cohere2moe.cpp for CXX dependencies
+[101/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/cohere2.cpp for CXX dependencies
+[102/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/codeshell.cpp for CXX dependencies
+[103/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/cogvlm.cpp for CXX dependencies
+[104/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/command-r.cpp for CXX dependencies
+[105/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/dbrx.cpp for CXX dependencies
+[106/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/deci.cpp for CXX dependencies
+[107/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/deepseek.cpp for CXX dependencies
+[108/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/deepseek2.cpp for CXX dependencies
+[109/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/deepseek2ocr.cpp for CXX dependencies
+[110/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/deepseek32.cpp for CXX dependencies
+[111/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/delta-net-base.cpp for CXX dependencies
+[112/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/deepseek4.cpp for CXX dependencies
+[113/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/deepseek41.cpp for CXX dependencies
+[114/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/dflash.cpp for CXX dependencies
+[115/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/dots1.cpp for CXX dependencies
+[116/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/dots3note.cpp for CXX dependencies
+[117/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/dream.cpp for CXX dependencies
+[118/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/ernie4-5-moe.cpp for CXX dependencies
+[119/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/eagle3.cpp for CXX dependencies
+[120/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/ernie4-5.cpp for CXX dependencies
+[121/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/exaone-moe.cpp for CXX dependencies
+[122/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/eurobert.cpp for CXX dependencies
+[123/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/exaone4.cpp for CXX dependencies
+[124/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/falcon-h1.cpp for CXX dependencies
+[125/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/exaone.cpp for CXX dependencies
+[126/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/flint.cpp for CXX dependencies
+[127/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/falcon.cpp for CXX dependencies
+[128/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gemma-embedding.cpp for CXX dependencies
+[129/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gemma-embedding2.cpp for CXX dependencies
+[130/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gemma.cpp for CXX dependencies
+[131/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gemma2.cpp for CXX dependencies
+[132/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gemma3.cpp for CXX dependencies
+[133/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gemma3n.cpp for CXX dependencies
+[134/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gemma4-assistant.cpp for CXX dependencies
+[135/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/glm4.cpp for CXX dependencies
+[136/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gemma4.cpp for CXX dependencies
+[137/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/glm4-moe.cpp for CXX dependencies
+[138/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/glm-dsa.cpp for CXX dependencies
+[139/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/glm5-next.cpp for CXX dependencies
+[140/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gpt2.cpp for CXX dependencies
+[141/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/gptneox.cpp for CXX dependencies
+[142/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/granite-moe.cpp for CXX dependencies
+[143/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/granite-hybrid.cpp for CXX dependencies
+[144/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/granite-swa.cpp for CXX dependencies
+[145/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/granite.cpp for CXX dependencies
+[146/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/granite-switch.cpp for CXX dependencies
+[147/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/grok.cpp for CXX dependencies
+[148/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/grovemoe.cpp for CXX dependencies
+[149/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/hrm-text.cpp for CXX dependencies
+[150/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/hunyuan-dense.cpp for CXX dependencies
+[151/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/hunyuan-moe.cpp for CXX dependencies
+[152/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/hunyuan-vl.cpp for CXX dependencies
+[153/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/hy-v4.cpp for CXX dependencies
+[154/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/hy-v3.cpp for CXX dependencies
+[155/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/jais.cpp for CXX dependencies
+[156/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/internlm2.cpp for CXX dependencies
+[157/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/jais2.cpp for CXX dependencies
+[158/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/jina-bert-v2.cpp for CXX dependencies
+[159/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/jamba.cpp for CXX dependencies
+[160/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/jina-bert-v3.cpp for CXX dependencies
+[161/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/k2-horizon.cpp for CXX dependencies
+[162/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/kimi-k3.cpp for CXX dependencies
+[163/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/lfm2moe.cpp for CXX dependencies
+[164/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/lfm2.cpp for CXX dependencies
+[165/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/kimi-linear.cpp for CXX dependencies
+[166/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/kolibri1.cpp for CXX dependencies
+[167/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/laguna.cpp for CXX dependencies
+[168/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/lfm-base.cpp for CXX dependencies
+[169/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/limite.cpp for CXX dependencies
+[170/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/lfm3.cpp for CXX dependencies
+[171/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/llada.cpp for CXX dependencies
+[172/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/llama.cpp for CXX dependencies
+[173/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/llada-moe.cpp for CXX dependencies
+[174/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/llama-embed.cpp for CXX dependencies
+[175/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/llama4.cpp for CXX dependencies
+[176/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/maion-coder.cpp for CXX dependencies
+[177/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/maincoder.cpp for CXX dependencies
+[178/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mamba2.cpp for CXX dependencies
+[179/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mamba.cpp for CXX dependencies
+[180/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mamba-base.cpp for CXX dependencies
+[181/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/maple.cpp for CXX dependencies
+[182/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mellum.cpp for CXX dependencies
+[183/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/metis16.cpp for CXX dependencies
+[184/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/minicpm3.cpp for CXX dependencies
+[185/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/minicpm.cpp for CXX dependencies
+[186/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mimo2.cpp for CXX dependencies
+[187/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/minimax-01.cpp for CXX dependencies
+[188/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/minimax-m2.cpp for CXX dependencies
+[189/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mistral-large4.cpp for CXX dependencies
+[190/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mistral3.cpp for CXX dependencies
+[191/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/minimax-m3.cpp for CXX dependencies
+[192/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mistral4.cpp for CXX dependencies
+[193/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/modern-bert.cpp for CXX dependencies
+[194/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/muse-glimmer.cpp for CXX dependencies
+[195/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/nanbeige.cpp for CXX dependencies
+[196/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/mpt.cpp for CXX dependencies
+[197/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/muse-spark.cpp for CXX dependencies
+[198/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/nemotron-h-moe.cpp for CXX dependencies
+[199/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/nemotron.cpp for CXX dependencies
+[200/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/neo-bert.cpp for CXX dependencies
+[201/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/nomic-bert-moe.cpp for CXX dependencies
+[202/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/nemotron-h.cpp for CXX dependencies
+[203/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/nomic-bert.cpp for CXX dependencies
+[204/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/olmo2.cpp for CXX dependencies
+[205/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/olmo.cpp for CXX dependencies
+[206/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/openai-moe.cpp for CXX dependencies
+[207/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/olmoe.cpp for CXX dependencies
+[208/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/openelm.cpp for CXX dependencies
+[209/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/paddleocr.cpp for CXX dependencies
+[210/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/orion.cpp for CXX dependencies
+[211/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/pangu-embed.cpp for CXX dependencies
+[212/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/phi2.cpp for CXX dependencies
+[213/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/phimoe.cpp for CXX dependencies
+[214/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/plamo.cpp for CXX dependencies
+[215/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/phi3.cpp for CXX dependencies
+[216/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/plamo2.cpp for CXX dependencies
+[217/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/plm.cpp for CXX dependencies
+[218/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/plamo3.cpp for CXX dependencies
+[219/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen.cpp for CXX dependencies
+[220/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/pockettts.cpp for CXX dependencies
+[221/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen2moe.cpp for CXX dependencies
+[222/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen35.cpp for CXX dependencies
+[223/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen2vl.cpp for CXX dependencies
+[224/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen2.cpp for CXX dependencies
+[225/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen3.cpp for CXX dependencies
+[226/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen35moe.cpp for CXX dependencies
+[227/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen3next.cpp for CXX dependencies
+[228/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen3moe.cpp for CXX dependencies
+[229/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen3vl.cpp for CXX dependencies
+[230/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen3tts.cpp for CXX dependencies
+[231/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen3vlmoe.cpp for CXX dependencies
+[232/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/qwen4exp.cpp for CXX dependencies
+[233/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/refact.cpp for CXX dependencies
+[234/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/rnd1.cpp for CXX dependencies
+[235/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/rwkv6-base.cpp for CXX dependencies
+[236/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/rwkv7-base.cpp for CXX dependencies
+[237/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/rwkv6qwen2.cpp for CXX dependencies
+[238/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/rwkv6.cpp for CXX dependencies
+[239/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/seed-oss.cpp for CXX dependencies
+[240/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/rwkv7.cpp for CXX dependencies
+[241/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/sensenova-u1.cpp for CXX dependencies
+[242/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/smallthinker.cpp for CXX dependencies
+[243/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/smollm3.cpp for CXX dependencies
+[244/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/spark2-5.cpp for CXX dependencies
+[245/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/starcoder.cpp for CXX dependencies
+[246/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/stablelm.cpp for CXX dependencies
+[247/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/starcoder2.cpp for CXX dependencies
+[248/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/t5encoder.cpp for CXX dependencies
+[249/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/t5.cpp for CXX dependencies
+[250/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/step35.cpp for CXX dependencies
+[251/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/talkie.cpp for CXX dependencies
+[252/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/wavtokenizer-dec.cpp for CXX dependencies
+[253/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/vllm-decision2.cpp for CXX dependencies
+[254/658] Scanning /__w/streamline/streamline/packaging/arch/src/build/_deps/llama-src/src/models/xverse.cpp for CXX dependencies
+[255/658] Generating CXX dyndep file _deps/llama-build/src/CMakeFiles/llama.dir/CXX.dd
+[256/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama_autogen/mocs_compilation.cpp.o
+[257/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-arch.cpp.o
+[258/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-cparams.cpp.o
+[259/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama.cpp.o
+[260/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-adapter.cpp.o
+[261/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-hparams.cpp.o
+[262/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-chat.cpp.o
+[263/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-io.cpp.o
+[264/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-batch.cpp.o
+[265/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-impl.cpp.o
+[266/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-kv-cache-iswa.cpp.o
+[267/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-kv-cache-dsa.cpp.o
+[268/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-context.cpp.o
+[269/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-graph.cpp.o
+[270/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-kv-cache-msa.cpp.o
+[271/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-kv-cache-dsa-iswa.cpp.o
+[272/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-grammar.cpp.o
+[273/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-memory.cpp.o
+[274/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-memory-hybrid.cpp.o
+[275/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-moe-cache.cpp.o
+[276/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-memory-hybrid-iswa.cpp.o
+[277/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-kv-cache.cpp.o
+[278/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-kv-cache-dsv4.cpp.o
+[279/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-mmap.cpp.o
+[280/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-memory-recurrent.cpp.o
+[281/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-memory-hybrid-idx.cpp.o
+[282/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-model-saver.cpp.o
+[283/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/unicode-data.cpp.o
+[284/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-quant.cpp.o
+[285/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-vocab.cpp.o
+[286/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-sampler.cpp.o
+[287/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-model-loader.cpp.o
+[288/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/afmoe.cpp.o
+[289/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/apertus.cpp.o
+[290/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/arctic.cpp.o
+[291/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/arcee.cpp.o
+[292/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/arwkv7.cpp.o
+[293/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/baichuan.cpp.o
+[294/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/bailingmoe2.cpp.o
+[295/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/bailingmoe.cpp.o
+[296/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/bailingmoe3.cpp.o
+[297/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/beam.cpp.o
+[298/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/bert.cpp.o
+[299/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/bitnet.cpp.o
+[300/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/bloom.cpp.o
+[301/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/chameleon.cpp.o
+[302/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/llama-model.cpp.o
+[303/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/unicode.cpp.o
+[304/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/chatglm.cpp.o
+[305/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/clip.cpp.o
+[306/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/clef.cpp.o
+[307/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/codeshell.cpp.o
+[308/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/clover-moe.cpp.o
+[309/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/cogvlm.cpp.o
+[310/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/cohere2.cpp.o
+[311/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/cohere2moe.cpp.o
+[312/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/dbrx.cpp.o
+[313/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/command-r.cpp.o
+[314/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/deci.cpp.o
+[315/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/deepseek.cpp.o
+[316/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/deepseek2.cpp.o
+[317/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/deepseek2ocr.cpp.o
+[318/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/delta-net-base.cpp.o
+[319/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/deepseek32.cpp.o
+[320/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/dots1.cpp.o
+[321/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/deepseek4.cpp.o
+[322/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/dream.cpp.o
+[323/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/deepseek41.cpp.o
+[324/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/dflash.cpp.o
+[325/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/dots3note.cpp.o
+[326/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/ernie4-5-moe.cpp.o
+[327/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/eagle3.cpp.o
+[328/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/ernie4-5.cpp.o
+[329/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/eurobert.cpp.o
+[330/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/exaone.cpp.o
+[331/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/exaone-moe.cpp.o
+[332/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/falcon-h1.cpp.o
+[333/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/exaone4.cpp.o
+[334/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/falcon.cpp.o
+[335/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/flint.cpp.o
+[336/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gemma-embedding.cpp.o
+[337/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gemma-embedding2.cpp.o
+[338/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gemma.cpp.o
+[339/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gemma2.cpp.o
+[340/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gemma3.cpp.o
+[341/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gemma3n.cpp.o
+[342/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gemma4-assistant.cpp.o
+[343/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/glm4-moe.cpp.o
+[344/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gemma4.cpp.o
+[345/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/glm-dsa.cpp.o
+[346/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/glm4.cpp.o
+[347/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gpt2.cpp.o
+[348/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/glm5-next.cpp.o
+[349/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/gptneox.cpp.o
+[350/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/granite-hybrid.cpp.o
+[351/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/granite-moe.cpp.o
+[352/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/granite-swa.cpp.o
+[353/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/granite-switch.cpp.o
+[354/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/granite.cpp.o
+[355/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/grok.cpp.o
+[356/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/grovemoe.cpp.o
+[357/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/hrm-text.cpp.o
+[358/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/hunyuan-dense.cpp.o
+[359/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/hunyuan-moe.cpp.o
+[360/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/hy-v3.cpp.o
+[361/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/hunyuan-vl.cpp.o
+[362/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/internlm2.cpp.o
+[363/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/jais.cpp.o
+[364/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/hy-v4.cpp.o
+[365/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/jais2.cpp.o
+[366/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/jamba.cpp.o
+[367/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/jina-bert-v3.cpp.o
+[368/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/jina-bert-v2.cpp.o
+[369/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/k2-horizon.cpp.o
+[370/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/kimi-k3.cpp.o
+[371/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/kimi-linear.cpp.o
+[372/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/lfm-base.cpp.o
+[373/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/kolibri1.cpp.o
+[374/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/laguna.cpp.o
+[375/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/lfm2.cpp.o
+[376/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/llada-moe.cpp.o
+[377/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/lfm2moe.cpp.o
+[378/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/lfm3.cpp.o
+[379/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/limite.cpp.o
+[380/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/llada.cpp.o
+[381/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/llama-embed.cpp.o
+[382/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/llama.cpp.o
+[383/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/maion-coder.cpp.o
+[384/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/maincoder.cpp.o
+[385/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mamba-base.cpp.o
+[386/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/llama4.cpp.o
+[387/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mamba.cpp.o
+[388/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mamba2.cpp.o
+[389/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/maple.cpp.o
+[390/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mellum.cpp.o
+[391/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/metis16.cpp.o
+[392/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mimo2.cpp.o
+[393/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/minicpm.cpp.o
+[394/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/minicpm3.cpp.o
+[395/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/minimax-m2.cpp.o
+[396/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/minimax-01.cpp.o
+[397/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mistral-large4.cpp.o
+[398/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mistral4.cpp.o
+[399/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/minimax-m3.cpp.o
+[400/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mistral3.cpp.o
+[401/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/mpt.cpp.o
+[402/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/modern-bert.cpp.o
+[403/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/muse-glimmer.cpp.o
+[404/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/muse-spark.cpp.o
+[405/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/nanbeige.cpp.o
+[406/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/nemotron-h-moe.cpp.o
+[407/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/nemotron.cpp.o
+[408/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/nemotron-h.cpp.o
+[409/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/nomic-bert.cpp.o
+[410/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/nomic-bert-moe.cpp.o
+[411/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/neo-bert.cpp.o
+[412/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/olmo.cpp.o
+[413/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/olmo2.cpp.o
+[414/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/olmoe.cpp.o
+[415/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/openai-moe.cpp.o
+[416/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/orion.cpp.o
+[417/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/openelm.cpp.o
+[418/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/paddleocr.cpp.o
+[419/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/phi2.cpp.o
+[420/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/pangu-embed.cpp.o
+[421/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/phimoe.cpp.o
+[422/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/phi3.cpp.o
+[423/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/plamo.cpp.o
+[424/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/plamo2.cpp.o
+[425/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/plamo3.cpp.o
+[426/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/plm.cpp.o
+[427/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen.cpp.o
+[428/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/pockettts.cpp.o
+[429/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen2.cpp.o
+[430/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen2moe.cpp.o
+[431/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen2vl.cpp.o
+[432/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen3.cpp.o
+[433/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen35.cpp.o
+[434/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen35moe.cpp.o
+[435/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen3moe.cpp.o
+[436/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen3next.cpp.o
+[437/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen3tts.cpp.o
+[438/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen3vl.cpp.o
+[439/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen3vlmoe.cpp.o
+[440/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/refact.cpp.o
+[441/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/rwkv6-base.cpp.o
+[442/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/rnd1.cpp.o
+[443/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/rwkv6.cpp.o
+[444/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/rwkv6qwen2.cpp.o
+[445/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/rwkv7-base.cpp.o
+[446/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/qwen4exp.cpp.o
+[447/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/rwkv7.cpp.o
+[448/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/seed-oss.cpp.o
+[449/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/smallthinker.cpp.o
+[450/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/sensenova-u1.cpp.o
+[451/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/spark2-5.cpp.o
+[452/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/smollm3.cpp.o
+[453/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/stablelm.cpp.o
+[454/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/starcoder.cpp.o
+[455/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/starcoder2.cpp.o
+[456/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/t5encoder.cpp.o
+[457/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/step35.cpp.o
+[458/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/t5.cpp.o
+[459/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/talkie.cpp.o
+[460/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/vllm-decision2.cpp.o
+[461/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/wavtokenizer-dec.cpp.o
+[462/658] Building CXX object _deps/llama-build/src/CMakeFiles/llama.dir/models/xverse.cpp.o
+[463/658] Linking CXX static library _deps/llama-build/src/libllama.a
+[464/658] Automatic MOC and UIC for target musicplayer
+[465/658] Running AUTOMOC file extraction for target musicplayer
+[466/658] Running rcc for resource qmake_Music
+[467/658] Generating .rcc/qmlcache/musicplayer_qmlcache_loader.cpp
+[468/658] Running moc --collect-json for target musicplayer
+[469/658] Automatic QML type registration for target musicplayer
+[470/658] Running rcc for resource speccatalog
+[471/658] Running rcc for resource musicplayer_raw_qml_0
+[472/658] Generating .rcc/qmlcache/musicplayer_qml_PodsPage_qml.cpp, .rcc/qmlcache/musicplayer_qml_PodsPage_qml.cpp.aotstats
+FAILED: [code=1] .rcc/qmlcache/musicplayer_qml_PodsPage_qml.cpp .rcc/qmlcache/musicplayer_qml_PodsPage_qml.cpp.aotstats /__w/streamline/streamline/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_PodsPage_qml.cpp /__w/streamline/streamline/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_PodsPage_qml.cpp.aotstats 
+cd /__w/streamline/streamline/packaging/arch/src/build && /usr/sbin/cmake -E make_directory /__w/streamline/streamline/packaging/arch/src/build/.rcc/qmlcache && /usr/lib/qt6/qmlcachegen --bare --resource-path /qt/qml/Music/qml/PodsPage.qml -I /__w/streamline/streamline/packaging/arch/src/build -I /usr/lib/qt6/qml -i /__w/streamline/streamline/packaging/arch/src/build/Music/qmldir --resource /__w/streamline/streamline/packaging/arch/src/build/.qt/rcc/speccatalog.qrc --resource /__w/streamline/streamline/packaging/arch/src/build/.qt/rcc/qmake_Music.qrc --resource /__w/streamline/streamline/packaging/arch/src/build/.qt/rcc/musicplayer_raw_qml_0.qrc --dump-aot-stats "--module-id=Music(musicplayer)" -o /__w/streamline/streamline/packaging/arch/src/build/.rcc/qmlcache/musicplayer_qml_PodsPage_qml.cpp /__w/streamline/streamline/qml/PodsPage.qml
+Error compiling qml file: /__w/streamline/streamline/qml/PodsPage.qml:26:19: error: Property duplicates alias name
+[473/658] Generating .rcc/qmlcache/musicplayer_qml_AiModelRow_qml.cpp, .rcc/qmlcache/musicplayer_qml_AiModelRow_qml.cpp.aotstats
+[474/658] Generating .rcc/qmlcache/musicplayer_qml_Icon_qml.cpp, .rcc/qmlcache/musicplayer_qml_Icon_qml.cpp.aotstats
+[475/658] Generating .rcc/qmlcache/musicplayer_qml_StartScreen_qml.cpp, .rcc/qmlcache/musicplayer_qml_StartScreen_qml.cpp.aotstats
+[476/658] Generating .rcc/qmlcache/musicplayer_qml_IconButton_qml.cpp, .rcc/qmlcache/musicplayer_qml_IconButton_qml.cpp.aotstats
+[477/658] Generating .rcc/qmlcache/musicplayer_qml_Main_qml.cpp, .rcc/qmlcache/musicplayer_qml_Main_qml.cpp.aotstats
+ninja: build stopped: subcommand failed.
+==> ERROR: A failure occurred in build().
+    Aborting...
