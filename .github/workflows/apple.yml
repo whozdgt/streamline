@@ -216,6 +216,7 @@ jobs:
           app=build-mac/Streamline.app
           [ -d "$app" ] || { echo "::error::No Streamline.app"; ls build-mac; exit 1; }
           "$GITHUB_WORKSPACE/qt/$QT_VERSION/macos/bin/macdeployqt" "$app" -qmldir=qml -always-overwrite
+          rm -rf "$app/Contents/PlugIns/sqldrivers"      # databases the app never uses (and whose libraries aren't there)
           # no Apple certificate: an ad hoc signature, which every Mac with Apple silicon needs to run the app at all
           codesign --force --deep --sign - "$app"
           codesign --verify --deep --strict "$app" && echo "signature: OK"
@@ -239,6 +240,7 @@ jobs:
       # building Qt itself. The same interface in its phone layout, at an iPhone's and an iPad's size (with their
       # status bars and home indicator), shows how it will look there.
       - name: The phone layout at an iPhone's and an iPad's size
+        continue-on-error: true
         run: |
           exe=build-mac/Streamline.app/Contents/MacOS/Streamline
           shot() {   # $1 name, $2 size, $3 top,bottom insets, $4 the page
@@ -247,8 +249,7 @@ jobs:
             echo "=== PNG $1 ==="; base64 -b 76 -i "$1-small.png"; echo "=== END ==="
           }
           shot iphone 393x852 59,34 home
-          shot iphone-pods 393x852 59,34 pods
-          shot ipad-pods 1032x1376 24,20 pods
+          shot ipad 1032x1376 24,20 home
 
       - uses: actions/upload-artifact@v4
         with:

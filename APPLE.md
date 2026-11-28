@@ -50,9 +50,10 @@ Intel Macs aren't built for yet.
   again to bring the copy up to date. "Move the files into topic folders" moves files in the copy.
 - **Pods on a Mac** read any folder; macOS asks once before Streamline reads Documents, Desktop or Downloads.
 - **The AI** runs on the processor, as on other devices. The writer model needs about 1 GB of memory.
-- **Not tried on a real iPhone yet.** The builds are checked on GitHub's Macs (the Mac app is opened there and a picture
-  of its window is taken), but expect a round of fixes after the first install: touch layout on an iPad, the Files
-  picker, playing in the background.
+- **Not tried on a real iPhone yet.** The builds are checked on GitHub's Macs: the Mac app is opened there and pictures
+  are taken of its window and of the phone layout at an iPhone's and an iPad's size. The iPhone app itself can't run in
+  Apple's simulator, because Qt's ready-made iOS libraries are for real devices only. So expect a round of fixes after
+  the first install: the Files picker, playing in the background, the lock-screen controls.
 
 ## The App Store, if you join the Developer Program later
 
