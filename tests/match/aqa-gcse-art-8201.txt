@@ -1,0 +1,23 @@
+# spec: https://filestore.aqa.org.uk/resources/art-and-design/specifications/AQA-ART-GCSE-SP-2016.PDF
+# GCSE Art and Design notes written for this test: sketchbook annotations and notes on each title. Each is under the
+# point it is about.
+=== 3.1 | knowledge and understanding
+How sources inspire ideas: annotating the work of artists and designers, understanding the purpose, intention and context of their work, and the ways ideas, feelings and meanings are conveyed through visual language.
+=== 3.2 | skills
+Skills: recording ideas through drawing and photography, experimenting with media and materials, refining work, and using the formal elements — line, tone, texture, shape, form, colour — in my own responses.
+=== 3.5 | fine art
+Fine art: painting and drawing, printmaking (lino and etching), sculpture and installation; my oil painting response to Frida Kahlo's self-portraits exploring identity.
+=== 3.6 | graphic communication
+Graphic communication: designing a book cover and a poster with typography, layout and illustration; branding and logo design; using Photoshop and Illustrator to communicate a message to an audience.
+=== 3.7 | textiles
+Textile design: fabric dyeing, batik and screen printing on cotton, embroidery and appliqué, constructing a fashion piece inspired by William Morris patterns.
+=== 3.8 | 3d design
+Three-dimensional design: ceramics and clay modelling, product design maquettes, architectural models in card and wood, sculpture with wire and found objects.
+=== 3.9 | photography
+Photography: aperture, shutter speed and depth of field, a darkroom photogram, digital editing, a photo shoot of urban landscapes inspired by Fay Godwin, lens-based and light-based media.
+=== - | chemistry
+Le Chatelier's principle: if a condition is changed, the equilibrium shifts to oppose the change.
+=== - | maths
+Pythagoras: a squared plus b squared equals c squared.
+=== - | history
+The causes of the First World War: the alliance system, militarism, imperialism and nationalism.

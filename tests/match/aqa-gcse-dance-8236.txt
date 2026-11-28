@@ -1,0 +1,19 @@
+# spec: https://filestore.aqa.org.uk/resources/dance/specifications/AQA-8236-SP-2016.PDF
+# GCSE Dance notes written for this test: rehearsal notes, a choreography log and set work notes. Each is under the
+# point it is about.
+=== 3.1.1 | solo performance
+Solo performance: performing the set phrases (Breathe, Flight, Shift, Scoop) with physical skills like balance, flexibility and control, technical skills like accuracy of action and timing, and expressive skills like projection and focus.
+=== 3.1.2.1 | duet performance
+Duet/trio performance: our trio piece, working on contact, lifts and timing with my partners, spatial awareness, and documenting the performance and the choreographic intent.
+=== 3.2.1 | choreography
+Choreography log: our stimulus was a poem about the sea; I chose motifs and developed them with repetition, canon, unison and levels, structured the dance in ternary form and wrote down my choreographic intention.
+=== 3.3.1 | own work
+Critical appreciation of my own work: evaluating my performance and choreography, how well the action, space and dynamics showed my intention, and what to improve.
+=== 3.3.2 | set works
+Professional works from the anthology: Emancipation of Expressionism by Kenrick Sandy, Artificial Things by Lucy Bennett, Shadows by Christopher Bruce — their choreographic intent, costume, lighting and aural setting.
+=== - | geography
+A tropical rainforest has four layers: emergent, canopy, understorey and forest floor.
+=== - | computer science
+A binary search halves the list each time.
+=== - | biology
+Mitochondria are where aerobic respiration takes place.

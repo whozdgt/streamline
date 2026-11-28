@@ -184,6 +184,12 @@ bool parseKey(const std::string &line, Key &k)
         if (fullStop && !k.title.empty() && k.title.back() == '.' && k.title.size() > 25) return false;
         // "Section 6 7). Use of…", "Paper 3 Statistics and Mechanics. Students are required…": a sentence, not a heading
         if (!k.title.empty() && (!std::isalpha(uint8_t(k.title[0])) || k.title.size() > 75)) return false;
+        // "Theme 1 covers the following three topics:": a sentence about it, not its heading (AQA GCSE French)
+        if (!k.title.empty() && std::islower(uint8_t(k.title[0]))) {
+            static const std::set<std::string> joiners = {"the", "a", "an", "and", "of", "to", "in", "for", "with", "on"};
+            const std::string fw = k.title.substr(0, k.title.find(' '));
+            if (!joiners.count(fw) && (k.title.back() == ':' || k.title.find(" following ") != std::string::npos)) return false;
+        }
         if (k.title.find(". ") != std::string::npos) return false;
         int numbers = 0;
         for (size_t c = 0; c < k.title.size(); ++c)
@@ -719,6 +725,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     bool foundSection = false;
     bool partHeadings = false;      // OCR: the content's lettered parts are headings ("2c. Content of Component 1: …")
     std::vector<size_t> sectionStarts;      // further content sections (AS, then A-level), by line
+    int contentNumber = -1;     // the content section's own number ("3 Subject content": 3), where it has one
     {
         int section = -1;
         for (size_t i = 0; i < all.size(); ++i) {
@@ -756,6 +763,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 sectionStarts.clear();
             }
         }
+        contentNumber = section;
         if (section < 0) {
             // OCR: the content is a lettered part of a section ("2c. Content of topics B1 to B6") up to the next part.
             // When content parts follow one another, the first is an overview of the next ("2b. Content of GCSE (9–1)
@@ -964,6 +972,15 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
     int lastTop = 0;
     int innerLast = 0;          // the last of a subsection's own numbered parts ("5 Specialisation…" in 1.3.1), if any
     bool letteredLayout = false;      // subtopics named above lettered statements ("Integers", "A understand…")
+    // AQA numbers its content as parts of the content's section ("3 Subject content", then "3.1", "3.2.1"): a line
+    // with a number of its own there is a footnote or an item of a list ("2 Because no vocabulary is specified…",
+    // AQA GCSE French), not a topic
+    bool subsectionsOnly = false;
+    if (board == "AQA" && contentNumber > 0)
+        for (const auto &x : lines) {
+            Num nx;
+            if (parseNum(x, nx) && nx.parts.size() >= 2 && nx.prefix.empty()) { subsectionsOnly = nx.parts[0] == contentNumber; break; }
+        }
     // OCR's tables of topics: a header ("Key topics Learners should have studied the following content:"), then each
     // row's topic in a narrow column, its name over a line or two ("Education in", "Sparta"), and then its content
     bool ocrTable = false;
@@ -1230,7 +1247,10 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             if (n.parts.size() == 1 && (n.prefix.empty() || tier)) {
                 // a topic ("2 Organisation of the organism"), or a numbered learning statement under a subtopic
                 const int v = n.parts[0];
-                bool heading = !statement;
+                bool heading = !statement && !subsectionsOnly;
+                // (nor a list of the content's parts with their pages: "2 Fine art (page 17)", AQA GCSE Art and Design)
+                static const std::regex pageRef(".*\\(pages? [0-9]{1,3}(\\s*(-|\xE2\x80\x93)\\s*[0-9]{1,3})?\\)$");
+                if (heading && std::regex_match(t, pageRef)) heading = false;
                 // (a skill's name is a topic too when its own points follow: "2 Process information", then "2.1 Perform
                 // appropriate operations with information", Cambridge Thinking Skills)
                 if (statement && std::isupper(uint8_t(t[0])) && std::count(t.begin(), t.end(), ' ') <= 4 && i + 1 < lines.size()) {

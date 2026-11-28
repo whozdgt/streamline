@@ -1,0 +1,27 @@
+# spec: https://www.ocr.org.uk/Images/315240-specification-accredited-gcse-classical-civilisation-j199.pdf
+# GCSE Classical Civilisation notes written for this test: revision notes. Each is under the point it is about,
+# named by its title (the spec's topics have no numbers).
+=== Gods | gods
+The Olympian gods: Zeus, Hera, Poseidon, Athena, Apollo, Artemis, Aphrodite, Hephaistos and the others; their Roman equivalents (Jupiter, Juno, Neptune, Minerva) and their symbols and spheres of influence.
+=== Heracles/Hercules | heracles
+Heracles/Hercules as the universal hero: his birth, the twelve labours such as the Nemean lion and the Hydra, his death on Mount Oeta and his worship as a god in Greece and Rome.
+=== Foundation Stories | foundation myths
+Foundation stories: Romulus and Remus and the founding of Rome, Aeneas fleeing Troy, Theseus as the founder hero of Athens and the contest between Athena and Poseidon for the city.
+=== Journeying to the Underworld | underworld
+Journeys to the underworld: Odysseus consulting the dead, Aeneas and the Sibyl in Book 6 of the Aeneid, Hades and Persephone, Charon and the river Styx, Elysium and Tartarus.
+=== Women of Legend | women of legend
+Women of legend: Medea and her escape from Colchis to Athens, Penelope's loyalty, Helen of Troy, Lucretia and Cloelia as Roman models of virtue.
+=== The character of Odysseus | odysseus
+The character of Odysseus in the Odyssey: his cunning (the Cyclops and "Nobody"), leadership of his men, endurance, and how Homer presents him as a hero on his journey home to Ithaca.
+=== Athens at War in the 5th century | athens at war
+Athens at war in the 5th century BC: the battle of Marathon, hoplites and the phalanx, triremes at Salamis, and the Peloponnesian War against Sparta.
+=== The Roman Military in the Imperial Period | roman army
+The Roman army in the imperial period: legions, centuries and centurions, training and equipment, the testudo, forts and camps, and life as a legionary soldier.
+=== Cleopatra | cleopatra
+Cleopatra VII of Egypt: her alliances with Julius Caesar and Mark Antony, the battle of Actium in 31 BC, and how Roman sources such as Horace presented her as a dangerous foreign queen.
+=== - | physics
+Ohm's law: V = IR.
+=== - | french
+Je suis allé au cinéma avec mes copains samedi dernier.
+=== - | business
+Market segmentation divides a market into groups of customers.
