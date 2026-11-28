@@ -587,7 +587,7 @@ Window {
                     visible: win.view === "flashcards"
                     gutter: win.gutter
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY, moving)
+                    onContentYChanged: win.noteScroll(contentY, scrolling)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                 }
                 PodsPage {
@@ -595,7 +595,7 @@ Window {
                     visible: win.view === "pods"
                     gutter: win.gutter
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY, moving)
+                    onContentYChanged: win.noteScroll(contentY, scrolling)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onChooseFolder: docPicker.visible = true
                     onOpenAiSettings: { settingsPanel.show("ai"); win.settingsOpen = true }
@@ -605,7 +605,7 @@ Window {
                     visible: win.view === "todos"
                     gutter: win.gutter
                     bottomMargin: win.dockSpace
-                    onContentYChanged: win.noteScroll(contentY, moving)
+                    onContentYChanged: win.noteScroll(contentY, scrolling)
                     anchors { left: parent.left; right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: win.contentTop }
                     onSignInRequested: win.authOpen = true
                 }

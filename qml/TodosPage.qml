@@ -7,7 +7,7 @@ Item {
     property int gutter: 36
     property real bottomMargin: 0
     property alias contentY: flick.contentY
-    readonly property alias moving: flick.moving       // the person is scrolling it (not a page that changed size)
+    readonly property alias scrolling: flick.moving       // the person is scrolling it (not a page that changed size)
     signal signInRequested()
 
     property string filter: "all"          // all | today | doing | overdue | flagged
