@@ -488,6 +488,72 @@ Info identify(const std::string &text)
     return info;
 }
 
+// A table of topics, sub-topics and the sub-topics' bullet points with no numbers anywhere: each row starts with the
+// topic's name (the same on every row of that topic) and then the sub-topic's, before its first bullet ("Business
+// objectives", "and strategy", "Mission statement • explain the nature and purpose…"). Which lines of a row are the
+// topic is told by the rows around it: the lines they start with alike.
+std::vector<podsort::SpecPoint> rowTable(const std::vector<std::string> &lines)
+{
+    struct Row { std::vector<std::string> name; std::string body; };
+    std::vector<Row> rows;
+    std::vector<std::string> pending;      // the lines of a name being read
+    auto bullet = [](const std::string &l) {
+        return l.rfind("\xE2\x80\xA2", 0) == 0 || l.rfind("\xE2\x97\x8F", 0) == 0 || l.rfind("\xE2\x96\xAA", 0) == 0;
+    };
+    for (const std::string &raw : lines) {
+        const std::string l = trim(raw);
+        if (l.empty()) continue;
+        const size_t b = l.find(" \xE2\x80\xA2 ");
+        if (!bullet(l) && b != std::string::npos && b >= 3 && b <= 60 && std::isupper(uint8_t(l[0]))) {
+            // a sub-topic's name and its first bullet on one line
+            pending.push_back(l.substr(0, b));
+            rows.push_back({pending, l.substr(b + 5) + "\n"});
+            pending.clear();
+        } else if (bullet(l)) {
+            if (!pending.empty()) { rows.push_back({pending, std::string()}); pending.clear(); }
+            if (!rows.empty() && rows.back().body.size() < 6000) rows.back().body += l + "\n";
+        } else if (!pending.empty() || (std::isupper(uint8_t(l[0])) && l.size() <= 50 && l.back() != '.' && l.back() != ',')) {
+            if (pending.size() < 8) pending.push_back(l);      // a name, or more of one
+        } else if (!rows.empty() && rows.back().body.size() < 6000) {
+            rows.back().body += l + "\n";      // more of the last bullet
+        }
+    }
+    if (rows.size() < 6) return {};
+    // how many lines of each row are its topic: those it shares with the row before or after it
+    auto shared = [&](size_t a, size_t c) {
+        size_t k = 0;
+        while (k < rows[a].name.size() && k < rows[c].name.size() && rows[a].name[k] == rows[c].name[k]) ++k;
+        return k;
+    };
+    std::vector<podsort::SpecPoint> out;
+    std::map<std::string, int> topics;
+    for (size_t r = 0; r < rows.size(); ++r) {
+        size_t k = std::max(r > 0 ? shared(r, r - 1) : 0, r + 1 < rows.size() ? shared(r, r + 1) : 0);
+        if (k >= rows[r].name.size()) k = rows[r].name.size() - 1;      // (a sub-topic keeps a line of its own)
+        std::string topic, sub;
+        for (size_t j = 0; j < rows[r].name.size(); ++j) (j < k ? topic : sub) += (j < k ? (topic.empty() ? "" : " ") : (sub.empty() ? "" : " ")) + rows[r].name[j];
+        int parent = -1;
+        if (!topic.empty()) {
+            auto it = topics.find(topic);
+            if (it == topics.end()) {
+                podsort::SpecPoint t;
+                t.title = cleanTitle(topic);
+                t.parent = -1;
+                out.push_back(t);
+                it = topics.emplace(topic, int(out.size()) - 1).first;
+            }
+            parent = it->second;
+        }
+        podsort::SpecPoint s;
+        s.title = cleanTitle(sub);
+        s.parent = parent;
+        s.body = rows[r].body;
+        out.push_back(s);
+    }
+    // a topic's sub-topics, all in one place (a topic's rows run on, so its points come together anyway)
+    return out;
+}
+
 std::vector<podsort::SpecPoint> parse(const std::string &text)
 {
     std::vector<std::string> all = splitLines(text);
@@ -687,10 +753,25 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     if (parts[j].content) last = j;
                 size_t start = k;
                 while (start < last && (!parts[start].content || parts[start].qualification)) ++start;
+                // an overview of the qualification's content and then its content under other names ("2b. Content of A
+                // Level in Chemistry B (Salters)", then "2c. Development of practical skills", "2d. Storylines", "2e.
+                // Chemical literacy", up to "2f. Prior knowledge, learning and progression"): those parts
+                if (start == last && parts[start].qualification && start + 1 < parts.size() && parts[start + 1].label[0] == parts[start].label[0]) {
+                    size_t end = start + 1;
+                    while (end < parts.size() && parts[end].label[0] == parts[start].label[0] &&
+                           !adminTitle(cleanTitle(all[parts[end].line].substr(3)))) ++end;
+                    // (only when it is more than an overview: the parts after it run on for pages)
+                    const size_t stop = end < parts.size() ? parts[end].line : all.size();
+                    if (end > start + 1 && stop - parts[start + 1].line > 4 * (parts[start + 1].line - parts[start].line)) {
+                        start = start + 1;
+                        last = end - 1;
+                        partHeadings = true;
+                    }
+                }
                 section = 0;
                 // several content parts ("Component 1: Microeconomics", "Component 2: Macroeconomics"): each is a
                 // heading, since their topics are numbered afresh
-                partHeadings = start < last;
+                partHeadings = partHeadings || start < last;
                 from = parts[start].line + (partHeadings ? 0 : 1);
                 to = last + 1 < parts.size() ? parts[last + 1].line : all.size();
             }
@@ -1075,6 +1156,15 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 static const std::set<std::string> months = {"january", "february", "march", "april", "may", "june", "july",
                                                              "august", "september", "october", "november", "december"};
                 if (heading && (months.count(lower(firstWord(t))) || (!dottedOpen() && lastTop > 0 && v > lastTop + 3))) heading = false;
+                // nor a book of the Bible ("1 Corinthians 12", "1 Timothy 3:16": Edexcel GCSE Religious Studies), nor a
+                // sentence about what students do ("3 Notation Students will be expected to…", "4 Spreadsheets:
+                // Learners could use…")
+                static const std::set<std::string> books = {"corinthians", "timothy", "thessalonians", "kings", "samuel", "chronicles",
+                                                            "peter", "john", "maccabees", "esdras"};
+                const std::string lt = " " + lower(t) + " ";
+                if (heading && (books.count(lower(firstWord(t))) || lt.find(" students ") != std::string::npos ||
+                                lt.find(" learners ") != std::string::npos || lt.find(" candidates ") != std::string::npos))
+                    heading = false;
                 // nor a level of a mark scheme: "1 1-5 A system that tackles some aspects…" (AQA A-level Computer
                 // Science's non-exam assessment)
                 static const std::regex band("^[0-9]{1,2}\\s*(-|\xE2\x80\x93)\\s*[0-9]{1,2}\\b.*");
@@ -1124,7 +1214,7 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                     const int next = nextDottedMajor(i);
                     heading = v == lastTop || (v > lastTop && next == v && (v == lastTop + 1 || !contentTitle(t))) ||
                               (v == lastTop + 1 && next > v && !contentTitle(t));
-                } else if (heading && v < lastTop) {
+                } else if (heading && v < lastTop && v > 1) {      // (1 starts afresh: a paper's or a subject's own topics)
                     // going back to an earlier topic: only that topic's heading again ("1 Number" at the top of a page),
                     // not a line of text that starts with its number ("6 C to describe particular nuclei", the 6 of
                     // carbon-14's symbol, inside topic 7: Edexcel International GCSE Physics)
@@ -1246,12 +1336,24 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 justOpened = -1;
                 continue;
             }
+            // OCR Chemistry B (Salters)' storylines: "Developing fuels (DF)", a topic (its name again at the top of
+            // each of its pages)
+            static const std::regex storyline("^[A-Z][A-Za-z ,'-]{3,60} \\([A-Z]{1,3}\\)$");
+            if (board == "OCR" && l.size() < 80 && std::regex_match(l, storyline)) {
+                made = open(18, "", cleanTitle(l), false);      // (beside the modules, not in one)
+                justOpened = made;
+                justMerged = merged;
+                justKeyword = false;
+                rawEndsComma = false;
+                lastTop = 0;
+                continue;
+            }
             // a subtopic named above its coded statements: "Structure and calculation", then "N1 order positive and
             // negative integers…" (the statements' codes, N1, A1, G1, aren't numbers of the document's own)
             if (i + 1 < lines.size() && !stack.empty() && l.size() >= 3 && l.size() <= 60 && std::isupper(uint8_t(l[0])) &&
                 l.back() != '.' && l.back() != ':' &&
                 std::none_of(l.begin(), l.end(), [](char c) { return std::isdigit(uint8_t(c)); }) &&
-                lines[i + 1].size() > 4 && std::isupper(uint8_t(lines[i + 1][0]))) {
+                lines[i + 1].size() > 4 && (std::isupper(uint8_t(lines[i + 1][0])) || lines[i + 1][0] == '(')) {
                 static const std::regex coded("^[A-Z]{1,2}[0-9]{1,2}[a-z]?\\s+[a-z].*");
                 // (or above lettered ones, "Integers", then "A understand and use integers…", "B understand place
                 // value"; or "See Foundation Tier" in the Higher Tier's copy: Edexcel International GCSE Mathematics A.
@@ -1264,7 +1366,11 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                         letters = lines[j].size() > 2 && lines[j][0] == 'B' && std::regex_match(lines[j], lettered);
                     letteredLayout = letteredLayout || letters;
                 }
-                if ((!statementLike(l) && (std::regex_match(lines[i + 1], coded) || std::regex_match(lines[i + 1], seeTier))) || letters) {
+                // (or above lettered statements of its own, where nothing numbered is open: "Energetics", then "(d) the
+                // terms: exothermic, endothermic…", in OCR Chemistry B's storylines)
+                static const std::regex letteredStatement("^\\([a-z]{1,4}\\) [a-z].*");
+                const bool underLetters = !dottedOpen() && !letterOpen() && std::regex_match(lines[i + 1], letteredStatement);
+                if ((!statementLike(l) && (std::regex_match(lines[i + 1], coded) || std::regex_match(lines[i + 1], seeTier) || underLetters)) || letters) {
                     made = open(33, "", cleanTitle(l), false);
                     justOpened = made;
                     justMerged = merged;
@@ -1430,8 +1536,15 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
             const auto it = byNumber.find(up);
             if (it == byNumber.end() || it->second == int(i)) continue;
             // (within its own paper or option: Paper 4's "1.1" isn't Paper 1's topic 1's)
-            auto root = [&](int q) { while (pts[size_t(q)].parent >= 0) q = pts[size_t(q)].parent; return q; };
-            if (root(int(i)) != root(it->second)) continue;
+            static const std::regex option("^[0-9]{1,2}[A-Z](\\.[0-9]{1,2})?$");
+            auto within = [&](int q) {
+                for (q = pts[size_t(q)].parent; q >= 0; q = pts[size_t(q)].parent) {
+                    const std::string &n = pts[size_t(q)].number;
+                    if (!n.empty() && (!std::isdigit(uint8_t(n[0])) || std::regex_match(n, option))) return q;
+                }
+                return -1;
+            };
+            if (within(int(i)) != within(it->second)) continue;
             bool loop = false;      // never under a point inside it
             for (int q = it->second; q >= 0 && !loop; q = pts[size_t(q)].parent) loop = q == int(i);
             if (!loop) pts[i].parent = it->second;
@@ -1500,6 +1613,13 @@ std::vector<podsort::SpecPoint> parse(const std::string &text)
                 break;
             }
         }
+    }
+    // Nothing numbered in the content, but a table of topics, sub-topics and their bullet points, the topic's name on
+    // every row ("Business objectives", "and strategy", then "Mission statement • explain the nature and purpose of a
+    // mission statement", …: OCR A Level Business)
+    if (pts.size() < 3 && foundSection) {
+        auto rows = rowTable(lines);
+        if (rows.size() >= 3) pts.swap(rows);
     }
     for (auto &p : pts) {
         p.depth = 0;
